@@ -3,58 +3,75 @@ import { supabase } from "../lib/supabaseClient";
 import { useRouter } from "next/router";
 
 export default function Home() {
+  const router = useRouter();
   const [projects, setProjects] = useState([]);
   const [newProjectName, setNewProjectName] = useState("");
   const [user, setUser] = useState(null);
-  const router = useRouter();
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    checkUser();
+    init();
   }, []);
 
-  async function checkUser() {
+  async function init() {
     const {
       data: { user },
     } = await supabase.auth.getUser();
 
     if (!user) {
       router.push("/login");
-    } else {
-      setUser(user);
-      fetchProjects(user.id);
+      return;
     }
+
+    setUser(user);
+    await loadProjects(user.id);
+    setLoading(false);
   }
 
-  async function fetchProjects(userId) {
+  async function loadProjects(userId) {
     const { data, error } = await supabase
       .from("projects")
       .select("*")
       .order("created_at", { ascending: false });
 
     if (error) {
-      console.error("Ошибка загрузки проектов:", error.message);
+      alert("Ошибка загрузки: " + error.message);
+      console.error(error);
     } else {
-      setProjects(data);
+      setProjects(data || []);
     }
   }
 
   async function addProject() {
     if (!newProjectName.trim()) return;
 
-    const { error } = await supabase.from("projects").insert([
-      {
-        name: newProjectName,
-        user_id: user.id, // 🔥 КЛЮЧЕВОЕ
-      },
-    ]);
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+
+    if (!user) {
+      alert("Пользователь не найден");
+      return;
+    }
+
+    const { data, error } = await supabase
+      .from("projects")
+      .insert([
+        {
+          name: newProjectName,
+          user_id: user.id,
+        },
+      ])
+      .select();
 
     if (error) {
-      console.error("Ошибка создания проекта:", error.message);
-      alert("Ошибка: " + error.message);
-    } else {
-      setNewProjectName("");
-      fetchProjects(user.id);
+      alert("Ошибка создания: " + error.message);
+      console.error(error);
+      return;
     }
+
+    setNewProjectName("");
+    await loadProjects(user.id);
   }
 
   async function logout() {
@@ -62,11 +79,13 @@ export default function Home() {
     router.push("/login");
   }
 
+  if (loading) return <div style={{ padding: 40 }}>Loading...</div>;
+
   return (
-    <div style={{ padding: "40px" }}>
+    <div style={{ padding: 40 }}>
       <h1>CableCore</h1>
 
-      <button onClick={logout} style={{ marginBottom: "20px" }}>
+      <button onClick={logout} style={{ marginBottom: 20 }}>
         Logout
       </button>
 
@@ -79,19 +98,19 @@ export default function Home() {
         onChange={(e) => setNewProjectName(e.target.value)}
       />
 
-      <button onClick={addProject} style={{ marginLeft: "10px" }}>
+      <button onClick={addProject} style={{ marginLeft: 10 }}>
         Add Project
       </button>
 
-      <div style={{ marginTop: "30px" }}>
+      <div style={{ marginTop: 30 }}>
         {projects.map((project) => (
           <div
             key={project.id}
             style={{
-              padding: "10px",
-              marginBottom: "10px",
+              padding: 12,
+              marginBottom: 10,
               background: "#1e2a3a",
-              borderRadius: "6px",
+              borderRadius: 6,
               cursor: "pointer",
             }}
             onClick={() => router.push(`/project/${project.id}`)}
