@@ -8,69 +8,55 @@ export default function Login() {
   const router = useRouter();
 
   useEffect(() => {
-    checkSession();
+    const checkUser = async () => {
+      const {
+        data: { session },
+      } = await supabase.auth.getSession();
+
+      if (session) {
+        router.push("/");
+      }
+    };
+
+    checkUser();
   }, []);
 
-  async function checkSession() {
-    const {
-      data: { session },
-    } = await supabase.auth.getSession();
-
-    if (session) {
-      router.push("/");
-    }
-  }
-
-  async function handleGoogleLogin() {
-    const { error } = await supabase.auth.signInWithOAuth({
+  const handleGoogleLogin = async () => {
+    await supabase.auth.signInWithOAuth({
       provider: "google",
       options: {
-        redirectTo: window.location.origin, // ВАЖНО
+        redirectTo: "https://cablecoreapp.vercel.app/auth/callback",
       },
     });
-
-    if (error) {
-      console.error("Login error:", error.message);
-      alert(error.message);
-    }
-  }
+  };
 
   return (
-    <div style={styles.container}>
-      <div style={styles.card}>
-        <h1>CableCore</h1>
-        <p>Вход в систему</p>
+    <div
+      style={{
+        height: "100vh",
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        background: "#001833",
+        color: "white",
+        flexDirection: "column",
+        gap: "20px",
+      }}
+    >
+      <h1>Login</h1>
 
-        <button onClick={handleGoogleLogin} style={styles.button}>
-          Войти через Google
-        </button>
-      </div>
+      <button
+        onClick={handleGoogleLogin}
+        style={{
+          padding: "12px 24px",
+          fontSize: "16px",
+          borderRadius: "8px",
+          border: "none",
+          cursor: "pointer",
+        }}
+      >
+        Sign in with Google
+      </button>
     </div>
   );
 }
-
-const styles = {
-  container: {
-    height: "100vh",
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "#0b1623",
-    color: "white",
-  },
-  card: {
-    padding: "40px",
-    background: "#142233",
-    borderRadius: "10px",
-    textAlign: "center",
-  },
-  button: {
-    marginTop: "20px",
-    padding: "12px 20px",
-    backgroundColor: "#4285F4",
-    border: "none",
-    color: "white",
-    borderRadius: "5px",
-    cursor: "pointer",
-  },
-};
