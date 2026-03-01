@@ -6,19 +6,17 @@ export default function AuthCallback() {
   const router = useRouter();
 
   useEffect(() => {
-    const handleAuth = async () => {
-      const { data, error } =
-        await supabase.auth.exchangeCodeForSession(
-          window.location.href
-        );
+    const checkSession = async () => {
+      const { data } = await supabase.auth.getSession();
 
-      console.log("SESSION DATA:", data);
-      console.log("SESSION ERROR:", error);
-
-      router.replace("/");
+      if (data.session) {
+        router.replace("/");
+      } else {
+        router.replace("/login");
+      }
     };
 
-    handleAuth();
+    checkSession();
   }, []);
 
   return <p style={{ padding: 40 }}>Completing login...</p>;
