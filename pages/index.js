@@ -4,68 +4,102 @@ import { useRouter } from "next/router";
 
 export default function Home() {
   const [projects, setProjects] = useState([]);
-  const [newProject, setNewProject] = useState("");
+  const [newProjectName, setNewProjectName] = useState("");
+  const [user, setUser] = useState(null);
   const router = useRouter();
 
   useEffect(() => {
     checkUser();
-    fetchProjects();
   }, []);
 
   async function checkUser() {
-    const { data: { session } } = await supabase.auth.getSession();
-    if (!session) {
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+
+    if (!user) {
       router.push("/login");
+    } else {
+      setUser(user);
+      fetchProjects(user.id);
     }
   }
 
-  async function fetchProjects() {
-    const { data } = await supabase
+  async function fetchProjects(userId) {
+    const { data, error } = await supabase
       .from("projects")
       .select("*")
       .order("created_at", { ascending: false });
 
-    setProjects(data || []);
+    if (error) {
+      console.error("Ошибка загрузки проектов:", error.message);
+    } else {
+      setProjects(data);
+    }
   }
 
   async function addProject() {
-    if (!newProject) return;
+    if (!newProjectName.trim()) return;
 
-    const { data: { user } } = await supabase.auth.getUser();
-
-    await supabase.from("projects").insert([
+    const { error } = await supabase.from("projects").insert([
       {
-        name: newProject,
-        user_id: user.id
-      }
+        name: newProjectName,
+        user_id: user.id, // 🔥 КЛЮЧЕВОЕ
+      },
     ]);
 
-    setNewProject("");
-    fetchProjects();
+    if (error) {
+      console.error("Ошибка создания проекта:", error.message);
+      alert("Ошибка: " + error.message);
+    } else {
+      setNewProjectName("");
+      fetchProjects(user.id);
+    }
+  }
+
+  async function logout() {
+    await supabase.auth.signOut();
+    router.push("/login");
   }
 
   return (
-    <div style={{ padding: 40 }}>
+    <div style={{ padding: "40px" }}>
       <h1>CableCore</h1>
 
-      <input
-        value={newProject}
-        onChange={(e) => setNewProject(e.target.value)}
-        placeholder="New project name"
-      />
-      <button onClick={addProject}>Add Project</button>
+      <button onClick={logout} style={{ marginBottom: "20px" }}>
+        Logout
+      </button>
 
-      <ul>
+      <h2>Projects:</h2>
+
+      <input
+        type="text"
+        placeholder="New project name"
+        value={newProjectName}
+        onChange={(e) => setNewProjectName(e.target.value)}
+      />
+
+      <button onClick={addProject} style={{ marginLeft: "10px" }}>
+        Add Project
+      </button>
+
+      <div style={{ marginTop: "30px" }}>
         {projects.map((project) => (
-          <li
+          <div
             key={project.id}
+            style={{
+              padding: "10px",
+              marginBottom: "10px",
+              background: "#1e2a3a",
+              borderRadius: "6px",
+              cursor: "pointer",
+            }}
             onClick={() => router.push(`/project/${project.id}`)}
-            style={{ cursor: "pointer", marginTop: 10 }}
           >
             {project.name}
-          </li>
+          </div>
         ))}
-      </ul>
+      </div>
     </div>
   );
 }
