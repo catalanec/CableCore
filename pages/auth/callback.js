@@ -9,12 +9,20 @@ export default function AuthCallback() {
 
   useEffect(() => {
     const handleAuth = async () => {
-      await supabase.auth.getSession();
-      router.push("/");
+      // Это важно для OAuth
+      await supabase.auth.exchangeCodeForSession(
+        window.location.href
+      );
+
+      router.replace("/");
     };
 
     handleAuth();
   }, []);
 
-  return <p>Logging you in...</p>;
+  return (
+    <div style={{ padding: "40px", color: "white" }}>
+      Completing login...
+    </div>
+  );
 }
