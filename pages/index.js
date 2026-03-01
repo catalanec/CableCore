@@ -1,7 +1,7 @@
-
 "use client";
 
 import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
 import { createClient } from "@supabase/supabase-js";
 
 const supabase = createClient(
@@ -10,6 +10,8 @@ const supabase = createClient(
 );
 
 export default function Home() {
+  const router = useRouter();
+
   const [projects, setProjects] = useState([]);
   const [loading, setLoading] = useState(true);
   const [newProject, setNewProject] = useState("");
@@ -52,8 +54,17 @@ export default function Home() {
   };
 
   return (
-    <div style={{ padding: "40px", background: "#0f172a", minHeight: "100vh", color: "white" }}>
-      <h1 style={{ fontSize: "42px", marginBottom: "20px" }}>CableCore</h1>
+    <div
+      style={{
+        padding: "40px",
+        background: "#0f172a",
+        minHeight: "100vh",
+        color: "white",
+      }}
+    >
+      <h1 style={{ fontSize: "42px", marginBottom: "20px" }}>
+        CableCore
+      </h1>
 
       <h2>Projects:</h2>
 
@@ -66,17 +77,18 @@ export default function Home() {
           style={{
             padding: "8px",
             marginRight: "10px",
-            borderRadius: "4px",
-            border: "none"
+            borderRadius: "6px",
+            border: "none",
           }}
         />
+
         <button
           onClick={addProject}
           style={{
             padding: "8px 12px",
-            borderRadius: "4px",
+            borderRadius: "6px",
             border: "none",
-            cursor: "pointer"
+            cursor: "pointer",
           }}
         >
           Add Project
@@ -88,7 +100,17 @@ export default function Home() {
         <p>Loading...</p>
       ) : (
         projects.map((project) => (
-          <div key={project.id}>
+          <div
+            key={project.id}
+            onClick={() => router.push(`/project/${project.id}`)}
+            style={{
+              cursor: "pointer",
+              marginBottom: "8px",
+              padding: "10px",
+              borderRadius: "6px",
+              background: "#1e293b",
+            }}
+          >
             {project.name}
           </div>
         ))
