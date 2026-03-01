@@ -6,19 +6,17 @@ export default function Callback() {
   const router = useRouter();
 
   useEffect(() => {
-    const handleAuth = async () => {
-      const { error } = await supabase.auth.exchangeCodeForSession(
-        window.location.href
-      );
+    const checkSession = async () => {
+      const {
+        data: { session },
+      } = await supabase.auth.getSession();
 
-      if (error) {
-        console.error("Auth error:", error.message);
-      }
+      console.log("SESSION AFTER REDIRECT:", session);
 
       router.push("/");
     };
 
-    handleAuth();
+    checkSession();
   }, []);
 
   return <p>Авторизация...</p>;
