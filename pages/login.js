@@ -12,8 +12,11 @@ export default function Login() {
   }, []);
 
   const checkUser = async () => {
-    const { data } = await supabase.auth.getSession();
-    if (data.session) {
+    const {
+      data: { session },
+    } = await supabase.auth.getSession();
+
+    if (session) {
       router.push("/");
     }
   };
@@ -22,7 +25,7 @@ export default function Login() {
     await supabase.auth.signInWithOAuth({
       provider: "google",
       options: {
-        redirectTo: window.location.origin,
+        redirectTo: `${window.location.origin}/auth/callback`,
       },
     });
   };
