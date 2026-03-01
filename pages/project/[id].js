@@ -12,92 +12,172 @@ export default function ProjectPage() {
 
   useEffect(() => {
     if (!id) return;
-
     fetchProject();
     fetchTasks();
   }, [id]);
 
   async function fetchProject() {
-    const { data } = await supabase
+    const { data, error } = await supabase
       .from("projects")
       .select("*")
       .eq("id", id)
       .single();
 
-    setProject(data);
+    if (!error) setProject(data);
   }
 
   async function fetchTasks() {
-    const { data } = await supabase
+    const { data, error } = await supabase
       .from("tasks")
       .select("*")
       .eq("project_id", id)
       .order("created_at", { ascending: true });
 
-    setTasks(data || []);
+    if (!error) setTasks(data || []);
   }
 
   async function addTask() {
     if (!newTask.trim()) return;
 
-    await supabase.from("tasks").insert([
+    const { error } = await supabase.from("tasks").insert([
       {
         title: newTask,
         project_id: id,
       },
     ]);
 
-    setNewTask("");
-    fetchTasks();
+    if (!error) {
+      setNewTask("");
+      fetchTasks();
+    }
   }
 
   async function toggleTask(task) {
-    await supabase
+    const { error } = await supabase
       .from("tasks")
       .update({ done: !task.done })
       .eq("id", task.id);
 
-    fetchTasks();
+    if (!error) fetchTasks();
   }
 
   async function deleteTask(taskId) {
-    await supabase.from("tasks").delete().eq("id", taskId);
-    fetchTasks();
+    const { error } = await supabase
+      .from("tasks")
+      .delete()
+      .eq("id", taskId);
+
+    if (!error) fetchTasks();
   }
 
-  if (!project) return <div style={{ padding: 40 }}>Loading...</div>;
+  if (!project) {
+    return (
+      <div
+        style={{
+          minHeight: "100vh",
+          background: "#0f172a",
+          color: "white",
+          padding: "40px",
+        }}
+      >
+        Loading...
+      </div>
+    );
+  }
 
   return (
-    <div style={{ padding: 40 }}>
-      <button onClick={() => router.push("/")}>← Back</button>
+    <div
+      style={{
+        minHeight: "100vh",
+        background: "#0f172a",
+        color: "white",
+        padding: "40px",
+      }}
+    >
+      <button
+        onClick={() => router.push("/")}
+        style={{
+          marginBottom: "20px",
+          padding: "6px 12px",
+          background: "#1e293b",
+          color: "white",
+          border: "none",
+          borderRadius: "6px",
+          cursor: "pointer",
+        }}
+      >
+        ← Back
+      </button>
 
-      <h1 style={{ marginTop: 20 }}>{project.name}</h1>
-      <p>Created at: {new Date(project.created_at).toLocaleString()}</p>
+      <h1>{project.name}</h1>
+      <p style={{ opacity: 0.7 }}>
+        Created at: {new Date(project.created_at).toLocaleString()}
+      </p>
 
-      <div style={{ marginTop: 30 }}>
+      <div style={{ marginTop: "30px" }}>
         <input
           placeholder="New task..."
           value={newTask}
           onChange={(e) => setNewTask(e.target.value)}
-          style={{ padding: 8, marginRight: 10 }}
+          style={{
+            padding: "8px",
+            marginRight: "10px",
+            borderRadius: "6px",
+            border: "none",
+          }}
         />
-        <button onClick={addTask}>Add Task</button>
+        <button
+          onClick={addTask}
+          style={{
+            padding: "8px 14px",
+            background: "#3b82f6",
+            color: "white",
+            border: "none",
+            borderRadius: "6px",
+            cursor: "pointer",
+          }}
+        >
+          Add Task
+        </button>
       </div>
 
-      <ul style={{ marginTop: 20 }}>
+      <ul style={{ marginTop: "20px", listStyle: "none", padding: 0 }}>
         {tasks.map((task) => (
-          <li key={task.id} style={{ marginBottom: 10 }}>
+          <li
+            key={task.id}
+            style={{
+              marginBottom: "10px",
+              padding: "10px",
+              background: "#1e293b",
+              borderRadius: "6px",
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+            }}
+          >
             <span
               onClick={() => toggleTask(task)}
               style={{
                 cursor: "pointer",
                 textDecoration: task.done ? "line-through" : "none",
-                marginRight: 10,
               }}
             >
               {task.title}
             </span>
-            <button onClick={() => deleteTask(task.id)}>Delete</button>
+
+            <button
+              onClick={() => deleteTask(task.id)}
+              style={{
+                background: "#ef4444",
+                color: "white",
+                border: "none",
+                borderRadius: "6px",
+                padding: "4px 10px",
+                cursor: "pointer",
+              }}
+            >
+              Delete
+            </button>
           </li>
         ))}
       </ul>
