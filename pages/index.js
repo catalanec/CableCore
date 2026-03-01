@@ -1,3 +1,6 @@
+
+"use client";
+
 import { useEffect, useState } from "react";
 import { createClient } from "@supabase/supabase-js";
 
@@ -9,53 +12,86 @@ const supabase = createClient(
 export default function Home() {
   const [projects, setProjects] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [newProject, setNewProject] = useState("");
 
-  useEffect(() => {
-  async function fetchProjects() {
-    console.log("URL:", process.env.NEXT_PUBLIC_SUPABASE_URL);
-
+  // Получение проектов
+  const fetchProjects = async () => {
     const { data, error } = await supabase
       .from("projects")
-      .select("*");
-
-    console.log("DATA:", data);
-    console.log("ERROR:", error);
+      .select("*")
+      .order("created_at", { ascending: false });
 
     if (error) {
-      alert("ERROR: " + JSON.stringify(error));
+      console.log("ERROR:", error);
     } else {
       setProjects(data);
     }
 
     setLoading(false);
-  }
+  };
 
-  fetchProjects();
-}, []);
+  useEffect(() => {
+    fetchProjects();
+  }, []);
+
+  // Добавление проекта
+  const addProject = async () => {
+    if (!newProject.trim()) return;
+
+    const { error } = await supabase
+      .from("projects")
+      .insert([{ name: newProject }]);
+
+    if (error) {
+      console.log("Insert error:", error);
+      return;
+    }
+
+    setNewProject("");
+    fetchProjects();
+  };
 
   return (
-    <div style={{
-      fontFamily: "Arial",
-      padding: "40px",
-      background: "#0f172a",
-      color: "white",
-      minHeight: "100vh"
-    }}>
-      <h1 style={{ fontSize: "40px", marginBottom: "20px" }}>
-        CableCore
-      </h1>
+    <div style={{ padding: "40px", background: "#0f172a", minHeight: "100vh", color: "white" }}>
+      <h1 style={{ fontSize: "42px", marginBottom: "20px" }}>CableCore</h1>
 
+      <h2>Projects:</h2>
+
+      {/* Форма добавления */}
+      <div style={{ marginBottom: "20px" }}>
+        <input
+          value={newProject}
+          onChange={(e) => setNewProject(e.target.value)}
+          placeholder="New project name"
+          style={{
+            padding: "8px",
+            marginRight: "10px",
+            borderRadius: "4px",
+            border: "none"
+          }}
+        />
+        <button
+          onClick={addProject}
+          style={{
+            padding: "8px 12px",
+            borderRadius: "4px",
+            border: "none",
+            cursor: "pointer"
+          }}
+        >
+          Add Project
+        </button>
+      </div>
+
+      {/* Список проектов */}
       {loading ? (
         <p>Loading...</p>
       ) : (
-        <>
-          <h2>Projects:</h2>
-          {projects.map(project => (
-            <div key={project.id}>
-              {project.name}
-            </div>
-          ))}
-        </>
+        projects.map((project) => (
+          <div key={project.id}>
+            {project.name}
+          </div>
+        ))
       )}
     </div>
   );
