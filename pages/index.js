@@ -1,62 +1,71 @@
-// pages/index.js
-
 import { useEffect, useState } from "react";
-import { useRouter } from "next/router";
 import { supabase } from "../lib/supabaseClient";
+import { useRouter } from "next/router";
 
 export default function Home() {
+  const [projects, setProjects] = useState([]);
+  const [newProject, setNewProject] = useState("");
   const router = useRouter();
-  const [user, setUser] = useState(null);
 
   useEffect(() => {
     checkUser();
+    fetchProjects();
   }, []);
 
-  const checkUser = async () => {
-    const { data } = await supabase.auth.getSession();
-    if (!data.session) {
+  async function checkUser() {
+    const { data: { session } } = await supabase.auth.getSession();
+    if (!session) {
       router.push("/login");
-    } else {
-      setUser(data.session.user);
     }
-  };
+  }
 
-  const logout = async () => {
-    await supabase.auth.signOut();
-    router.push("/login");
-  };
+  async function fetchProjects() {
+    const { data } = await supabase
+      .from("projects")
+      .select("*")
+      .order("created_at", { ascending: false });
 
-  if (!user) return null;
+    setProjects(data || []);
+  }
+
+  async function addProject() {
+    if (!newProject) return;
+
+    const { data: { user } } = await supabase.auth.getUser();
+
+    await supabase.from("projects").insert([
+      {
+        name: newProject,
+        user_id: user.id
+      }
+    ]);
+
+    setNewProject("");
+    fetchProjects();
+  }
 
   return (
-    <div style={styles.container}>
-      <h1>Добро пожаловать в CableCore</h1>
-      <p>{user.email}</p>
+    <div style={{ padding: 40 }}>
+      <h1>CableCore</h1>
 
-      <button onClick={logout} style={styles.button}>
-        Выйти
-      </button>
+      <input
+        value={newProject}
+        onChange={(e) => setNewProject(e.target.value)}
+        placeholder="New project name"
+      />
+      <button onClick={addProject}>Add Project</button>
+
+      <ul>
+        {projects.map((project) => (
+          <li
+            key={project.id}
+            onClick={() => router.push(`/project/${project.id}`)}
+            style={{ cursor: "pointer", marginTop: 10 }}
+          >
+            {project.name}
+          </li>
+        ))}
+      </ul>
     </div>
   );
 }
-
-const styles = {
-  container: {
-    height: "100vh",
-    backgroundColor: "#0b1623",
-    color: "white",
-    display: "flex",
-    flexDirection: "column",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  button: {
-    marginTop: "20px",
-    padding: "10px 15px",
-    backgroundColor: "#ff4d4d",
-    border: "none",
-    color: "white",
-    borderRadius: "5px",
-    cursor: "pointer",
-  },
-};
