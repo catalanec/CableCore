@@ -11,22 +11,27 @@ export default function Home() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    async function fetchProjects() {
-      const { data, error } = await supabase
-        .from("projects")
-        .select("*");
+  async function fetchProjects() {
+    console.log("URL:", process.env.NEXT_PUBLIC_SUPABASE_URL);
 
-      if (error) {
-        alert(JSON.stringify(error));
-      } else {
-        setProjects(data);
-      }
+    const { data, error } = await supabase
+      .from("projects")
+      .select("*");
 
-      setLoading(false);
+    console.log("DATA:", data);
+    console.log("ERROR:", error);
+
+    if (error) {
+      alert("ERROR: " + JSON.stringify(error));
+    } else {
+      setProjects(data);
     }
 
-    fetchProjects();
-  }, []);
+    setLoading(false);
+  }
+
+  fetchProjects();
+}, []);
 
   return (
     <div style={{
