@@ -8,10 +8,10 @@ export default function Login() {
   const router = useRouter();
 
   useEffect(() => {
-    checkUser();
+    checkSession();
   }, []);
 
-  const checkUser = async () => {
+  async function checkSession() {
     const {
       data: { session },
     } = await supabase.auth.getSession();
@@ -19,16 +19,21 @@ export default function Login() {
     if (session) {
       router.push("/");
     }
-  };
+  }
 
-  const handleGoogleLogin = async () => {
-    await supabase.auth.signInWithOAuth({
+  async function handleGoogleLogin() {
+    const { error } = await supabase.auth.signInWithOAuth({
       provider: "google",
       options: {
-        redirectTo: `${window.location.origin}/auth/callback`,
+        redirectTo: window.location.origin, // ВАЖНО
       },
     });
-  };
+
+    if (error) {
+      console.error("Login error:", error.message);
+      alert(error.message);
+    }
+  }
 
   return (
     <div style={styles.container}>
