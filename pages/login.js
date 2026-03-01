@@ -7,27 +7,29 @@ import { supabase } from "../lib/supabaseClient";
 export default function Login() {
   const router = useRouter();
 
+  // Если уже есть сессия — сразу на главную
   useEffect(() => {
-    const checkUser = async () => {
-      const {
-        data: { session },
-      } = await supabase.auth.getSession();
-
-      if (session) {
-        router.push("/");
+    const checkSession = async () => {
+      const { data } = await supabase.auth.getSession();
+      if (data.session) {
+        router.replace("/");
       }
     };
 
-    checkUser();
+    checkSession();
   }, []);
 
   const handleGoogleLogin = async () => {
-    await supabase.auth.signInWithOAuth({
+    const { error } = await supabase.auth.signInWithOAuth({
       provider: "google",
       options: {
         redirectTo: "https://cablecoreapp.vercel.app/auth/callback",
       },
     });
+
+    if (error) {
+      alert("Login error: " + error.message);
+    }
   };
 
   return (
@@ -38,9 +40,9 @@ export default function Login() {
         justifyContent: "center",
         alignItems: "center",
         background: "#001833",
-        color: "white",
         flexDirection: "column",
-        gap: "20px",
+        gap: "24px",
+        color: "white",
       }}
     >
       <h1>Login</h1>
@@ -48,7 +50,7 @@ export default function Login() {
       <button
         onClick={handleGoogleLogin}
         style={{
-          padding: "12px 24px",
+          padding: "12px 28px",
           fontSize: "16px",
           borderRadius: "8px",
           border: "none",
