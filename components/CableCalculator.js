@@ -68,33 +68,51 @@ return(
 
 <div style={{
 background:"#111827",
-padding:"40px",
-borderRadius:"12px",
-marginTop:"40px"
+padding:"50px",
+borderRadius:"16px",
+marginTop:"40px",
+maxWidth:"900px",
+marginLeft:"auto",
+marginRight:"auto"
 }}>
 
-<h2 style={{marginBottom:"30px"}}>Calculadora profesional</h2>
+<h2 style={{
+textAlign:"center",
+marginBottom:"40px"
+}}>
+Calculadora profesional
+</h2>
 
 <div style={{
 display:"grid",
 gridTemplateColumns:"1fr 1fr",
-gap:"30px"
+gap:"60px"
 }}>
+
+{/* LEFT COLUMN */}
 
 <div>
 
 <label>Puntos de red</label>
+
 <input
 type="number"
 value={points}
 onChange={e=>setPoints(Number(e.target.value))}
-style={{display:"block",marginBottom:"20px",width:"100%"}}
+style={{
+width:"100%",
+marginBottom:"20px"
+}}
 />
 
 <label>Tipo de cable</label>
+
 <select
 onChange={e=>setCable(Number(e.target.value))}
-style={{display:"block",marginBottom:"20px",width:"100%"}}
+style={{
+width:"100%",
+marginBottom:"20px"
+}}
 >
 
 <option value="95">Cat6 – 95€</option>
@@ -104,9 +122,13 @@ style={{display:"block",marginBottom:"20px",width:"100%"}}
 </select>
 
 <label>Tipo instalación</label>
+
 <select
 onChange={e=>setInstallation(e.target.value)}
-style={{display:"block",marginBottom:"20px",width:"100%"}}
+style={{
+width:"100%",
+marginBottom:"20px"
+}}
 >
 
 <option value="superficial">Superficial</option>
@@ -121,11 +143,15 @@ style={{display:"block",marginBottom:"20px",width:"100%"}}
 
 <>
 <label>Metros canaleta</label>
+
 <input
 type="number"
 value={canaleta}
 onChange={e=>setCanaleta(Number(e.target.value))}
-style={{display:"block",marginBottom:"20px",width:"100%"}}
+style={{
+width:"100%",
+marginBottom:"20px"
+}}
 />
 </>
 
@@ -136,19 +162,27 @@ style={{display:"block",marginBottom:"20px",width:"100%"}}
 <>
 
 <label>Metros regata</label>
+
 <input
 type="number"
 value={regata}
 onChange={e=>setRegata(Number(e.target.value))}
-style={{display:"block",marginBottom:"20px",width:"100%"}}
+style={{
+width:"100%",
+marginBottom:"20px"
+}}
 />
 
 <label>Metros corrugado</label>
+
 <input
 type="number"
 value={corrugado}
 onChange={e=>setCorrugado(Number(e.target.value))}
-style={{display:"block",marginBottom:"20px",width:"100%"}}
+style={{
+width:"100%",
+marginBottom:"20px"
+}}
 />
 
 </>
@@ -159,7 +193,10 @@ style={{display:"block",marginBottom:"20px",width:"100%"}}
 
 <select
 onChange={e=>setRack(Number(e.target.value))}
-style={{display:"block",marginBottom:"20px",width:"100%"}}
+style={{
+width:"100%",
+marginBottom:"20px"
+}}
 >
 
 <option value="0">No incluido</option>
@@ -171,9 +208,12 @@ style={{display:"block",marginBottom:"20px",width:"100%"}}
 
 </div>
 
+
+{/* RIGHT COLUMN */}
+
 <div>
 
-<h4>Equipos</h4>
+<h4 style={{marginBottom:"15px"}}>Equipos</h4>
 
 <label>
 <input type="checkbox" onChange={e=>setSwitch(e.target.checked)}/>
@@ -200,7 +240,10 @@ style={{display:"block",marginBottom:"20px",width:"100%"}}
 
 <select
 onChange={e=>setUrgency(Number(e.target.value))}
-style={{display:"block",marginBottom:"20px",width:"100%"}}
+style={{
+width:"100%",
+marginBottom:"25px"
+}}
 >
 
 <option value="1">Normal</option>
@@ -214,7 +257,9 @@ style={{display:"block",marginBottom:"20px",width:"100%"}}
 <p>Subtotal: {result.subtotal}€</p>
 <p>IVA (21%): {result.iva}€</p>
 
-<h2 style={{color:"#facc15"}}>Total: {result.total}€</h2>
+<h2 style={{color:"#facc15"}}>
+Total: {result.total}€
+</h2>
 
 <button
 onClick={()=>onSave(result)}
