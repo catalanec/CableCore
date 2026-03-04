@@ -1,14 +1,11 @@
 import { useState } from "react";
+import jsPDF from "jspdf";
 
 export default function CableCalculator({ onSave }) {
 
 const [points,setPoints]=useState(1);
 const [cable,setCable]=useState(95);
 const [installation,setInstallation]=useState("superficial");
-
-const [canaleta,setCanaleta]=useState(0);
-const [regata,setRegata]=useState(0);
-const [corrugado,setCorrugado]=useState(0);
 
 const [rack,setRack]=useState(0);
 
@@ -23,26 +20,9 @@ function calculate(){
 let subtotalPoints=points*cable;
 let installCost=0;
 
-if(installation==="superficial"){
-installCost+=canaleta*8;
-}
-
-if(installation==="techo"){
-installCost+=points*12;
-}
-
-if(installation==="empotrado_existente"){
-installCost+=points*20;
-}
-
-if(installation==="empotrado_nuevo"){
-installCost+=regata*22;
-installCost+=corrugado*4.5;
-}
-
-if(installation==="industrial"){
-subtotalPoints*=1.2;
-}
+if(installation==="techo") installCost+=points*12;
+if(installation==="empotrado_existente") installCost+=points*20;
+if(installation==="industrial") subtotalPoints*=1.2;
 
 let equip=0;
 
@@ -64,6 +44,35 @@ total:total.toFixed(2)
 
 const result=calculate();
 
+function generatePDF(){
+
+const doc = new jsPDF();
+
+doc.setFontSize(20);
+doc.text("CableCore Presupuesto",20,20);
+
+doc.setFontSize(12);
+
+doc.text(`Puntos de red: ${points}`,20,40);
+doc.text(`Tipo cable: ${cable}€`,20,50);
+doc.text(`Tipo instalación: ${installation}`,20,60);
+
+doc.text(`Rack: ${rack}€`,20,70);
+
+doc.text(`Switch: ${switchEquip ? "Sí":"No"}`,20,90);
+doc.text(`Router: ${routerEquip ? "Sí":"No"}`,20,100);
+doc.text(`Configuración: ${configEquip ? "Sí":"No"}`,20,110);
+
+doc.text(`Subtotal: ${result.subtotal}€`,20,140);
+doc.text(`IVA (21%): ${result.iva}€`,20,150);
+
+doc.setFontSize(16);
+doc.text(`TOTAL: ${result.total}€`,20,170);
+
+doc.save("presupuesto-cablecore.pdf");
+
+}
+
 return(
 
 <div style={{
@@ -76,10 +85,7 @@ marginLeft:"auto",
 marginRight:"auto"
 }}>
 
-<h2 style={{
-textAlign:"center",
-marginBottom:"40px"
-}}>
+<h2 style={{textAlign:"center",marginBottom:"40px"}}>
 Calculadora profesional
 </h2>
 
@@ -89,8 +95,6 @@ gridTemplateColumns:"1fr 1fr",
 gap:"60px"
 }}>
 
-{/* LEFT COLUMN */}
-
 <div>
 
 <label>Puntos de red</label>
@@ -99,20 +103,14 @@ gap:"60px"
 type="number"
 value={points}
 onChange={e=>setPoints(Number(e.target.value))}
-style={{
-width:"100%",
-marginBottom:"20px"
-}}
+style={{width:"100%",marginBottom:"20px"}}
 />
 
 <label>Tipo de cable</label>
 
 <select
 onChange={e=>setCable(Number(e.target.value))}
-style={{
-width:"100%",
-marginBottom:"20px"
-}}
+style={{width:"100%",marginBottom:"20px"}}
 >
 
 <option value="95">Cat6 – 95€</option>
@@ -125,78 +123,21 @@ marginBottom:"20px"
 
 <select
 onChange={e=>setInstallation(e.target.value)}
-style={{
-width:"100%",
-marginBottom:"20px"
-}}
+style={{width:"100%",marginBottom:"20px"}}
 >
 
 <option value="superficial">Superficial</option>
 <option value="techo">Techo técnico</option>
 <option value="empotrado_existente">Empotrado existente</option>
-<option value="empotrado_nuevo">Empotrado nuevo</option>
 <option value="industrial">Industrial</option>
 
 </select>
-
-{installation==="superficial" &&(
-
-<>
-<label>Metros canaleta</label>
-
-<input
-type="number"
-value={canaleta}
-onChange={e=>setCanaleta(Number(e.target.value))}
-style={{
-width:"100%",
-marginBottom:"20px"
-}}
-/>
-</>
-
-)}
-
-{installation==="empotrado_nuevo" &&(
-
-<>
-
-<label>Metros regata</label>
-
-<input
-type="number"
-value={regata}
-onChange={e=>setRegata(Number(e.target.value))}
-style={{
-width:"100%",
-marginBottom:"20px"
-}}
-/>
-
-<label>Metros corrugado</label>
-
-<input
-type="number"
-value={corrugado}
-onChange={e=>setCorrugado(Number(e.target.value))}
-style={{
-width:"100%",
-marginBottom:"20px"
-}}
-/>
-
-</>
-
-)}
 
 <label>Rack</label>
 
 <select
 onChange={e=>setRack(Number(e.target.value))}
-style={{
-width:"100%",
-marginBottom:"20px"
-}}
+style={{width:"100%",marginBottom:"20px"}}
 >
 
 <option value="0">No incluido</option>
@@ -208,12 +149,9 @@ marginBottom:"20px"
 
 </div>
 
-
-{/* RIGHT COLUMN */}
-
 <div>
 
-<h4 style={{marginBottom:"15px"}}>Equipos</h4>
+<h4>Equipos</h4>
 
 <label>
 <input type="checkbox" onChange={e=>setSwitch(e.target.checked)}/>
@@ -240,10 +178,7 @@ marginBottom:"20px"
 
 <select
 onChange={e=>setUrgency(Number(e.target.value))}
-style={{
-width:"100%",
-marginBottom:"25px"
-}}
+style={{width:"100%",marginBottom:"25px"}}
 >
 
 <option value="1">Normal</option>
@@ -252,7 +187,7 @@ marginBottom:"25px"
 
 </select>
 
-<hr style={{margin:"20px 0"}}/>
+<hr/>
 
 <p>Subtotal: {result.subtotal}€</p>
 <p>IVA (21%): {result.iva}€</p>
@@ -269,10 +204,26 @@ padding:"12px 20px",
 background:"#facc15",
 border:"none",
 borderRadius:"6px",
-fontWeight:"600"
+fontWeight:"600",
+marginRight:"10px"
 }}
 >
 Guardar presupuesto
+</button>
+
+<button
+onClick={generatePDF}
+style={{
+marginTop:"20px",
+padding:"12px 20px",
+background:"#22c55e",
+border:"none",
+borderRadius:"6px",
+color:"white",
+fontWeight:"600"
+}}
+>
+Descargar PDF
 </button>
 
 </div>
