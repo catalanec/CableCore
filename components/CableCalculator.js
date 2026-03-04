@@ -1,3 +1,5 @@
+// components/CableCalculator.js
+
 import { useState } from "react"
 import jsPDF from "jspdf"
 
@@ -54,91 +56,108 @@ const presupuestoID =
 today.getFullYear() +
 (today.getMonth()+1) +
 today.getDate() +
-(today.getHours()) +
-(today.getMinutes())
+today.getHours() +
+today.getMinutes()
 
 const date = today.toLocaleDateString()
 
-doc.setFontSize(22)
-doc.text("CableCore",20,20)
+const pageWidth = doc.internal.pageSize.getWidth()
 
-doc.setDrawColor(200,160,40)
-doc.line(20,25,190,25)
+doc.setFont("helvetica","bold")
+doc.setFontSize(28)
+doc.text("CableCore",20,30)
+
+doc.setDrawColor(201,164,39)
+doc.setLineWidth(0.8)
+doc.line(20,36,pageWidth-20,36)
 
 doc.setFontSize(11)
+doc.setFont("helvetica","normal")
 
-doc.text(`Presupuesto ID: ${presupuestoID}`,20,40)
+doc.text(`Presupuesto ID: ${presupuestoID}`,20,55)
 
 if(client){
 
-doc.text(`Cliente: ${client.name}`,20,50)
-doc.text(`Teléfono: ${client.phone}`,20,58)
+doc.text(`Cliente: ${client.name}`,20,65)
+doc.text(`Teléfono: ${client.phone}`,20,73)
 
 }
 
-doc.text(`Fecha: ${date}`,20,68)
+doc.text(`Fecha: ${date}`,20,83)
 
-doc.setFontSize(12)
+const tableStart = 105
 
-doc.text("Concepto",20,90)
-doc.text("Cantidad",90,90)
-doc.text("Precio Unitario (€)",120,90)
-doc.text("Total (€)",170,90)
+doc.setFillColor(201,164,39)
+doc.rect(20,tableStart,170,10,"F")
 
-doc.line(20,94,190,94)
+doc.setTextColor(255,255,255)
+doc.setFontSize(11)
 
-let y = 110
+doc.text("Concepto",22,tableStart+7)
+doc.text("Cantidad",85,tableStart+7)
+doc.text("Precio Unitario (€)",110,tableStart+7)
+doc.text("Total (€)",165,tableStart+7)
+
+doc.setTextColor(0,0,0)
+
+let y = tableStart + 18
 
 const puntosTotal = points * cable
 
-doc.text(`Puntos Cat`,20,y)
+doc.text("Puntos de red Cat",22,y)
 doc.text(String(points),90,y)
 doc.text(`${cable}`,120,y)
 doc.text(`${puntosTotal}`,170,y)
 
-y += 15
+y += 12
 
 if(installation !== "superficial"){
 
-doc.text(`Instalación`,20,y)
+doc.text("Instalación",22,y)
 doc.text("-",90,y)
 doc.text("-",120,y)
 doc.text("120",170,y)
 
-y += 15
+y += 12
 
 }
 
 if(rack>0){
 
-doc.text(`Rack mural`,20,y)
+doc.text("Rack mural",22,y)
 doc.text("1",90,y)
 doc.text(`${rack}`,120,y)
 doc.text(`${rack}`,170,y)
 
-y += 15
+y += 12
 
 }
 
-doc.line(20,y+10,190,y+10)
+doc.setDrawColor(200,200,200)
+doc.line(20,y+6,190,y+6)
 
 doc.setFontSize(12)
 
-doc.text(`Subtotal: ${result.subtotal} €`,20,y+30)
-doc.text(`IVA (21%): ${result.iva} €`,20,y+40)
+doc.text(`Subtotal: ${result.subtotal} €`,20,y+20)
+doc.text(`IVA (21%): ${result.iva} €`,20,y+30)
 
-doc.setFontSize(16)
-doc.text(`Total: ${result.total} €`,20,y+55)
+doc.setFont("helvetica","bold")
+doc.setFontSize(18)
 
-doc.line(20,y+70,190,y+70)
+doc.text(`Total: ${result.total} €`,20,y+45)
+
+doc.setDrawColor(201,164,39)
+doc.line(20,y+60,pageWidth-20,y+60)
 
 doc.setFontSize(10)
+doc.setFont("helvetica","normal")
 
-doc.text("Validez del presupuesto: 15 días",20,y+85)
-doc.text("Garantía: 3 meses sobre trabajos realizados.",20,y+93)
+doc.text("Validez del presupuesto: 15 días",20,y+80)
+doc.text("Garantía: 3 meses sobre trabajos realizados.",20,y+88)
 
-doc.text("Anton Shapoval",20,y+110)
-doc.text("Badalona, Cataluña",20,y+118)
+doc.text("Anton Shapoval",20,y+105)
+doc.text("CIF: Y3806392K",20,y+113)
+doc.text("Badalona, Cataluña",20,y+121)
 
 doc.save(`CableCore_Presupuesto_${presupuestoID}.pdf`)
 
