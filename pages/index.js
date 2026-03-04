@@ -4,6 +4,7 @@ import { supabase } from "../lib/supabaseClient";
 export default function Home() {
   const [user, setUser] = useState(null);
   const [clients, setClients] = useState([]);
+
   const [name, setName] = useState("");
   const [address, setAddress] = useState("");
   const [phone, setPhone] = useState("");
@@ -32,7 +33,6 @@ export default function Home() {
     if (!name) return;
 
     const { data } = await supabase.auth.getSession();
-
     const user = data.session.user;
 
     await supabase.from("clients").insert([
@@ -76,20 +76,21 @@ export default function Home() {
           placeholder="Client name"
           value={name}
           onChange={(e) => setName(e.target.value)}
+          style={{ padding: "6px" }}
         />
 
         <input
           placeholder="Address"
           value={address}
           onChange={(e) => setAddress(e.target.value)}
-          style={{ marginLeft: "10px" }}
+          style={{ marginLeft: "10px", padding: "6px" }}
         />
 
         <input
           placeholder="Phone"
           value={phone}
           onChange={(e) => setPhone(e.target.value)}
-          style={{ marginLeft: "10px" }}
+          style={{ marginLeft: "10px", padding: "6px" }}
         />
 
         <button
@@ -110,19 +111,23 @@ export default function Home() {
         <p>No clients yet</p>
       ) : (
         clients.map((client) => (
-          <div
+          <a
             key={client.id}
+            href={`/client/${client.id}`}
             style={{
+              display: "block",
               marginTop: "10px",
-              padding: "10px",
+              padding: "12px",
               background: "#0b2545",
               borderRadius: "6px",
+              textDecoration: "none",
+              color: "white",
             }}
           >
             <strong>{client.name}</strong>
             <div>{client.address}</div>
             <div>{client.phone}</div>
-          </div>
+          </a>
         ))
       )}
     </div>
