@@ -5,14 +5,14 @@ import CableCalculator from "../../components/CableCalculator";
 
 export default function ClientPage() {
 
-const router=useRouter();
-const {id}=router.query;
+const router = useRouter();
+const { id } = router.query;
 
-const [client,setClient]=useState(null);
-const [jobs,setJobs]=useState([]);
+const [client,setClient] = useState(null);
+const [jobs,setJobs] = useState([]);
 
-const [title,setTitle]=useState("");
-const [description,setDescription]=useState("");
+const [title,setTitle] = useState("");
+const [description,setDescription] = useState("");
 
 useEffect(()=>{
 if(!id) return;
@@ -24,7 +24,7 @@ loadJobs();
 
 async function loadClient(){
 
-const {data}=await supabase
+const { data } = await supabase
 .from("clients")
 .select("*")
 .eq("id",id)
@@ -36,13 +36,13 @@ setClient(data);
 
 async function loadJobs(){
 
-const {data}=await supabase
+const { data } = await supabase
 .from("jobs")
 .select("*")
 .eq("client_id",id)
 .order("created_at",{ascending:false});
 
-setJobs(data||[]);
+setJobs(data || []);
 
 }
 
@@ -71,14 +71,12 @@ if(!client) return <div style={{padding:40}}>Loading...</div>;
 
 return(
 
-<div
-style={{
+<div style={{
 minHeight:"100vh",
 background:"#001833",
 color:"white",
 padding:"40px"
-}}
->
+}}>
 
 <h1>{client.name}</h1>
 
@@ -107,13 +105,12 @@ style={{marginLeft:"10px"}}
 Add
 </button>
 
-
 <CableCalculator
+client={client}
 onSave={(result)=>{
 console.log("Presupuesto:",result);
 }}
 />
-
 
 <h2 style={{marginTop:"40px"}}>Jobs</h2>
 
