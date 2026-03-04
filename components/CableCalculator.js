@@ -65,21 +65,37 @@ const result=calculate();
 
 return(
 
-<div>
+<div style={{
+background:"#111827",
+padding:"40px",
+borderRadius:"12px",
+marginTop:"40px"
+}}>
 
-<h2>Calculadora profesional</h2>
+<h2 style={{marginBottom:"20px"}}>Calculadora profesional</h2>
 
 <label>Puntos de red</label>
-<input type="number" value={points} onChange={e=>setPoints(Number(e.target.value))}/>
+<input
+type="number"
+value={points}
+onChange={e=>setPoints(Number(e.target.value))}
+style={{display:"block",marginBottom:"20px"}}
+/>
 
 <label>Tipo de cable</label>
-<select onChange={e=>setCable(Number(e.target.value))}>
+<select
+onChange={e=>setCable(Number(e.target.value))}
+style={{display:"block",marginBottom:"20px"}}
+>
 <option value="95">Cat6 – 95€</option>
 <option value="110">Cat6A – 110€</option>
 </select>
 
 <label>Tipo instalación</label>
-<select onChange={e=>setInstallation(e.target.value)}>
+<select
+onChange={e=>setInstallation(e.target.value)}
+style={{display:"block",marginBottom:"20px"}}
+>
 
 <option value="superficial">Superficial</option>
 <option value="techo">Techo técnico</option>
@@ -92,22 +108,40 @@ return(
 {installation==="superficial" && (
 <>
 <label>Metros canaleta</label>
-<input type="number" value={canaleta} onChange={e=>setCanaleta(Number(e.target.value))}/>
+<input
+type="number"
+value={canaleta}
+onChange={e=>setCanaleta(Number(e.target.value))}
+style={{display:"block",marginBottom:"20px"}}
+/>
 </>
 )}
 
 {installation==="empotrado_nuevo" && (
 <>
 <label>Metros regata</label>
-<input type="number" value={regata} onChange={e=>setRegata(Number(e.target.value))}/>
+<input
+type="number"
+value={regata}
+onChange={e=>setRegata(Number(e.target.value))}
+style={{display:"block",marginBottom:"20px"}}
+/>
 
 <label>Metros corrugado</label>
-<input type="number" value={corrugado} onChange={e=>setCorrugado(Number(e.target.value))}/>
+<input
+type="number"
+value={corrugado}
+onChange={e=>setCorrugado(Number(e.target.value))}
+style={{display:"block",marginBottom:"20px"}}
+/>
 </>
 )}
 
 <label>Rack</label>
-<select onChange={e=>setRack(Number(e.target.value))}>
+<select
+onChange={e=>setRack(Number(e.target.value))}
+style={{display:"block",marginBottom:"20px"}}
+>
 <option value="0">No incluido</option>
 <option value="150">Rack 6U – 150€</option>
 <option value="220">Rack 9U – 220€</option>
@@ -120,18 +154,27 @@ return(
 Switch
 </label>
 
+<br/>
+
 <label>
 <input type="checkbox" onChange={e=>setRouter(e.target.checked)}/>
 Router
 </label>
 
+<br/>
+
 <label>
 <input type="checkbox" onChange={e=>setConfig(e.target.checked)}/>
-Config red
+Configuración red
 </label>
 
+<br/><br/>
+
 <label>Urgencia</label>
-<select onChange={e=>setUrgency(Number(e.target.value))}>
+<select
+onChange={e=>setUrgency(Number(e.target.value))}
+style={{display:"block",marginBottom:"20px"}}
+>
 <option value="1">Normal</option>
 <option value="1.2">Urgente</option>
 <option value="1.4">Muy urgente</option>
@@ -143,7 +186,16 @@ Config red
 <p>IVA: {result.iva}€</p>
 <h3>Total: {result.total}€</h3>
 
-<button onClick={()=>onSave(result)}>
+<button
+onClick={()=>onSave(result)}
+style={{
+marginTop:"20px",
+padding:"10px 20px",
+background:"#facc15",
+border:"none",
+borderRadius:"6px"
+}}
+>
 Guardar presupuesto
 </button>
 
