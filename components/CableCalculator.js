@@ -45,6 +45,7 @@ subtotalPoints*=1.2;
 }
 
 let equip=0;
+
 if(switchEquip) equip+=60;
 if(routerEquip) equip+=60;
 if(configEquip) equip+=120;
@@ -53,11 +54,11 @@ let subtotal=(subtotalPoints+installCost+rack+equip)*urgency;
 let iva=subtotal*0.21;
 let total=subtotal+iva;
 
-return {
+return{
 subtotal:subtotal.toFixed(2),
 iva:iva.toFixed(2),
 total:total.toFixed(2)
-};
+}
 
 }
 
@@ -72,29 +73,40 @@ borderRadius:"12px",
 marginTop:"40px"
 }}>
 
-<h2 style={{marginBottom:"20px"}}>Calculadora profesional</h2>
+<h2 style={{marginBottom:"30px"}}>Calculadora profesional</h2>
+
+<div style={{
+display:"grid",
+gridTemplateColumns:"1fr 1fr",
+gap:"30px"
+}}>
+
+<div>
 
 <label>Puntos de red</label>
 <input
 type="number"
 value={points}
 onChange={e=>setPoints(Number(e.target.value))}
-style={{display:"block",marginBottom:"20px"}}
+style={{display:"block",marginBottom:"20px",width:"100%"}}
 />
 
 <label>Tipo de cable</label>
 <select
 onChange={e=>setCable(Number(e.target.value))}
-style={{display:"block",marginBottom:"20px"}}
+style={{display:"block",marginBottom:"20px",width:"100%"}}
 >
+
 <option value="95">Cat6 – 95€</option>
 <option value="110">Cat6A – 110€</option>
+<option value="130">Cat7 – 130€</option>
+
 </select>
 
 <label>Tipo instalación</label>
 <select
 onChange={e=>setInstallation(e.target.value)}
-style={{display:"block",marginBottom:"20px"}}
+style={{display:"block",marginBottom:"20px",width:"100%"}}
 >
 
 <option value="superficial">Superficial</option>
@@ -105,26 +117,30 @@ style={{display:"block",marginBottom:"20px"}}
 
 </select>
 
-{installation==="superficial" && (
+{installation==="superficial" &&(
+
 <>
 <label>Metros canaleta</label>
 <input
 type="number"
 value={canaleta}
 onChange={e=>setCanaleta(Number(e.target.value))}
-style={{display:"block",marginBottom:"20px"}}
+style={{display:"block",marginBottom:"20px",width:"100%"}}
 />
 </>
+
 )}
 
-{installation==="empotrado_nuevo" && (
+{installation==="empotrado_nuevo" &&(
+
 <>
+
 <label>Metros regata</label>
 <input
 type="number"
 value={regata}
 onChange={e=>setRegata(Number(e.target.value))}
-style={{display:"block",marginBottom:"20px"}}
+style={{display:"block",marginBottom:"20px",width:"100%"}}
 />
 
 <label>Metros corrugado</label>
@@ -132,72 +148,91 @@ style={{display:"block",marginBottom:"20px"}}
 type="number"
 value={corrugado}
 onChange={e=>setCorrugado(Number(e.target.value))}
-style={{display:"block",marginBottom:"20px"}}
+style={{display:"block",marginBottom:"20px",width:"100%"}}
 />
+
 </>
+
 )}
 
 <label>Rack</label>
+
 <select
 onChange={e=>setRack(Number(e.target.value))}
-style={{display:"block",marginBottom:"20px"}}
+style={{display:"block",marginBottom:"20px",width:"100%"}}
 >
+
 <option value="0">No incluido</option>
 <option value="150">Rack 6U – 150€</option>
 <option value="220">Rack 9U – 220€</option>
+<option value="290">Rack 12U – 290€</option>
+
 </select>
+
+</div>
+
+<div>
 
 <h4>Equipos</h4>
 
 <label>
 <input type="checkbox" onChange={e=>setSwitch(e.target.checked)}/>
-Switch
+ Switch instalación
 </label>
 
 <br/>
 
 <label>
 <input type="checkbox" onChange={e=>setRouter(e.target.checked)}/>
-Router
+ Router instalación
 </label>
 
 <br/>
 
 <label>
 <input type="checkbox" onChange={e=>setConfig(e.target.checked)}/>
-Configuración red
+ Configuración red
 </label>
 
 <br/><br/>
 
 <label>Urgencia</label>
+
 <select
 onChange={e=>setUrgency(Number(e.target.value))}
-style={{display:"block",marginBottom:"20px"}}
+style={{display:"block",marginBottom:"20px",width:"100%"}}
 >
+
 <option value="1">Normal</option>
-<option value="1.2">Urgente</option>
-<option value="1.4">Muy urgente</option>
+<option value="1.2">Urgente +20%</option>
+<option value="1.4">Muy urgente +40%</option>
+
 </select>
 
-<hr/>
+<hr style={{margin:"20px 0"}}/>
 
 <p>Subtotal: {result.subtotal}€</p>
-<p>IVA: {result.iva}€</p>
-<h3>Total: {result.total}€</h3>
+<p>IVA (21%): {result.iva}€</p>
+
+<h2 style={{color:"#facc15"}}>Total: {result.total}€</h2>
 
 <button
 onClick={()=>onSave(result)}
 style={{
 marginTop:"20px",
-padding:"10px 20px",
+padding:"12px 20px",
 background:"#facc15",
 border:"none",
-borderRadius:"6px"
+borderRadius:"6px",
+fontWeight:"600"
 }}
 >
 Guardar presupuesto
 </button>
+
+</div>
+
+</div>
 
 </div>
 
