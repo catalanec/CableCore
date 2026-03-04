@@ -1,0 +1,23 @@
+<svg width="320" height="80" viewBox="0 0 320 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+
+<g transform="translate(0,10)">
+<polygon points="30,0 55,14 55,42 30,56 5,42 5,14"
+stroke="#D4AF37"
+stroke-width="4"
+fill="none"/>
+
+<path d="M20 18 L30 12 L40 18 L40 38 L30 44 L20 38 Z"
+stroke="#D4AF37"
+stroke-width="3"
+fill="none"/>
+</g>
+
+<text x="80" y="35" font-family="Inter, Arial" font-size="28" fill="#FFFFFF" font-weight="600">
+CableCore
+</text>
+
+<text x="80" y="55" font-family="Inter, Arial" font-size="12" fill="#F2D57E" letter-spacing="2">
+Network Infrastructure
+</text>
+
+</svg>
