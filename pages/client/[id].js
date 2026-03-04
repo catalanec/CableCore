@@ -15,6 +15,7 @@ const [title,setTitle] = useState("");
 const [description,setDescription] = useState("");
 
 useEffect(()=>{
+
 if(!id) return;
 
 loadClient();
@@ -46,7 +47,9 @@ setJobs(data || []);
 
 }
 
-async function addJob(){
+async function addJob(e){
+
+e.preventDefault();
 
 if(!title) return;
 
@@ -54,9 +57,9 @@ await supabase
 .from("jobs")
 .insert([
 {
-client_id:id,
 title,
-description
+description,
+client_id:id
 }
 ]);
 
@@ -67,76 +70,83 @@ loadJobs();
 
 }
 
-if(!client) return <div style={{padding:40}}>Loading...</div>;
+if(!client) return <p>Loading...</p>;
 
-return(
+return (
 
-<div style={{
-minHeight:"100vh",
-background:"#001833",
-color:"white",
-padding:"40px"
-}}>
+<div style={{padding:"40px",color:"white"}}>
 
-<h1>{client.name}</h1>
+<h1 style={{fontSize:"40px"}}>{client.name}</h1>
 
-<p><b>Address:</b> {client.address}</p>
-<p><b>Phone:</b> {client.phone}</p>
+<p>
+<strong>Address:</strong> {client.address}
+</p>
+
+<p>
+<strong>Phone:</strong> {client.phone}
+</p>
+
+
+{/* ADD JOB */}
 
 <h2 style={{marginTop:"40px"}}>Add Job</h2>
+
+<form
+onSubmit={addJob}
+style={{
+display:"flex",
+gap:"10px",
+marginBottom:"40px"
+}}
+>
 
 <input
 placeholder="Job title"
 value={title}
 onChange={e=>setTitle(e.target.value)}
+style={{padding:"8px"}}
 />
 
 <input
 placeholder="Description"
 value={description}
 onChange={e=>setDescription(e.target.value)}
-style={{marginLeft:"10px"}}
+style={{padding:"8px"}}
 />
 
-<button
-onClick={addJob}
-style={{marginLeft:"10px"}}
->
+<button type="submit">
 Add
 </button>
 
-<CableCalculator
-client={client}
-onSave={(result)=>{
-console.log("Presupuesto:",result);
-}}
-/>
+</form>
+
+
+{/* CALCULATOR */}
+
+<CableCalculator client={client} />
+
+
+{/* JOB LIST */}
 
 <h2 style={{marginTop:"40px"}}>Jobs</h2>
 
-{jobs.length===0 ? (
-<p>No jobs yet</p>
-):(
-
-jobs.map(job=>(
+{jobs.map(job=>(
 <div
 key={job.id}
 style={{
-marginTop:"10px",
-padding:"12px",
-background:"#0b2545",
-borderRadius:"6px"
+background:"#102a43",
+padding:"15px",
+borderRadius:"10px",
+marginBottom:"10px"
 }}
 >
 
 <strong>{job.title}</strong>
 
-<div>{job.description}</div>
+<p>{job.description}</p>
 
 </div>
-))
-
-)}
+))}
 
 </div>
 
