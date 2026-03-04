@@ -1,7 +1,7 @@
 import { useState } from "react";
 import jsPDF from "jspdf";
 
-export default function CableCalculator({ onSave }) {
+export default function CableCalculator({ onSave, client }) {
 
 const [points,setPoints]=useState(1);
 const [cable,setCable]=useState(95);
@@ -48,28 +48,49 @@ function generatePDF(){
 
 const doc = new jsPDF();
 
-doc.setFontSize(20);
-doc.text("CableCore Presupuesto",20,20);
+const today = new Date().toLocaleDateString();
+const presupuestoNumber = Math.floor(Math.random()*100000);
 
-doc.setFontSize(12);
-
-doc.text(`Puntos de red: ${points}`,20,40);
-doc.text(`Tipo cable: ${cable}€`,20,50);
-doc.text(`Tipo instalación: ${installation}`,20,60);
-
-doc.text(`Rack: ${rack}€`,20,70);
-
-doc.text(`Switch: ${switchEquip ? "Sí":"No"}`,20,90);
-doc.text(`Router: ${routerEquip ? "Sí":"No"}`,20,100);
-doc.text(`Configuración: ${configEquip ? "Sí":"No"}`,20,110);
-
-doc.text(`Subtotal: ${result.subtotal}€`,20,140);
-doc.text(`IVA (21%): ${result.iva}€`,20,150);
+doc.setFontSize(22);
+doc.text("CableCore",20,20);
 
 doc.setFontSize(16);
-doc.text(`TOTAL: ${result.total}€`,20,170);
+doc.text("Presupuesto",20,30);
 
-doc.save("presupuesto-cablecore.pdf");
+doc.setFontSize(11);
+
+doc.text(`Presupuesto Nº: ${presupuestoNumber}`,20,45);
+doc.text(`Fecha: ${today}`,20,52);
+
+if(client){
+
+doc.text(`Cliente: ${client.name}`,20,65);
+doc.text(`Dirección: ${client.address}`,20,72);
+doc.text(`Teléfono: ${client.phone}`,20,79);
+
+}
+
+doc.line(20,90,190,90);
+
+doc.text(`Puntos de red: ${points}`,20,105);
+doc.text(`Tipo cable: ${cable}€`,20,115);
+doc.text(`Tipo instalación: ${installation}`,20,125);
+
+doc.text(`Rack: ${rack}€`,20,135);
+
+doc.text(`Switch instalación: ${switchEquip ? "Sí":"No"}`,20,150);
+doc.text(`Router instalación: ${routerEquip ? "Sí":"No"}`,20,160);
+doc.text(`Configuración red: ${configEquip ? "Sí":"No"}`,20,170);
+
+doc.line(20,185,190,185);
+
+doc.text(`Subtotal: ${result.subtotal}€`,20,200);
+doc.text(`IVA (21%): ${result.iva}€`,20,210);
+
+doc.setFontSize(18);
+doc.text(`TOTAL: ${result.total}€`,20,225);
+
+doc.save(`presupuesto-${presupuestoNumber}.pdf`);
 
 }
 
