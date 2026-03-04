@@ -56,33 +56,30 @@ total: total.toFixed(2)
 
 return (
 
-<div
-style={{
-background:"#111827",
+<div style={{
+background:"#0f172a",
 padding:"40px",
 borderRadius:"20px",
-marginTop:"40px"
-}}
->
+marginTop:"40px",
+color:"white"
+}}>
 
-<h2
-style={{
+<h2 style={{
 textAlign:"center",
-marginBottom:"30px"
-}}
->
+marginBottom:"40px",
+fontSize:"28px"
+}}>
 Calculadora profesional
 </h2>
 
-<div
-style={{
+<div style={{
 display:"grid",
 gridTemplateColumns:"1fr 1fr",
-gap:"40px"
-}}
->
+gap:"50px"
+}}>
 
-{/* LEFT */}
+
+{/* LEFT SIDE */}
 
 <div>
 
@@ -92,7 +89,12 @@ gap:"40px"
 type="number"
 value={points}
 onChange={e=>setPoints(Number(e.target.value))}
-style={{width:"100%",marginBottom:"15px"}}
+style={{
+width:"100%",
+padding:"10px",
+marginBottom:"20px",
+borderRadius:"8px"
+}}
 />
 
 
@@ -101,7 +103,12 @@ style={{width:"100%",marginBottom:"15px"}}
 <select
 value={cablePrice}
 onChange={e=>setCablePrice(Number(e.target.value))}
-style={{width:"100%",marginBottom:"15px"}}
+style={{
+width:"100%",
+padding:"10px",
+marginBottom:"20px",
+borderRadius:"8px"
+}}
 >
 
 <option value={95}>Cat6 – 95€</option>
@@ -116,7 +123,12 @@ style={{width:"100%",marginBottom:"15px"}}
 <select
 value={installation}
 onChange={e=>setInstallation(e.target.value)}
-style={{width:"100%",marginBottom:"15px"}}
+style={{
+width:"100%",
+padding:"10px",
+marginBottom:"20px",
+borderRadius:"8px"
+}}
 >
 
 <option value="superficial">Superficial</option>
@@ -132,7 +144,11 @@ style={{width:"100%",marginBottom:"15px"}}
 <select
 value={rack}
 onChange={e=>setRack(Number(e.target.value))}
-style={{width:"100%"}}
+style={{
+width:"100%",
+padding:"10px",
+borderRadius:"8px"
+}}
 >
 
 <option value={0}>No incluido</option>
@@ -145,11 +161,11 @@ style={{width:"100%"}}
 </div>
 
 
-{/* RIGHT */}
+{/* RIGHT SIDE */}
 
 <div>
 
-<h3>Equipos</h3>
+<h3 style={{marginBottom:"15px"}}>Equipos</h3>
 
 <label>
 <input
@@ -191,7 +207,12 @@ onChange={e=>setConfig(e.target.checked)}
 <select
 value={urgency}
 onChange={e=>setUrgency(Number(e.target.value))}
-style={{width:"100%",marginBottom:"20px"}}
+style={{
+width:"100%",
+padding:"10px",
+marginBottom:"20px",
+borderRadius:"8px"
+}}
 >
 
 <option value={1}>Normal</option>
@@ -201,40 +222,32 @@ style={{width:"100%",marginBottom:"20px"}}
 </select>
 
 
-<hr/>
+<hr style={{opacity:0.3}}/>
 
 
 <p>Subtotal: {subtotal.toFixed(2)}€</p>
 
 <p>IVA (21%): {iva.toFixed(2)}€</p>
 
-<h2
-style={{
-color:"#facc15"
-}}
->
+<h2 style={{color:"#facc15"}}>
 Total: {total.toFixed(2)}€
 </h2>
 
 
-<div
-style={{
+<div style={{
 display:"flex",
 gap:"15px",
 marginTop:"20px"
-}}
->
+}}>
 
-<button
-style={{
+<button style={{
 background:"#facc15",
 border:"none",
 padding:"12px 20px",
 borderRadius:"8px",
 fontWeight:"600",
 cursor:"pointer"
-}}
->
+}}>
 Guardar presupuesto
 </button>
 
