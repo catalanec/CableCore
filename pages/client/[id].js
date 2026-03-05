@@ -20,7 +20,6 @@ loadClient()
 loadJobs()
 },[id])
 
-
 async function loadClient(){
 
 const { data } = await supabase
@@ -33,7 +32,6 @@ setClient(data)
 
 }
 
-
 async function loadJobs(){
 
 const { data } = await supabase
@@ -45,7 +43,6 @@ const { data } = await supabase
 setJobs(data || [])
 
 }
-
 
 async function addJob(){
 
@@ -68,7 +65,6 @@ loadJobs()
 
 }
 
-
 if(!client) return null
 
 
@@ -85,7 +81,7 @@ color:"white"
 
 <div
 style={{
-maxWidth:"1100px",
+maxWidth:"900px",
 margin:"0 auto"
 }}
 >
@@ -101,11 +97,10 @@ margin:"0 auto"
 
 <div
 style={{
-display:"grid",
-gridTemplateColumns:"260px 1fr 100px",
-gap:"12px",
+display:"flex",
+gap:"10px",
 marginTop:"15px",
-maxWidth:"750px"
+maxWidth:"650px"
 }}
 >
 
@@ -114,6 +109,7 @@ placeholder="Job title"
 value={title}
 onChange={(e)=>setTitle(e.target.value)}
 style={{
+width:"200px",
 padding:"12px",
 borderRadius:"10px",
 border:"none"
@@ -125,6 +121,7 @@ placeholder="Description"
 value={description}
 onChange={(e)=>setDescription(e.target.value)}
 style={{
+flex:1,
 padding:"12px",
 borderRadius:"10px",
 border:"none"
@@ -136,7 +133,7 @@ onClick={addJob}
 style={{
 background:"#3b82f6",
 border:"none",
-padding:"12px",
+padding:"12px 18px",
 borderRadius:"10px",
 color:"white",
 cursor:"pointer"
@@ -154,6 +151,7 @@ Add
 
 
 <h2 style={{marginTop:"40px"}}>Jobs</h2>
+
 
 <div
 style={{
@@ -175,6 +173,7 @@ borderRadius:"14px"
 >
 
 <h3>{job.title}</h3>
+
 <p style={{opacity:0.7}}>{job.description}</p>
 
 </div>
