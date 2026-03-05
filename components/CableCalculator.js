@@ -4,6 +4,7 @@ import { generatePDF } from "../utils/generatePDF"
 export default function CableCalculator({ client }) {
 
 const [points,setPoints] = useState(1)
+
 const pricePerPoint = 95
 
 const subtotal = points * pricePerPoint
@@ -13,41 +14,46 @@ const total = +(subtotal + iva).toFixed(2)
 function downloadPDF(){
 
 generatePDF(client,{
-points:points,
+points,
 price:pricePerPoint,
-subtotal:subtotal,
-iva:iva,
-total:total
+subtotal,
+iva,
+total
 })
 
 }
 
 return(
 
-<div style={{
-background:"#0b1d33",
-padding:"40px",
+<div
+style={{
+background:"#0c1f36",
+padding:"35px",
 borderRadius:"20px",
 maxWidth:"900px",
-margin:"40px auto",
+margin:"30px auto",
 color:"white"
-}}>
+}}
+>
 
-<h2 style={{
+<h2
+style={{
 textAlign:"center",
 marginBottom:"30px"
-}}>
+}}
+>
 Calculadora profesional
 </h2>
 
-
-<div style={{
+<div
+style={{
 display:"flex",
 flexWrap:"wrap",
-gap:"40px"
-}}>
+gap:"30px"
+}}
+>
 
-<div style={{flex:"1"}}>
+<div style={{flex:"1 1 250px"}}>
 
 <label>Puntos de red</label>
 
@@ -57,22 +63,27 @@ value={points}
 onChange={(e)=>setPoints(Number(e.target.value))}
 style={{
 width:"100%",
-padding:"10px",
-borderRadius:"8px",
-marginTop:"5px"
+padding:"12px",
+marginTop:"5px",
+borderRadius:"10px",
+border:"none"
 }}
 />
 
 </div>
 
 
-<div style={{flex:"1"}}>
+<div style={{flex:"1 1 250px"}}>
 
 <h3>Resumen</h3>
 
-<p>Subtotal: {subtotal.toFixed(2)}€</p>
+<p>
+Subtotal: {subtotal.toFixed(2)}€
+</p>
 
-<p>IVA (21%): {iva.toFixed(2)}€</p>
+<p>
+IVA (21%): {iva.toFixed(2)}€
+</p>
 
 <h2 style={{color:"#d4af37"}}>
 Total: {total.toFixed(2)}€
@@ -83,21 +94,24 @@ Total: {total.toFixed(2)}€
 </div>
 
 
-<div style={{
+<div
+style={{
 marginTop:"30px",
 display:"flex",
-gap:"20px"
-}}>
+justifyContent:"center"
+}}
+>
 
 <button
 onClick={downloadPDF}
 style={{
 background:"#22c55e",
 border:"none",
-padding:"14px 25px",
+padding:"14px 30px",
 borderRadius:"10px",
 color:"white",
 fontWeight:"bold",
+fontSize:"16px",
 cursor:"pointer"
 }}
 >
