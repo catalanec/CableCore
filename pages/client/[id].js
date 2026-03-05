@@ -1,67 +1,63 @@
 import { useRouter } from "next/router"
-import { useEffect,useState } from "react"
-import supabase from "../../lib/supabaseClient"
+import { useEffect, useState } from "react"
+import { supabase } from "../../lib/supabaseClient"
 import CableCalculator from "../../components/CableCalculator"
 
-export default function ClientPage(){
+export default function ClientPage() {
 
 const router = useRouter()
 const { id } = router.query
 
-const [client,setClient] = useState(null)
-const [jobs,setJobs] = useState([])
+const [client, setClient] = useState(null)
+const [jobs, setJobs] = useState([])
 
-const [title,setTitle] = useState("")
-const [description,setDescription] = useState("")
+const [title, setTitle] = useState("")
+const [description, setDescription] = useState("")
 
+useEffect(() => {
 
-useEffect(()=>{
-
-if(!id) return
+if (!id) return
 
 loadClient()
 loadJobs()
 
-},[id])
+}, [id])
 
-
-async function loadClient(){
+async function loadClient() {
 
 const { data } = await supabase
 .from("clients")
 .select("*")
-.eq("id",id)
+.eq("id", id)
 .single()
 
 setClient(data)
 
 }
 
-
-async function loadJobs(){
+async function loadJobs() {
 
 const { data } = await supabase
 .from("jobs")
 .select("*")
-.eq("client_id",id)
-.order("created_at",{ascending:false})
+.eq("client_id", id)
+.order("created_at", { ascending: false })
 
 setJobs(data || [])
 
 }
 
+async function addJob() {
 
-async function addJob(){
-
-if(!title) return
+if (!title) return
 
 await supabase
 .from("jobs")
 .insert([
 {
-client_id:id,
-title,
-description
+client_id: id,
+title: title,
+description: description
 }
 ])
 
@@ -72,29 +68,33 @@ loadJobs()
 
 }
 
+if (!client) return null
 
-if(!client) return null
-
-
-return(
+return (
 
 <div style={{
-background:"#0a1b2b",
-minHeight:"100vh",
-padding:"40px",
-color:"white"
+background: "#071a2c",
+minHeight: "100vh",
+padding: "40px",
+color: "white"
 }}>
 
+<h1 style={{marginBottom:"10px"}}>
+{client.name}
+</h1>
 
-<h1 style={{marginBottom:"10px"}}>{client.name}</h1>
+<p style={{opacity:0.7}}>
+Address: {client.address}
+</p>
 
-<p style={{opacity:0.7}}>Address: {client.address}</p>
+<p style={{opacity:0.7}}>
+Phone: {client.phone}
+</p>
 
-<p style={{opacity:0.7}}>Phone: {client.phone}</p>
 
-
-
-<h2 style={{marginTop:"40px"}}>Add Job</h2>
+<h2 style={{marginTop:"40px"}}>
+Add Job
+</h2>
 
 <div style={{
 display:"flex",
@@ -106,7 +106,7 @@ marginBottom:"30px"
 <input
 placeholder="Job title"
 value={title}
-onChange={e=>setTitle(e.target.value)}
+onChange={(e)=>setTitle(e.target.value)}
 style={{
 padding:"10px",
 borderRadius:"8px",
@@ -117,7 +117,7 @@ border:"none"
 <input
 placeholder="Description"
 value={description}
-onChange={e=>setDescription(e.target.value)}
+onChange={(e)=>setDescription(e.target.value)}
 style={{
 padding:"10px",
 borderRadius:"8px",
@@ -141,35 +141,40 @@ Add
 </div>
 
 
-
-<CableCalculator client={client}/>
-
+<CableCalculator client={client} />
 
 
-<h2 style={{marginTop:"40px"}}>Jobs</h2>
+<h2 style={{marginTop:"40px"}}>
+Jobs
+</h2>
 
 <div style={{marginTop:"20px"}}>
 
-{jobs.map(job=>(
+{jobs.map(job => (
+
 <div
 key={job.id}
 style={{
-background:"#132f4c",
+background:"#102c4a",
 padding:"20px",
 borderRadius:"12px",
 marginBottom:"15px"
 }}
 >
 
-<h3>{job.title}</h3>
+<h3>
+{job.title}
+</h3>
 
-<p style={{opacity:0.7}}>{job.description}</p>
+<p style={{opacity:0.7}}>
+{job.description}
+</p>
 
 </div>
+
 ))}
 
 </div>
-
 
 </div>
 
