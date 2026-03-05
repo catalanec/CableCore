@@ -23,6 +23,7 @@ loadJobs()
 
 }, [id])
 
+
 async function loadClient() {
 
 const { data } = await supabase
@@ -35,17 +36,19 @@ setClient(data)
 
 }
 
+
 async function loadJobs() {
 
 const { data } = await supabase
 .from("jobs")
 .select("*")
 .eq("client_id", id)
-.order("created_at", { ascending: false })
+.order("created_at", { ascending:false })
 
 setJobs(data || [])
 
 }
+
 
 async function addJob() {
 
@@ -55,9 +58,9 @@ await supabase
 .from("jobs")
 .insert([
 {
-client_id: id,
-title: title,
-description: description
+client_id:id,
+title:title,
+description:description
 }
 ])
 
@@ -68,15 +71,17 @@ loadJobs()
 
 }
 
+
 if (!client) return null
 
-return (
+
+return(
 
 <div style={{
-background: "#071a2c",
-minHeight: "100vh",
-padding: "40px",
-color: "white"
+background:"#071a2c",
+minHeight:"100vh",
+padding:"30px 20px",
+color:"white"
 }}>
 
 <h1 style={{marginBottom:"10px"}}>
@@ -92,14 +97,18 @@ Phone: {client.phone}
 </p>
 
 
-<h2 style={{marginTop:"40px"}}>
+<h2 style={{
+marginTop:"40px",
+marginBottom:"15px"
+}}>
 Add Job
 </h2>
 
+
 <div style={{
 display:"flex",
+flexWrap:"wrap",
 gap:"10px",
-marginTop:"10px",
 marginBottom:"30px"
 }}>
 
@@ -108,8 +117,9 @@ placeholder="Job title"
 value={title}
 onChange={(e)=>setTitle(e.target.value)}
 style={{
-padding:"10px",
-borderRadius:"8px",
+flex:"1 1 200px",
+padding:"12px",
+borderRadius:"10px",
 border:"none"
 }}
 />
@@ -119,8 +129,9 @@ placeholder="Description"
 value={description}
 onChange={(e)=>setDescription(e.target.value)}
 style={{
-padding:"10px",
-borderRadius:"8px",
+flex:"1 1 200px",
+padding:"12px",
+borderRadius:"10px",
 border:"none"
 }}
 />
@@ -131,8 +142,9 @@ style={{
 background:"#3b82f6",
 color:"white",
 border:"none",
-padding:"10px 18px",
-borderRadius:"8px"
+padding:"12px 20px",
+borderRadius:"10px",
+cursor:"pointer"
 }}
 >
 Add
@@ -141,14 +153,22 @@ Add
 </div>
 
 
-<CableCalculator client={client} />
+<CableCalculator client={client}/>
 
 
-<h2 style={{marginTop:"40px"}}>
+<h2 style={{
+marginTop:"40px",
+marginBottom:"15px"
+}}>
 Jobs
 </h2>
 
-<div style={{marginTop:"20px"}}>
+
+<div style={{
+display:"flex",
+flexDirection:"column",
+gap:"15px"
+}}>
 
 {jobs.map(job => (
 
@@ -157,12 +177,11 @@ key={job.id}
 style={{
 background:"#102c4a",
 padding:"20px",
-borderRadius:"12px",
-marginBottom:"15px"
+borderRadius:"12px"
 }}
 >
 
-<h3>
+<h3 style={{marginBottom:"5px"}}>
 {job.title}
 </h3>
 
@@ -175,6 +194,7 @@ marginBottom:"15px"
 ))}
 
 </div>
+
 
 </div>
 
