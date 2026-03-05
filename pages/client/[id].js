@@ -15,12 +15,9 @@ const [title,setTitle] = useState("")
 const [description,setDescription] = useState("")
 
 useEffect(()=>{
-
 if(!id) return
-
 loadClient()
 loadJobs()
-
 },[id])
 
 
@@ -93,31 +90,22 @@ margin:"0 auto"
 }}
 >
 
-<h1 style={{marginBottom:"10px"}}>
-{client.name}
-</h1>
+<h1>{client.name}</h1>
 
-<p style={{opacity:0.7}}>
-Address: {client.address}
-</p>
-
-<p style={{opacity:0.7}}>
-Phone: {client.phone}
-</p>
+<p style={{opacity:0.7}}>Address: {client.address}</p>
+<p style={{opacity:0.7}}>Phone: {client.phone}</p>
 
 
-<h2 style={{marginTop:"40px"}}>
-Add Job
-</h2>
+<h2 style={{marginTop:"40px"}}>Add Job</h2>
 
 
 <div
 style={{
-display:"flex",
+display:"grid",
+gridTemplateColumns:"260px 1fr 100px",
 gap:"12px",
 marginTop:"15px",
-alignItems:"center",
-flexWrap:"wrap"
+maxWidth:"750px"
 }}
 >
 
@@ -126,7 +114,6 @@ placeholder="Job title"
 value={title}
 onChange={(e)=>setTitle(e.target.value)}
 style={{
-width:"260px",
 padding:"12px",
 borderRadius:"10px",
 border:"none"
@@ -138,7 +125,6 @@ placeholder="Description"
 value={description}
 onChange={(e)=>setDescription(e.target.value)}
 style={{
-width:"360px",
 padding:"12px",
 borderRadius:"10px",
 border:"none"
@@ -150,7 +136,7 @@ onClick={addJob}
 style={{
 background:"#3b82f6",
 border:"none",
-padding:"12px 22px",
+padding:"12px",
 borderRadius:"10px",
 color:"white",
 cursor:"pointer"
@@ -167,10 +153,7 @@ Add
 </div>
 
 
-<h2 style={{marginTop:"40px"}}>
-Jobs
-</h2>
-
+<h2 style={{marginTop:"40px"}}>Jobs</h2>
 
 <div
 style={{
@@ -191,13 +174,8 @@ borderRadius:"14px"
 }}
 >
 
-<h3>
-{job.title}
-</h3>
-
-<p style={{opacity:0.7}}>
-{job.description}
-</p>
+<h3>{job.title}</h3>
+<p style={{opacity:0.7}}>{job.description}</p>
 
 </div>
 ))}
