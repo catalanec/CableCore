@@ -3,64 +3,62 @@ import { useEffect, useState } from "react"
 import { supabase } from "../../lib/supabaseClient"
 import CableCalculator from "../../components/CableCalculator"
 
-export default function ClientPage() {
+export default function ClientPage(){
 
 const router = useRouter()
 const { id } = router.query
 
-const [client, setClient] = useState(null)
-const [jobs, setJobs] = useState([])
+const [client,setClient] = useState(null)
+const [jobs,setJobs] = useState([])
 
-const [title, setTitle] = useState("")
-const [description, setDescription] = useState("")
+const [title,setTitle] = useState("")
+const [description,setDescription] = useState("")
 
-useEffect(() => {
+useEffect(()=>{
 
-if (!id) return
+if(!id) return
 
 loadClient()
 loadJobs()
 
-}, [id])
+},[id])
 
 
-async function loadClient() {
+async function loadClient(){
 
 const { data } = await supabase
 .from("clients")
 .select("*")
-.eq("id", id)
+.eq("id",id)
 .single()
 
 setClient(data)
 
 }
 
-
-async function loadJobs() {
+async function loadJobs(){
 
 const { data } = await supabase
 .from("jobs")
 .select("*")
-.eq("client_id", id)
-.order("created_at", { ascending:false })
+.eq("client_id",id)
+.order("created_at",{ascending:false})
 
 setJobs(data || [])
 
 }
 
+async function addJob(){
 
-async function addJob() {
-
-if (!title) return
+if(!title) return
 
 await supabase
 .from("jobs")
 .insert([
 {
 client_id:id,
-title:title,
-description:description
+title,
+description
 }
 ])
 
@@ -71,8 +69,7 @@ loadJobs()
 
 }
 
-
-if (!client) return null
+if(!client) return null
 
 
 return(
@@ -80,36 +77,32 @@ return(
 <div style={{
 background:"#071a2c",
 minHeight:"100vh",
-padding:"30px 20px",
+padding:"40px",
 color:"white"
 }}>
 
-<h1 style={{marginBottom:"10px"}}>
-{client.name}
-</h1>
 
-<p style={{opacity:0.7}}>
-Address: {client.address}
-</p>
-
-<p style={{opacity:0.7}}>
-Phone: {client.phone}
-</p>
-
-
-<h2 style={{
-marginTop:"40px",
-marginBottom:"15px"
+<div style={{
+maxWidth:"1100px",
+margin:"0 auto"
 }}>
-Add Job
-</h2>
+
+<h1 style={{marginBottom:"10px"}}>{client.name}</h1>
+
+<p style={{opacity:0.7}}>Address: {client.address}</p>
+
+<p style={{opacity:0.7}}>Phone: {client.phone}</p>
+
+
+<h2 style={{marginTop:"40px"}}>Add Job</h2>
 
 
 <div style={{
-display:"flex",
-flexWrap:"wrap",
+display:"grid",
+gridTemplateColumns:"1fr 1fr auto",
 gap:"10px",
-marginBottom:"30px"
+marginTop:"10px",
+marginBottom:"40px"
 }}>
 
 <input
@@ -117,7 +110,6 @@ placeholder="Job title"
 value={title}
 onChange={(e)=>setTitle(e.target.value)}
 style={{
-flex:"1 1 200px",
 padding:"12px",
 borderRadius:"10px",
 border:"none"
@@ -129,7 +121,6 @@ placeholder="Description"
 value={description}
 onChange={(e)=>setDescription(e.target.value)}
 style={{
-flex:"1 1 200px",
 padding:"12px",
 borderRadius:"10px",
 border:"none"
@@ -142,7 +133,7 @@ style={{
 background:"#3b82f6",
 color:"white",
 border:"none",
-padding:"12px 20px",
+padding:"12px 18px",
 borderRadius:"10px",
 cursor:"pointer"
 }}
@@ -156,45 +147,37 @@ Add
 <CableCalculator client={client}/>
 
 
-<h2 style={{
-marginTop:"40px",
-marginBottom:"15px"
-}}>
-Jobs
-</h2>
+<h2 style={{marginTop:"40px"}}>Jobs</h2>
 
 
 <div style={{
 display:"flex",
 flexDirection:"column",
-gap:"15px"
+gap:"20px",
+marginTop:"20px"
 }}>
 
-{jobs.map(job => (
-
+{jobs.map(job=>(
 <div
 key={job.id}
 style={{
 background:"#102c4a",
-padding:"20px",
-borderRadius:"12px"
+padding:"25px",
+borderRadius:"14px"
 }}
 >
 
-<h3 style={{marginBottom:"5px"}}>
-{job.title}
-</h3>
+<h3>{job.title}</h3>
 
-<p style={{opacity:0.7}}>
-{job.description}
-</p>
+<p style={{opacity:0.7}}>{job.description}</p>
 
 </div>
-
 ))}
 
 </div>
 
+
+</div>
 
 </div>
 
