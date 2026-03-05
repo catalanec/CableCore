@@ -6,33 +6,32 @@ export default function CableCalculator({ client }) {
 const [points,setPoints] = useState(1)
 
 const pricePerPoint = 95
+const iva = 0.21
 
 const subtotal = points * pricePerPoint
-const iva = +(subtotal * 0.21).toFixed(2)
-const total = +(subtotal + iva).toFixed(2)
+const ivaAmount = subtotal * iva
+const total = subtotal + ivaAmount
 
 function downloadPDF(){
 
-generatePDF(client,{
+generatePDF({
+client,
 points,
-price:pricePerPoint,
 subtotal,
-iva,
+ivaAmount,
 total
 })
 
 }
 
-return(
+return (
 
 <div
 style={{
-background:"#0c1f36",
-padding:"35px",
-borderRadius:"20px",
-maxWidth:"900px",
-margin:"30px auto",
-color:"white"
+background:"#0e2744",
+padding:"40px",
+borderRadius:"18px",
+marginTop:"20px"
 }}
 >
 
@@ -45,15 +44,17 @@ marginBottom:"30px"
 Calculadora profesional
 </h2>
 
+
 <div
 style={{
-display:"flex",
-flexWrap:"wrap",
-gap:"30px"
+display:"grid",
+gridTemplateColumns:"1fr 1fr",
+gap:"40px"
 }}
 >
 
-<div style={{flex:"1 1 250px"}}>
+
+<div>
 
 <label>Puntos de red</label>
 
@@ -64,7 +65,7 @@ onChange={(e)=>setPoints(Number(e.target.value))}
 style={{
 width:"100%",
 padding:"12px",
-marginTop:"5px",
+marginTop:"6px",
 borderRadius:"10px",
 border:"none"
 }}
@@ -73,50 +74,39 @@ border:"none"
 </div>
 
 
-<div style={{flex:"1 1 250px"}}>
+<div>
 
 <h3>Resumen</h3>
 
-<p>
-Subtotal: {subtotal.toFixed(2)}€
-</p>
+<p>Subtotal: {subtotal.toFixed(2)}€</p>
 
-<p>
-IVA (21%): {iva.toFixed(2)}€
-</p>
+<p>IVA (21%): {ivaAmount.toFixed(2)}€</p>
 
-<h2 style={{color:"#d4af37"}}>
-Total: {total.toFixed(2)}€
-</h2>
-
-</div>
-
-</div>
-
-
-<div
+<h2
 style={{
-marginTop:"30px",
-display:"flex",
-justifyContent:"center"
+color:"#f4c542"
 }}
 >
+Total: {total.toFixed(2)}€
+</h2>
 
 <button
 onClick={downloadPDF}
 style={{
-background:"#22c55e",
+marginTop:"20px",
+background:"#2ecc71",
 border:"none",
-padding:"14px 30px",
-borderRadius:"10px",
+padding:"14px 24px",
+borderRadius:"12px",
 color:"white",
 fontWeight:"bold",
-fontSize:"16px",
 cursor:"pointer"
 }}
 >
 Descargar PDF
 </button>
+
+</div>
 
 </div>
 
