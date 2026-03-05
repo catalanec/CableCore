@@ -25,32 +25,45 @@ const [urgency,setUrgency] = useState(1)
 let subtotalPoints = points * cable
 let installCost = 0
 
+
+// SUPERFICIAL
 if(installation==="superficial"){
 installCost += canaleta * 8
 }
 
+
+// TECHO TECNICO
 if(installation==="techo"){
 installCost += points * 12
+installCost += corrugado * 4.5
 }
 
+
+// EMPOTRADO EXISTENTE
 if(installation==="empotrado_existente"){
 installCost += points * 20
 }
 
+
+// EMPOTRADO NUEVO
 if(installation==="empotrado_nuevo"){
 installCost += regata * 22
 installCost += corrugado * 4.5
 }
 
+
+// INDUSTRIAL
 if(installation==="industrial"){
 subtotalPoints *= 1.2
 }
+
 
 let equip = 0
 
 if(switchInstall) equip += 60
 if(routerInstall) equip += 60
 if(config) equip += 120
+
 
 let subtotal = (subtotalPoints + installCost + rack + equip) * urgency
 let iva = subtotal * 0.21
@@ -94,9 +107,11 @@ gap:"40px"
 
 {/* LEFT COLUMN */}
 
+
 <div>
 
 <label>Puntos de red</label>
+
 <input
 type="number"
 value={points}
@@ -108,6 +123,7 @@ style={{width:"100%",padding:"10px",borderRadius:"8px"}}
 <br/><br/>
 
 <label>Tipo de cable</label>
+
 <select
 onChange={(e)=>setCable(Number(e.target.value))}
 style={{width:"100%",padding:"10px",borderRadius:"8px"}}
@@ -115,6 +131,7 @@ style={{width:"100%",padding:"10px",borderRadius:"8px"}}
 
 <option value="95">Cat6 – 95€</option>
 <option value="110">Cat6A – 110€</option>
+<option value="140">Cat7 – 140€</option>
 
 </select>
 
@@ -122,6 +139,7 @@ style={{width:"100%",padding:"10px",borderRadius:"8px"}}
 <br/><br/>
 
 <label>Tipo instalación</label>
+
 <select
 value={installation}
 onChange={(e)=>setInstallation(e.target.value)}
@@ -145,15 +163,18 @@ style={{width:"100%",padding:"10px",borderRadius:"8px"}}
 <br/><br/>
 
 <label>Metros canaleta</label>
+
 <input
 type="number"
 value={canaleta}
 onChange={(e)=>setCanaleta(Number(e.target.value))}
 style={{width:"100%",padding:"10px",borderRadius:"8px"}}
 />
+
 </>
 
 )}
+
 
 
 {/* REGATA */}
@@ -164,6 +185,7 @@ style={{width:"100%",padding:"10px",borderRadius:"8px"}}
 <br/><br/>
 
 <label>Metros regata</label>
+
 <input
 type="number"
 value={regata}
@@ -171,9 +193,21 @@ onChange={(e)=>setRegata(Number(e.target.value))}
 style={{width:"100%",padding:"10px",borderRadius:"8px"}}
 />
 
+</>
+
+)}
+
+
+
+{/* CORRUGADO */}
+
+{(installation==="empotrado_nuevo" || installation==="techo") && (
+
+<>
 <br/><br/>
 
-<label>Metros corrugado</label>
+<label>Metros tubo corrugado</label>
+
 <input
 type="number"
 value={corrugado}
@@ -186,9 +220,11 @@ style={{width:"100%",padding:"10px",borderRadius:"8px"}}
 )}
 
 
+
 <br/><br/>
 
 <label>Rack</label>
+
 <select
 onChange={(e)=>setRack(Number(e.target.value))}
 style={{width:"100%",padding:"10px",borderRadius:"8px"}}
@@ -197,6 +233,7 @@ style={{width:"100%",padding:"10px",borderRadius:"8px"}}
 <option value="0">No incluido</option>
 <option value="150">Rack 6U – 150€</option>
 <option value="220">Rack 9U – 220€</option>
+<option value="290">Rack 12U – 290€</option>
 
 </select>
 
@@ -205,6 +242,7 @@ style={{width:"100%",padding:"10px",borderRadius:"8px"}}
 
 
 {/* RIGHT COLUMN */}
+
 
 <div>
 
@@ -245,6 +283,7 @@ Configuración red (120€)
 <br/><br/>
 
 <label>Urgencia</label>
+
 <select
 onChange={(e)=>setUrgency(Number(e.target.value))}
 style={{width:"100%",padding:"10px",borderRadius:"8px"}}
@@ -274,15 +313,18 @@ Total: {total.toFixed(2)}€
 onClick={handlePDF}
 style={{
 marginTop:"20px",
-background:"#facc15",
+background:"#22c55e",
 border:"none",
 padding:"14px 24px",
 borderRadius:"10px",
 cursor:"pointer",
-fontWeight:"bold"
+fontWeight:"bold",
+color:"white"
 }}
 >
-Guardar presupuesto
+
+Descargar PDF
+
 </button>
 
 
