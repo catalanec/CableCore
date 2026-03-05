@@ -1,5 +1,5 @@
 import { useRouter } from "next/router"
-import { useEffect,useState } from "react"
+import { useEffect, useState } from "react"
 import { supabase } from "../../lib/supabaseClient"
 import CableCalculator from "../../components/CableCalculator"
 
@@ -23,6 +23,7 @@ loadJobs()
 
 },[id])
 
+
 async function loadClient(){
 
 const { data } = await supabase
@@ -35,6 +36,7 @@ setClient(data)
 
 }
 
+
 async function loadJobs(){
 
 const { data } = await supabase
@@ -46,6 +48,7 @@ const { data } = await supabase
 setJobs(data || [])
 
 }
+
 
 async function addJob(){
 
@@ -68,6 +71,7 @@ loadJobs()
 
 }
 
+
 if(!client) return null
 
 
@@ -77,7 +81,7 @@ return(
 style={{
 background:"#071a2c",
 minHeight:"100vh",
-padding:"40px",
+padding:"40px 20px",
 color:"white"
 }}
 >
@@ -89,26 +93,31 @@ margin:"0 auto"
 }}
 >
 
-<h1>{client.name}</h1>
+<h1 style={{marginBottom:"10px"}}>
+{client.name}
+</h1>
 
-<p style={{opacity:0.7}}>Address: {client.address}</p>
-<p style={{opacity:0.7}}>Phone: {client.phone}</p>
+<p style={{opacity:0.7}}>
+Address: {client.address}
+</p>
+
+<p style={{opacity:0.7}}>
+Phone: {client.phone}
+</p>
 
 
-<h2 style={{marginTop:"40px"}}>Add Job</h2>
+<h2 style={{marginTop:"40px"}}>
+Add Job
+</h2>
 
-
-<div
-style={{
-maxWidth:"700px",
-marginTop:"15px"
-}}
->
 
 <div
 style={{
 display:"flex",
-gap:"10px"
+gap:"12px",
+marginTop:"15px",
+alignItems:"center",
+flexWrap:"wrap"
 }}
 >
 
@@ -117,7 +126,7 @@ placeholder="Job title"
 value={title}
 onChange={(e)=>setTitle(e.target.value)}
 style={{
-flex:1,
+width:"260px",
 padding:"12px",
 borderRadius:"10px",
 border:"none"
@@ -129,7 +138,7 @@ placeholder="Description"
 value={description}
 onChange={(e)=>setDescription(e.target.value)}
 style={{
-flex:1,
+width:"360px",
 padding:"12px",
 borderRadius:"10px",
 border:"none"
@@ -141,7 +150,7 @@ onClick={addJob}
 style={{
 background:"#3b82f6",
 border:"none",
-padding:"12px 20px",
+padding:"12px 22px",
 borderRadius:"10px",
 color:"white",
 cursor:"pointer"
@@ -152,15 +161,15 @@ Add
 
 </div>
 
-</div>
-
 
 <div style={{marginTop:"40px"}}>
 <CableCalculator client={client}/>
 </div>
 
 
-<h2 style={{marginTop:"40px"}}>Jobs</h2>
+<h2 style={{marginTop:"40px"}}>
+Jobs
+</h2>
 
 
 <div
@@ -182,8 +191,13 @@ borderRadius:"14px"
 }}
 >
 
-<h3>{job.title}</h3>
-<p style={{opacity:0.7}}>{job.description}</p>
+<h3>
+{job.title}
+</h3>
+
+<p style={{opacity:0.7}}>
+{job.description}
+</p>
 
 </div>
 ))}
