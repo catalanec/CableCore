@@ -12,7 +12,8 @@ const subtotal = points * pricePerPoint
 const ivaAmount = subtotal * iva
 const total = subtotal + ivaAmount
 
-function downloadPDF(){
+
+function handlePDF(){
 
 generatePDF({
 client,
@@ -30,8 +31,7 @@ return (
 style={{
 background:"#0e2744",
 padding:"40px",
-borderRadius:"18px",
-marginTop:"20px"
+borderRadius:"16px"
 }}
 >
 
@@ -91,7 +91,7 @@ Total: {total.toFixed(2)}€
 </h2>
 
 <button
-onClick={downloadPDF}
+onClick={handlePDF}
 style={{
 marginTop:"20px",
 background:"#2ecc71",
