@@ -1,41 +1,41 @@
-import { useState } from "react"
-import generatePDF from "../utils/generatePDF"
+import { useState } from "react";
+import generatePDF from "../utils/generatePDF";
 
 export default function CableCalculator({ client }) {
 
-const [points,setPoints] = useState(1)
-const [cablePrice,setCablePrice] = useState(95)
-const [installation,setInstallation] = useState("superficial")
-const [rack,setRack] = useState(0)
+const [points,setPoints] = useState(1);
+const [cablePrice,setCablePrice] = useState(95);
+const [installation,setInstallation] = useState("superficial");
+const [rack,setRack] = useState(0);
 
-const [switchInstall,setSwitchInstall] = useState(false)
-const [routerInstall,setRouterInstall] = useState(false)
-const [config,setConfig] = useState(false)
+const [switchInstall,setSwitchInstall] = useState(false);
+const [routerInstall,setRouterInstall] = useState(false);
+const [config,setConfig] = useState(false);
 
-const [urgency,setUrgency] = useState(1)
+const [urgency,setUrgency] = useState(1);
 
 
 // CALCULATIONS
 
-let subtotalPoints = points * cablePrice
+let subtotalPoints = points * cablePrice;
 
-let installationCost = 0
+let installationCost = 0;
 
-if(installation === "techo") installationCost += points * 12
-if(installation === "empotrado_existente") installationCost += points * 20
-if(installation === "industrial") subtotalPoints *= 1.2
+if(installation === "techo") installationCost += points * 12;
+if(installation === "empotrado_existente") installationCost += points * 20;
+if(installation === "industrial") subtotalPoints *= 1.2;
 
-let equipmentCost = 0
+let equipmentCost = 0;
 
-if(switchInstall) equipmentCost += 60
-if(routerInstall) equipmentCost += 60
-if(config) equipmentCost += 120
+if(switchInstall) equipmentCost += 60;
+if(routerInstall) equipmentCost += 60;
+if(config) equipmentCost += 120;
 
-let subtotal = (subtotalPoints + installationCost + rack + equipmentCost) * urgency
+let subtotal = (subtotalPoints + installationCost + rack + equipmentCost) * urgency;
 
-let iva = subtotal * 0.21
+let iva = subtotal * 0.21;
 
-let total = subtotal + iva
+let total = subtotal + iva;
 
 
 function downloadPDF(){
@@ -79,8 +79,6 @@ gridTemplateColumns:"1fr 1fr",
 gap:"50px"
 }}>
 
-
-{/* LEFT COLUMN */}
 
 <div>
 
@@ -162,8 +160,6 @@ borderRadius:"8px"
 </div>
 
 
-{/* RIGHT COLUMN */}
-
 <div>
 
 <h3 style={{marginBottom:"15px"}}>Equipos</h3>
@@ -227,7 +223,6 @@ borderRadius:"8px"
 
 
 <p>Subtotal: {subtotal.toFixed(2)}€</p>
-
 <p>IVA (21%): {iva.toFixed(2)}€</p>
 
 <h2 style={{color:"#facc15"}}>
