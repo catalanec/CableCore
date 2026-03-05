@@ -74,18 +74,21 @@ if(!client) return null
 
 return(
 
-<div style={{
+<div
+style={{
 background:"#071a2c",
 minHeight:"100vh",
-padding:"40px",
+padding:"40px 20px",
 color:"white"
-}}>
+}}
+>
 
-
-<div style={{
-maxWidth:"1100px",
+<div
+style={{
+maxWidth:"1000px",
 margin:"0 auto"
-}}>
+}}
+>
 
 <h1 style={{marginBottom:"10px"}}>{client.name}</h1>
 
@@ -96,20 +99,22 @@ margin:"0 auto"
 
 <h2 style={{marginTop:"40px"}}>Add Job</h2>
 
-
-<div style={{
-display:"grid",
-gridTemplateColumns:"1fr 1fr auto",
+<div
+style={{
+display:"flex",
 gap:"10px",
 marginTop:"10px",
-marginBottom:"40px"
-}}>
+flexWrap:"wrap"
+}}
+>
 
 <input
 placeholder="Job title"
 value={title}
 onChange={(e)=>setTitle(e.target.value)}
 style={{
+flex:"1",
+minWidth:"200px",
 padding:"12px",
 borderRadius:"10px",
 border:"none"
@@ -121,6 +126,8 @@ placeholder="Description"
 value={description}
 onChange={(e)=>setDescription(e.target.value)}
 style={{
+flex:"1",
+minWidth:"200px",
 padding:"12px",
 borderRadius:"10px",
 border:"none"
@@ -133,7 +140,7 @@ style={{
 background:"#3b82f6",
 color:"white",
 border:"none",
-padding:"12px 18px",
+padding:"12px 20px",
 borderRadius:"10px",
 cursor:"pointer"
 }}
@@ -144,18 +151,21 @@ Add
 </div>
 
 
+<div style={{marginTop:"40px"}}>
 <CableCalculator client={client}/>
+</div>
 
 
 <h2 style={{marginTop:"40px"}}>Jobs</h2>
 
-
-<div style={{
+<div
+style={{
 display:"flex",
 flexDirection:"column",
 gap:"20px",
 marginTop:"20px"
-}}>
+}}
+>
 
 {jobs.map(job=>(
 <div
@@ -175,7 +185,6 @@ borderRadius:"14px"
 ))}
 
 </div>
-
 
 </div>
 
