@@ -15,23 +15,23 @@ const [config,setConfig] = useState(false)
 const [urgency,setUrgency] = useState(1)
 
 
-// CALCULATION
+// CALCULATIONS
 
 let subtotalPoints = points * cablePrice
 
-let installCost = 0
+let installationCost = 0
 
-if(installation === "techo") installCost += points * 12
-if(installation === "empotrado_existente") installCost += points * 20
+if(installation === "techo") installationCost += points * 12
+if(installation === "empotrado_existente") installationCost += points * 20
 if(installation === "industrial") subtotalPoints *= 1.2
 
-let equip = 0
+let equipmentCost = 0
 
-if(switchInstall) equip += 60
-if(routerInstall) equip += 60
-if(config) equip += 120
+if(switchInstall) equipmentCost += 60
+if(routerInstall) equipmentCost += 60
+if(config) equipmentCost += 120
 
-let subtotal = (subtotalPoints + installCost + rack + equip) * urgency
+let subtotal = (subtotalPoints + installationCost + rack + equipmentCost) * urgency
 
 let iva = subtotal * 0.21
 
@@ -42,10 +42,10 @@ function downloadPDF(){
 
 generatePDF({
 id: Date.now(),
-client: client.name,
-email: client.email || "cliente@email.com",
+client: client?.name || "Cliente",
+email: client?.email || "cliente@email.com",
 points,
-price:cablePrice,
+price: cablePrice,
 subtotal: subtotal.toFixed(2),
 iva: iva.toFixed(2),
 total: total.toFixed(2)
@@ -72,6 +72,7 @@ fontSize:"28px"
 Calculadora profesional
 </h2>
 
+
 <div style={{
 display:"grid",
 gridTemplateColumns:"1fr 1fr",
@@ -79,7 +80,7 @@ gap:"50px"
 }}>
 
 
-{/* LEFT SIDE */}
+{/* LEFT COLUMN */}
 
 <div>
 
@@ -161,7 +162,7 @@ borderRadius:"8px"
 </div>
 
 
-{/* RIGHT SIDE */}
+{/* RIGHT COLUMN */}
 
 <div>
 
