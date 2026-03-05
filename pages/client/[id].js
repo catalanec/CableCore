@@ -1,5 +1,5 @@
 import { useRouter } from "next/router"
-import { useEffect, useState } from "react"
+import { useEffect,useState } from "react"
 import { supabase } from "../../lib/supabaseClient"
 import CableCalculator from "../../components/CableCalculator"
 
@@ -22,7 +22,6 @@ loadClient()
 loadJobs()
 
 },[id])
-
 
 async function loadClient(){
 
@@ -78,33 +77,38 @@ return(
 style={{
 background:"#071a2c",
 minHeight:"100vh",
-padding:"40px 20px",
+padding:"40px",
 color:"white"
 }}
 >
 
 <div
 style={{
-maxWidth:"1000px",
+maxWidth:"1100px",
 margin:"0 auto"
 }}
 >
 
-<h1 style={{marginBottom:"10px"}}>{client.name}</h1>
+<h1>{client.name}</h1>
 
 <p style={{opacity:0.7}}>Address: {client.address}</p>
-
 <p style={{opacity:0.7}}>Phone: {client.phone}</p>
 
 
 <h2 style={{marginTop:"40px"}}>Add Job</h2>
 
+
+<div
+style={{
+maxWidth:"700px",
+marginTop:"15px"
+}}
+>
+
 <div
 style={{
 display:"flex",
-gap:"10px",
-marginTop:"10px",
-flexWrap:"wrap"
+gap:"10px"
 }}
 >
 
@@ -113,8 +117,7 @@ placeholder="Job title"
 value={title}
 onChange={(e)=>setTitle(e.target.value)}
 style={{
-flex:"1",
-minWidth:"200px",
+flex:1,
 padding:"12px",
 borderRadius:"10px",
 border:"none"
@@ -126,8 +129,7 @@ placeholder="Description"
 value={description}
 onChange={(e)=>setDescription(e.target.value)}
 style={{
-flex:"1",
-minWidth:"200px",
+flex:1,
 padding:"12px",
 borderRadius:"10px",
 border:"none"
@@ -138,15 +140,17 @@ border:"none"
 onClick={addJob}
 style={{
 background:"#3b82f6",
-color:"white",
 border:"none",
 padding:"12px 20px",
 borderRadius:"10px",
+color:"white",
 cursor:"pointer"
 }}
 >
 Add
 </button>
+
+</div>
 
 </div>
 
@@ -157,6 +161,7 @@ Add
 
 
 <h2 style={{marginTop:"40px"}}>Jobs</h2>
+
 
 <div
 style={{
@@ -178,7 +183,6 @@ borderRadius:"14px"
 >
 
 <h3>{job.title}</h3>
-
 <p style={{opacity:0.7}}>{job.description}</p>
 
 </div>
