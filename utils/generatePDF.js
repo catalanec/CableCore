@@ -1,95 +1,121 @@
 import jsPDF from "jspdf"
 
-export function generatePDF(client, data) {
+export function generatePDF(data){
 
 const doc = new jsPDF()
 
-const primary = "#071a2c"
-const gold = "#d4af37"
+const {
+client,
+points,
+cable,
+installation,
+corrugado,
+regata,
+canaleta,
+rack,
+switchInstall,
+routerInstall,
+config,
+subtotal,
+iva,
+total
+} = data
 
-const pageWidth = doc.internal.pageSize.width
 
-// HEADER
-doc.setFillColor(primary)
-doc.rect(0,0,pageWidth,30,"F")
+let y = 20
 
-doc.setTextColor(255,255,255)
 doc.setFontSize(22)
-doc.text("CableCore",15,18)
+doc.text("CableCore",20,y)
 
-doc.setFontSize(11)
-doc.text("Network Infrastructure",15,25)
+y+=10
 
+doc.setFontSize(12)
 
-// LINE
-doc.setDrawColor(212,175,55)
-doc.setLineWidth(0.6)
-doc.line(15,35,pageWidth-15,35)
+doc.text(`Cliente: ${client?.name || ""}`,20,y)
+y+=7
 
+doc.text(`Dirección: ${client?.address || ""}`,20,y)
+y+=7
 
-// CLIENT INFO
-doc.setTextColor(0,0,0)
-doc.setFontSize(11)
+doc.text(`Teléfono: ${client?.phone || ""}`,20,y)
 
-const presupuestoId = "CC-" + Date.now()
+y+=15
 
-doc.text(`Presupuesto ID: ${presupuestoId}`,15,45)
+doc.line(20,y,190,y)
 
-doc.text(`Cliente: ${client?.name || "-"}`,15,52)
+y+=10
 
-doc.text(`Teléfono: ${client?.phone || "-"}`,15,59)
+doc.text(`Puntos de red: ${points}`,20,y)
+y+=7
 
-doc.text(`Dirección: ${client?.address || "-"}`,15,66)
+doc.text(`Cable: ${cable}`,20,y)
+y+=7
 
-
-// TABLE HEADER
-doc.setFillColor(212,175,55)
-doc.rect(15,80,pageWidth-30,8,"F")
-
-doc.setTextColor(255,255,255)
-doc.setFontSize(10)
-
-doc.text("Concepto",18,86)
-doc.text("Cantidad",90,86)
-doc.text("Precio",120,86)
-doc.text("Total",160,86)
+doc.text(`Instalación: ${installation}`,20,y)
+y+=7
 
 
-// TABLE DATA
-doc.setTextColor(0,0,0)
+if(corrugado){
+doc.text(`Corrugado: ${corrugado} m`,20,y)
+y+=7
+}
 
-doc.text("Instalación punto de red",18,100)
-doc.text(String(data.points),90,100)
-doc.text(`${data.price} €`,120,100)
-doc.text(`${data.subtotal} €`,160,100)
+if(regata){
+doc.text(`Regata: ${regata} m`,20,y)
+y+=7
+}
 
+if(canaleta){
+doc.text(`Canaleta: ${canaleta} m`,20,y)
+y+=7
+}
 
-// TOTALS
-doc.setFontSize(11)
-
-doc.text(`Subtotal: ${data.subtotal} €`,15,130)
-doc.text(`IVA (21%): ${data.iva} €`,15,138)
-
-doc.setFontSize(14)
-doc.setTextColor(212,175,55)
-doc.text(`TOTAL: ${data.total} €`,15,150)
-
-
-// FOOTER LINE
-doc.setDrawColor(212,175,55)
-doc.line(15,160,pageWidth-15,160)
-
-doc.setTextColor(0,0,0)
-doc.setFontSize(10)
-
-doc.text("Validez del presupuesto: 15 días",15,170)
-doc.text("Garantía: 3 meses sobre trabajos realizados.",15,177)
-
-doc.text("CableCore",15,190)
-doc.text("Barcelona, Cataluña",15,197)
+if(rack){
+doc.text(`Rack: ${rack} €`,20,y)
+y+=7
+}
 
 
-// SAVE
-doc.save("presupuesto_cablecore.pdf")
+if(switchInstall || routerInstall || config){
+
+y+=5
+
+doc.text("Equipos:",20,y)
+y+=7
+
+if(switchInstall){
+doc.text("- Instalación switch",20,y)
+y+=7
+}
+
+if(routerInstall){
+doc.text("- Instalación router",20,y)
+y+=7
+}
+
+if(config){
+doc.text("- Configuración red",20,y)
+y+=7
+}
+
+}
+
+y+=10
+
+doc.line(20,y,190,y)
+
+y+=10
+
+doc.text(`Subtotal: ${subtotal.toFixed(2)} €`,20,y)
+y+=7
+
+doc.text(`IVA (21%): ${iva.toFixed(2)} €`,20,y)
+y+=10
+
+doc.setFontSize(16)
+
+doc.text(`TOTAL: ${total.toFixed(2)} €`,20,y)
+
+doc.save("presupuesto-cablecore.pdf")
 
 }
