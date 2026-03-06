@@ -20,7 +20,8 @@ const [config,setConfig] = useState(false)
 const [urgency,setUrgency] = useState(1)
 
 
-// CALCULATION
+
+// CALCULATIONS
 
 let subtotalPoints = points * cable
 let installCost = 0
@@ -70,16 +71,32 @@ let iva = subtotal * 0.21
 let total = subtotal + iva
 
 
+
 function handlePDF(){
 
 generatePDF({
 client,
+points,
+cable:
+cable===95 ? "Cat6" :
+cable===110 ? "Cat6A" :
+"Cat7",
+
+installation,
+corrugado,
+regata,
+canaleta,
+rack,
+switchInstall,
+routerInstall,
+config,
 subtotal,
 iva,
 total
 })
 
 }
+
 
 
 return(
@@ -95,6 +112,7 @@ borderRadius:"18px"
 <h2 style={{textAlign:"center",marginBottom:"30px"}}>
 Calculadora profesional
 </h2>
+
 
 <div
 style={{
@@ -153,6 +171,7 @@ style={{width:"100%",padding:"10px",borderRadius:"8px"}}
 <option value="industrial">Industrial</option>
 
 </select>
+
 
 
 {/* CANALETA */}
@@ -280,6 +299,7 @@ Configuración red (120€)
 </label>
 
 
+
 <br/><br/>
 
 <label>Urgencia</label>
@@ -294,6 +314,7 @@ style={{width:"100%",padding:"10px",borderRadius:"8px"}}
 <option value="1.4">Muy urgente (+40%)</option>
 
 </select>
+
 
 
 <hr style={{margin:"25px 0"}}/>
