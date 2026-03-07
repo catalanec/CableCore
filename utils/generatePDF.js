@@ -15,8 +15,8 @@ doc.line(25,35,190,35)
 
 doc.setFontSize(12)
 
-const clientName = data.client?.name || "Cliente"
-const clientPhone = data.client?.phone || ""
+const clientName = String(data.client?.name || "Cliente")
+const clientPhone = String(data.client?.phone || "")
 
 doc.text(`Presupuesto ID: CC-${Date.now()}`,25,50)
 doc.text(`Cliente: ${clientName}`,25,60)
@@ -25,40 +25,40 @@ doc.text(`Teléfono: ${clientPhone}`,25,70)
 let rows = []
 
 rows.push([
-`Puntos red ${data.cableType || ""}`,
+"Puntos red",
 data.points,
 data.cable,
 (data.points * data.cable).toFixed(2)
 ])
 
-if(data.canaleta > 0){
+if(data.canaleta){
 rows.push([
 "Canaleta",
-`${data.canaleta} m`,
+data.canaleta + " m",
 8,
 (data.canaleta*8).toFixed(2)
 ])
 }
 
-if(data.regata > 0){
+if(data.regata){
 rows.push([
 "Regata",
-`${data.regata} m`,
+data.regata + " m",
 22,
 (data.regata*22).toFixed(2)
 ])
 }
 
-if(data.corrugado > 0){
+if(data.corrugado){
 rows.push([
 "Tubo corrugado",
-`${data.corrugado} m`,
+data.corrugado + " m",
 4.5,
 (data.corrugado*4.5).toFixed(2)
 ])
 }
 
-if(data.rack > 0){
+if(data.rack){
 rows.push([
 "Rack",
 1,
