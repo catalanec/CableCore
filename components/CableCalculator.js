@@ -6,15 +6,12 @@ import { generatePDF } from "../utils/generatePDF"
 export default function CableCalculator({ client }) {
 
 const [points,setPoints] = useState(1)
-
+const [cable,setCable] = useState(95)
 const [cableType,setCableType] = useState("Cat6")
-const [cablePrice,setCablePrice] = useState(95)
 
 const [installation,setInstallation] = useState("superficial")
 
 const [canaleta,setCanaleta] = useState(0)
-const [regata,setRegata] = useState(0)
-const [corrugado,setCorrugado] = useState(0)
 
 const [rack,setRack] = useState(0)
 
@@ -30,239 +27,220 @@ const [total,setTotal] = useState(0)
 
 useEffect(()=>{
 
-let cost = points * cablePrice
+let subtotalPoints = points * cable
+let installCost = 0
 
 if(installation==="superficial"){
-cost += canaleta * 8
+installCost += canaleta * 8
 }
 
-if(installation==="empotrado"){
-cost += regata * 22
-cost += corrugado * 4.5
-}
+let equipCost = 0
 
-if(installation==="techo"){
-cost += points * 12
-cost += corrugado * 4.5
-}
+if(switchInstall) equipCost += 60
+if(routerInstall) equipCost += 60
+if(config) equipCost += 120
 
-if(rack>0){
-cost += rack
-}
+let rackCost = Number(rack)
 
-if(switchInstall){
-cost += 60
-}
+let sum = subtotalPoints + installCost + equipCost + rackCost
 
-if(routerInstall){
-cost += 60
-}
+let ivaCalc = sum * 0.21
+let totalCalc = sum + ivaCalc
 
-if(config){
-cost += 120
-}
-
-cost = cost * urgency
-
-setSubtotal(cost)
-
-const ivaCalc = cost * 0.21
+setSubtotal(sum)
 setIva(ivaCalc)
-
-setTotal(cost + ivaCalc)
+setTotal(totalCalc)
 
 },[
 points,
-cablePrice,
+cable,
 installation,
 canaleta,
-regata,
-corrugado,
 rack,
 switchInstall,
 routerInstall,
-config,
-urgency
+config
 ])
 
-return(
+function downloadPDF(){
 
-<div className="bg-[#0c2438] p-8 rounded-xl mt-8 text-white">
+generatePDF({
+client,
+points,
+cablePrice:cable,
+subtotal,
+iva,
+total
+})
 
-<h2 className="text-2xl mb-6">
+}
+
+return (
+
+<div style={{
+background:"#17324d",
+padding:"40px",
+borderRadius:"20px",
+marginTop:"30px"
+}}>
+
+<h2 style={{
+textAlign:"center",
+marginBottom:"30px"
+}}>
 Calculadora profesional
 </h2>
 
-<div className="grid grid-cols-2 gap-6">
+<div style={{
+display:"grid",
+gridTemplateColumns:"1fr 1fr",
+gap:"40px"
+}}>
 
 <div>
+
 <label>Puntos de red</label>
 <input
 type="number"
 value={points}
-onChange={(e)=>setPoints(Number(e.target.value))}
-className="w-full p-2 rounded text-black"
+onChange={e=>setPoints(Number(e.target.value))}
+style={{width:"100%"}}
 />
-</div>
 
-<div>
 <label>Tipo de cable</label>
 <select
 value={cableType}
-onChange={(e)=>{
+onChange={e=>{
 
-setCableType(e.target.value)
+let type = e.target.value
+setCableType(type)
 
-if(e.target.value==="Cat6") setCablePrice(95)
-if(e.target.value==="Cat6a") setCablePrice(120)
-if(e.target.value==="Cat7") setCablePrice(140)
+if(type==="Cat6") setCable(95)
+if(type==="Cat6A") setCable(110)
+if(type==="Cat7") setCable(125)
 
 }}
-className="w-full p-2 rounded text-black"
 >
 
-<option value="Cat6">Cat6</option>
-<option value="Cat6a">Cat6a</option>
-<option value="Cat7">Cat7</option>
+<option value="Cat6">Cat6 – 95€</option>
+<option value="Cat6A">Cat6A – 110€</option>
+<option value="Cat7">Cat7 – 125€</option>
 
 </select>
-</div>
 
-<div>
 <label>Tipo instalación</label>
 <select
 value={installation}
-onChange={(e)=>setInstallation(e.target.value)}
-className="w-full p-2 rounded text-black"
+onChange={e=>setInstallation(e.target.value)}
 >
 
 <option value="superficial">Superficial</option>
-<option value="empotrado">Empotrado</option>
-<option value="techo">Techo técnico</option>
+<option value="techo">Techo</option>
 
 </select>
-</div>
 
-<div>
 <label>Metros canaleta</label>
 <input
 type="number"
 value={canaleta}
-onChange={(e)=>setCanaleta(Number(e.target.value))}
-className="w-full p-2 rounded text-black"
+onChange={e=>setCanaleta(Number(e.target.value))}
 />
-</div>
 
-<div>
-<label>Metros regata</label>
-<input
-type="number"
-value={regata}
-onChange={(e)=>setRegata(Number(e.target.value))}
-className="w-full p-2 rounded text-black"
-/>
-</div>
-
-<div>
-<label>Metros tubo corrugado</label>
-<input
-type="number"
-value={corrugado}
-onChange={(e)=>setCorrugado(Number(e.target.value))}
-className="w-full p-2 rounded text-black"
-/>
-</div>
-
-<div>
 <label>Rack</label>
 <select
 value={rack}
-onChange={(e)=>setRack(Number(e.target.value))}
-className="w-full p-2 rounded text-black"
+onChange={e=>setRack(Number(e.target.value))}
 >
 
-<option value="0">No incluido</option>
-<option value="250">Rack 6U</option>
-<option value="400">Rack 9U</option>
+<option value={0}>No incluido</option>
+<option value={150}>Rack pequeño</option>
+<option value={300}>Rack profesional</option>
 
 </select>
+
 </div>
 
 <div>
-<label>Urgencia</label>
-<select
-value={urgency}
-onChange={(e)=>setUrgency(Number(e.target.value))}
-className="w-full p-2 rounded text-black"
->
 
-<option value="1">Normal</option>
-<option value="1.3">Urgente</option>
-<option value="1.5">Muy urgente</option>
-
-</select>
-</div>
-
-</div>
-
-<h3 className="mt-6">Equipos</h3>
-
-<div className="flex gap-6 mt-2">
+<h3>Equipos</h3>
 
 <label>
 <input
 type="checkbox"
 checked={switchInstall}
-onChange={(e)=>setSwitchInstall(e.target.checked)}
+onChange={()=>setSwitchInstall(!switchInstall)}
 />
- Switch instalación (60€)
+Switch instalación (60€)
 </label>
 
 <label>
 <input
 type="checkbox"
 checked={routerInstall}
-onChange={(e)=>setRouterInstall(e.target.checked)}
+onChange={()=>setRouterInstall(!routerInstall)}
 />
- Router instalación (60€)
+Router instalación (60€)
 </label>
 
 <label>
 <input
 type="checkbox"
 checked={config}
-onChange={(e)=>setConfig(e.target.checked)}
+onChange={()=>setConfig(!config)}
 />
- Configuración red (120€)
+Configuración red (120€)
 </label>
+
+<br/>
+
+<label>Urgencia</label>
+
+<select
+value={urgency}
+onChange={e=>setUrgency(Number(e.target.value))}
+>
+
+<option value={1}>Normal</option>
+<option value={1.5}>Urgente</option>
+
+</select>
+
+<hr/>
+
+<p>Subtotal: {subtotal.toFixed(2)}€</p>
+<p>IVA (21%): {iva.toFixed(2)}€</p>
+
+<h2 style={{color:"#ffd000"}}>
+Total: {total.toFixed(2)}€
+</h2>
+
+<button
+onClick={downloadPDF}
+style={{
+background:"#2ecc71",
+padding:"12px 20px",
+borderRadius:"8px",
+marginRight:"10px",
+border:"none"
+}}
+>
+Descargar PDF
+</button>
+
+<button
+style={{
+background:"#f1c40f",
+padding:"12px 20px",
+borderRadius:"8px",
+border:"none"
+}}
+>
+Guardar presupuesto
+</button>
 
 </div>
 
-<hr className="my-6"/>
-
-<p>Subtotal: {subtotal.toFixed(2)} €</p>
-<p>IVA (21%): {iva.toFixed(2)} €</p>
-
-<h3 className="text-xl mt-2">
-Total: {total.toFixed(2)} €
-</h3>
-
-<button
-onClick={()=>generatePDF({
-client,
-points,
-cableType,
-cablePrice,
-subtotal,
-iva,
-total
-})}
-className="bg-white text-black px-4 py-2 rounded mt-4"
->
-
-Descargar PDF
-
-</button>
+</div>
 
 </div>
 
