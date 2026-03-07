@@ -5,65 +5,65 @@ export function generatePDF(data){
 
 const doc = new jsPDF()
 
-// TITLE
+doc.setFont("Helvetica")
+
 doc.setFontSize(26)
 doc.text("CableCore",25,30)
 
-// GOLD LINE
 doc.setDrawColor(201,162,39)
 doc.line(25,35,190,35)
 
 doc.setFontSize(12)
 
-doc.text("Presupuesto ID: CC-" + Date.now(),25,50)
-doc.text("Cliente: " + (data.client?.name || ""),25,60)
-doc.text("Teléfono: " + (data.client?.phone || ""),25,70)
+const clientName = data.client?.name || "Cliente"
+const clientPhone = data.client?.phone || ""
 
+doc.text(`Presupuesto ID: CC-${Date.now()}`,25,50)
+doc.text(`Cliente: ${clientName}`,25,60)
+doc.text(`Teléfono: ${clientPhone}`,25,70)
 
-// ===== BUILD TABLE =====
-
-let rows = []
+let rows=[]
 
 // puntos red
 rows.push([
-"Puntos red (" + data.cableType + ")",
+`Puntos red ${data.cableType || ""}`,
 data.points,
 data.cable,
-data.points * data.cable
+(data.points * data.cable).toFixed(2)
 ])
 
 // canaleta
-if(data.canaleta > 0){
+if(data.canaleta>0){
 rows.push([
 "Canaleta",
-data.canaleta + " m",
-"8€",
-data.canaleta * 8
+`${data.canaleta} m`,
+"8",
+(data.canaleta*8).toFixed(2)
 ])
 }
 
 // regata
-if(data.regata > 0){
+if(data.regata>0){
 rows.push([
 "Regata",
-data.regata + " m",
-"22€",
-data.regata * 22
+`${data.regata} m`,
+"22",
+(data.regata*22).toFixed(2)
 ])
 }
 
 // corrugado
-if(data.corrugado > 0){
+if(data.corrugado>0){
 rows.push([
 "Tubo corrugado",
-data.corrugado + " m",
-"4.5€",
-data.corrugado * 4.5
+`${data.corrugado} m`,
+"4.5",
+(data.corrugado*4.5).toFixed(2)
 ])
 }
 
 // rack
-if(data.rack > 0){
+if(data.rack>0){
 rows.push([
 "Rack",
 "1",
@@ -77,8 +77,8 @@ if(data.switchInstall){
 rows.push([
 "Instalación switch",
 "1",
-"60€",
-60
+"60",
+"60"
 ])
 }
 
@@ -87,65 +87,40 @@ if(data.routerInstall){
 rows.push([
 "Instalación router",
 "1",
-"60€",
-60
+"60",
+"60"
 ])
 }
 
-// config
+// configuración red
 if(data.config){
 rows.push([
 "Configuración red",
 "1",
-"120€",
-120
+"120",
+"120"
 ])
 }
 
-
-// ===== TABLE =====
-
 autoTable(doc,{
 startY:90,
-
 head:[
 ["Concepto","Cantidad","Precio (€)","Total (€)"]
 ],
-
 body:rows,
-
-theme:"grid",
-
 tableWidth:165,
-
 margin:{
-left:25,
-right:20
+left:25
 },
-
 styles:{
 fontSize:11,
 cellPadding:4
 },
-
 headStyles:{
 fillColor:[201,162,39],
-textColor:255,
-fontSize:11,
-cellPadding:3
-},
-
-columnStyles:{
-0:{cellWidth:90},
-1:{cellWidth:25, halign:"center"},
-2:{cellWidth:25, halign:"center"},
-3:{cellWidth:25, halign:"center"}
+textColor:255
 }
-
 })
-
-
-// ===== TOTALS =====
 
 let y = doc.lastAutoTable.finalY + 20
 
