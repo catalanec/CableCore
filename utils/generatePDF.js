@@ -1,4 +1,5 @@
 import jsPDF from "jspdf"
+import autoTable from "jspdf-autotable"
 
 export function generatePDF(data){
 
@@ -7,9 +8,6 @@ client,
 points,
 cable,
 installation,
-regata,
-corrugado,
-canaleta,
 rack,
 switchInstall,
 routerInstall,
@@ -21,159 +19,80 @@ total
 
 const doc = new jsPDF()
 
-let y = 20
+const presupuestoID = "CC-" + Date.now()
 
 doc.setFontSize(22)
-doc.text("CableCore",20,y)
-
-y+=10
+doc.text("CableCore",20,20)
 
 doc.setDrawColor(200,160,40)
-doc.line(20,y,190,y)
-
-y+=12
+doc.line(20,26,190,26)
 
 doc.setFontSize(11)
 
-const presupuestoID = "CC-"+Date.now()
-
-doc.text(`Presupuesto ID: ${presupuestoID}`,20,y)
-y+=7
-
-doc.text(`Cliente: ${client?.name || ""}`,20,y)
-y+=7
-
-doc.text(`Teléfono: ${client?.phone || ""}`,20,y)
-
-y+=10
+doc.text(`Presupuesto ID: ${presupuestoID}`,20,36)
+doc.text(`Cliente: ${client?.name || ""}`,20,43)
+doc.text(`Teléfono: ${client?.phone || ""}`,20,50)
 
 
 // TABLA
 
-doc.setFillColor(200,160,40)
+let rows = []
 
-doc.rect(20,y,170,8,"F")
-
-doc.setTextColor(255,255,255)
-
-doc.text("Concepto",22,y+5)
-doc.text("Cantidad",90,y+5)
-doc.text("Precio",120,y+5)
-doc.text("Total",160,y+5)
-
-doc.setTextColor(0,0,0)
-
-y+=10
-
-
-// PUNTOS
-
-doc.text(`Puntos ${cable}`,22,y)
-doc.text(String(points),95,y)
-doc.text("-",125,y)
-doc.text(String(points*(cable==="Cat6"?95:cable==="Cat6A"?110:140)),160,y)
-
-y+=8
-
-
-// INSTALACION
-
-doc.text("Instalación",22,y)
-doc.text("-",95,y)
-doc.text("-",125,y)
-doc.text(String((subtotal*0.2).toFixed(0)),160,y)
-
-y+=8
-
-
-// RACK
+rows.push([
+`Puntos ${cable}`,
+points,
+"-",
+(points * (cable==="Cat6"?95:cable==="Cat6A"?110:140))
+])
 
 if(rack){
-
-doc.text("Rack",22,y)
-doc.text("1",95,y)
-doc.text(String(rack),125,y)
-doc.text(String(rack),160,y)
-
-y+=8
-
+rows.push(["Rack",1,rack,rack])
 }
 
-
-// EQUIPOS
-
 if(switchInstall){
-
-doc.text("Instalación switch",22,y)
-doc.text("1",95,y)
-doc.text("60",125,y)
-doc.text("60",160,y)
-
-y+=8
-
+rows.push(["Instalación switch",1,60,60])
 }
 
 if(routerInstall){
-
-doc.text("Instalación router",22,y)
-doc.text("1",95,y)
-doc.text("60",125,y)
-doc.text("60",160,y)
-
-y+=8
-
+rows.push(["Instalación router",1,60,60])
 }
 
 if(config){
-
-doc.text("Configuración red",22,y)
-doc.text("1",95,y)
-doc.text("120",125,y)
-doc.text("120",160,y)
-
-y+=8
-
+rows.push(["Configuración red",1,120,120])
 }
 
 
-y+=5
+autoTable(doc,{
+startY:60,
+head:[["Concepto","Cantidad","Precio (€)","Total (€)"]],
+body:rows,
+theme:"grid",
+headStyles:{
+fillColor:[200,160,40]
+}
+})
 
-doc.line(20,y,190,y)
 
-y+=10
+let finalY = doc.lastAutoTable.finalY + 10
 
 
-doc.text(`Subtotal: ${subtotal.toFixed(2)} €`,20,y)
-y+=7
-
-doc.text(`IVA (21%): ${iva.toFixed(2)} €`,20,y)
-y+=10
+doc.text(`Subtotal: ${subtotal.toFixed(2)} €`,20,finalY)
+doc.text(`IVA (21%): ${iva.toFixed(2)} €`,20,finalY+7)
 
 doc.setFontSize(14)
 
-doc.text(`Total: ${total.toFixed(2)} €`,20,y)
+doc.text(`Total: ${total.toFixed(2)} €`,20,finalY+16)
 
 
-y+=15
-
-doc.line(20,y,190,y)
-
-y+=10
+doc.line(20,finalY+25,190,finalY+25)
 
 doc.setFontSize(10)
 
-doc.text("Validez del presupuesto: 15 días",20,y)
-y+=6
+doc.text("Validez del presupuesto: 15 días",20,finalY+35)
+doc.text("Garantía: 3 meses sobre trabajos realizados.",20,finalY+41)
 
-doc.text("Garantía: 3 meses sobre trabajos realizados.",20,y)
-
-y+=12
-
-doc.text("Anton Shapoval",20,y)
-y+=6
-
-doc.text("Badalona, Cataluña",20,y)
-
+doc.text("Anton Shapoval",20,finalY+52)
+doc.text("Badalona, Cataluña",20,finalY+58)
 
 doc.save("presupuesto-cablecore.pdf")
 
