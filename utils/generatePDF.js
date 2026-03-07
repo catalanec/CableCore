@@ -9,7 +9,7 @@ doc.setFontSize(26)
 doc.text("CableCore",20,30)
 
 doc.setDrawColor(201,162,39)
-doc.line(20,35,190,35)
+doc.line(20,35,180,35)
 
 doc.setFontSize(12)
 
@@ -28,7 +28,7 @@ body:[
 
 theme:"grid",
 
-tableWidth:170,
+tableWidth:160,
 
 margin:{left:20,right:20},
 
@@ -43,10 +43,10 @@ textColor:255
 },
 
 columnStyles:{
-0:{cellWidth:80},
+0:{cellWidth:75},
 1:{cellWidth:25},
 2:{cellWidth:30},
-3:{cellWidth:35}
+3:{cellWidth:30}
 }
 
 })
@@ -59,7 +59,7 @@ doc.text(`IVA (21%): ${data.iva.toFixed(2)} €`,20,y+10)
 doc.setFontSize(16)
 doc.text(`Total: ${data.total.toFixed(2)} €`,20,y+25)
 
-doc.line(20,y+35,190,y+35)
+doc.line(20,y+35,180,y+35)
 
 doc.setFontSize(11)
 
