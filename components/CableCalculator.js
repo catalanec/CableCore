@@ -348,6 +348,19 @@ Descargar PDF
 
 </button>
 
+<button
+style={{
+marginTop:"15px",
+background:"#facc15",
+border:"none",
+padding:"14px 24px",
+borderRadius:"10px",
+cursor:"pointer",
+fontWeight:"bold"
+}}
+>
+Guardar presupuesto
+</button>
 
 </div>
 
