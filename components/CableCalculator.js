@@ -36,13 +36,13 @@ if(installation==="superficial"){
 cost += canaleta * 8
 }
 
-if(installation==="techo"){
-cost += points * 12
+if(installation==="empotrado"){
+cost += regata * 22
 cost += corrugado * 4.5
 }
 
-if(installation==="empotrado"){
-cost += regata * 22
+if(installation==="techo"){
+cost += points * 12
 cost += corrugado * 4.5
 }
 
@@ -89,21 +89,23 @@ return(
 
 <div className="bg-[#0c2438] p-8 rounded-xl mt-8 text-white">
 
-<h2 className="text-2xl mb-6">Calculadora profesional</h2>
+<h2 className="text-2xl mb-6">
+Calculadora profesional
+</h2>
 
-<div className="grid md:grid-cols-2 gap-6">
+<div className="grid grid-cols-2 gap-6">
 
-<div className="flex flex-col">
+<div>
 <label>Puntos de red</label>
 <input
 type="number"
 value={points}
 onChange={(e)=>setPoints(Number(e.target.value))}
-className="p-2 rounded text-black"
+className="w-full p-2 rounded text-black"
 />
 </div>
 
-<div className="flex flex-col">
+<div>
 <label>Tipo de cable</label>
 <select
 value={cableType}
@@ -116,80 +118,88 @@ if(e.target.value==="Cat6a") setCablePrice(120)
 if(e.target.value==="Cat7") setCablePrice(140)
 
 }}
-className="p-2 rounded text-black"
+className="w-full p-2 rounded text-black"
 >
+
 <option value="Cat6">Cat6</option>
 <option value="Cat6a">Cat6a</option>
 <option value="Cat7">Cat7</option>
+
 </select>
 </div>
 
-<div className="flex flex-col">
+<div>
 <label>Tipo instalación</label>
 <select
 value={installation}
 onChange={(e)=>setInstallation(e.target.value)}
-className="p-2 rounded text-black"
+className="w-full p-2 rounded text-black"
 >
+
 <option value="superficial">Superficial</option>
-<option value="techo">Techo técnico</option>
 <option value="empotrado">Empotrado</option>
+<option value="techo">Techo técnico</option>
+
 </select>
 </div>
 
-<div className="flex flex-col">
+<div>
 <label>Metros canaleta</label>
 <input
 type="number"
 value={canaleta}
 onChange={(e)=>setCanaleta(Number(e.target.value))}
-className="p-2 rounded text-black"
+className="w-full p-2 rounded text-black"
 />
 </div>
 
-<div className="flex flex-col">
+<div>
 <label>Metros regata</label>
 <input
 type="number"
 value={regata}
 onChange={(e)=>setRegata(Number(e.target.value))}
-className="p-2 rounded text-black"
+className="w-full p-2 rounded text-black"
 />
 </div>
 
-<div className="flex flex-col">
+<div>
 <label>Metros tubo corrugado</label>
 <input
 type="number"
 value={corrugado}
 onChange={(e)=>setCorrugado(Number(e.target.value))}
-className="p-2 rounded text-black"
+className="w-full p-2 rounded text-black"
 />
 </div>
 
-<div className="flex flex-col">
+<div>
 <label>Rack</label>
 <select
 value={rack}
 onChange={(e)=>setRack(Number(e.target.value))}
-className="p-2 rounded text-black"
+className="w-full p-2 rounded text-black"
 >
+
 <option value="0">No incluido</option>
 <option value="250">Rack 6U</option>
 <option value="400">Rack 9U</option>
+
 </select>
 </div>
 
-<div className="flex flex-col">
+<div>
 <label>Urgencia</label>
 <select
 value={urgency}
 onChange={(e)=>setUrgency(Number(e.target.value))}
-className="p-2 rounded text-black"
+className="w-full p-2 rounded text-black"
 >
+
 <option value="1">Normal</option>
 <option value="1.3">Urgente</option>
 <option value="1.5">Muy urgente</option>
+
 </select>
 </div>
 
@@ -197,7 +207,7 @@ className="p-2 rounded text-black"
 
 <h3 className="mt-6">Equipos</h3>
 
-<div className="flex gap-6 mt-2 flex-wrap">
+<div className="flex gap-6 mt-2">
 
 <label>
 <input
@@ -243,17 +253,15 @@ client,
 points,
 cableType,
 cablePrice,
-canaleta,
-regata,
-corrugado,
-installation,
 subtotal,
 iva,
 total
 })}
 className="bg-white text-black px-4 py-2 rounded mt-4"
 >
+
 Descargar PDF
+
 </button>
 
 </div>
