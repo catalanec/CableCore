@@ -6,8 +6,10 @@ import { generatePDF } from "../utils/generatePDF"
 export default function CableCalculator({ client }) {
 
 const [points,setPoints] = useState(1)
+
 const [cable,setCable] = useState(95)
 const [cableType,setCableType] = useState("Cat6")
+
 const [installation,setInstallation] = useState("superficial")
 
 const [canaleta,setCanaleta] = useState(0)
@@ -91,11 +93,11 @@ return(
 
 <div className="bg-[#142c44] p-8 rounded-xl mt-8">
 
-<h2 className="text-2xl text-center mb-8">
+<h2 className="text-2xl mb-6 text-center">
 Calculadora profesional
 </h2>
 
-<div className="grid md:grid-cols-2 gap-8">
+<div className="grid grid-cols-2 gap-8">
 
 <div className="space-y-4">
 
@@ -197,7 +199,7 @@ className="w-full p-2 rounded text-black"
 
 <div className="space-y-4">
 
-<h3 className="text-lg">Equipos</h3>
+<h3>Equipos</h3>
 
 <label className="block">
 <input
