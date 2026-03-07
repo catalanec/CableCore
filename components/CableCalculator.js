@@ -6,10 +6,8 @@ import { generatePDF } from "../utils/generatePDF"
 export default function CableCalculator({ client }) {
 
 const [points,setPoints] = useState(1)
-
 const [cable,setCable] = useState(95)
 const [cableType,setCableType] = useState("Cat6")
-
 const [installation,setInstallation] = useState("superficial")
 
 const [canaleta,setCanaleta] = useState(0)
@@ -91,13 +89,15 @@ urgency
 
 return(
 
-<div className="mt-8 bg-[#142c44] p-8 rounded-xl">
+<div className="bg-[#142c44] p-8 rounded-xl mt-8">
 
-<h2 className="text-2xl mb-6 text-center">
+<h2 className="text-2xl text-center mb-8">
 Calculadora profesional
 </h2>
 
-<div className="grid grid-cols-2 gap-6">
+<div className="grid md:grid-cols-2 gap-8">
+
+<div className="space-y-4">
 
 <div>
 <label>Puntos de red</label>
@@ -193,8 +193,43 @@ className="w-full p-2 rounded text-black"
 </select>
 </div>
 
-<div>
+</div>
+
+<div className="space-y-4">
+
+<h3 className="text-lg">Equipos</h3>
+
+<label className="block">
+<input
+type="checkbox"
+checked={switchInstall}
+onChange={(e)=>setSwitchInstall(e.target.checked)}
+/>
+ Switch instalación (60€)
+</label>
+
+<label className="block">
+<input
+type="checkbox"
+checked={routerInstall}
+onChange={(e)=>setRouterInstall(e.target.checked)}
+/>
+ Router instalación (60€)
+</label>
+
+<label className="block">
+<input
+type="checkbox"
+checked={config}
+onChange={(e)=>setConfig(e.target.checked)}
+/>
+ Configuración red (120€)
+</label>
+
+<div className="mt-6">
+
 <label>Urgencia</label>
+
 <select
 value={urgency}
 onChange={(e)=>setUrgency(Number(e.target.value))}
@@ -206,40 +241,6 @@ className="w-full p-2 rounded text-black"
 <option value="1.5">Muy urgente</option>
 
 </select>
-</div>
-
-</div>
-
-<div className="mt-8">
-
-<h3 className="mb-2">Equipos</h3>
-
-<label className="block">
-<input
-type="checkbox"
-checked={switchInstall}
-onChange={(e)=>setSwitchInstall(e.target.checked)}
-/>
-Switch instalación (60€)
-</label>
-
-<label className="block">
-<input
-type="checkbox"
-checked={routerInstall}
-onChange={(e)=>setRouterInstall(e.target.checked)}
-/>
-Router instalación (60€)
-</label>
-
-<label className="block">
-<input
-type="checkbox"
-checked={config}
-onChange={(e)=>setConfig(e.target.checked)}
-/>
-Configuración red (120€)
-</label>
 
 </div>
 
@@ -252,8 +253,6 @@ Configuración red (120€)
 Total: {total.toFixed(2)} €
 </h3>
 
-<div className="flex gap-4 mt-6">
-
 <button
 onClick={()=>generatePDF({
 client,
@@ -263,12 +262,14 @@ subtotal,
 iva,
 total
 })}
-className="bg-green-500 px-4 py-2 rounded"
+className="bg-green-500 px-4 py-2 rounded mt-4"
 >
 
 Descargar PDF
 
 </button>
+
+</div>
 
 </div>
 
