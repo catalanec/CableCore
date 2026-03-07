@@ -47,6 +47,10 @@ installCost += regata * 22
 installCost += corrugado * 4.5
 }
 
+if(installation==="industrial"){
+subtotalPoints *= 1.2
+}
+
 let equip = 0
 
 if(switchInstall) equip+=60
@@ -92,21 +96,16 @@ gap:"40px",
 flexWrap:"wrap"
 }}>
 
-{/* LEFT */}
-
 <div style={{flex:1,minWidth:"320px"}}>
 
 <label>Puntos de red</label>
-<input
-type="number"
-value={points}
+<input type="number" value={points}
 onChange={e=>setPoints(Number(e.target.value))}
 style={inputStyle}
 />
 
 <label>Tipo de cable</label>
-<select
-value={cable}
+<select value={cable}
 onChange={e=>setCable(Number(e.target.value))}
 style={inputStyle}
 >
@@ -116,8 +115,7 @@ style={inputStyle}
 </select>
 
 <label>Tipo instalación</label>
-<select
-value={installation}
+<select value={installation}
 onChange={e=>setInstallation(e.target.value)}
 style={inputStyle}
 >
@@ -125,15 +123,13 @@ style={inputStyle}
 <option value="techo">Techo técnico</option>
 <option value="empotrado_existente">Empotrado existente</option>
 <option value="empotrado_nuevo">Empotrado nuevo</option>
+<option value="industrial">Industrial</option>
 </select>
 
 {installation==="superficial" && (
-
 <>
 <label>Metros canaleta</label>
-<input
-type="number"
-value={canaleta}
+<input type="number" value={canaleta}
 onChange={e=>setCanaleta(Number(e.target.value))}
 style={inputStyle}
 />
@@ -141,20 +137,15 @@ style={inputStyle}
 )}
 
 {installation==="empotrado_nuevo" && (
-
 <>
 <label>Metros regata</label>
-<input
-type="number"
-value={regata}
+<input type="number" value={regata}
 onChange={e=>setRegata(Number(e.target.value))}
 style={inputStyle}
 />
 
 <label>Metros tubo corrugado</label>
-<input
-type="number"
-value={corrugado}
+<input type="number" value={corrugado}
 onChange={e=>setCorrugado(Number(e.target.value))}
 style={inputStyle}
 />
@@ -162,12 +153,9 @@ style={inputStyle}
 )}
 
 {installation==="techo" && (
-
 <>
 <label>Metros tubo corrugado</label>
-<input
-type="number"
-value={corrugado}
+<input type="number" value={corrugado}
 onChange={e=>setCorrugado(Number(e.target.value))}
 style={inputStyle}
 />
@@ -175,8 +163,7 @@ style={inputStyle}
 )}
 
 <label>Rack</label>
-<select
-value={rack}
+<select value={rack}
 onChange={e=>setRack(Number(e.target.value))}
 style={inputStyle}
 >
@@ -188,39 +175,39 @@ style={inputStyle}
 
 </div>
 
-{/* RIGHT */}
-
 <div style={{flex:1,minWidth:"320px"}}>
 
 <h3>Equipos</h3>
 
 <label>
-<input type="checkbox" checked={switchInstall}
-onChange={()=>setSwitchInstall(!switchInstall)}/>
- Switch instalación (60€)
+<input type="checkbox"
+checked={switchInstall}
+onChange={()=>setSwitchInstall(!switchInstall)}
+/> Switch instalación (60€)
 </label>
 
 <br/>
 
 <label>
-<input type="checkbox" checked={routerInstall}
-onChange={()=>setRouterInstall(!routerInstall)}/>
- Router instalación (60€)
+<input type="checkbox"
+checked={routerInstall}
+onChange={()=>setRouterInstall(!routerInstall)}
+/> Router instalación (60€)
 </label>
 
 <br/>
 
 <label>
-<input type="checkbox" checked={config}
-onChange={()=>setConfig(!config)}/>
- Configuración red (120€)
+<input type="checkbox"
+checked={config}
+onChange={()=>setConfig(!config)}
+/> Configuración red (120€)
 </label>
 
 <br/><br/>
 
 <label>Urgencia</label>
-<select
-value={urgency}
+<select value={urgency}
 onChange={e=>setUrgency(Number(e.target.value))}
 style={inputStyle}
 >
@@ -270,6 +257,5 @@ Guardar presupuesto
 </div>
 
 </div>
-
 )
 }
