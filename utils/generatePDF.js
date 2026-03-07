@@ -7,18 +7,19 @@ const doc = new jsPDF()
 
 // TITLE
 doc.setFontSize(26)
-doc.text("CableCore",30,30)
+doc.text("CableCore",25,30)
 
 // GOLD LINE TOP
 doc.setDrawColor(201,162,39)
-doc.line(30,35,180,35)
+doc.line(25,35,190,35)
 
 // CLIENT INFO
 doc.setFontSize(12)
 
-doc.text("Presupuesto ID: CC-" + Date.now(),30,50)
-doc.text("Cliente: " + (data.client?.name || ""),30,60)
-doc.text("Teléfono: " + (data.client?.phone || ""),30,70)
+doc.text("Presupuesto ID: CC-" + Date.now(),25,50)
+doc.text("Cliente: " + (data.client?.name || ""),25,60)
+doc.text("Teléfono: " + (data.client?.phone || ""),25,70)
+
 
 // TABLE
 autoTable(doc,{
@@ -34,57 +35,63 @@ body:[
 
 theme:"grid",
 
-tableWidth:150,
+// ДЛИНА ТАБЛИЦЫ (чёрная стрелка)
+tableWidth:165,
 
 margin:{
-left:30,
-right:30
+left:25,
+right:20
 },
 
 styles:{
 fontSize:11,
-cellPadding:6,
-halign:"left"
+cellPadding:4
 },
 
+// ВЫСОТА ЗОЛОТОЙ СТРОКИ (красная стрелка)
 headStyles:{
 fillColor:[201,162,39],
 textColor:255,
-fontStyle:"bold"
+fontSize:11,
+cellPadding:3
 },
 
 columnStyles:{
-0:{cellWidth:75},
-1:{cellWidth:20, halign:"center"},
+0:{cellWidth:90},
+1:{cellWidth:25, halign:"center"},
 2:{cellWidth:25, halign:"center"},
-3:{cellWidth:30, halign:"center"}
+3:{cellWidth:25, halign:"center"}
 }
 
 })
+
 
 // TOTALS
 let y = doc.lastAutoTable.finalY + 20
 
 doc.setFontSize(12)
 
-doc.text(`Subtotal: ${data.subtotal.toFixed(2)} €`,30,y)
-doc.text(`IVA (21%): ${data.iva.toFixed(2)} €`,30,y+10)
+doc.text(`Subtotal: ${data.subtotal.toFixed(2)} €`,25,y)
+doc.text(`IVA (21%): ${data.iva.toFixed(2)} €`,25,y+10)
 
 doc.setFontSize(16)
-doc.text(`Total: ${data.total.toFixed(2)} €`,30,y+25)
+doc.text(`Total: ${data.total.toFixed(2)} €`,25,y+25)
+
 
 // GOLD LINE BOTTOM
 doc.setDrawColor(201,162,39)
-doc.line(30,y+35,180,y+35)
+doc.line(25,y+35,190,y+35)
+
 
 // FOOTER
 doc.setFontSize(11)
 
-doc.text("Validez del presupuesto: 15 días",30,y+50)
-doc.text("Garantía: 3 meses sobre trabajos realizados.",30,y+60)
+doc.text("Validez del presupuesto: 15 días",25,y+50)
+doc.text("Garantía: 3 meses sobre trabajos realizados.",25,y+60)
 
-doc.text("Anton Shapoval",30,y+80)
-doc.text("Badalona, Cataluña",30,y+90)
+doc.text("Anton Shapoval",25,y+80)
+doc.text("Badalona, Cataluña",25,y+90)
+
 
 // SAVE
 doc.save("presupuesto.pdf")
