@@ -1,4 +1,6 @@
-import { useState } from "react"
+"use client"
+
+import { useState, useEffect } from "react"
 import { generatePDF } from "../utils/generatePDF"
 
 export default function CableCalculator({ client }) {
@@ -19,343 +21,246 @@ const [config,setConfig] = useState(false)
 
 const [urgency,setUrgency] = useState(1)
 
+const [subtotal,setSubtotal] = useState(0)
+const [iva,setIva] = useState(0)
+const [total,setTotal] = useState(0)
 
-
-// CALCULATIONS
+useEffect(()=>{
 
 let subtotalPoints = points * cable
 let installCost = 0
 
-
-// SUPERFICIAL
 if(installation==="superficial"){
 installCost += canaleta * 8
 }
 
-
-// TECHO TECNICO
 if(installation==="techo"){
-installCost += points * 12
 installCost += corrugado * 4.5
 }
 
-
-// EMPOTRADO EXISTENTE
 if(installation==="empotrado_existente"){
 installCost += points * 20
 }
 
-
-// EMPOTRADO NUEVO
 if(installation==="empotrado_nuevo"){
 installCost += regata * 22
 installCost += corrugado * 4.5
 }
 
-
-// INDUSTRIAL
-if(installation==="industrial"){
-subtotalPoints *= 1.2
-}
-
-
 let equip = 0
 
-if(switchInstall) equip += 60
-if(routerInstall) equip += 60
-if(config) equip += 120
+if(switchInstall) equip+=60
+if(routerInstall) equip+=60
+if(config) equip+=120
 
+let subtotalCalc = (subtotalPoints + installCost + rack + equip) * urgency
+let ivaCalc = subtotalCalc * 0.21
+let totalCalc = subtotalCalc + ivaCalc
 
-let subtotal = (subtotalPoints + installCost + rack + equip) * urgency
-let iva = subtotal * 0.21
-let total = subtotal + iva
+setSubtotal(subtotalCalc)
+setIva(ivaCalc)
+setTotal(totalCalc)
 
-
-
-function handlePDF(){
-
-generatePDF({
-client,
-points,
-cable:
-cable===95 ? "Cat6" :
-cable===110 ? "Cat6A" :
-"Cat7",
-
-installation,
-corrugado,
-regata,
-canaleta,
+},[
+points,cable,installation,
+canaleta,regata,corrugado,
 rack,
-switchInstall,
-routerInstall,
-config,
-subtotal,
-iva,
-total
-})
+switchInstall,routerInstall,config,
+urgency
+])
 
+const inputStyle={
+width:"100%",
+padding:"14px",
+marginBottom:"18px",
+borderRadius:"10px",
+border:"1px solid #d1d5db",
+background:"#e5e7eb",
+color:"#111827",
+fontSize:"14px",
+boxSizing:"border-box"
 }
-
-
 
 return(
 
-<div
-style={{
-background:"#0e2744",
+<div style={{
+background:"#162b46",
 padding:"40px",
-borderRadius:"18px"
-}}
->
+borderRadius:"20px",
+display:"flex",
+gap:"40px",
+flexWrap:"wrap"
+}}>
 
-<h2 style={{textAlign:"center",marginBottom:"30px"}}>
-Calculadora profesional
-</h2>
+{/* LEFT */}
 
-
-<div
-style={{
-display:"grid",
-gridTemplateColumns:"1fr 1fr",
-gap:"40px"
-}}
->
-
-
-{/* LEFT COLUMN */}
-
-
-<div>
+<div style={{flex:1,minWidth:"320px"}}>
 
 <label>Puntos de red</label>
-
 <input
 type="number"
 value={points}
-onChange={(e)=>setPoints(Number(e.target.value))}
-style={{width:"100%",padding:"10px",borderRadius:"8px"}}
+onChange={e=>setPoints(Number(e.target.value))}
+style={inputStyle}
 />
 
-
-<br/><br/>
-
 <label>Tipo de cable</label>
-
 <select
-onChange={(e)=>setCable(Number(e.target.value))}
-style={{width:"100%",padding:"10px",borderRadius:"8px"}}
+value={cable}
+onChange={e=>setCable(Number(e.target.value))}
+style={inputStyle}
 >
-
-<option value="95">Cat6 – 95€</option>
-<option value="110">Cat6A – 110€</option>
-<option value="140">Cat7 – 140€</option>
-
+<option value={95}>Cat6 – 95€</option>
+<option value={110}>Cat6A – 110€</option>
+<option value={140}>Cat7 – 140€</option>
 </select>
 
-
-<br/><br/>
-
 <label>Tipo instalación</label>
-
 <select
 value={installation}
-onChange={(e)=>setInstallation(e.target.value)}
-style={{width:"100%",padding:"10px",borderRadius:"8px"}}
+onChange={e=>setInstallation(e.target.value)}
+style={inputStyle}
 >
-
 <option value="superficial">Superficial</option>
 <option value="techo">Techo técnico</option>
 <option value="empotrado_existente">Empotrado existente</option>
 <option value="empotrado_nuevo">Empotrado nuevo</option>
-<option value="industrial">Industrial</option>
-
 </select>
-
-
-
-{/* CANALETA */}
 
 {installation==="superficial" && (
 
 <>
-<br/><br/>
-
 <label>Metros canaleta</label>
-
 <input
 type="number"
 value={canaleta}
-onChange={(e)=>setCanaleta(Number(e.target.value))}
-style={{width:"100%",padding:"10px",borderRadius:"8px"}}
+onChange={e=>setCanaleta(Number(e.target.value))}
+style={inputStyle}
 />
-
 </>
-
 )}
-
-
-
-{/* REGATA */}
 
 {installation==="empotrado_nuevo" && (
 
 <>
-<br/><br/>
-
 <label>Metros regata</label>
-
 <input
 type="number"
 value={regata}
-onChange={(e)=>setRegata(Number(e.target.value))}
-style={{width:"100%",padding:"10px",borderRadius:"8px"}}
+onChange={e=>setRegata(Number(e.target.value))}
+style={inputStyle}
 />
 
-</>
-
-)}
-
-
-
-{/* CORRUGADO */}
-
-{(installation==="empotrado_nuevo" || installation==="techo") && (
-
-<>
-<br/><br/>
-
 <label>Metros tubo corrugado</label>
-
 <input
 type="number"
 value={corrugado}
-onChange={(e)=>setCorrugado(Number(e.target.value))}
-style={{width:"100%",padding:"10px",borderRadius:"8px"}}
+onChange={e=>setCorrugado(Number(e.target.value))}
+style={inputStyle}
 />
-
 </>
-
 )}
 
+{installation==="techo" && (
 
-
-<br/><br/>
+<>
+<label>Metros tubo corrugado</label>
+<input
+type="number"
+value={corrugado}
+onChange={e=>setCorrugado(Number(e.target.value))}
+style={inputStyle}
+/>
+</>
+)}
 
 <label>Rack</label>
-
 <select
-onChange={(e)=>setRack(Number(e.target.value))}
-style={{width:"100%",padding:"10px",borderRadius:"8px"}}
+value={rack}
+onChange={e=>setRack(Number(e.target.value))}
+style={inputStyle}
 >
-
-<option value="0">No incluido</option>
-<option value="150">Rack 6U – 150€</option>
-<option value="220">Rack 9U – 220€</option>
-<option value="290">Rack 12U – 290€</option>
-
+<option value={0}>No incluido</option>
+<option value={150}>Rack 6U – 150€</option>
+<option value={220}>Rack 9U – 220€</option>
+<option value={290}>Rack 12U – 290€</option>
 </select>
 
 </div>
 
+{/* RIGHT */}
 
-
-{/* RIGHT COLUMN */}
-
-
-<div>
+<div style={{flex:1,minWidth:"320px"}}>
 
 <h3>Equipos</h3>
 
 <label>
-<input
-type="checkbox"
-checked={switchInstall}
-onChange={()=>setSwitchInstall(!switchInstall)}
-/>
-Switch instalación (60€)
+<input type="checkbox" checked={switchInstall}
+onChange={()=>setSwitchInstall(!switchInstall)}/>
+ Switch instalación (60€)
 </label>
 
 <br/>
 
 <label>
-<input
-type="checkbox"
-checked={routerInstall}
-onChange={()=>setRouterInstall(!routerInstall)}
-/>
-Router instalación (60€)
+<input type="checkbox" checked={routerInstall}
+onChange={()=>setRouterInstall(!routerInstall)}/>
+ Router instalación (60€)
 </label>
 
 <br/>
 
 <label>
-<input
-type="checkbox"
-checked={config}
-onChange={()=>setConfig(!config)}
-/>
-Configuración red (120€)
+<input type="checkbox" checked={config}
+onChange={()=>setConfig(!config)}/>
+ Configuración red (120€)
 </label>
-
-
 
 <br/><br/>
 
 <label>Urgencia</label>
-
 <select
-onChange={(e)=>setUrgency(Number(e.target.value))}
-style={{width:"100%",padding:"10px",borderRadius:"8px"}}
+value={urgency}
+onChange={e=>setUrgency(Number(e.target.value))}
+style={inputStyle}
 >
-
-<option value="1">Normal</option>
-<option value="1.2">Urgente (+20%)</option>
-<option value="1.4">Muy urgente (+40%)</option>
-
+<option value={1}>Normal</option>
+<option value={1.2}>Urgente +20%</option>
+<option value={1.4}>Muy urgente +40%</option>
 </select>
 
-
-
-<hr style={{margin:"25px 0"}}/>
-
+<hr/>
 
 <p>Subtotal: {subtotal.toFixed(2)}€</p>
-
 <p>IVA (21%): {iva.toFixed(2)}€</p>
-
 
 <h2 style={{color:"#facc15"}}>
 Total: {total.toFixed(2)}€
 </h2>
 
+<br/>
 
 <button
-onClick={handlePDF}
+onClick={()=>generatePDF({client,points,cable,installation,subtotal,iva,total})}
 style={{
-marginTop:"20px",
 background:"#22c55e",
 border:"none",
 padding:"14px 24px",
 borderRadius:"10px",
-cursor:"pointer",
+color:"white",
 fontWeight:"bold",
-color:"white"
+marginRight:"10px"
 }}
 >
-
 Descargar PDF
-
 </button>
 
 <button
 style={{
-marginTop:"15px",
 background:"#facc15",
 border:"none",
 padding:"14px 24px",
 borderRadius:"10px",
-cursor:"pointer",
 fontWeight:"bold"
 }}
 >
@@ -366,8 +271,5 @@ Guardar presupuesto
 
 </div>
 
-</div>
-
 )
-
 }
