@@ -32,9 +32,9 @@ export default function Footer() {
                             <Image
                                 src="/logocablecore.png"
                                 alt="CableCore"
-                                width={80}
-                                height={80}
-                                className="w-20 h-20 object-contain"
+                                width={160}
+                                height={107}
+                                className="w-36 h-auto object-contain"
                             />
                             <span className="font-heading font-bold text-lg text-white">
                                 Cable<span className="text-brand-gold">Core</span>
