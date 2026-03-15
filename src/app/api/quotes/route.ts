@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { sendQuoteNotification } from '@/lib/email';
 
 export async function POST(request: NextRequest) {
     try {
@@ -8,6 +9,10 @@ export async function POST(request: NextRequest) {
         if (!data.client_name || !data.client_phone || !data.client_email) {
             return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
         }
+
+        // Generate quote number
+        const now = new Date();
+        const quoteNumber = `CC-${now.getFullYear()}${String(now.getMonth()+1).padStart(2,'0')}${String(now.getDate()).padStart(2,'0')}-${Math.floor(Math.random()*900+100)}`;
 
         // If Supabase is configured, save to database
         const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
@@ -54,13 +59,8 @@ export async function POST(request: NextRequest) {
                 console.error('Supabase error:', error);
                 return NextResponse.json({ error: 'Database error' }, { status: 500 });
             }
-        }
 
-        // Also save lead
-        if (supabaseUrl && supabaseKey) {
-            const { createClient } = await import('@supabase/supabase-js');
-            const supabase = createClient(supabaseUrl, supabaseKey);
-
+            // Also save lead
             await supabase.from('leads').insert({
                 name: data.client_name,
                 phone: data.client_phone,
@@ -71,7 +71,20 @@ export async function POST(request: NextRequest) {
             });
         }
 
-        return NextResponse.json({ success: true });
+        // Send email notifications (admin + client)
+        await sendQuoteNotification({
+            clientName: data.client_name,
+            clientPhone: data.client_phone,
+            clientEmail: data.client_email,
+            cableType: data.cableType,
+            cableMeters: data.cableMeters,
+            networkPoints: data.points,
+            installationType: data.installationType,
+            total: data.total,
+            quoteNumber,
+        });
+
+        return NextResponse.json({ success: true, quoteNumber });
     } catch (error) {
         console.error('API error:', error);
         return NextResponse.json({ error: 'Server error' }, { status: 500 });

@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { sendLeadNotification } from '@/lib/email';
 
 export async function POST(request: NextRequest) {
     try {
@@ -21,7 +22,7 @@ export async function POST(request: NextRequest) {
                 email: data.email,
                 service: data.service || null,
                 message: data.message || null,
-                source: 'contact_form',
+                source: data.source || 'contact_form',
                 status: 'new',
             });
 
@@ -30,6 +31,16 @@ export async function POST(request: NextRequest) {
                 return NextResponse.json({ error: 'Database error' }, { status: 500 });
             }
         }
+
+        // Send email notification to admin
+        await sendLeadNotification({
+            name: data.name,
+            phone: data.phone,
+            email: data.email,
+            service: data.service,
+            message: data.message,
+            source: data.source || 'contact_form',
+        });
 
         return NextResponse.json({ success: true });
     } catch (error) {
