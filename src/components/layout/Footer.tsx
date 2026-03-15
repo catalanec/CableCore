@@ -1,20 +1,26 @@
 import { useTranslations } from 'next-intl';
+import { Link } from '@/i18n/routing';
 import Image from 'next/image';
 
-const cities = [
-    'Barcelona', 'Hospitalet', 'Badalona', 'Sabadell', 'Terrassa',
-    'Mataró', 'Granollers', 'Cornellà', 'Sant Cugat', 'El Prat',
+const services = [
+    { href: '/servicios', label: 'cabling' },
+    { href: '/servicios', label: 'home' },
+    { href: '/servicios', label: 'office' },
+    { href: '/servicios', label: 'retail' },
 ];
 
-const services = [
-    { key: 'home', label: 'Cableado doméstico' },
-    { key: 'office', label: 'Redes de oficina' },
-    { key: 'retail', label: 'Retail y comercio' },
-    { key: 'business', label: 'Empresas y PYME' },
+const companyLinks = [
+    { href: '/nosotros', key: 'about' },
+    { href: '/proceso', key: 'process' },
+    { href: '/proyectos', key: 'projects' },
+    { href: '/blog', key: 'blog' },
+    { href: '/contacto', key: 'contact' },
+    { href: '/calculator', key: 'calculator' },
 ];
 
 export default function Footer() {
     const t = useTranslations('footer');
+    const tn = useTranslations('nav');
 
     return (
         <footer className="bg-brand-dark border-t border-border-subtle relative z-10">
@@ -22,7 +28,7 @@ export default function Footer() {
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
                     {/* Brand */}
                     <div className="lg:col-span-1">
-                        <div className="flex items-center gap-2.5 mb-4">
+                        <Link href="/" className="flex items-center gap-2.5 mb-4">
                             <Image
                                 src="/logocablecore.png"
                                 alt="CableCore"
@@ -33,7 +39,7 @@ export default function Footer() {
                             <span className="font-heading font-bold text-lg text-white">
                                 Cable<span className="text-brand-gold">Core</span>
                             </span>
-                        </div>
+                        </Link>
                         <p className="text-sm text-brand-gold-muted leading-relaxed mb-4">
                             {t('desc')}
                         </p>
@@ -47,22 +53,27 @@ export default function Footer() {
                         <h4 className="font-heading font-semibold text-white mb-4">{t('services')}</h4>
                         <ul className="space-y-2.5">
                             {services.map((s) => (
-                                <li key={s.key}>
-                                    <a href="#services" className="text-sm text-brand-gold-muted hover:text-brand-gold transition-colors">
-                                        {s.label}
-                                    </a>
+                                <li key={s.label}>
+                                    <Link href={s.href} className="text-sm text-brand-gold-muted hover:text-brand-gold transition-colors">
+                                        {s.label === 'cabling' ? 'Cableado estructurado' :
+                                         s.label === 'home' ? 'Redes domésticas' :
+                                         s.label === 'office' ? 'Redes de oficina' :
+                                         'Retail y comercio'}
+                                    </Link>
                                 </li>
                             ))}
                         </ul>
                     </div>
 
-                    {/* Coverage */}
+                    {/* Company */}
                     <div>
                         <h4 className="font-heading font-semibold text-white mb-4">{t('company')}</h4>
                         <ul className="space-y-2.5">
-                            {cities.slice(0, 6).map((city) => (
-                                <li key={city}>
-                                    <span className="text-sm text-brand-gold-muted">{city}</span>
+                            {companyLinks.map((item) => (
+                                <li key={item.key}>
+                                    <Link href={item.href} className="text-sm text-brand-gold-muted hover:text-brand-gold transition-colors">
+                                        {tn(item.key)}
+                                    </Link>
                                 </li>
                             ))}
                         </ul>

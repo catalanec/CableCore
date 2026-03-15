@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useTranslations, useLocale } from 'next-intl';
-import { usePathname, useRouter } from '@/i18n/routing';
+import { usePathname, useRouter, Link } from '@/i18n/routing';
 import Image from 'next/image';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -27,11 +27,13 @@ export default function Header() {
     }, []);
 
     const navItems = [
-        { href: '#services', label: t('services') },
-        { href: '#trust', label: t('process') },
-        { href: '#process', label: t('process') },
-        { href: '#testimonials', label: t('contact') },
-        { href: '#coverage', label: t('calculator') },
+        { href: '/servicios', label: t('services') },
+        { href: '/proceso', label: t('process') },
+        { href: '/proyectos', label: t('projects') },
+        { href: '/nosotros', label: t('about') },
+        { href: '/contacto', label: t('contact') },
+        { href: '/blog', label: 'Blog' },
+        { href: '/calculator', label: t('calculator') },
     ];
 
     const switchLocale = (newLocale: string) => {
@@ -47,7 +49,7 @@ export default function Header() {
         >
             <div className="container-custom flex items-center justify-between h-16 lg:h-20">
                 {/* Logo */}
-                <a href="#hero" className="flex items-center gap-2.5 group">
+                <Link href="/" className="flex items-center gap-2.5 group">
                     <Image
                         src="/logocablecore.png"
                         alt="CableCore"
@@ -58,24 +60,22 @@ export default function Header() {
                     <span className="font-heading font-bold text-lg lg:text-xl text-white group-hover:text-brand-gold transition-colors">
                         Cable<span className="text-brand-gold">Core</span>
                     </span>
-                </a>
+                </Link>
 
                 {/* Desktop Nav */}
                 <nav className="hidden lg:flex items-center gap-1">
-                    {[
-                        { href: '#services', label: t('services') },
-                        { href: '#trust', label: 'Ventajas' },
-                        { href: '#process', label: t('process') },
-                        { href: '#testimonials', label: 'Opiniones' },
-                        { href: '#coverage', label: 'Cobertura' },
-                    ].map((item) => (
-                        <a
+                    {navItems.map((item) => (
+                        <Link
                             key={item.href}
                             href={item.href}
-                            className="px-3 py-2 text-sm text-gray-300 hover:text-brand-gold transition-colors rounded-lg hover:bg-white/[0.03]"
+                            className={`px-3 py-2 text-sm rounded-lg transition-colors ${
+                                pathname === item.href
+                                    ? 'text-brand-gold bg-white/[0.05]'
+                                    : 'text-gray-300 hover:text-brand-gold hover:bg-white/[0.03]'
+                            }`}
                         >
                             {item.label}
-                        </a>
+                        </Link>
                     ))}
                 </nav>
 
@@ -98,12 +98,12 @@ export default function Header() {
                     </div>
 
                     {/* CTA Button */}
-                    <a
-                        href="#quote"
+                    <Link
+                        href="/contacto"
                         className="hidden sm:inline-flex btn-gold text-sm px-5 py-2.5"
                     >
                         {t('quote')}
-                    </a>
+                    </Link>
 
                     {/* Mobile Menu Toggle */}
                     <button
@@ -132,26 +132,23 @@ export default function Header() {
                         className="lg:hidden bg-[rgba(9,9,11,0.98)] backdrop-blur-xl border-t border-border-subtle"
                     >
                         <div className="container-custom py-4 flex flex-col gap-1">
-                            {[
-                                { href: '#services', label: t('services') },
-                                { href: '#trust', label: 'Ventajas' },
-                                { href: '#process', label: t('process') },
-                                { href: '#testimonials', label: 'Opiniones' },
-                                { href: '#coverage', label: 'Cobertura' },
-                                { href: '#quote', label: t('contact') },
-                            ].map((item) => (
-                                <a
+                            {navItems.map((item) => (
+                                <Link
                                     key={item.href}
                                     href={item.href}
                                     onClick={() => setMobileOpen(false)}
-                                    className="px-4 py-3 text-gray-300 hover:text-brand-gold hover:bg-white/[0.03] rounded-lg transition-colors"
+                                    className={`px-4 py-3 rounded-lg transition-colors ${
+                                        pathname === item.href
+                                            ? 'text-brand-gold bg-white/[0.05]'
+                                            : 'text-gray-300 hover:text-brand-gold hover:bg-white/[0.03]'
+                                    }`}
                                 >
                                     {item.label}
-                                </a>
+                                </Link>
                             ))}
-                            <a href="#quote" className="btn-gold text-center mt-2">
+                            <Link href="/contacto" className="btn-gold text-center mt-2">
                                 {t('quote')}
-                            </a>
+                            </Link>
                         </div>
                     </motion.div>
                 )}

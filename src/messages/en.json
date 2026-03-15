@@ -11,7 +11,8 @@
         "about": "About",
         "contact": "Contact",
         "calculator": "Calculator",
-        "quote": "Free Quote"
+        "quote": "Free Quote",
+        "blog": "Blog"
     },
     "hero": {
         "badge": "Barcelona & Surroundings",
@@ -185,5 +186,201 @@
         "company": "Company",
         "contactTitle": "Contact",
         "rights": "All rights reserved."
+    },
+    "servicesPage": {
+        "label": "All our services",
+        "title": "Professional solutions for",
+        "titleHighlight": "network & cabling",
+        "subtitle": "From a single Ethernet outlet to complete enterprise infrastructure — we cover all your connectivity needs.",
+        "ctaCalc": "Calculate quote",
+        "ctaTitle": "Need an",
+        "ctaTitleHighlight": "installation?",
+        "ctaSubtitle": "Request a free, no-obligation quote. We respond within 24 hours.",
+        "items": {
+            "cabling": {
+                "title": "Structured cabling",
+                "desc": "Certified Cat6, Cat6A and Cat7 cable installation. Each point includes RJ45 keystone, wall plate and Ethernet cable."
+            },
+            "home": {
+                "title": "Home networks",
+                "desc": "Fast and stable internet throughout your home. Network points, Wi-Fi mesh and Smart Home."
+            },
+            "office": {
+                "title": "Office networks",
+                "desc": "Professional infrastructure for maximum productivity. Certified cabling, racks and VoIP."
+            },
+            "retail": {
+                "title": "Retail & commerce",
+                "desc": "Connectivity for shops, restaurants and points of sale. POS, Wi-Fi and IP cameras."
+            },
+            "business": {
+                "title": "Businesses (SME)",
+                "desc": "Scalable high-performance networks. Fiber optics, server rooms and Fluke certification."
+            },
+            "rj45": {
+                "title": "RJ45 network outlets",
+                "desc": "Professional network outlet installation. Each point certified with professional equipment."
+            },
+            "rack": {
+                "title": "Racks & patch panels",
+                "desc": "Wall-mount and floor-standing rack cabinet installation. Professional cable organization."
+            },
+            "network": {
+                "title": "Network equipment",
+                "desc": "Installation and configuration of switches, routers and professional Wi-Fi access points."
+            },
+            "management": {
+                "title": "Cable management",
+                "desc": "Cable trays, corrugated tubes, rack organization and professional labeling of all cables."
+            }
+        }
+    },
+    "processPage": {
+        "label": "How we work",
+        "title": "Your installation step by",
+        "titleHighlight": "step",
+        "subtitle": "A clear, professional and transparent process — from the first consultation to final handover with certification.",
+        "steps": [
+            {
+                "title": "Free consultation",
+                "desc": "We contact you, analyze your needs and arrange a free technical visit to the space."
+            },
+            {
+                "title": "Technical survey",
+                "desc": "We visit the site, measure, assess existing infrastructure and design the optimal solution."
+            },
+            {
+                "title": "Detailed quote",
+                "desc": "We deliver a clear, detailed quote with materials, labor and timelines. No surprises."
+            },
+            {
+                "title": "Professional installation",
+                "desc": "Our team executes the installation with top-quality materials and impeccable finishes."
+            },
+            {
+                "title": "Certification & testing",
+                "desc": "We certify every network point with Fluke equipment. We verify speed, continuity and standards compliance."
+            },
+            {
+                "title": "Handover & support",
+                "desc": "We deliver complete documentation, train the team and offer post-installation technical support."
+            }
+        ],
+        "guarantee1": {
+            "title": "5-year warranty",
+            "desc": "Materials and workmanship covered for five full years."
+        },
+        "guarantee2": {
+            "title": "Certification included",
+            "desc": "Every network point certified with deliverable Fluke report."
+        },
+        "guarantee3": {
+            "title": "Response in 24h",
+            "desc": "Quote and technical assistance within one business day."
+        },
+        "ctaTitle": "Ready to",
+        "ctaTitleHighlight": "get started?",
+        "ctaSubtitle": "Request your free consultation — we visit, measure and quote at no obligation."
+    },
+    "projectsPage": {
+        "label": "Our work",
+        "title": "Completed",
+        "titleHighlight": "projects",
+        "subtitle": "Each installation showcases our commitment to quality, cleanliness and professionalism.",
+        "stats": {
+            "installations": "Installations",
+            "years": "Years of experience",
+            "certified": "Certified",
+            "warranty": "Years warranty"
+        },
+        "items": [
+            {
+                "title": "Tech Startup Office — Eixample",
+                "type": "Office",
+                "points": "42 points",
+                "cable": "Cat6A",
+                "desc": "Complete structured cabling for a tech startup. Server room, VLANs and corporate Wi-Fi."
+            },
+            {
+                "title": "Dental Clinic — Gràcia",
+                "type": "Clinic",
+                "points": "24 points",
+                "cable": "Cat6",
+                "desc": "Network for patient management, digital radiology and appointment system. Clean installation without disrupting operations."
+            },
+            {
+                "title": "Boutique Hotel — Born",
+                "type": "Hospitality",
+                "points": "68 points",
+                "cable": "Cat6A",
+                "desc": "High-density Wi-Fi for guests, management network for reception and IP cameras in common areas."
+            },
+            {
+                "title": "Villa — Sant Cugat",
+                "type": "Home",
+                "points": "16 points",
+                "cable": "Cat7",
+                "desc": "Complete smart home network with Ethernet points in every room. Smart Home, 4K streaming and remote work."
+            },
+            {
+                "title": "Logistics Warehouse — ZAL",
+                "type": "Industrial",
+                "points": "36 points",
+                "cable": "Cat6",
+                "desc": "Industrial network for inventory management, scanners and shipping terminals. IP67 protected cabling."
+            },
+            {
+                "title": "Restaurant — Barceloneta",
+                "type": "Hospitality",
+                "points": "14 points",
+                "cable": "Cat6",
+                "desc": "Network for POS, kitchen, customer Wi-Fi and CCTV system. Night installation without disrupting service."
+            }
+        ],
+        "ctaTitle": "Is your project",
+        "ctaTitleHighlight": "next?",
+        "ctaSubtitle": "Tell us what you need — we advise and quote at no obligation."
+    },
+    "aboutPage": {
+        "label": "About us",
+        "title": "Meet",
+        "titleHighlight": "CableCore",
+        "subtitle": "Over 10 years connecting homes, offices and businesses in Barcelona with top-quality network infrastructure.",
+        "storyLabel": "Our story",
+        "storyTitle": "From technicians to Barcelona's reference",
+        "storyP1": "CableCore was born with a clear mission: to offer professional-quality network installations at a fair price in Barcelona and surroundings.",
+        "storyP2": "With over 500 installations completed, we've become the go-to reference for businesses and individuals needing reliable, lasting connectivity.",
+        "storyP3": "Every project is unique — from an apartment with 4 network points to enterprise infrastructure with a server room. We adapt to your needs with custom solutions.",
+        "stats": {
+            "installations": "Installations",
+            "years": "Years of experience",
+            "satisfaction": "Satisfaction",
+            "response": "Response"
+        },
+        "valuesTitle": "Our",
+        "valuesTitleHighlight": "values",
+        "values": [
+            { "icon": "🏅", "title": "Excellence", "desc": "Every installation meets the highest standards of quality and professional certification." },
+            { "icon": "🤝", "title": "Transparency", "desc": "Clear quotes with no surprises. You know exactly what you pay and why." },
+            { "icon": "⚡", "title": "Efficiency", "desc": "We meet deadlines. 24h response, fast and clean installation." },
+            { "icon": "🛡️", "title": "Full warranty", "desc": "5-year warranty on all installations. Your investment is protected." },
+            { "icon": "📍", "title": "Local presence", "desc": "We're local. Based in Barcelona, providing close, personal support." },
+            { "icon": "🔧", "title": "Technology", "desc": "Top-quality materials and professional Fluke certification equipment." }
+        ],
+        "ctaTitle": "Want to work",
+        "ctaTitleHighlight": "with us?",
+        "ctaSubtitle": "Get in touch — we're here to help with your network project."
+    },
+    "contactPage": {
+        "label": "Contact",
+        "title": "Let's talk about your",
+        "titleHighlight": "project",
+        "subtitle": "We're at your service. Contact us by phone, WhatsApp, email or fill in the form — we respond within 24 hours.",
+        "phone": "Phone",
+        "address": "Address",
+        "hours": "Business hours",
+        "formTitle": "Send us your enquiry",
+        "mapTitle": "Find us in",
+        "mapTitleHighlight": "Badalona"
     }
 }
