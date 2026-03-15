@@ -53,9 +53,9 @@ export default function Header() {
                     <Image
                         src="/logocablecore.png"
                         alt="CableCore"
-                        width={192}
-                        height={128}
-                        className="w-36 h-auto lg:w-44 object-contain"
+                        width={64}
+                        height={62}
+                        className="w-14 h-auto lg:w-16 object-contain"
                     />
                     <span className="font-heading font-bold text-lg lg:text-xl text-white group-hover:text-brand-gold transition-colors">
                         Cable<span className="text-brand-gold">Core</span>
