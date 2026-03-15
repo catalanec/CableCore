@@ -1,7 +1,7 @@
 import { useTranslations } from 'next-intl';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
-import Link from 'next/link';
+import { Link } from '@/i18n/routing';
 
 const allServices = [
     {
@@ -70,9 +70,9 @@ export default function ServiciosPage() {
                             {t('servicesPage.subtitle')}
                         </p>
                         <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                            <a href="/calculadora" className="btn-gold text-base px-8 py-4">
+                            <Link href="/calculator" className="btn-gold text-base px-8 py-4">
                                 🧮 {t('servicesPage.ctaCalc')}
-                            </a>
+                            </Link>
                             <a href="https://wa.me/34605974605" target="_blank" rel="noopener" className="btn-outline text-base px-8 py-4">
                                 💬 WhatsApp
                             </a>
