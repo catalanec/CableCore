@@ -118,12 +118,14 @@ export default function HomePage() {
                                 const features = t.raw(`services.${key}.features`) as string[];
                                 return (
                                     <div key={key} className="card p-6 group">
-                                        <div className="w-14 h-14 rounded-xl bg-[rgba(201,168,76,0.08)] border border-[rgba(201,168,76,0.12)] flex items-center justify-center text-2xl mb-5">
-                                            {serviceIcons[i]}
+                                        <div className="flex items-center gap-3 mb-4">
+                                            <div className="w-12 h-12 rounded-xl bg-[rgba(201,168,76,0.08)] border border-[rgba(201,168,76,0.12)] flex items-center justify-center text-2xl shrink-0">
+                                                {serviceIcons[i]}
+                                            </div>
+                                            <h3 className="font-heading font-semibold text-lg text-white group-hover:text-brand-gold transition-colors">
+                                                {t(`services.${key}.title`)}
+                                            </h3>
                                         </div>
-                                        <h3 className="font-heading font-semibold text-lg mb-2 text-white group-hover:text-brand-gold transition-colors">
-                                            {t(`services.${key}.title`)}
-                                        </h3>
                                         <p className="text-sm text-brand-gold-muted mb-4 leading-relaxed">
                                             {t(`services.${key}.desc`)}
                                         </p>

@@ -93,12 +93,14 @@ export default function ServiciosPage() {
                                     : service.features!;
                                 return (
                                     <div key={service.key} className="card p-7 group hover:border-brand-gold/30 transition-all duration-300">
-                                        <div className="w-14 h-14 rounded-xl bg-[rgba(201,168,76,0.08)] border border-[rgba(201,168,76,0.12)] flex items-center justify-center text-2xl mb-5">
-                                            {service.icon}
+                                        <div className="flex items-center gap-3 mb-4">
+                                            <div className="w-12 h-12 rounded-xl bg-[rgba(201,168,76,0.08)] border border-[rgba(201,168,76,0.12)] flex items-center justify-center text-2xl shrink-0">
+                                                {service.icon}
+                                            </div>
+                                            <h2 className="font-heading font-semibold text-xl text-white group-hover:text-brand-gold transition-colors">
+                                                {t(`servicesPage.items.${service.key}.title`)}
+                                            </h2>
                                         </div>
-                                        <h2 className="font-heading font-semibold text-xl mb-2 text-white group-hover:text-brand-gold transition-colors">
-                                            {t(`servicesPage.items.${service.key}.title`)}
-                                        </h2>
                                         <p className="text-sm text-brand-gold-muted mb-5 leading-relaxed">
                                             {t(`servicesPage.items.${service.key}.desc`)}
                                         </p>
