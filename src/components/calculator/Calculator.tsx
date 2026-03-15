@@ -2,6 +2,7 @@
 
 import { useState, useCallback, useMemo } from 'react';
 import { useTranslations } from 'next-intl';
+import { Link } from '@/i18n/routing';
 import AIQuoteAssistant from './AIQuoteAssistant';
 import QuoteForm from './QuoteForm';
 
@@ -614,9 +615,9 @@ export default function Calculator({ locale }: { locale: string }) {
                         </div>
                     </div>
 
-                    <a href="/contacto" className="btn-gold w-full justify-center text-base py-4 mb-4">
+                    <Link href="/contacto" className="btn-gold w-full justify-center text-base py-4 mb-4">
                         {l.requestQuote} →
-                    </a>
+                    </Link>
 
                     <a
                         href={`https://wa.me/34605974605?text=${encodeURIComponent(

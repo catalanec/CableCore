@@ -1,6 +1,7 @@
 import { useTranslations } from 'next-intl';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
+import { Link } from '@/i18n/routing';
 
 export default function NosotrosPage() {
     const t = useTranslations();
@@ -100,9 +101,9 @@ export default function NosotrosPage() {
                             {t('aboutPage.ctaSubtitle')}
                         </p>
                         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-                            <a href="/contacto" className="btn-gold text-base px-8 py-4">
+                            <Link href="/contacto" className="btn-gold text-base px-8 py-4">
                                 {t('hero.cta')} →
-                            </a>
+                            </Link>
                             <a href="tel:+34605974605" className="btn-outline text-base px-8 py-4">
                                 📞 +34 605 974 605
                             </a>
