@@ -28,17 +28,14 @@ export default function Footer() {
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
                     {/* Brand */}
                     <div className="lg:col-span-1">
-                        <Link href="/" className="flex items-center gap-2.5 mb-4">
+                        <Link href="/" className="flex items-center mb-4">
                             <Image
                                 src="/logocablecore.png"
                                 alt="CableCore"
-                                width={64}
-                                height={62}
-                                className="w-14 h-auto object-contain"
+                                width={80}
+                                height={77}
+                                className="w-20 h-auto object-contain"
                             />
-                            <span className="font-heading font-bold text-lg text-white">
-                                Cable<span className="text-brand-gold">Core</span>
-                            </span>
                         </Link>
                         <p className="text-sm text-brand-gold-muted leading-relaxed mb-4">
                             {t('desc')}

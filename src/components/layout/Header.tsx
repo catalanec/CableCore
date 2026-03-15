@@ -49,17 +49,14 @@ export default function Header() {
         >
             <div className="container-custom flex items-center justify-between h-16 lg:h-20">
                 {/* Logo */}
-                <Link href="/" className="flex items-center gap-2.5 group">
+                <Link href="/" className="flex items-center group">
                     <Image
                         src="/logocablecore.png"
                         alt="CableCore"
-                        width={64}
-                        height={62}
-                        className="w-14 h-auto lg:w-16 object-contain"
+                        width={96}
+                        height={92}
+                        className="w-20 h-auto lg:w-24 object-contain"
                     />
-                    <span className="font-heading font-bold text-lg lg:text-xl text-white group-hover:text-brand-gold transition-colors">
-                        Cable<span className="text-brand-gold">Core</span>
-                    </span>
                 </Link>
 
                 {/* Desktop Nav */}
