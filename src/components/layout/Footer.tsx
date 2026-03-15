@@ -113,8 +113,8 @@ export default function Footer() {
                         © {new Date().getFullYear()} CableCore. {t('rights')}
                     </p>
                     <div className="flex gap-4 text-xs text-brand-gold-muted">
-                        <a href="#" className="hover:text-brand-gold transition-colors">{t('privacy')}</a>
-                        <a href="#" className="hover:text-brand-gold transition-colors">{t('legal')}</a>
+                        <Link href="/privacidad" className="hover:text-brand-gold transition-colors">{t('privacy')}</Link>
+                        <Link href="/aviso-legal" className="hover:text-brand-gold transition-colors">{t('legal')}</Link>
                     </div>
                 </div>
             </div>
