@@ -133,9 +133,9 @@ export default function ServiciosPage() {
                             {t('servicesPage.ctaSubtitle')}
                         </p>
                         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-                            <a href="#quote" className="btn-gold text-base px-8 py-4">
+                            <Link href="/contacto" className="btn-gold text-base px-8 py-4">
                                 {t('hero.cta')} →
-                            </a>
+                            </Link>
                             <a href="tel:+34605974605" className="btn-outline text-base px-8 py-4">
                                 📞 +34 605 974 605
                             </a>

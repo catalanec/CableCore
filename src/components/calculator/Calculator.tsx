@@ -614,7 +614,7 @@ export default function Calculator({ locale }: { locale: string }) {
                         </div>
                     </div>
 
-                    <a href="#quote" className="btn-gold w-full justify-center text-base py-4 mb-4">
+                    <a href="/contacto" className="btn-gold w-full justify-center text-base py-4 mb-4">
                         {l.requestQuote} →
                     </a>
 

@@ -1,6 +1,7 @@
 import { useTranslations } from 'next-intl';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
+import { Link } from '@/i18n/routing';
 
 export default function ProcesoPage() {
     const t = useTranslations();
@@ -111,9 +112,9 @@ export default function ProcesoPage() {
                             {t('processPage.ctaSubtitle')}
                         </p>
                         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-                            <a href="#quote" className="btn-gold text-base px-8 py-4">
+                            <Link href="/contacto" className="btn-gold text-base px-8 py-4">
                                 {t('hero.cta')} →
-                            </a>
+                            </Link>
                             <a href="https://wa.me/34605974605" target="_blank" rel="noopener" className="btn-outline text-base px-8 py-4">
                                 💬 WhatsApp
                             </a>
