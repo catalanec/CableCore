@@ -63,16 +63,11 @@ export function generateQuoteHTML(data: QuotePDFData): string {
 
     <!-- Header -->
     <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 30px; border-bottom: 3px solid #C9A84C; padding-bottom: 20px;">
-      <div style="display: flex; align-items: center; gap: 8px;">
-        <img src="https://cablecore.es/logocablecore.png" alt="CableCore" style="height: 140px; width: auto;" crossorigin="anonymous" />
-        <div>
-          <h1 style="font-size: 28px; font-weight: 800; margin-bottom: 2px;">
-            <span style="color: #222;">Cable</span><span style="color: #8B6914;">Core</span>
-          </h1>
-          <p style="color: #666; font-size: 11px; font-style: italic;">Conectamos tu negocio</p>
-        </div>
+      <div style="text-align: center;">
+        <img src="https://cablecore.es/logocablecore.png" alt="CableCore" style="height: 100px; width: auto;" crossorigin="anonymous" />
+        <p style="color: #8B6914; font-size: 13px; font-style: italic; margin-top: 4px; font-weight: 500;">Conectamos tu negocio</p>
       </div>
-      <div style="text-align: right; font-size: 12px; color: #555; line-height: 1.6;">
+      <div style="text-align: right; font-size: 12px; color: #555; line-height: 1.6; padding-top: 10px;">
         <div style="color: #8B6914; font-size: 18px; font-weight: 700; margin-bottom: 4px;">PRESUPUESTO</div>
         <div>Nº ${data.quoteNumber}</div>
         <div>Fecha: ${data.date}</div>
