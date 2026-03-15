@@ -219,12 +219,12 @@ export default function QuoteForm({ locale, calculationData }: QuoteFormProps) {
 
                 <div>
                     <label className="block text-xs text-brand-gold-muted mb-1.5">{l.email} *</label>
-                    <input type="email" required value={email} onChange={(e) => setEmail(e.target.value)} className={inputClass} placeholder="tu@email.com" />
+                    <input type="email" required value={email} onChange={(e) => setEmail(e.target.value)} className={inputClass} placeholder="email@example.com" />
                 </div>
 
                 <div>
                     <label className="block text-xs text-brand-gold-muted mb-1.5">{l.address}</label>
-                    <input type="text" value={address} onChange={(e) => setAddress(e.target.value)} className={inputClass} placeholder="Dirección de instalación" />
+                    <input type="text" value={address} onChange={(e) => setAddress(e.target.value)} className={inputClass} placeholder={l.address} />
                 </div>
 
                 <div>

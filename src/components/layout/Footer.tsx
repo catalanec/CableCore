@@ -44,7 +44,7 @@ export default function Footer() {
                             {t('desc')}
                         </p>
                         <p className="text-xs text-brand-gold-muted italic">
-                            Conectamos tu negocio
+                            {t('tagline')}
                         </p>
                     </div>
 
@@ -55,10 +55,10 @@ export default function Footer() {
                             {services.map((s) => (
                                 <li key={s.label}>
                                     <Link href={s.href} className="text-sm text-brand-gold-muted hover:text-brand-gold transition-colors">
-                                        {s.label === 'cabling' ? 'Cableado estructurado' :
-                                         s.label === 'home' ? 'Redes domésticas' :
-                                         s.label === 'office' ? 'Redes de oficina' :
-                                         'Retail y comercio'}
+                                        {s.label === 'cabling' ? t('cabling') :
+                                         s.label === 'home' ? t('homeNet') :
+                                         s.label === 'office' ? t('officeNet') :
+                                         t('retailNet')}
                                     </Link>
                                 </li>
                             ))}
@@ -102,7 +102,7 @@ export default function Footer() {
                                 📍 Carrer Vitor Balaguer 33, Badalona, 08914
                             </li>
                             <li className="flex items-center gap-2 text-sm text-brand-gold-muted">
-                                🕐 Lun–Sáb 9:00–19:00
+                                🕐 {t('schedule')}
                             </li>
                         </ul>
                     </div>
@@ -116,8 +116,8 @@ export default function Footer() {
                         © {new Date().getFullYear()} CableCore. {t('rights')}
                     </p>
                     <div className="flex gap-4 text-xs text-brand-gold-muted">
-                        <a href="#" className="hover:text-brand-gold transition-colors">Política de privacidad</a>
-                        <a href="#" className="hover:text-brand-gold transition-colors">Aviso legal</a>
+                        <a href="#" className="hover:text-brand-gold transition-colors">{t('privacy')}</a>
+                        <a href="#" className="hover:text-brand-gold transition-colors">{t('legal')}</a>
                     </div>
                 </div>
             </div>

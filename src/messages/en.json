@@ -1,386 +1,569 @@
 {
-    "meta": {
-        "title": "CableCore — Network Installation & Structured Cabling in Barcelona",
-        "description": "Specialists in network cable installation, structured cabling and network points in Barcelona and surroundings. Free quote."
+  "meta": {
+    "title": "CableCore — Network Installation & Structured Cabling in Barcelona",
+    "description": "Specialists in network cable installation, structured cabling and network points in Barcelona and surroundings. Free quote."
+  },
+  "nav": {
+    "home": "Home",
+    "services": "Services",
+    "process": "Process",
+    "projects": "Projects",
+    "about": "About",
+    "contact": "Contact",
+    "calculator": "Calculator",
+    "quote": "Free Quote",
+    "blog": "Blog"
+  },
+  "hero": {
+    "badge": "Barcelona & Surroundings",
+    "title": "Professional installation of",
+    "titleHighlight": "network cabling in Barcelona",
+    "subtitle": "Specialists in Cat6, Cat6A and Cat7 Ethernet networks for homes, offices and businesses. Custom solutions with full warranty.",
+    "cta": "Request a Quote",
+    "ctaWhatsapp": "Contact via WhatsApp",
+    "stats": {
+      "installations": "Installations",
+      "experience": "Years of experience",
+      "warranty": "Warranty"
+    }
+  },
+  "services": {
+    "label": "Our Services",
+    "title": "Network solutions for",
+    "titleHighlight": "every need",
+    "subtitle": "From a home connection to a full business infrastructure — we design and install networks that work.",
+    "home": {
+      "title": "Home",
+      "desc": "Fast and stable internet throughout your home. Say goodbye to dead zones.",
+      "features": [
+        "Ethernet network points",
+        "Cat6/Cat6a cabling",
+        "Wi-Fi mesh setup",
+        "Smart Home ready"
+      ]
     },
-    "nav": {
-        "home": "Home",
-        "services": "Services",
-        "process": "Process",
-        "projects": "Projects",
-        "about": "About",
-        "contact": "Contact",
-        "calculator": "Calculator",
-        "quote": "Free Quote",
-        "blog": "Blog"
+    "office": {
+      "title": "Office",
+      "desc": "Professional infrastructure for maximum productivity and security.",
+      "features": [
+        "Certified structured cabling",
+        "Racks & patch panels",
+        "VoIP & IP telephony",
+        "Segmented networks (VLAN)"
+      ]
     },
-    "hero": {
-        "badge": "Barcelona & Surroundings",
-        "title": "Professional installation of",
-        "titleHighlight": "network cabling in Barcelona",
-        "subtitle": "Specialists in Cat6, Cat6A and Cat7 Ethernet networks for homes, offices and businesses. Custom solutions with full warranty.",
-        "cta": "Request a Quote",
-        "ctaWhatsapp": "Contact via WhatsApp",
-        "stats": {
-            "installations": "Installations",
-            "experience": "Years of experience",
-            "warranty": "Warranty"
-        }
+    "retail": {
+      "title": "Retail & Commerce",
+      "desc": "Connectivity for shops, restaurants and points of sale.",
+      "features": [
+        "POS terminals",
+        "Customer Wi-Fi",
+        "IP cameras (CCTV)",
+        "Access control systems"
+      ]
     },
+    "business": {
+      "title": "Businesses (SME)",
+      "desc": "Scalable high-performance networks for small and medium enterprises.",
+      "features": [
+        "Indoor fiber optics",
+        "Server rooms",
+        "Redundancy & failover",
+        "Fluke certification"
+      ]
+    }
+  },
+  "trust": {
+    "label": "Why Choose Us?",
+    "title": "The difference is in the",
+    "titleHighlight": "details",
+    "subtitle": "We don't just install cables — we design infrastructures that last and grow with you.",
+    "certified": {
+      "title": "Certified Technicians",
+      "desc": "Our team holds professional certifications in networking and structured cabling."
+    },
+    "warranty": {
+      "title": "5-Year Warranty",
+      "desc": "All our installations include a five-year warranty on materials and workmanship."
+    },
+    "fast": {
+      "title": "Fast Response",
+      "desc": "Quote within 24 hours and project completion on agreed timelines."
+    },
+    "local": {
+      "title": "Local Support",
+      "desc": "We're based in Barcelona. Local, reliable, hands-on technical support."
+    }
+  },
+  "process": {
+    "label": "How We Work",
+    "title": "Your installation in",
+    "titleHighlight": "4 steps",
+    "subtitle": "A clear, transparent and efficient process — from consultation to certification.",
+    "steps": [
+      {
+        "title": "Free Consultation",
+        "desc": "We analyze your needs and visit the space to assess the installation."
+      },
+      {
+        "title": "Design & Quote",
+        "desc": "We design the optimal solution and provide a detailed, no-obligation quote."
+      },
+      {
+        "title": "Professional Installation",
+        "desc": "We execute the installation with top-quality materials and perfect finishes."
+      },
+      {
+        "title": "Certification & Handover",
+        "desc": "We certify every network point, deliver documentation and train you on usage."
+      }
+    ]
+  },
+  "testimonials": {
+    "label": "Reviews",
+    "title": "What our",
+    "titleHighlight": "clients say",
+    "items": [
+      {
+        "text": "They installed the complete network in our office in two days. Flawless work, everything certified and running perfectly.",
+        "name": "Marta García",
+        "role": "Operations Director, Estudio Creativo BCN",
+        "initials": "MG"
+      },
+      {
+        "text": "We needed cabling for cameras and POS. Quick response, clear quote, clean installation. Perfect.",
+        "name": "Jordi Recasens",
+        "role": "Owner, Botiga del Barri",
+        "initials": "JR"
+      },
+      {
+        "text": "After renovating my apartment I wanted network points in every room. Professional work, fair price. Internet flies now.",
+        "name": "Andrey Sokolov",
+        "role": "Private client, Eixample",
+        "initials": "AS"
+      }
+    ]
+  },
+  "coverage": {
+    "label": "Coverage Area",
+    "title": "Service in",
+    "titleHighlight": "Barcelona & surroundings",
+    "subtitle": "We cover Barcelona city and the entire metropolitan area.",
+    "highlight": {
+      "title": "Response in 24h",
+      "desc": "Request your quote and receive a response within one business day. Free technical visits across our coverage area."
+    }
+  },
+  "cta": {
+    "title": "Prefer to speak",
+    "titleHighlight": "directly",
+    "subtitle": "Call us or message us on WhatsApp — we're here to help."
+  },
+  "contact": {
+    "label": "Contact",
+    "title": "Request your",
+    "titleHighlight": "free quote",
+    "subtitle": "Tell us what you need and we'll send you a detailed, no-obligation quote within 24 hours.",
+    "form": {
+      "name": "Full name",
+      "phone": "Phone",
+      "email": "Email",
+      "service": "Service type",
+      "serviceDefault": "Select a service",
+      "message": "Describe your project",
+      "messagePlaceholder": "Tell us the details: how many network points? New construction or renovation? Do you have floor plans?",
+      "submit": "Send Quote Request",
+      "note": "Your data is safe. We don't share your information with third parties."
+    },
+    "success": {
+      "title": "Request Sent!",
+      "desc": "Thank you for contacting us. We'll respond with a detailed quote within 24 hours."
+    }
+  },
+  "footer": {
+    "desc": "Specialists in network installation and structured cabling in Barcelona. Connecting your world reliably and professionally.",
+    "services": "Services",
+    "company": "Company",
+    "contactTitle": "Contact",
+    "rights": "All rights reserved.",
+    "tagline": "Connecting your business",
+    "cabling": "Structured cabling",
+    "homeNet": "Home networks",
+    "officeNet": "Office networks",
+    "retailNet": "Retail & commercial",
+    "schedule": "Mon–Sat 9:00–19:00",
+    "privacy": "Privacy policy",
+    "legal": "Legal notice"
+  },
+  "servicesPage": {
+    "label": "All our services",
+    "title": "Professional solutions for",
+    "titleHighlight": "network & cabling",
+    "subtitle": "From a single Ethernet outlet to complete enterprise infrastructure — we cover all your connectivity needs.",
+    "ctaCalc": "Calculate quote",
+    "ctaTitle": "Need an",
+    "ctaTitleHighlight": "installation?",
+    "ctaSubtitle": "Request a free, no-obligation quote. We respond within 24 hours.",
+    "items": {
+      "cabling": {
+        "title": "Structured cabling",
+        "desc": "Certified Cat6, Cat6A and Cat7 cable installation. Each point includes RJ45 keystone, wall plate and Ethernet cable."
+      },
+      "home": {
+        "title": "Home networks",
+        "desc": "Fast and stable internet throughout your home. Network points, Wi-Fi mesh and Smart Home."
+      },
+      "office": {
+        "title": "Office networks",
+        "desc": "Professional infrastructure for maximum productivity. Certified cabling, racks and VoIP."
+      },
+      "retail": {
+        "title": "Retail & commerce",
+        "desc": "Connectivity for shops, restaurants and points of sale. POS, Wi-Fi and IP cameras."
+      },
+      "business": {
+        "title": "Businesses (SME)",
+        "desc": "Scalable high-performance networks. Fiber optics, server rooms and Fluke certification."
+      },
+      "rj45": {
+        "title": "RJ45 network outlets",
+        "desc": "Professional network outlet installation. Each point certified with professional equipment."
+      },
+      "rack": {
+        "title": "Racks & patch panels",
+        "desc": "Wall-mount and floor-standing rack cabinet installation. Professional cable organization."
+      },
+      "network": {
+        "title": "Network equipment",
+        "desc": "Installation and configuration of switches, routers and professional Wi-Fi access points."
+      },
+      "management": {
+        "title": "Cable management",
+        "desc": "Cable trays, corrugated tubes, rack organization and professional labeling of all cables."
+      }
+    }
+  },
+  "processPage": {
+    "label": "How we work",
+    "title": "Your installation step by",
+    "titleHighlight": "step",
+    "subtitle": "A clear, professional and transparent process — from the first consultation to final handover with certification.",
+    "steps": [
+      {
+        "title": "Free consultation",
+        "desc": "We contact you, analyze your needs and arrange a free technical visit to the space."
+      },
+      {
+        "title": "Technical survey",
+        "desc": "We visit the site, measure, assess existing infrastructure and design the optimal solution."
+      },
+      {
+        "title": "Detailed quote",
+        "desc": "We deliver a clear, detailed quote with materials, labor and timelines. No surprises."
+      },
+      {
+        "title": "Professional installation",
+        "desc": "Our team executes the installation with top-quality materials and impeccable finishes."
+      },
+      {
+        "title": "Certification & testing",
+        "desc": "We certify every network point with Fluke equipment. We verify speed, continuity and standards compliance."
+      },
+      {
+        "title": "Handover & support",
+        "desc": "We deliver complete documentation, train the team and offer post-installation technical support."
+      }
+    ],
+    "guarantee1": {
+      "title": "5-year warranty",
+      "desc": "Materials and workmanship covered for five full years."
+    },
+    "guarantee2": {
+      "title": "Certification included",
+      "desc": "Every network point certified with deliverable Fluke report."
+    },
+    "guarantee3": {
+      "title": "Response in 24h",
+      "desc": "Quote and technical assistance within one business day."
+    },
+    "ctaTitle": "Ready to",
+    "ctaTitleHighlight": "get started?",
+    "ctaSubtitle": "Request your free consultation — we visit, measure and quote at no obligation."
+  },
+  "projectsPage": {
+    "label": "Our work",
+    "title": "Completed",
+    "titleHighlight": "projects",
+    "subtitle": "Each installation showcases our commitment to quality, cleanliness and professionalism.",
+    "stats": {
+      "installations": "Installations",
+      "years": "Years of experience",
+      "certified": "Certified",
+      "warranty": "Years warranty"
+    },
+    "items": [
+      {
+        "title": "Tech Startup Office — Eixample",
+        "type": "Office",
+        "points": "42 points",
+        "cable": "Cat6A",
+        "desc": "Complete structured cabling for a tech startup. Server room, VLANs and corporate Wi-Fi."
+      },
+      {
+        "title": "Dental Clinic — Gràcia",
+        "type": "Clinic",
+        "points": "24 points",
+        "cable": "Cat6",
+        "desc": "Network for patient management, digital radiology and appointment system. Clean installation without disrupting operations."
+      },
+      {
+        "title": "Boutique Hotel — Born",
+        "type": "Hospitality",
+        "points": "68 points",
+        "cable": "Cat6A",
+        "desc": "High-density Wi-Fi for guests, management network for reception and IP cameras in common areas."
+      },
+      {
+        "title": "Villa — Sant Cugat",
+        "type": "Home",
+        "points": "16 points",
+        "cable": "Cat7",
+        "desc": "Complete smart home network with Ethernet points in every room. Smart Home, 4K streaming and remote work."
+      },
+      {
+        "title": "Logistics Warehouse — ZAL",
+        "type": "Industrial",
+        "points": "36 points",
+        "cable": "Cat6",
+        "desc": "Industrial network for inventory management, scanners and shipping terminals. IP67 protected cabling."
+      },
+      {
+        "title": "Restaurant — Barceloneta",
+        "type": "Hospitality",
+        "points": "14 points",
+        "cable": "Cat6",
+        "desc": "Network for POS, kitchen, customer Wi-Fi and CCTV system. Night installation without disrupting service."
+      }
+    ],
+    "ctaTitle": "Is your project",
+    "ctaTitleHighlight": "next?",
+    "ctaSubtitle": "Tell us what you need — we advise and quote at no obligation."
+  },
+  "aboutPage": {
+    "label": "About us",
+    "title": "Meet",
+    "titleHighlight": "CableCore",
+    "subtitle": "Over 10 years connecting homes, offices and businesses in Barcelona with top-quality network infrastructure.",
+    "storyLabel": "Our story",
+    "storyTitle": "From technicians to Barcelona's reference",
+    "storyP1": "CableCore was born with a clear mission: to offer professional-quality network installations at a fair price in Barcelona and surroundings.",
+    "storyP2": "With over 500 installations completed, we've become the go-to reference for businesses and individuals needing reliable, lasting connectivity.",
+    "storyP3": "Every project is unique — from an apartment with 4 network points to enterprise infrastructure with a server room. We adapt to your needs with custom solutions.",
+    "stats": {
+      "installations": "Installations",
+      "years": "Years of experience",
+      "satisfaction": "Satisfaction",
+      "response": "Response"
+    },
+    "valuesTitle": "Our",
+    "valuesTitleHighlight": "values",
+    "values": [
+      {
+        "icon": "🏅",
+        "title": "Excellence",
+        "desc": "Every installation meets the highest standards of quality and professional certification."
+      },
+      {
+        "icon": "🤝",
+        "title": "Transparency",
+        "desc": "Clear quotes with no surprises. You know exactly what you pay and why."
+      },
+      {
+        "icon": "⚡",
+        "title": "Efficiency",
+        "desc": "We meet deadlines. 24h response, fast and clean installation."
+      },
+      {
+        "icon": "🛡️",
+        "title": "Full warranty",
+        "desc": "5-year warranty on all installations. Your investment is protected."
+      },
+      {
+        "icon": "📍",
+        "title": "Local presence",
+        "desc": "We're local. Based in Barcelona, providing close, personal support."
+      },
+      {
+        "icon": "🔧",
+        "title": "Technology",
+        "desc": "Top-quality materials and professional Fluke certification equipment."
+      }
+    ],
+    "ctaTitle": "Want to work",
+    "ctaTitleHighlight": "with us?",
+    "ctaSubtitle": "Get in touch — we're here to help with your network project."
+  },
+  "contactPage": {
+    "label": "Contact",
+    "title": "Let's talk about your",
+    "titleHighlight": "project",
+    "subtitle": "We're at your service. Contact us by phone, WhatsApp, email or fill in the form — we respond within 24 hours.",
+    "phone": "Phone",
+    "address": "Address",
+    "hours": "Business hours",
+    "formTitle": "Send us your enquiry",
+    "mapTitle": "Find us in",
+    "mapTitleHighlight": "Badalona"
+  },
+  "pages": {
     "services": {
-        "label": "Our Services",
-        "title": "Network solutions for",
-        "titleHighlight": "every need",
-        "subtitle": "From a home connection to a full business infrastructure — we design and install networks that work.",
-        "home": {
-            "title": "Home",
-            "desc": "Fast and stable internet throughout your home. Say goodbye to dead zones.",
-            "features": [
-                "Ethernet network points",
-                "Cat6/Cat6a cabling",
-                "Wi-Fi mesh setup",
-                "Smart Home ready"
-            ]
-        },
-        "office": {
-            "title": "Office",
-            "desc": "Professional infrastructure for maximum productivity and security.",
-            "features": [
-                "Certified structured cabling",
-                "Racks & patch panels",
-                "VoIP & IP telephony",
-                "Segmented networks (VLAN)"
-            ]
-        },
-        "retail": {
-            "title": "Retail & Commerce",
-            "desc": "Connectivity for shops, restaurants and points of sale.",
-            "features": [
-                "POS terminals",
-                "Customer Wi-Fi",
-                "IP cameras (CCTV)",
-                "Access control systems"
-            ]
-        },
-        "business": {
-            "title": "Businesses (SME)",
-            "desc": "Scalable high-performance networks for small and medium enterprises.",
-            "features": [
-                "Indoor fiber optics",
-                "Server rooms",
-                "Redundancy & failover",
-                "Fluke certification"
-            ]
-        }
-    },
-    "trust": {
-        "label": "Why Choose Us?",
-        "title": "The difference is in the",
-        "titleHighlight": "details",
-        "subtitle": "We don't just install cables — we design infrastructures that last and grow with you.",
-        "certified": {
-            "title": "Certified Technicians",
-            "desc": "Our team holds professional certifications in networking and structured cabling."
-        },
-        "warranty": {
-            "title": "5-Year Warranty",
-            "desc": "All our installations include a five-year warranty on materials and workmanship."
-        },
-        "fast": {
-            "title": "Fast Response",
-            "desc": "Quote within 24 hours and project completion on agreed timelines."
-        },
-        "local": {
-            "title": "Local Support",
-            "desc": "We're based in Barcelona. Local, reliable, hands-on technical support."
-        }
+      "title": "Our",
+      "titleHighlight": "Services",
+      "subtitle": "Professional network installation solutions for any type of space.",
+      "label": "What we do",
+      "ctaCalc": "Calculate quote",
+      "ctaWhatsapp": "Ask via WhatsApp",
+      "cabling": {
+        "title": "Structured cabling",
+        "desc": "Professional Cat6, Cat6A and Cat7 network cable installation for commercial and industrial buildings."
+      },
+      "homeNetwork": {
+        "title": "Home networks",
+        "desc": "Network points, mesh Wi-Fi and concealed cabling for modern homes."
+      },
+      "officeNetwork": {
+        "title": "Office networks",
+        "desc": "Complete network infrastructure for offices: racks, switches, patch panels."
+      },
+      "industrial": {
+        "title": "Industrial installations",
+        "desc": "Cabling for warehouses and factories with IP protection and fiber optics."
+      },
+      "cctv": {
+        "title": "CCTV and surveillance",
+        "desc": "IP camera installation and surveillance systems with dedicated cabling."
+      },
+      "wifi": {
+        "title": "Professional Wi-Fi",
+        "desc": "Enterprise access points, mesh Wi-Fi and total coverage."
+      },
+      "rack": {
+        "title": "Racks and patch panels",
+        "desc": "Installation and organization of 6U, 9U, 12U racks with patch panels."
+      },
+      "fiber": {
+        "title": "Fiber optics",
+        "desc": "Fiber optic installation for long distances and high speed."
+      },
+      "consulting": {
+        "title": "Network consulting",
+        "desc": "Network infrastructure design and planning tailored to your needs."
+      }
     },
     "process": {
-        "label": "How We Work",
-        "title": "Your installation in",
-        "titleHighlight": "4 steps",
-        "subtitle": "A clear, transparent and efficient process — from consultation to certification.",
-        "steps": [
-            {
-                "title": "Free Consultation",
-                "desc": "We analyze your needs and visit the space to assess the installation."
-            },
-            {
-                "title": "Design & Quote",
-                "desc": "We design the optimal solution and provide a detailed, no-obligation quote."
-            },
-            {
-                "title": "Professional Installation",
-                "desc": "We execute the installation with top-quality materials and perfect finishes."
-            },
-            {
-                "title": "Certification & Handover",
-                "desc": "We certify every network point, deliver documentation and train you on usage."
-            }
-        ]
-    },
-    "testimonials": {
-        "label": "Reviews",
-        "title": "What our",
-        "titleHighlight": "clients say",
-        "items": [
-            {
-                "text": "They installed the complete network in our office in two days. Flawless work, everything certified and running perfectly.",
-                "name": "Marta García",
-                "role": "Operations Director, Estudio Creativo BCN",
-                "initials": "MG"
-            },
-            {
-                "text": "We needed cabling for cameras and POS. Quick response, clear quote, clean installation. Perfect.",
-                "name": "Jordi Recasens",
-                "role": "Owner, Botiga del Barri",
-                "initials": "JR"
-            },
-            {
-                "text": "After renovating my apartment I wanted network points in every room. Professional work, fair price. Internet flies now.",
-                "name": "Andrey Sokolov",
-                "role": "Private client, Eixample",
-                "initials": "AS"
-            }
-        ]
-    },
-    "coverage": {
-        "label": "Coverage Area",
-        "title": "Service in",
-        "titleHighlight": "Barcelona & surroundings",
-        "subtitle": "We cover Barcelona city and the entire metropolitan area.",
-        "highlight": {
-            "title": "Response in 24h",
-            "desc": "Request your quote and receive a response within one business day. Free technical visits across our coverage area."
+      "title": "How We",
+      "titleHighlight": "Work",
+      "subtitle": "A clear and professional process from start to finish.",
+      "label": "Our process",
+      "steps": [
+        {
+          "title": "Initial consultation",
+          "desc": "We analyze your needs and the space. Free visit with no obligation."
+        },
+        {
+          "title": "Project design",
+          "desc": "We create a detailed plan with materials, blueprints and budget."
+        },
+        {
+          "title": "Quote",
+          "desc": "You receive a transparent, itemized quote with no surprises."
+        },
+        {
+          "title": "Installation",
+          "desc": "Our team performs a clean and professional installation."
+        },
+        {
+          "title": "Testing and certification",
+          "desc": "We test every network point with professional certification equipment."
+        },
+        {
+          "title": "After-sales support",
+          "desc": "Full warranty and technical support after installation."
         }
+      ],
+      "guarantees": "Our guarantees",
+      "guarantee1": "5-year warranty on all installations",
+      "guarantee2": "Certification of every network point",
+      "guarantee3": "Premium quality materials",
+      "ctaTitle": "Ready to get started?",
+      "ctaSubtitle": "Request your free quote today.",
+      "ctaCalc": "Calculate quote",
+      "ctaWhatsapp": "WhatsApp"
     },
-    "cta": {
-        "title": "Prefer to speak",
-        "titleHighlight": "directly",
-        "subtitle": "Call us or message us on WhatsApp — we're here to help."
+    "projects": {
+      "title": "Our",
+      "titleHighlight": "Projects",
+      "subtitle": "Some of the projects we have completed for our clients.",
+      "label": "Portfolio",
+      "statsInstallations": "Installations",
+      "statsExperience": "Years of experience",
+      "statsWarranty": "Warranty",
+      "ctaTitle": "Have a similar project?",
+      "ctaSubtitle": "Tell us your idea and we'll help make it happen.",
+      "ctaCalc": "Calculate quote",
+      "ctaWhatsapp": "WhatsApp"
+    },
+    "about": {
+      "title": "About",
+      "titleHighlight": "Us",
+      "subtitle": "Meet the team behind CableCore.",
+      "label": "Who we are",
+      "storyTitle": "Our story",
+      "storyText": "CableCore was born with a clear mission: to offer the highest quality network installation services in Barcelona and its surroundings.",
+      "missionTitle": "Our mission",
+      "missionText": "To connect homes and businesses with reliable, secure network infrastructure ready for the future.",
+      "valuesTitle": "Our values",
+      "values": [
+        "Quality",
+        "Professionalism",
+        "Transparency",
+        "Innovation"
+      ],
+      "ctaTitle": "Want to work with us?",
+      "ctaCalc": "Request a quote",
+      "ctaWhatsapp": "WhatsApp"
     },
     "contact": {
-        "label": "Contact",
-        "title": "Request your",
-        "titleHighlight": "free quote",
-        "subtitle": "Tell us what you need and we'll send you a detailed, no-obligation quote within 24 hours.",
-        "form": {
-            "name": "Full name",
-            "phone": "Phone",
-            "email": "Email",
-            "service": "Service type",
-            "serviceDefault": "Select a service",
-            "message": "Describe your project",
-            "messagePlaceholder": "Tell us the details: how many network points? New construction or renovation? Do you have floor plans?",
-            "submit": "Send Quote Request",
-            "note": "Your data is safe. We don't share your information with third parties."
-        },
-        "success": {
-            "title": "Request Sent!",
-            "desc": "Thank you for contacting us. We'll respond with a detailed quote within 24 hours."
-        }
+      "title": "Get in",
+      "titleHighlight": "Touch",
+      "subtitle": "We're here to help you with your network project.",
+      "label": "Contact",
+      "phone": "Phone",
+      "email": "Email",
+      "whatsapp": "WhatsApp",
+      "address": "Address",
+      "schedule": "Schedule",
+      "scheduleValue": "Mon–Sat 9:00–19:00",
+      "formTitle": "Send us a message",
+      "formName": "Name",
+      "formPhone": "Phone",
+      "formEmail": "Email",
+      "formService": "Service",
+      "formMessage": "Message",
+      "formSubmit": "Send message",
+      "formSuccess": "Message sent successfully!"
     },
-    "footer": {
-        "desc": "Specialists in network installation and structured cabling in Barcelona. Connecting your world reliably and professionally.",
-        "services": "Services",
-        "company": "Company",
-        "contactTitle": "Contact",
-        "rights": "All rights reserved."
-    },
-    "servicesPage": {
-        "label": "All our services",
-        "title": "Professional solutions for",
-        "titleHighlight": "network & cabling",
-        "subtitle": "From a single Ethernet outlet to complete enterprise infrastructure — we cover all your connectivity needs.",
-        "ctaCalc": "Calculate quote",
-        "ctaTitle": "Need an",
-        "ctaTitleHighlight": "installation?",
-        "ctaSubtitle": "Request a free, no-obligation quote. We respond within 24 hours.",
-        "items": {
-            "cabling": {
-                "title": "Structured cabling",
-                "desc": "Certified Cat6, Cat6A and Cat7 cable installation. Each point includes RJ45 keystone, wall plate and Ethernet cable."
-            },
-            "home": {
-                "title": "Home networks",
-                "desc": "Fast and stable internet throughout your home. Network points, Wi-Fi mesh and Smart Home."
-            },
-            "office": {
-                "title": "Office networks",
-                "desc": "Professional infrastructure for maximum productivity. Certified cabling, racks and VoIP."
-            },
-            "retail": {
-                "title": "Retail & commerce",
-                "desc": "Connectivity for shops, restaurants and points of sale. POS, Wi-Fi and IP cameras."
-            },
-            "business": {
-                "title": "Businesses (SME)",
-                "desc": "Scalable high-performance networks. Fiber optics, server rooms and Fluke certification."
-            },
-            "rj45": {
-                "title": "RJ45 network outlets",
-                "desc": "Professional network outlet installation. Each point certified with professional equipment."
-            },
-            "rack": {
-                "title": "Racks & patch panels",
-                "desc": "Wall-mount and floor-standing rack cabinet installation. Professional cable organization."
-            },
-            "network": {
-                "title": "Network equipment",
-                "desc": "Installation and configuration of switches, routers and professional Wi-Fi access points."
-            },
-            "management": {
-                "title": "Cable management",
-                "desc": "Cable trays, corrugated tubes, rack organization and professional labeling of all cables."
-            }
-        }
-    },
-    "processPage": {
-        "label": "How we work",
-        "title": "Your installation step by",
-        "titleHighlight": "step",
-        "subtitle": "A clear, professional and transparent process — from the first consultation to final handover with certification.",
-        "steps": [
-            {
-                "title": "Free consultation",
-                "desc": "We contact you, analyze your needs and arrange a free technical visit to the space."
-            },
-            {
-                "title": "Technical survey",
-                "desc": "We visit the site, measure, assess existing infrastructure and design the optimal solution."
-            },
-            {
-                "title": "Detailed quote",
-                "desc": "We deliver a clear, detailed quote with materials, labor and timelines. No surprises."
-            },
-            {
-                "title": "Professional installation",
-                "desc": "Our team executes the installation with top-quality materials and impeccable finishes."
-            },
-            {
-                "title": "Certification & testing",
-                "desc": "We certify every network point with Fluke equipment. We verify speed, continuity and standards compliance."
-            },
-            {
-                "title": "Handover & support",
-                "desc": "We deliver complete documentation, train the team and offer post-installation technical support."
-            }
-        ],
-        "guarantee1": {
-            "title": "5-year warranty",
-            "desc": "Materials and workmanship covered for five full years."
-        },
-        "guarantee2": {
-            "title": "Certification included",
-            "desc": "Every network point certified with deliverable Fluke report."
-        },
-        "guarantee3": {
-            "title": "Response in 24h",
-            "desc": "Quote and technical assistance within one business day."
-        },
-        "ctaTitle": "Ready to",
-        "ctaTitleHighlight": "get started?",
-        "ctaSubtitle": "Request your free consultation — we visit, measure and quote at no obligation."
-    },
-    "projectsPage": {
-        "label": "Our work",
-        "title": "Completed",
-        "titleHighlight": "projects",
-        "subtitle": "Each installation showcases our commitment to quality, cleanliness and professionalism.",
-        "stats": {
-            "installations": "Installations",
-            "years": "Years of experience",
-            "certified": "Certified",
-            "warranty": "Years warranty"
-        },
-        "items": [
-            {
-                "title": "Tech Startup Office — Eixample",
-                "type": "Office",
-                "points": "42 points",
-                "cable": "Cat6A",
-                "desc": "Complete structured cabling for a tech startup. Server room, VLANs and corporate Wi-Fi."
-            },
-            {
-                "title": "Dental Clinic — Gràcia",
-                "type": "Clinic",
-                "points": "24 points",
-                "cable": "Cat6",
-                "desc": "Network for patient management, digital radiology and appointment system. Clean installation without disrupting operations."
-            },
-            {
-                "title": "Boutique Hotel — Born",
-                "type": "Hospitality",
-                "points": "68 points",
-                "cable": "Cat6A",
-                "desc": "High-density Wi-Fi for guests, management network for reception and IP cameras in common areas."
-            },
-            {
-                "title": "Villa — Sant Cugat",
-                "type": "Home",
-                "points": "16 points",
-                "cable": "Cat7",
-                "desc": "Complete smart home network with Ethernet points in every room. Smart Home, 4K streaming and remote work."
-            },
-            {
-                "title": "Logistics Warehouse — ZAL",
-                "type": "Industrial",
-                "points": "36 points",
-                "cable": "Cat6",
-                "desc": "Industrial network for inventory management, scanners and shipping terminals. IP67 protected cabling."
-            },
-            {
-                "title": "Restaurant — Barceloneta",
-                "type": "Hospitality",
-                "points": "14 points",
-                "cable": "Cat6",
-                "desc": "Network for POS, kitchen, customer Wi-Fi and CCTV system. Night installation without disrupting service."
-            }
-        ],
-        "ctaTitle": "Is your project",
-        "ctaTitleHighlight": "next?",
-        "ctaSubtitle": "Tell us what you need — we advise and quote at no obligation."
-    },
-    "aboutPage": {
-        "label": "About us",
-        "title": "Meet",
-        "titleHighlight": "CableCore",
-        "subtitle": "Over 10 years connecting homes, offices and businesses in Barcelona with top-quality network infrastructure.",
-        "storyLabel": "Our story",
-        "storyTitle": "From technicians to Barcelona's reference",
-        "storyP1": "CableCore was born with a clear mission: to offer professional-quality network installations at a fair price in Barcelona and surroundings.",
-        "storyP2": "With over 500 installations completed, we've become the go-to reference for businesses and individuals needing reliable, lasting connectivity.",
-        "storyP3": "Every project is unique — from an apartment with 4 network points to enterprise infrastructure with a server room. We adapt to your needs with custom solutions.",
-        "stats": {
-            "installations": "Installations",
-            "years": "Years of experience",
-            "satisfaction": "Satisfaction",
-            "response": "Response"
-        },
-        "valuesTitle": "Our",
-        "valuesTitleHighlight": "values",
-        "values": [
-            { "icon": "🏅", "title": "Excellence", "desc": "Every installation meets the highest standards of quality and professional certification." },
-            { "icon": "🤝", "title": "Transparency", "desc": "Clear quotes with no surprises. You know exactly what you pay and why." },
-            { "icon": "⚡", "title": "Efficiency", "desc": "We meet deadlines. 24h response, fast and clean installation." },
-            { "icon": "🛡️", "title": "Full warranty", "desc": "5-year warranty on all installations. Your investment is protected." },
-            { "icon": "📍", "title": "Local presence", "desc": "We're local. Based in Barcelona, providing close, personal support." },
-            { "icon": "🔧", "title": "Technology", "desc": "Top-quality materials and professional Fluke certification equipment." }
-        ],
-        "ctaTitle": "Want to work",
-        "ctaTitleHighlight": "with us?",
-        "ctaSubtitle": "Get in touch — we're here to help with your network project."
-    },
-    "contactPage": {
-        "label": "Contact",
-        "title": "Let's talk about your",
-        "titleHighlight": "project",
-        "subtitle": "We're at your service. Contact us by phone, WhatsApp, email or fill in the form — we respond within 24 hours.",
-        "phone": "Phone",
-        "address": "Address",
-        "hours": "Business hours",
-        "formTitle": "Send us your enquiry",
-        "mapTitle": "Find us in",
-        "mapTitleHighlight": "Badalona"
+    "blog": {
+      "title": "Technical",
+      "titleHighlight": "Blog",
+      "subtitle": "Professional articles about network installation, structured cabling and network technology for homes and businesses.",
+      "label": "Knowledge",
+      "readMore": "Read article →",
+      "backToBlog": "← Back to blog",
+      "relatedArticles": "Related articles",
+      "ctaTitle": "Need a professional installation?",
+      "ctaCalc": "Calculate quote",
+      "ctaWhatsapp": "WhatsApp"
     }
+  }
 }
