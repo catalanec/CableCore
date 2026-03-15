@@ -63,8 +63,8 @@ export function generateQuoteHTML(data: QuotePDFData): string {
 
     <!-- Header -->
     <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 30px; border-bottom: 3px solid #C9A84C; padding-bottom: 20px;">
-      <div style="display: flex; align-items: center; gap: 14px;">
-        <img src="https://cablecore.es/logocablecore.png" alt="CableCore" style="height: 70px; width: auto;" crossorigin="anonymous" />
+      <div style="display: flex; align-items: center; gap: 8px;">
+        <img src="https://cablecore.es/logocablecore.png" alt="CableCore" style="height: 140px; width: auto;" crossorigin="anonymous" />
         <div>
           <h1 style="font-size: 28px; font-weight: 800; margin-bottom: 2px;">
             <span style="color: #222;">Cable</span><span style="color: #8B6914;">Core</span>
