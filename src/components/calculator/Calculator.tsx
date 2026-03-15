@@ -615,9 +615,12 @@ export default function Calculator({ locale }: { locale: string }) {
                         </div>
                     </div>
 
-                    <Link href="/contacto" className="btn-gold w-full justify-center text-base py-4 mb-4">
+                    <button
+                        onClick={() => document.getElementById('quote-form')?.scrollIntoView({ behavior: 'smooth' })}
+                        className="btn-gold w-full justify-center text-base py-4 mb-4"
+                    >
                         {l.requestQuote} →
-                    </Link>
+                    </button>
 
                     <a
                         href={`https://wa.me/34605974605?text=${encodeURIComponent(
@@ -635,7 +638,7 @@ export default function Calculator({ locale }: { locale: string }) {
                     </p>
 
                     {/* Quote Form */}
-                    <div className="mt-6 pt-6 border-t border-border-subtle">
+                    <div id="quote-form" className="mt-6 pt-6 border-t border-border-subtle">
                         <QuoteForm
                             locale={locale}
                             calculationData={{
