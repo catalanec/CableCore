@@ -172,7 +172,7 @@ export default function ContactoPage() {
                                                     name="email"
                                                     required
                                                     className="w-full px-4 py-3 bg-surface-card border border-border-subtle rounded-lg text-white placeholder-gray-500 focus:border-brand-gold/50 focus:ring-1 focus:ring-brand-gold/20 outline-none transition-all"
-                                                    placeholder="tu@email.com"
+                                                    placeholder="email@example.com"
                                                 />
                                             </div>
 
