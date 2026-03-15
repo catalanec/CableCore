@@ -454,7 +454,7 @@ export default function Calculator({ locale }: { locale: string }) {
                                     >
                                         +
                                     </button>
-                                    <span className="text-xs text-brand-gold-muted w-6">{l.meters}</span>
+                                    <span className="text-xs text-brand-gold-muted w-14 text-right shrink-0 whitespace-nowrap">{l.meters}</span>
                                 </div>
                             </div>
                         ))}

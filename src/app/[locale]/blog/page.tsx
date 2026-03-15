@@ -6,6 +6,7 @@ import { BLOG_ARTICLES } from '@/lib/blog-data';
 
 export default function BlogPage() {
     const t = useTranslations();
+    const p = useTranslations('pages.blog');
 
     return (
         <>
@@ -16,13 +17,13 @@ export default function BlogPage() {
                 <section className="py-20 lg:py-28 relative overflow-hidden">
                     <div className="absolute top-[-20%] left-1/2 -translate-x-1/2 w-[800px] h-[800px] bg-[radial-gradient(circle,rgba(201,168,76,0.06)_0%,transparent_70%)] pointer-events-none" />
                     <div className="container-custom text-center max-w-3xl mx-auto relative z-10">
-                        <span className="section-label mx-auto">Blog</span>
+                        <span className="section-label mx-auto">{p('label')}</span>
                         <h1 className="font-heading text-4xl sm:text-5xl lg:text-6xl font-extrabold leading-[1.1] mt-6 mb-6">
-                            Guías y consejos sobre{' '}
-                            <span className="text-gradient-gold">redes y cableado</span>
+                            {p('title')}{' '}
+                            <span className="text-gradient-gold">{p('titleHighlight')}</span>
                         </h1>
                         <p className="text-base sm:text-lg text-brand-gold-muted max-w-2xl mx-auto leading-relaxed">
-                            Artículos profesionales sobre instalación de redes, cableado estructurado y tecnología de red para hogares y empresas.
+                            {p('subtitle')}
                         </p>
                     </div>
                 </section>
@@ -71,18 +72,18 @@ export default function BlogPage() {
                     <div className="absolute inset-0 bg-gradient-to-br from-[rgba(201,168,76,0.04)] to-transparent" />
                     <div className="container-custom relative z-10 text-center">
                         <h2 className="font-heading text-3xl sm:text-4xl lg:text-5xl font-bold mb-4">
-                            ¿Necesitas ayuda con tu{' '}
-                            <span className="text-gradient-gold">red?</span>
+                            {p('ctaTitle').split(' ').slice(0, -1).join(' ')}{' '}
+                            <span className="text-gradient-gold">{p('ctaTitle').split(' ').slice(-1)}</span>
                         </h2>
                         <p className="text-brand-gold-muted text-lg mb-10 max-w-xl mx-auto">
-                            Solicita un presupuesto gratuito o calcula el coste de tu instalación en segundos.
+                            {p('subtitle')}
                         </p>
                         <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
                             <Link href="/contacto" className="btn-gold text-base px-8 py-4">
                                 {t('hero.cta')} →
                             </Link>
                             <Link href="/calculator" className="btn-outline text-base px-8 py-4">
-                                🧮 Calculadora
+                                🧮 {t('nav.calculator')}
                             </Link>
                         </div>
                     </div>
