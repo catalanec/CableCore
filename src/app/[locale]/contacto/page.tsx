@@ -118,7 +118,7 @@ export default function ContactoPage() {
                                         <div className="w-12 h-12 rounded-xl bg-[rgba(201,168,76,0.08)] border border-[rgba(201,168,76,0.12)] flex items-center justify-center text-xl">🕐</div>
                                         <div>
                                             <h3 className="font-heading font-semibold text-white">{t('contactPage.hours')}</h3>
-                                            <p className="text-sm text-brand-gold-muted">Lun–Sáb 9:00–19:00</p>
+                                            <p className="text-sm text-brand-gold-muted">{t('footer.schedule')}</p>
                                         </div>
                                     </div>
                                 </div>
