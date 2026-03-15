@@ -1,10 +1,16 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
-<polygon points="32,4 54,16 54,40 32,52 10,40 10,16"
-stroke="#D4AF37"
-stroke-width="4"
-fill="none"/>
-<path d="M24 20 L32 16 L40 20 L40 34 L32 38 L24 34 Z"
-stroke="#D4AF37"
-stroke-width="3"
-fill="none"/>
+<defs>
+  <linearGradient id="gold" x1="0%" y1="0%" x2="100%" y2="100%">
+    <stop offset="0%" style="stop-color:#E8C547"/>
+    <stop offset="100%" style="stop-color:#C9A84C"/>
+  </linearGradient>
+</defs>
+<rect width="64" height="64" rx="14" fill="#09090b"/>
+<polygon points="32,6 52,17 52,39 32,50 12,39 12,17"
+  stroke="url(#gold)"
+  stroke-width="4"
+  fill="none"/>
+<path d="M24 21 L32 16 L40 21 L40 35 L32 40 L24 35 Z"
+  fill="url(#gold)"
+  opacity="0.9"/>
 </svg>

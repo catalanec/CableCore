@@ -1,7 +1,6 @@
 /* ═══════════════════════════════════════════
-   PDF Quote Generator
-   Generates professional PDF quotes using
-   HTML-to-canvas approach (works client-side)
+   PDF Quote Generator — Print-Friendly Version
+   White background with dark text for clean printing
    ═══════════════════════════════════════════ */
 
 export interface QuotePDFData {
@@ -36,12 +35,12 @@ export function generateQuoteNumber(): string {
 }
 
 export function generateQuoteHTML(data: QuotePDFData): string {
-    const itemRows = data.items.map(item => `
-    <tr>
-      <td style="padding: 10px 12px; border-bottom: 1px solid #2a2a2e; color: #a09480; font-size: 13px;">${item.description}</td>
-      <td style="padding: 10px 12px; border-bottom: 1px solid #2a2a2e; color: #a09480; text-align: center; font-size: 13px;">${item.quantity}</td>
-      <td style="padding: 10px 12px; border-bottom: 1px solid #2a2a2e; color: #a09480; text-align: right; font-size: 13px;">${item.unitPrice}</td>
-      <td style="padding: 10px 12px; border-bottom: 1px solid #2a2a2e; color: #c9a84c; text-align: right; font-weight: 600; font-size: 13px;">${item.total}</td>
+    const itemRows = data.items.map((item, i) => `
+    <tr style="background: ${i % 2 === 0 ? '#fff' : '#f8f6f1'};">
+      <td style="padding: 10px 14px; border-bottom: 1px solid #e0dcd4; color: #333; font-size: 13px;">${item.description}</td>
+      <td style="padding: 10px 14px; border-bottom: 1px solid #e0dcd4; color: #333; text-align: center; font-size: 13px;">${item.quantity}</td>
+      <td style="padding: 10px 14px; border-bottom: 1px solid #e0dcd4; color: #333; text-align: right; font-size: 13px;">${item.unitPrice}</td>
+      <td style="padding: 10px 14px; border-bottom: 1px solid #e0dcd4; color: #8B6914; text-align: right; font-weight: 700; font-size: 13px;">${item.total}</td>
     </tr>
   `).join('');
 
@@ -52,46 +51,50 @@ export function generateQuoteHTML(data: QuotePDFData): string {
   <meta charset="utf-8">
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { font-family: 'Helvetica Neue', Arial, sans-serif; background: #09090b; color: #fff; }
+    body { font-family: 'Helvetica Neue', Arial, sans-serif; background: #fff; color: #222; }
+    @page { margin: 15mm; }
+    @media print {
+      body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    }
   </style>
 </head>
 <body>
-  <div style="max-width: 800px; margin: 0 auto; padding: 40px; background: #09090b;">
+  <div style="max-width: 800px; margin: 0 auto; padding: 30px 20px; background: #fff;">
 
     <!-- Header -->
-    <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 40px; border-bottom: 2px solid #c9a84c; padding-bottom: 24px;">
+    <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 30px; border-bottom: 3px solid #C9A84C; padding-bottom: 20px;">
       <div>
-        <h1 style="font-size: 28px; font-weight: 800; margin-bottom: 4px;">
-          <span style="color: #fff;">Cable</span><span style="color: #c9a84c;">Core</span>
+        <h1 style="font-size: 30px; font-weight: 800; margin-bottom: 4px;">
+          <span style="color: #222;">Cable</span><span style="color: #8B6914;">Core</span>
         </h1>
-        <p style="color: #a09480; font-size: 12px; font-style: italic;">Conectamos tu negocio</p>
+        <p style="color: #666; font-size: 12px; font-style: italic;">Conectamos tu negocio</p>
       </div>
-      <div style="text-align: right; font-size: 12px; color: #a09480; line-height: 1.6;">
-        <div style="color: #c9a84c; font-size: 16px; font-weight: 700; margin-bottom: 4px;">PRESUPUESTO</div>
-        <div>N° ${data.quoteNumber}</div>
+      <div style="text-align: right; font-size: 12px; color: #555; line-height: 1.6;">
+        <div style="color: #8B6914; font-size: 18px; font-weight: 700; margin-bottom: 4px;">PRESUPUESTO</div>
+        <div>Nº ${data.quoteNumber}</div>
         <div>Fecha: ${data.date}</div>
       </div>
     </div>
 
     <!-- Client info -->
-    <div style="background: #111113; border: 1px solid #2a2a2e; border-radius: 8px; padding: 20px; margin-bottom: 30px;">
-      <h3 style="color: #c9a84c; font-size: 11px; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 12px;">Datos del cliente</h3>
-      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 8px; font-size: 13px;">
-        <div><span style="color: #666;">Nombre:</span> <span style="color: #fff;">${data.client.name}</span></div>
-        <div><span style="color: #666;">Teléfono:</span> <span style="color: #fff;">${data.client.phone}</span></div>
-        <div><span style="color: #666;">Email:</span> <span style="color: #fff;">${data.client.email}</span></div>
-        ${data.client.address ? `<div><span style="color: #666;">Dirección:</span> <span style="color: #fff;">${data.client.address}</span></div>` : ''}
+    <div style="background: #f8f6f1; border: 2px solid #e0dcd4; border-radius: 6px; padding: 18px; margin-bottom: 25px;">
+      <h3 style="color: #8B6914; font-size: 11px; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 10px; font-weight: 700;">Datos del cliente</h3>
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 6px; font-size: 13px;">
+        <div><span style="color: #888; font-weight: 600;">Nombre:</span> <span style="color: #222; font-weight: 500;">${data.client.name}</span></div>
+        <div><span style="color: #888; font-weight: 600;">Teléfono:</span> <span style="color: #222; font-weight: 500;">${data.client.phone}</span></div>
+        <div><span style="color: #888; font-weight: 600;">Email:</span> <span style="color: #222; font-weight: 500;">${data.client.email}</span></div>
+        ${data.client.address ? `<div><span style="color: #888; font-weight: 600;">Dirección:</span> <span style="color: #222; font-weight: 500;">${data.client.address}</span></div>` : ''}
       </div>
     </div>
 
     <!-- Items table -->
     <table style="width: 100%; border-collapse: collapse; margin-bottom: 24px;">
       <thead>
-        <tr style="background: #111113;">
-          <th style="padding: 12px; text-align: left; color: #c9a84c; font-size: 11px; text-transform: uppercase; letter-spacing: 1px; border-bottom: 2px solid #c9a84c;">Descripción</th>
-          <th style="padding: 12px; text-align: center; color: #c9a84c; font-size: 11px; text-transform: uppercase; letter-spacing: 1px; border-bottom: 2px solid #c9a84c;">Cantidad</th>
-          <th style="padding: 12px; text-align: right; color: #c9a84c; font-size: 11px; text-transform: uppercase; letter-spacing: 1px; border-bottom: 2px solid #c9a84c;">Precio/ud.</th>
-          <th style="padding: 12px; text-align: right; color: #c9a84c; font-size: 11px; text-transform: uppercase; letter-spacing: 1px; border-bottom: 2px solid #c9a84c;">Total</th>
+        <tr>
+          <th style="padding: 12px 14px; text-align: left; color: #fff; background: #8B6914; font-size: 11px; text-transform: uppercase; letter-spacing: 1px;">Descripción</th>
+          <th style="padding: 12px 14px; text-align: center; color: #fff; background: #8B6914; font-size: 11px; text-transform: uppercase; letter-spacing: 1px;">Cantidad</th>
+          <th style="padding: 12px 14px; text-align: right; color: #fff; background: #8B6914; font-size: 11px; text-transform: uppercase; letter-spacing: 1px;">Precio/ud.</th>
+          <th style="padding: 12px 14px; text-align: right; color: #fff; background: #8B6914; font-size: 11px; text-transform: uppercase; letter-spacing: 1px;">Total</th>
         </tr>
       </thead>
       <tbody>
@@ -101,37 +104,37 @@ export function generateQuoteHTML(data: QuotePDFData): string {
 
     <!-- Totals -->
     <div style="display: flex; justify-content: flex-end;">
-      <div style="width: 280px;">
-        <div style="display: flex; justify-content: space-between; padding: 8px 0; font-size: 13px; color: #a09480; border-bottom: 1px solid #2a2a2e;">
-          <span>Subtotal</span> <span>${data.subtotal}</span>
+      <div style="width: 300px;">
+        <div style="display: flex; justify-content: space-between; padding: 8px 12px; font-size: 13px; color: #555; border-bottom: 1px solid #e0dcd4;">
+          <span>Subtotal</span> <span style="font-weight: 600; color: #333;">${data.subtotal}</span>
         </div>
         ${data.urgencyMultiplier ? `
-        <div style="display: flex; justify-content: space-between; padding: 8px 0; font-size: 13px; color: #e8b931; border-bottom: 1px solid #2a2a2e;">
-          <span>Multiplicador urgencia</span> <span>${data.urgencyMultiplier}</span>
+        <div style="display: flex; justify-content: space-between; padding: 8px 12px; font-size: 13px; color: #B8860B; background: #FFF8E1; border-bottom: 1px solid #e0dcd4;">
+          <span style="font-weight: 600;">Multiplicador urgencia</span> <span style="font-weight: 700;">${data.urgencyMultiplier}</span>
         </div>
         ` : ''}
-        <div style="display: flex; justify-content: space-between; padding: 8px 0; font-size: 13px; color: #a09480; border-bottom: 1px solid #2a2a2e;">
-          <span>IVA (21%)</span> <span>${data.iva}</span>
+        <div style="display: flex; justify-content: space-between; padding: 8px 12px; font-size: 13px; color: #555; border-bottom: 1px solid #e0dcd4;">
+          <span>IVA (21%)</span> <span style="font-weight: 600; color: #333;">${data.iva}</span>
         </div>
-        <div style="display: flex; justify-content: space-between; padding: 12px 0; font-size: 20px; font-weight: 800; color: #c9a84c; border-top: 2px solid #c9a84c; margin-top: 4px;">
+        <div style="display: flex; justify-content: space-between; padding: 12px; font-size: 22px; font-weight: 800; color: #8B6914; background: #f8f6f1; border: 2px solid #C9A84C; border-radius: 4px; margin-top: 6px;">
           <span>TOTAL</span> <span>${data.total}</span>
         </div>
       </div>
     </div>
 
     ${data.notes ? `
-    <div style="margin-top: 30px; background: #111113; border: 1px solid #2a2a2e; border-radius: 8px; padding: 16px;">
-      <h4 style="color: #c9a84c; font-size: 11px; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 8px;">Notas</h4>
-      <p style="color: #a09480; font-size: 12px; line-height: 1.5;">${data.notes}</p>
+    <div style="margin-top: 25px; background: #f8f6f1; border: 1px solid #e0dcd4; border-radius: 6px; padding: 14px;">
+      <h4 style="color: #8B6914; font-size: 11px; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 6px; font-weight: 700;">Notas</h4>
+      <p style="color: #555; font-size: 12px; line-height: 1.5;">${data.notes}</p>
     </div>
     ` : ''}
 
     <!-- Footer -->
-    <div style="margin-top: 40px; padding-top: 20px; border-top: 1px solid #2a2a2e; font-size: 11px; color: #666; text-align: center; line-height: 1.8;">
-      <div><b style="color: #c9a84c;">CableCore</b> — Instalación profesional de redes y cableado estructurado</div>
+    <div style="margin-top: 35px; padding-top: 15px; border-top: 2px solid #C9A84C; font-size: 11px; color: #666; text-align: center; line-height: 1.8;">
+      <div><b style="color: #8B6914;">CableCore</b> — Instalación profesional de redes y cableado estructurado</div>
       <div>📞 +34 605 974 605 · ✉️ info@cablecore.es · 🌐 cablecore.es</div>
       <div>📍 Carrer Vitor Balaguer 33, Badalona, 08914, Barcelona</div>
-      <div style="margin-top: 8px; color: #555;">Presupuesto válido por 30 días · Precios con IVA incluido</div>
+      <div style="margin-top: 8px; color: #999; font-size: 10px;">Presupuesto válido por 30 días · Precios con IVA incluido</div>
     </div>
 
   </div>

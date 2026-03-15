@@ -27,7 +27,8 @@ export default function RootLayout({
     return (
         <html className={`${inter.variable} ${outfit.variable}`} suppressHydrationWarning>
             <head>
-                <link rel="icon" href="/logocablecore.png" />
+                <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+                <link rel="apple-touch-icon" href="/logocablecore.png" />
             </head>
             <body className="font-body bg-[#09090b] text-white antialiased">
                 {children}
