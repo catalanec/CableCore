@@ -1,9 +1,9 @@
 import { notFound } from 'next/navigation';
-import { useTranslations } from 'next-intl';
+import { useTranslations, useLocale } from 'next-intl';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import { Link } from '@/i18n/routing';
-import { BLOG_ARTICLES } from '@/lib/blog-data';
+import { getBlogArticles, BLOG_ARTICLES } from '@/lib/blog-data';
 import type { Metadata } from 'next';
 
 export function generateStaticParams() {
@@ -11,7 +11,8 @@ export function generateStaticParams() {
 }
 
 export function generateMetadata({ params }: { params: { slug: string; locale: string } }): Metadata {
-    const article = BLOG_ARTICLES.find((a) => a.slug === params.slug);
+    const articles = getBlogArticles(params.locale);
+    const article = articles.find((a) => a.slug === params.slug);
     if (!article) return {};
 
     return {
@@ -28,8 +29,11 @@ export function generateMetadata({ params }: { params: { slug: string; locale: s
 }
 
 export default function BlogArticlePage({ params }: { params: { slug: string } }) {
-    const article = BLOG_ARTICLES.find((a) => a.slug === params.slug);
+    const locale = useLocale();
+    const articles = getBlogArticles(locale);
+    const article = articles.find((a) => a.slug === params.slug);
     const t = useTranslations();
+    const p = useTranslations('pages.blog');
 
     if (!article) notFound();
 
@@ -69,7 +73,7 @@ export default function BlogArticlePage({ params }: { params: { slug: string } }
                     <div className="container-custom max-w-3xl mx-auto relative z-10">
                         <div className="flex items-center gap-3 mb-6">
                             <Link href="/blog" className="text-sm text-brand-gold hover:underline">
-                                ← Blog
+                                {p('backToBlog')}
                             </Link>
                             <span className="text-brand-gold-muted">|</span>
                             <span className="text-xs px-2.5 py-1 rounded-full bg-[rgba(201,168,76,0.1)] text-brand-gold border border-brand-gold/20">
@@ -154,20 +158,20 @@ export default function BlogArticlePage({ params }: { params: { slug: string } }
                 <section className="py-16 lg:py-24">
                     <div className="container-custom max-w-3xl mx-auto">
                         <h2 className="font-heading text-2xl font-bold text-white mb-6">
-                            Servicios relacionados
+                            {p('relatedArticles')}
                         </h2>
                         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
                             <Link href="/servicios" className="card p-5 text-center hover:border-brand-gold/30 transition-all">
                                 <div className="text-2xl mb-2">🔌</div>
-                                <p className="text-sm text-brand-gold-muted">Ver servicios</p>
+                                <p className="text-sm text-brand-gold-muted">{t('nav.services')}</p>
                             </Link>
                             <Link href="/calculator" className="card p-5 text-center hover:border-brand-gold/30 transition-all">
                                 <div className="text-2xl mb-2">🧮</div>
-                                <p className="text-sm text-brand-gold-muted">Calculadora</p>
+                                <p className="text-sm text-brand-gold-muted">{t('nav.calculator')}</p>
                             </Link>
                             <Link href="/contacto" className="card p-5 text-center hover:border-brand-gold/30 transition-all">
                                 <div className="text-2xl mb-2">📞</div>
-                                <p className="text-sm text-brand-gold-muted">Contacto</p>
+                                <p className="text-sm text-brand-gold-muted">{t('nav.contact')}</p>
                             </Link>
                         </div>
                     </div>
@@ -180,13 +184,9 @@ export default function BlogArticlePage({ params }: { params: { slug: string } }
                     <div className="absolute inset-0 bg-gradient-to-br from-[rgba(201,168,76,0.04)] to-transparent" />
                     <div className="container-custom relative z-10 text-center">
                         <h2 className="font-heading text-3xl sm:text-4xl font-bold mb-4">
-                            ¿Necesitas un{' '}
-                            <span className="text-gradient-gold">presupuesto?</span>
+                            {p('ctaTitle')}
                         </h2>
-                        <p className="text-brand-gold-muted text-lg mb-8 max-w-xl mx-auto">
-                            Contacta con nosotros para una consulta gratuita.
-                        </p>
-                        <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                        <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mt-8">
                             <Link href="/contacto" className="btn-gold text-base px-8 py-4">
                                 {t('hero.cta')} →
                             </Link>

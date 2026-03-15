@@ -1,12 +1,14 @@
-import { useTranslations } from 'next-intl';
+import { useTranslations, useLocale } from 'next-intl';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import { Link } from '@/i18n/routing';
-import { BLOG_ARTICLES } from '@/lib/blog-data';
+import { getBlogArticles } from '@/lib/blog-data';
 
 export default function BlogPage() {
     const t = useTranslations();
     const p = useTranslations('pages.blog');
+    const locale = useLocale();
+    const articles = getBlogArticles(locale);
 
     return (
         <>
@@ -34,7 +36,7 @@ export default function BlogPage() {
                 <section className="py-20 lg:py-28">
                     <div className="container-custom">
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                            {BLOG_ARTICLES.map((article) => (
+                            {articles.map((article) => (
                                 <Link
                                     key={article.slug}
                                     href={`/blog/${article.slug}`}
@@ -72,8 +74,7 @@ export default function BlogPage() {
                     <div className="absolute inset-0 bg-gradient-to-br from-[rgba(201,168,76,0.04)] to-transparent" />
                     <div className="container-custom relative z-10 text-center">
                         <h2 className="font-heading text-3xl sm:text-4xl lg:text-5xl font-bold mb-4">
-                            {p('ctaTitle').split(' ').slice(0, -1).join(' ')}{' '}
-                            <span className="text-gradient-gold">{p('ctaTitle').split(' ').slice(-1)}</span>
+                            {p('ctaTitle')}
                         </h2>
                         <p className="text-brand-gold-muted text-lg mb-10 max-w-xl mx-auto">
                             {p('subtitle')}
