@@ -1,0 +1,85 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ============================================
+   CableCore — Global Styles
+   Premium Black & Gold
+   ============================================ */
+
+@layer base {
+    html {
+        scroll-behavior: smooth;
+        -webkit-text-size-adjust: 100%;
+    }
+
+    body {
+        @apply bg-brand-black text-white antialiased;
+        font-family: var(--font-inter), -apple-system, BlinkMacSystemFont, sans-serif;
+    }
+
+    /* Subtle grid background */
+    body::before {
+        content: '';
+        position: fixed;
+        inset: 0;
+        background-image:
+            linear-gradient(rgba(201, 168, 76, 0.015) 1px, transparent 1px),
+            linear-gradient(90deg, rgba(201, 168, 76, 0.015) 1px, transparent 1px);
+        background-size: 80px 80px;
+        pointer-events: none;
+        z-index: 0;
+    }
+
+    ::selection {
+        background: rgba(201, 168, 76, 0.3);
+        color: #fff;
+    }
+}
+
+@layer components {
+    .container-custom {
+        @apply w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+    }
+
+    .text-gradient-gold {
+        @apply bg-gradient-gold bg-clip-text text-transparent;
+    }
+
+    .glass {
+        @apply bg-surface-glass backdrop-blur-xl border border-border-subtle;
+    }
+
+    .card {
+        @apply bg-surface-card border border-border-subtle rounded-xl transition-all duration-300;
+    }
+
+    .card:hover {
+        @apply bg-surface-card-hover border-border-accent shadow-glow;
+    }
+
+    .btn-gold {
+        @apply inline-flex items-center gap-2 font-semibold px-7 py-3.5 rounded-lg bg-gradient-gold text-black shadow-glow hover:shadow-glow-strong hover:-translate-y-0.5 transition-all duration-300;
+    }
+
+    .btn-outline {
+        @apply inline-flex items-center gap-2 font-semibold px-7 py-3.5 rounded-lg bg-surface-card text-white border border-border-subtle hover:bg-surface-card-hover hover:border-border-accent hover:-translate-y-0.5 transition-all duration-300;
+    }
+
+    .section-label {
+        @apply inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-wider text-brand-gold px-4 py-1.5 rounded-full w-fit;
+        background: rgba(201, 168, 76, 0.06);
+        border: 1px solid rgba(201, 168, 76, 0.12);
+    }
+
+    .gold-divider {
+        @apply h-px border-0 opacity-30;
+        background: linear-gradient(90deg, transparent, #a08535, #c9a84c, #a08535, transparent);
+    }
+}
+
+@layer utilities {
+    .animate-reveal {
+        animation: slide-up 0.6s ease forwards;
+    }
+}

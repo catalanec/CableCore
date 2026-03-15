@@ -1,0 +1,445 @@
+/* ═══════════════════════════════════════════
+   SEO Landing Pages Data
+   Keyword-targeted pages for Barcelona
+   ═══════════════════════════════════════════ */
+
+export interface SEOPageConfig {
+    slug: string;
+    title: string;
+    h1: string;
+    h2s: string[];
+    intro: string;
+    features: { icon: string; title: string; text: string }[];
+    faq: { q: string; a: string }[];
+    metaDescription: string;
+    cta: string;
+}
+
+export const SEO_PAGES: SEOPageConfig[] = [
+    {
+        slug: 'instalacion-cable-red-barcelona',
+        title: 'Instalación Cable de Red Barcelona | CableCore',
+        h1: 'Instalación profesional de cable de red en Barcelona',
+        h2s: ['¿Por qué elegir CableCore?', 'Proceso de instalación', 'Preguntas frecuentes'],
+        intro: 'Servicio profesional de instalación de cable de red Ethernet en Barcelona y alrededores. Cableado Cat5e, Cat6, Cat6A y Cat7 para hogares, oficinas y naves industriales.',
+        metaDescription: 'Instalación de cable de red en Barcelona. Cableado Ethernet profesional Cat5e, Cat6, Cat6A, Cat7. Presupuesto gratis. ☎ +34 605 974 605',
+        cta: '¿Necesitas instalar cable de red en Barcelona?',
+        features: [
+            { icon: '🔌', title: 'Todas las categorías', text: 'Instalamos Cat5e, Cat6, Cat6A y Cat7 según tus necesidades de velocidad y presupuesto.' },
+            { icon: '🏠', title: 'Hogares y oficinas', text: 'Soluciones de cableado adaptadas a espacios residenciales y empresariales.' },
+            { icon: '📋', title: 'Presupuesto gratis', text: 'Visita técnica y presupuesto detallado sin compromiso.' },
+            { icon: '⚡', title: 'Instalación rápida', text: 'Instalamos tu red en el menor tiempo posible con mínimas molestias.' },
+            { icon: '✅', title: 'Certificación', text: 'Todas las instalaciones se certifican y testean para garantizar el rendimiento.' },
+            { icon: '🛡️', title: 'Garantía', text: 'Garantía en mano de obra y materiales para tu tranquilidad.' },
+        ],
+        faq: [
+            { q: '¿Cuánto cuesta instalar cable de red en Barcelona?', a: 'El precio depende del tipo de cable, metros y tipo de instalación. Un punto de red Cat6 instalado cuesta desde 45€. Pide presupuesto gratis.' },
+            { q: '¿Cuánto tarda la instalación?', a: 'Una instalación doméstica de 4-8 puntos se realiza en 1 día. Proyectos empresariales pueden tardar 2-5 días.' },
+            { q: '¿Qué categoría de cable necesito?', a: 'Para uso doméstico Cat6 es suficiente. Para oficinas recomendamos Cat6A. Para instalaciones industriales o de alta velocidad, Cat7.' },
+        ],
+    },
+    {
+        slug: 'cableado-estructurado-barcelona',
+        title: 'Cableado Estructurado Barcelona | CableCore',
+        h1: 'Cableado estructurado profesional en Barcelona',
+        h2s: ['Ventajas del cableado estructurado', 'Nuestro proceso', 'Preguntas frecuentes'],
+        intro: 'Diseño e instalación de cableado estructurado para empresas en Barcelona. Red organizada, escalable y certificada para oficinas, comercios y naves industriales.',
+        metaDescription: 'Cableado estructurado en Barcelona. Diseño, instalación y certificación de redes para empresas. Presupuesto gratis. ☎ +34 605 974 605',
+        cta: '¿Necesitas cableado estructurado en Barcelona?',
+        features: [
+            { icon: '🏗️', title: 'Diseño a medida', text: 'Diseñamos la infraestructura de red adaptada a tu espacio y necesidades.' },
+            { icon: '📐', title: 'Normativa vigente', text: 'Cumplimos con la normativa ISO/IEC 11801 y ANSI/TIA-568.' },
+            { icon: '📈', title: 'Escalabilidad', text: 'Red preparada para crecer con tu negocio sin necesidad de rehacer la instalación.' },
+            { icon: '🔧', title: 'Mantenimiento', text: 'Fácil identificación y gestión de puntos gracias a un etiquetado profesional.' },
+            { icon: '🏭', title: 'Todos los sectores', text: 'Oficinas, comercios, hoteles, clínicas, naves industriales y más.' },
+            { icon: '📊', title: 'Certificación Fluke', text: 'Testeo y certificación de cada punto con equipos profesionales.' },
+        ],
+        faq: [
+            { q: '¿Qué es el cableado estructurado?', a: 'Es un sistema de cableado organizado y estandarizado que permite gestionar voz, datos y vídeo de forma eficiente en un edificio.' },
+            { q: '¿Cuánto cuesta el cableado estructurado?', a: 'Depende del número de puntos y la complejidad. Un presupuesto orientativo para una oficina de 20 puntos está entre 2.000€ y 4.000€.' },
+            { q: '¿Se puede hacer en un local ya construido?', a: 'Sí, trabajamos con canaleta, falso techo y empotrado para adaptar la instalación a cualquier espacio existente.' },
+        ],
+    },
+    {
+        slug: 'instalacion-cat6-barcelona',
+        title: 'Instalación Cat6 Barcelona | CableCore',
+        h1: 'Instalación de cable Cat6 en Barcelona',
+        h2s: ['Ventajas del Cat6', 'Proceso de instalación', 'Preguntas frecuentes'],
+        intro: 'Instalación profesional de cableado Cat6 en Barcelona. Velocidad hasta 1 Gbps, ideal para hogares y oficinas. Presupuesto gratis y sin compromiso.',
+        metaDescription: 'Instalación Cat6 en Barcelona. Cable Ethernet 1Gbps para hogar y oficina. Instalador profesional. Presupuesto gratis. ☎ +34 605 974 605',
+        cta: '¿Necesitas Cat6 en Barcelona?',
+        features: [
+            { icon: '⚡', title: 'Hasta 1 Gbps', text: 'Velocidad sobrada para navegación, streaming 4K y trabajo remoto.' },
+            { icon: '💰', title: 'Mejor relación calidad-precio', text: 'Cable Cat6 al mejor precio con instalación profesional incluida.' },
+            { icon: '🏠', title: 'Ideal para hogar', text: 'Perfecto para domicilios que quieren conexión estable y rápida.' },
+            { icon: '📡', title: 'Compatible WiFi 6', text: 'Base perfecta para routers WiFi 6 y puntos de acceso.' },
+            { icon: '🔌', title: 'RJ45 certificado', text: 'Todos los puntos certificados y testeados por nuestros técnicos.' },
+            { icon: '🛠️', title: 'Instalación limpia', text: 'Canaleta, falso techo o empotrado según tu preferencia.' },
+        ],
+        faq: [
+            { q: '¿Cuál es la diferencia entre Cat5e y Cat6?', a: 'Cat6 soporta velocidades de hasta 1 Gbps a 100m vs 100 Mbps del Cat5e, con mejor blindaje contra interferencias.' },
+            { q: '¿Cat6 es suficiente para mi oficina?', a: 'Para oficinas pequeñas con hasta 10 empleados, Cat6 es una excelente opción. Si necesitas más de 1 Gbps, considera Cat6A.' },
+        ],
+    },
+    {
+        slug: 'instalacion-cat6a-barcelona',
+        title: 'Instalación Cat6A Barcelona | CableCore',
+        h1: 'Instalación de cable Cat6A en Barcelona',
+        h2s: ['Ventajas del Cat6A', 'Proceso de instalación', 'Preguntas frecuentes'],
+        intro: 'Instalación profesional de cableado Cat6A en Barcelona. Velocidad de 10 Gbps, apantallado, ideal para empresas que exigen alto rendimiento de red.',
+        metaDescription: 'Instalación Cat6A en Barcelona. Cable 10Gbps apantallado para empresas. Instalador profesional certificado. ☎ +34 605 974 605',
+        cta: '¿Necesitas Cat6A para tu empresa?',
+        features: [
+            { icon: '🚀', title: 'Hasta 10 Gbps', text: '10 veces más rápido que Cat6 estándar para grandes transferencias de datos.' },
+            { icon: '🛡️', title: 'Apantallado (FTP)', text: 'Mayor protección contra interferencias electromagnéticas.' },
+            { icon: '🏢', title: 'Ideal para empresas', text: 'La elección preferida para oficinas medianas y grandes.' },
+            { icon: '📊', title: 'Futuro-proof', text: 'Preparado para tecnologías como WiFi 6E, PoE++ y 10GbE.' },
+            { icon: '🏥', title: 'Sectores exigentes', text: 'Perfecto para clínicas, estudios de diseño y empresas tech.' },
+            { icon: '✅', title: 'Certificación', text: 'Certificamos cada punto hasta 500 MHz con equipos profesionales.' },
+        ],
+        faq: [
+            { q: '¿Merece la pena Cat6A frente a Cat6?', a: 'Si tu empresa maneja grandes volúmenes de datos o planeas crecer en los próximos 5-10 años, Cat6A es una inversión inteligente.' },
+            { q: '¿Cat6A funciona con mis equipos actuales?', a: 'Sí, Cat6A es retrocompatible con Cat6 y Cat5e. Puedes actualizarte sin cambiar switches ni routers.' },
+        ],
+    },
+    {
+        slug: 'instalacion-cat7-barcelona',
+        title: 'Instalación Cat7 Barcelona | CableCore',
+        h1: 'Instalación de cable Cat7 en Barcelona',
+        h2s: ['Ventajas del Cat7', 'Proceso de instalación', 'Preguntas frecuentes'],
+        intro: 'Instalación de cableado Cat7 en Barcelona para los entornos más exigentes. Blindaje S/FTP, hasta 10 Gbps y frecuencia de 600 MHz.',
+        metaDescription: 'Instalación Cat7 en Barcelona. Cable S/FTP 10Gbps 600MHz para entornos industriales y data centers. ☎ +34 605 974 605',
+        cta: '¿Necesitas Cat7 para tu proyecto?',
+        features: [
+            { icon: '⚡', title: '10 Gbps / 600 MHz', text: 'Máximo rendimiento para entornos industriales y data centers.' },
+            { icon: '🛡️', title: 'Doble blindaje S/FTP', text: 'Cada par blindado individualmente más blindaje global.' },
+            { icon: '🏭', title: 'Industrial', text: 'Ideal para fábricas, naves y entornos con interferencias electromagnéticas.' },
+            { icon: '📡', title: 'PoE++', text: 'Soporta Power over Ethernet para cámaras, APs y dispositivos IoT.' },
+            { icon: '🔒', title: 'Máxima fiabilidad', text: 'Conectores GG45 o TERA para conexiones a prueba de errores.' },
+            { icon: '📐', title: 'Normativa completa', text: 'Cumple con las normas más estrictas: ISO/IEC 11801 Class F.' },
+        ],
+        faq: [
+            { q: '¿Cuándo necesito Cat7?', a: 'Cuando el entorno tiene muchas interferencias electromagnéticas (fábricas, CPDs) o necesitas la máxima calidad de señal.' },
+            { q: '¿Es compatible Cat7 con mis equipos?', a: 'Sí, Cat7 con conectores RJ45 es compatible con todo el equipo estándar.' },
+        ],
+    },
+    {
+        slug: 'instalador-rj45-barcelona',
+        title: 'Instalador RJ45 Barcelona | CableCore',
+        h1: 'Instalador de conectores RJ45 en Barcelona',
+        h2s: ['Servicio profesional RJ45', 'Proceso', 'FAQ'],
+        intro: 'Instalación y certificación de conectores RJ45 en Barcelona. Crimpado profesional, colocación de rosetas y testeo de cada punto de red.',
+        metaDescription: 'Instalador RJ45 en Barcelona. Crimpado profesional, rosetas y testeo. Servicio rápido y garantizado. ☎ +34 605 974 605',
+        cta: '¿Necesitas un instalador RJ45?',
+        features: [
+            { icon: '🔌', title: 'Crimpado profesional', text: 'Terminación de conectores RJ45 con herramientas de precisión.' },
+            { icon: '🔍', title: 'Testeo individual', text: 'Cada conector se verifica con tester profesional.' },
+            { icon: '📐', title: 'Cat5e a Cat7', text: 'Trabajamos con todas las categorías de cable Ethernet.' },
+            { icon: '🏠', title: 'Domicilio y empresa', text: 'Servicio a domicilio para hogares, oficinas y naves.' },
+            { icon: '⚡', title: 'Servicio rápido', text: 'Instalación de puntos RJ45 en el día en Barcelona.' },
+            { icon: '✅', title: 'Garantía', text: 'Garantía en cada punto instalado y certificado.' },
+        ],
+        faq: [
+            { q: '¿Cuánto cuesta instalar un punto RJ45?', a: 'Un punto RJ45 instalado y certificado cuesta desde 15€ (solo conector) hasta 45-85€ (punto completo con cable y roseta).' },
+        ],
+    },
+    {
+        slug: 'instalacion-rack-red-barcelona',
+        title: 'Instalación Rack de Red Barcelona | CableCore',
+        h1: 'Instalación de rack de red en Barcelona',
+        h2s: ['Tipos de rack que instalamos', 'Proceso', 'FAQ'],
+        intro: 'Instalación profesional de racks de red en Barcelona. Racks de pared, de suelo y armarios de telecomunicaciones con patch panel y organización de cableado.',
+        metaDescription: 'Instalación de rack de red en Barcelona. Racks de pared y suelo, patch panel, organización de cableado. ☎ +34 605 974 605',
+        cta: '¿Necesitas instalar un rack de red?',
+        features: [
+            { icon: '🗄️', title: 'Rack de pared', text: 'Desde 6U hasta 18U para oficinas y PYMES. Instalación limpia en pared.' },
+            { icon: '🏗️', title: 'Rack de suelo', text: 'Desde 22U hasta 42U para grandes instalaciones y CPDs.' },
+            { icon: '🔗', title: 'Patch panel', text: 'Organización de conexiones con patch panel Cat6/Cat6A/Cat7.' },
+            { icon: '🔄', title: 'Organización', text: 'Pasacables, paneles ciegos y gestión de cables profesional.' },
+            { icon: '🔌', title: 'Alimentación', text: 'Regletas rack con protección contra sobretensiones.' },
+            { icon: '❄️', title: 'Ventilación', text: 'Bandejas de ventilación y termos para racks cerrados.' },
+        ],
+        faq: [
+            { q: '¿Qué tamaño de rack necesito?', a: 'Para una oficina pequeña, un rack de pared 12U es suficiente. Para más de 20 puntos, recomendamos rack de suelo desde 22U.' },
+            { q: '¿Incluye el patch panel?', a: 'Ofrecemos instalación de rack con y sin patch panel. El rack con patch panel integrado incluye organización completa.' },
+        ],
+    },
+    {
+        slug: 'instalacion-red-oficina-barcelona',
+        title: 'Instalación Red Oficina Barcelona | CableCore',
+        h1: 'Instalación de red para oficinas en Barcelona',
+        h2s: ['Soluciones para oficinas', 'Proceso', 'FAQ'],
+        intro: 'Instalación completa de red para oficinas en Barcelona. Diseño, cableado estructurado, rack, WiFi empresarial y configuración de red. Todo llave en mano.',
+        metaDescription: 'Instalación de red para oficinas en Barcelona. Cableado + rack + WiFi + configuración. Llave en mano. ☎ +34 605 974 605',
+        cta: '¿Necesitas montar la red de tu oficina?',
+        features: [
+            { icon: '🏢', title: 'Solución completa', text: 'Diseño, cableado, rack, WiFi y configuración en un solo servicio.' },
+            { icon: '📐', title: 'Diseño personalizado', text: 'Analizamos tu oficina para optimizar la distribución de puntos de red.' },
+            { icon: '📡', title: 'WiFi empresarial', text: 'Puntos de acceso profesionales para cobertura total sin zonas muertas.' },
+            { icon: '⚙️', title: 'Configuración', text: 'Configuración de switches, VLANs y segmentación de red.' },
+            { icon: '🔒', title: 'Seguridad', text: 'Red segmentada con acceso seguro para empleados e invitados.' },
+            { icon: '📋', title: 'Documentación', text: 'Planos de red, etiquetado y documentación técnica completa.' },
+        ],
+        faq: [
+            { q: '¿Cuánto cuesta montar la red de una oficina?', a: 'Depende del tamaño: una oficina de 10 puestos desde 1.500€, de 20 puestos desde 3.000€, y de 50 puestos desde 6.000€.' },
+            { q: '¿Podéis trabajar fuera de horario?', a: 'Sí, instalamos en horario nocturno o fines de semana para no interrumpir tu actividad.' },
+        ],
+    },
+    {
+        slug: 'instalacion-red-casa-barcelona',
+        title: 'Instalación Red Casa Barcelona | CableCore',
+        h1: 'Instalación de red doméstica en Barcelona',
+        h2s: ['Ventajas del cable en casa', 'Proceso', 'FAQ'],
+        intro: 'Instalación de red Ethernet en casa en Barcelona. Mejora tu WiFi, elimina zonas muertas y disfruta de conexión estable en cada habitación.',
+        metaDescription: 'Instalación de red en casa en Barcelona. Cable Ethernet + WiFi profesional. Elimina zonas muertas. ☎ +34 605 974 605',
+        cta: '¿Quieres mejorar la red de tu casa?',
+        features: [
+            { icon: '🏠', title: 'Red en toda la casa', text: 'Puntos Ethernet en salón, despacho, dormitorios y zonas comunes.' },
+            { icon: '📡', title: 'WiFi sin zonas muertas', text: 'Puntos de acceso conectados por cable para WiFi perfecto en toda la vivienda.' },
+            { icon: '🎮', title: 'Gaming y streaming', text: 'Latencia mínima para juegos online y streaming 4K sin buffering.' },
+            { icon: '💼', title: 'Teletrabajo', text: 'Conexión estable para videoconferencias y trabajo remoto sin cortes.' },
+            { icon: '🔧', title: 'Instalación discreta', text: 'Canaleta decorativa o empotrado para una instalación invisible.' },
+            { icon: '💰', title: 'Precio competitivo', text: 'Desde 180€ para 2 puntos de red y desde 350€ para 4 puntos.' },
+        ],
+        faq: [
+            { q: '¿Se puede instalar red Ethernet en un piso ya construido?', a: 'Sí, usamos canaleta decorativa o aprovechamos tubos existentes. En reformas, podemos empotrar el cable.' },
+            { q: '¿Cuántos puntos de red necesito en casa?', a: 'Recomendamos mínimo 2 puntos (salón y despacho). Ideal: 4 puntos (añadiendo dormitorios).' },
+        ],
+    },
+    {
+        slug: 'instalacion-patch-panel-barcelona',
+        title: 'Instalación Patch Panel Barcelona | CableCore',
+        h1: 'Instalación de patch panel en Barcelona',
+        h2s: ['Ventajas del patch panel', 'Proceso', 'FAQ'],
+        intro: 'Instalación profesional de patch panels en Barcelona. Organiza tu red, facilita cambios y reduce errores con un panel de parcheo Cat6/Cat6A/Cat7.',
+        metaDescription: 'Instalación patch panel en Barcelona. Organización profesional de red Cat6/Cat6A/Cat7. ☎ +34 605 974 605',
+        cta: '¿Necesitas un patch panel?',
+        features: [
+            { icon: '🔗', title: 'Organización total', text: 'Cada cable identificado y terminado en un panel centralizado.' },
+            { icon: '🔄', title: 'Cambios fáciles', text: 'Reconfigurar puntos de red sin tocar el cableado permanente.' },
+            { icon: '📐', title: 'Cat6/Cat6A/Cat7', text: 'Patch panels de 12, 24 y 48 puertos para cualquier categoría.' },
+            { icon: '🏷️', title: 'Etiquetado', text: 'Sistema de etiquetado profesional para fácil identificación.' },
+            { icon: '🗄️', title: 'Integración rack', text: 'Compatible con racks estándar 19" de pared y suelo.' },
+            { icon: '✅', title: 'Certificación', text: 'Cada puerto terminado y certificado con tester profesional.' },
+        ],
+        faq: [
+            { q: '¿Qué es un patch panel?', a: 'Es un panel que centraliza todas las conexiones de red. Los cables del edificio llegan al panel y se conectan con latiguillos cortos al switch.' },
+        ],
+    },
+
+    /* ═══════════════════════════════════════════
+       Location-Targeted Pages
+       ═══════════════════════════════════════════ */
+
+    {
+        slug: 'instalacion-red-hospitalet',
+        title: "Instalación Red L'Hospitalet de Llobregat | CableCore",
+        h1: "Instalación de red en L'Hospitalet de Llobregat",
+        h2s: ['Nuestros servicios en L\'Hospitalet', 'Proceso de instalación', 'Preguntas frecuentes'],
+        intro: "Instalación profesional de cable de red y cableado estructurado en L'Hospitalet de Llobregat. Cat6, Cat6A y Cat7 para hogares, oficinas y locales comerciales. Servicio rápido y presupuesto gratis.",
+        metaDescription: "Instalación de red en L'Hospitalet de Llobregat. Cableado Ethernet Cat6/Cat6A/Cat7 profesional. Presupuesto gratis. ☎ +34 605 974 605",
+        cta: '¿Necesitas instalación de red en L\'Hospitalet?',
+        features: [
+            { icon: '📍', title: "Servicio local en L'Hospitalet", text: "Técnicos cerca de ti en L'Hospitalet y alrededores. Respuesta rápida y visita técnica en el día." },
+            { icon: '🏢', title: 'Oficinas y comercios', text: "Cableado estructurado para las zonas empresariales de L'Hospitalet: Gran Via, Fira y Zona Franca." },
+            { icon: '🏠', title: 'Pisos y viviendas', text: 'Red Ethernet en tu domicilio para teletrabajo, gaming y streaming sin interrupciones.' },
+            { icon: '⚡', title: 'Cat6 / Cat6A / Cat7', text: 'Instalamos cualquier categoría de cable según tus necesidades y presupuesto.' },
+            { icon: '✅', title: 'Certificación completa', text: 'Cada punto de red testado y certificado con equipo profesional.' },
+            { icon: '📋', title: 'Presupuesto gratis', text: 'Visita técnica y presupuesto detallado sin compromiso en 24h.' },
+        ],
+        faq: [
+            { q: "¿Cuánto cuesta instalar red en L'Hospitalet?", a: 'Los precios son los mismos que en Barcelona ciudad. Un punto Cat6 desde 95€ instalado. Pide presupuesto sin compromiso.' },
+            { q: "¿Cuánto tardáis en llegar a L'Hospitalet?", a: "Estamos en Badalona y cubrimos toda el área metropolitana. En L'Hospitalet podemos estar en el mismo día." },
+        ],
+    },
+    {
+        slug: 'instalacion-red-badalona',
+        title: 'Instalación Red Badalona | CableCore',
+        h1: 'Instalación de red en Badalona',
+        h2s: ['Nuestros servicios en Badalona', 'Proceso de instalación', 'Preguntas frecuentes'],
+        intro: 'Instalación profesional de cable de red en Badalona. Somos tu empresa local de cableado estructurado. Cat6, Cat6A y Cat7 para hogares, oficinas y naves industriales en Badalona.',
+        metaDescription: 'Instalación de red en Badalona. Empresa local de cableado Ethernet Cat6/Cat6A/Cat7. Presupuesto gratis. ☎ +34 605 974 605',
+        cta: '¿Necesitas red en Badalona?',
+        features: [
+            { icon: '📍', title: 'Tu empresa local', text: 'CableCore tiene su sede en Badalona. Somos tu instalador de red de confianza en la ciudad.' },
+            { icon: '🏭', title: 'Polígonos industriales', text: 'Cableado para naves y empresas en los polígonos de Badalona y Montgat.' },
+            { icon: '🏠', title: 'Hogares en Badalona', text: 'Red Ethernet para pisos en el centro, Llefià, La Salut, Gorg y todas las zonas.' },
+            { icon: '🏢', title: 'Oficinas', text: 'Cableado estructurado para oficinas y coworkings en Badalona.' },
+            { icon: '⚡', title: 'Respuesta inmediata', text: 'Al estar en Badalona, podemos hacer visitas técnicas en el mismo día.' },
+            { icon: '🛡️', title: 'Garantía 5 años', text: 'Todas nuestras instalaciones con garantía de 5 años en materiales y mano de obra.' },
+        ],
+        faq: [
+            { q: '¿Estáis en Badalona?', a: 'Sí, nuestra oficina está en Carrer Vitor Balaguer 33, Badalona. Somos tu instalador de red local.' },
+            { q: '¿Cubrís todo Badalona?', a: 'Sí, cubrimos todos los barrios de Badalona: centro, Llefià, La Salut, Gorg, Montigalà, Sant Roc y más.' },
+        ],
+    },
+    {
+        slug: 'instalacion-red-sabadell',
+        title: 'Instalación Red Sabadell | CableCore',
+        h1: 'Instalación de red en Sabadell',
+        h2s: ['Servicios en Sabadell', 'Proceso', 'Preguntas frecuentes'],
+        intro: 'Instalación de cable de red en Sabadell. Cableado estructurado Cat6, Cat6A y Cat7 para empresas y hogares. Servicio profesional con presupuesto gratuito.',
+        metaDescription: 'Instalación de red en Sabadell. Cableado Ethernet Cat6/Cat6A/Cat7 profesional para empresas y hogares. ☎ +34 605 974 605',
+        cta: '¿Necesitas instalación de red en Sabadell?',
+        features: [
+            { icon: '🏙️', title: 'Cobertura en Sabadell', text: 'Servicio de instalación de red en todo Sabadell y el Vallès Occidental.' },
+            { icon: '🏭', title: 'Zona industrial', text: 'Cableado para naves y empresas en los polígonos industriales de Sabadell.' },
+            { icon: '🏢', title: 'Oficinas centro', text: 'Cableado estructurado para oficinas en el centro de Sabadell y zona Eix Macià.' },
+            { icon: '🏠', title: 'Hogares', text: 'Red Ethernet para teletrabajo y entretenimiento en viviendas de Sabadell.' },
+            { icon: '📋', title: 'Presupuesto gratis', text: 'Visita técnica en Sabadell y presupuesto detallado sin compromiso.' },
+            { icon: '✅', title: 'Certificación', text: 'Todos los puntos de red certificados con equipo Fluke profesional.' },
+        ],
+        faq: [
+            { q: '¿Hacéis instalaciones en Sabadell?', a: 'Sí, cubrimos Sabadell y todo el Vallès Occidental. Servicio profesional con los mismos precios que en Barcelona.' },
+            { q: '¿Cuánto tardáis en hacer un presupuesto?', a: 'Respondemos en 24 horas y podemos hacer la visita técnica en 1-2 días laborables.' },
+        ],
+    },
+    {
+        slug: 'instalacion-red-terrassa',
+        title: 'Instalación Red Terrassa | CableCore',
+        h1: 'Instalación de red en Terrassa',
+        h2s: ['Servicios en Terrassa', 'Proceso', 'Preguntas frecuentes'],
+        intro: 'Instalación profesional de cable de red en Terrassa. Cableado estructurado para empresas, oficinas y hogares. Cat6, Cat6A y Cat7 con certificación incluida.',
+        metaDescription: 'Instalación de red en Terrassa. Cableado estructurado Cat6/Cat6A/Cat7 profesional. Presupuesto gratis. ☎ +34 605 974 605',
+        cta: '¿Necesitas red en Terrassa?',
+        features: [
+            { icon: '🏙️', title: 'Servicio en Terrassa', text: 'Instalación de redes en Terrassa y municipios del Vallès Occidental.' },
+            { icon: '🏗️', title: 'Obra nueva y reforma', text: 'Cableado en edificios nuevos o adaptación en locales y oficinas existentes.' },
+            { icon: '📡', title: 'WiFi empresarial', text: 'Instalación de puntos de acceso WiFi profesionales con cableado backbone.' },
+            { icon: '🗄️', title: 'Racks y patch panels', text: 'Instalación de armarios de telecomunicaciones para empresas en Terrassa.' },
+            { icon: '⚡', title: 'Rápido y profesional', text: 'Equipo experimentado para instalaciones rápidas y limpias.' },
+            { icon: '📋', title: 'Sin compromiso', text: 'Presupuesto detallado gratuito con visita técnica incluida.' },
+        ],
+        faq: [
+            { q: '¿Cubrís Terrassa?', a: 'Sí, realizamos instalaciones en Terrassa, Rubí, Sant Cugat y todo el Vallès.' },
+            { q: '¿Qué tipo de cable recomendáis para una oficina en Terrassa?', a: 'Para oficinas recomendamos Cat6A (10 Gbps). Es la mejor inversión a medio-largo plazo.' },
+        ],
+    },
+    {
+        slug: 'instalacion-red-sant-cugat',
+        title: 'Instalación Red Sant Cugat del Vallès | CableCore',
+        h1: 'Instalación de red en Sant Cugat del Vallès',
+        h2s: ['Servicios en Sant Cugat', 'Proceso', 'Preguntas frecuentes'],
+        intro: 'Instalación de red profesional en Sant Cugat del Vallès. Cableado estructurado para oficinas, despachos y viviendas de alta gama. Presupuesto sin compromiso.',
+        metaDescription: 'Instalación de red en Sant Cugat del Vallès. Cableado Ethernet profesional para oficinas y hogares. ☎ +34 605 974 605',
+        cta: '¿Necesitas red en Sant Cugat?',
+        features: [
+            { icon: '🏢', title: 'Parques empresariales', text: 'Cableado para oficinas en los parques empresariales y centros de negocios de Sant Cugat.' },
+            { icon: '🏠', title: 'Chalets y viviendas', text: 'Instalaciones de red premium para viviendas unifamiliares y adosados.' },
+            { icon: '📐', title: 'Diseño a medida', text: 'Diseñamos la red perfecta para tu espacio, optimizando puntos y recorridos.' },
+            { icon: '🔒', title: 'Redes seguras', text: 'VLAN, segmentación y acceso controlado para empresas y home office.' },
+            { icon: '📡', title: 'WiFi mesh', text: 'Cobertura WiFi total en viviendas grandes con puntos de acceso cableados.' },
+            { icon: '✅', title: 'Calidad premium', text: 'Materiales de primera y acabados impecables para instalaciones discretas.' },
+        ],
+        faq: [
+            { q: '¿Hacéis instalaciones en chalets de Sant Cugat?', a: 'Sí, tenemos amplia experiencia en viviendas unifamiliares. Instalamos red en todas las plantas con acabado discreto.' },
+            { q: '¿Cuánto cuesta cablear un chalet?', a: 'Depende del tamaño y número de puntos. Un chalet de 3 plantas con 8-12 puntos está en torno a 1.500-3.000€.' },
+        ],
+    },
+    {
+        slug: 'instalacion-red-cornella',
+        title: 'Instalación Red Cornellà de Llobregat | CableCore',
+        h1: 'Instalación de red en Cornellà de Llobregat',
+        h2s: ['Servicios en Cornellà', 'Proceso', 'Preguntas frecuentes'],
+        intro: 'Instalación de red en Cornellà de Llobregat. Cableado Ethernet profesional para empresas del Baix Llobregat. Cat6, Cat6A y Cat7 con certificación.',
+        metaDescription: 'Instalación de red en Cornellà de Llobregat. Cableado Ethernet profesional Cat6/Cat6A/Cat7. ☎ +34 605 974 605',
+        cta: '¿Necesitas red en Cornellà?',
+        features: [
+            { icon: '📍', title: 'Baix Llobregat', text: 'Servicio en Cornellà y todo el Baix Llobregat: Esplugues, Sant Joan Despí, Sant Just.' },
+            { icon: '🏢', title: 'Zona empresarial', text: 'Cableado para oficinas y empresas en las áreas comerciales de Cornellà.' },
+            { icon: '🏠', title: 'Hogares', text: 'Red Ethernet en viviendas para mejorar la conexión de toda la familia.' },
+            { icon: '🏭', title: 'Industrial', text: 'Instalaciones en naves y polígonos del Baix Llobregat.' },
+            { icon: '⚡', title: 'Servicio rápido', text: 'Presupuesto en 24h e instalación en la fecha que mejor te convenga.' },
+            { icon: '🛡️', title: 'Garantía total', text: 'Garantía de 5 años en materiales y mano de obra.' },
+        ],
+        faq: [
+            { q: '¿Cubrís Cornellà de Llobregat?', a: 'Sí, cubrimos Cornellà y todos los municipios del Baix Llobregat.' },
+        ],
+    },
+    {
+        slug: 'instalacion-red-sant-boi',
+        title: 'Instalación Red Sant Boi de Llobregat | CableCore',
+        h1: 'Instalación de red en Sant Boi de Llobregat',
+        h2s: ['Servicios en Sant Boi', 'Proceso', 'Preguntas frecuentes'],
+        intro: 'Instalación de redes en Sant Boi de Llobregat. Cableado estructurado Ethernet para hogares y negocios en el Baix Llobregat. Técnicos certificados.',
+        metaDescription: 'Instalación de red en Sant Boi de Llobregat. Cableado Ethernet Cat6/Cat6A/Cat7 profesional. ☎ +34 605 974 605',
+        cta: '¿Necesitas red en Sant Boi?',
+        features: [
+            { icon: '📍', title: 'Cobertura local', text: 'Servicio de instalación de red en Sant Boi, Viladecans, Gavà y municipios cercanos.' },
+            { icon: '🏢', title: 'Negocios locales', text: 'Cableado para comercios, oficinas y consultorios en Sant Boi.' },
+            { icon: '🏠', title: 'Residencial', text: 'Puntos de red en pisos y casas para teletrabajo y entretenimiento.' },
+            { icon: '📡', title: 'WiFi profesional', text: 'Eliminamos zonas sin cobertura con puntos de acceso cableados.' },
+            { icon: '📋', title: 'Presupuesto gratis', text: 'Evaluación técnica y presupuesto sin compromiso.' },
+            { icon: '✅', title: 'Garantía', text: 'Instalaciones garantizadas con certificación de cada punto.' },
+        ],
+        faq: [
+            { q: '¿Instaláis en Sant Boi de Llobregat?', a: 'Sí, cubrimos Sant Boi y toda la zona del Baix Llobregat sur.' },
+        ],
+    },
+    {
+        slug: 'instalacion-red-castelldefels',
+        title: 'Instalación Red Castelldefels | CableCore',
+        h1: 'Instalación de red en Castelldefels',
+        h2s: ['Servicios en Castelldefels', 'Proceso', 'Preguntas frecuentes'],
+        intro: 'Instalación de red en Castelldefels. Cableado Ethernet para viviendas, chalets y empresas de la zona costera. Presupuesto gratis.',
+        metaDescription: 'Instalación de red en Castelldefels. Cableado Ethernet Cat6/Cat6A/Cat7 para hogares y empresas. ☎ +34 605 974 605',
+        cta: '¿Necesitas red en Castelldefels?',
+        features: [
+            { icon: '🏖️', title: 'Zona costera', text: 'Servicio en Castelldefels, Gavà Mar, Sitges y la costa del Garraf.' },
+            { icon: '🏠', title: 'Chalets y casas', text: 'Red Ethernet en viviendas unifamiliares con cobertura en todas las plantas.' },
+            { icon: '📡', title: 'WiFi total', text: 'Puntos de acceso cableados para WiFi perfecto en casa y jardín.' },
+            { icon: '🏢', title: 'Empresas', text: 'Cableado para oficinas y negocios en el Parc Empresarial de Castelldefels.' },
+            { icon: '🎮', title: 'Gaming y streaming', text: 'Conexión directa por cable para latencia mínima y máximo rendimiento.' },
+            { icon: '🛡️', title: 'Calidad garantizada', text: 'Materiales premium y garantía de 5 años en todas las instalaciones.' },
+        ],
+        faq: [
+            { q: '¿Hacéis instalaciones en chalets de Castelldefels?', a: 'Sí, realizamos instalaciones en chalets de Castelldefels y Gavà. Cubrimos todas las plantas y zonas exteriores.' },
+            { q: '¿Se puede tener WiFi en el jardín?', a: 'Sí, instalamos puntos de acceso exterior conectados por cable para WiFi en terrazas y jardines.' },
+        ],
+    },
+    {
+        slug: 'instalacion-red-mataro',
+        title: 'Instalación Red Mataró | CableCore',
+        h1: 'Instalación de red en Mataró',
+        h2s: ['Servicios en Mataró', 'Proceso', 'Preguntas frecuentes'],
+        intro: 'Instalación profesional de cable de red en Mataró. Cableado estructurado Cat6/Cat6A/Cat7 para empresas del Maresme. Presupuesto gratuito.',
+        metaDescription: 'Instalación de red en Mataró. Cableado Ethernet profesional para empresas y hogares del Maresme. ☎ +34 605 974 605',
+        cta: '¿Necesitas red en Mataró?',
+        features: [
+            { icon: '🏙️', title: 'Maresme', text: 'Servicio en Mataró, Premià de Mar, Vilassar y toda la comarca del Maresme.' },
+            { icon: '🏭', title: 'Industria', text: 'Cableado para empresas y naves en los polígonos industriales de Mataró.' },
+            { icon: '🏢', title: 'Oficinas', text: 'Red estructurada para despachos y oficinas en el centro de Mataró.' },
+            { icon: '🏠', title: 'Domicilios', text: 'Instalación Ethernet en viviendas para mejorar tu conexión a Internet.' },
+            { icon: '⚡', title: 'Rápido', text: 'Presupuesto en 24h. Instalaciones en 1-3 días según complejidad.' },
+            { icon: '📊', title: 'Certificación Fluke', text: 'Medición y certificación profesional de todos los puntos de red.' },
+        ],
+        faq: [
+            { q: '¿Llegáis hasta Mataró?', a: 'Sí, cubrimos toda la comarca del Maresme desde Badalona hasta Mataró y más allá.' },
+            { q: '¿Los precios son iguales que en Barcelona?', a: 'Sí, nuestros precios son los mismos en toda el área metropolitana. Sin recargos por desplazamiento.' },
+        ],
+    },
+    {
+        slug: 'instalacion-red-granollers',
+        title: 'Instalación Red Granollers | CableCore',
+        h1: 'Instalación de red en Granollers',
+        h2s: ['Servicios en Granollers', 'Proceso', 'Preguntas frecuentes'],
+        intro: 'Instalación de red profesional en Granollers y el Vallès Oriental. Cableado Cat6, Cat6A y Cat7 para empresas y hogares. Presupuesto sin compromiso.',
+        metaDescription: 'Instalación de red en Granollers. Cableado Ethernet Cat6/Cat6A/Cat7 para empresas del Vallès Oriental. ☎ +34 605 974 605',
+        cta: '¿Necesitas red en Granollers?',
+        features: [
+            { icon: '🏙️', title: 'Vallès Oriental', text: 'Servicio en Granollers, Mollet del Vallès, Parets y toda la comarca.' },
+            { icon: '🏭', title: 'Polígonos', text: 'Cableado estructurado para empresas en los polígonos de Granollers y Canovelles.' },
+            { icon: '🏢', title: 'Centros de negocio', text: 'Red profesional para oficinas y despachos en Granollers.' },
+            { icon: '🏠', title: 'Viviendas', text: 'Red doméstica para teletrabajo, streaming y gaming.' },
+            { icon: '📋', title: 'Presupuesto 24h', text: 'Contacta hoy y recibe presupuesto detallado en 24 horas.' },
+            { icon: '✅', title: 'Garantía 5 años', text: 'Materiales de calidad con garantía extendida de 5 años.' },
+        ],
+        faq: [
+            { q: '¿Hacéis instalaciones en Granollers?', a: 'Sí, cubrimos Granollers y todo el Vallès Oriental. Mismos precios que en Barcelona.' },
+        ],
+    },
+];
+
+export function getPageBySlug(slug: string): SEOPageConfig | undefined {
+    return SEO_PAGES.find(p => p.slug === slug);
+}

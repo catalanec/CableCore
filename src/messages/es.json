@@ -1,0 +1,189 @@
+{
+    "meta": {
+        "title": "CableCore — Instalación de Redes y Cableado Estructurado en Barcelona",
+        "description": "Especialistas en instalación de cable de red, cableado estructurado y puntos de red en Barcelona y alrededores. Presupuesto gratuito."
+    },
+    "nav": {
+        "home": "Inicio",
+        "services": "Servicios",
+        "process": "Proceso",
+        "projects": "Proyectos",
+        "about": "Nosotros",
+        "contact": "Contacto",
+        "calculator": "Calculadora",
+        "quote": "Presupuesto Gratis"
+    },
+    "hero": {
+        "badge": "Barcelona y alrededores",
+        "title": "Instalación profesional de",
+        "titleHighlight": "cableado de red en Barcelona",
+        "subtitle": "Especialistas en redes Ethernet Cat6, Cat6A y Cat7 para hogares, oficinas y negocios. Soluciones a medida con garantía total.",
+        "cta": "Solicitar Presupuesto",
+        "ctaWhatsapp": "Contactar por WhatsApp",
+        "stats": {
+            "installations": "Instalaciones",
+            "experience": "Años de experiencia",
+            "warranty": "Garantía"
+        }
+    },
+    "services": {
+        "label": "Nuestros servicios",
+        "title": "Soluciones de red para",
+        "titleHighlight": "cada necesidad",
+        "subtitle": "Desde una conexión doméstica hasta una infraestructura empresarial completa — diseñamos e instalamos redes que funcionan.",
+        "home": {
+            "title": "Hogar",
+            "desc": "Internet rápido y estable en toda tu vivienda. Adiós a las zonas sin cobertura.",
+            "features": [
+                "Puntos de red Ethernet",
+                "Cableado Cat6/Cat6a",
+                "Configuración Wi-Fi mesh",
+                "Smart Home ready"
+            ]
+        },
+        "office": {
+            "title": "Oficina",
+            "desc": "Infraestructura profesional para máxima productividad y seguridad.",
+            "features": [
+                "Cableado estructurado certificado",
+                "Racks y patch panels",
+                "VoIP y telefonía IP",
+                "Redes segmentadas (VLAN)"
+            ]
+        },
+        "retail": {
+            "title": "Retail y Comercio",
+            "desc": "Conectividad para tiendas, restaurantes y puntos de venta.",
+            "features": [
+                "TPV y puntos de venta",
+                "Wi-Fi para clientes",
+                "Cámaras IP (CCTV)",
+                "Sistemas de control de acceso"
+            ]
+        },
+        "business": {
+            "title": "Empresas (PYME)",
+            "desc": "Redes escalables y de alto rendimiento para pequeñas y medianas empresas.",
+            "features": [
+                "Fibra óptica interior",
+                "Salas de servidores",
+                "Redundancia y failover",
+                "Certificación Fluke"
+            ]
+        }
+    },
+    "trust": {
+        "label": "¿Por qué elegirnos?",
+        "title": "La diferencia está en los",
+        "titleHighlight": "detalles",
+        "subtitle": "No solo instalamos cables — diseñamos infraestructuras que duran y crecen contigo.",
+        "certified": {
+            "title": "Técnicos certificados",
+            "desc": "Nuestro equipo cuenta con certificaciones profesionales en redes y cableado estructurado."
+        },
+        "warranty": {
+            "title": "Garantía de 5 años",
+            "desc": "Todas nuestras instalaciones incluyen garantía de cinco años en materiales y mano de obra."
+        },
+        "fast": {
+            "title": "Respuesta rápida",
+            "desc": "Presupuesto en 24 horas y finalización del proyecto en los plazos acordados."
+        },
+        "local": {
+            "title": "Soporte local",
+            "desc": "Estamos en Barcelona. Soporte técnico local, fiable y cercano."
+        }
+    },
+    "process": {
+        "label": "Cómo trabajamos",
+        "title": "Tu instalación en",
+        "titleHighlight": "4 pasos",
+        "subtitle": "Un proceso claro, transparente y eficiente — desde la consulta hasta la certificación.",
+        "steps": [
+            {
+                "title": "Consulta gratuita",
+                "desc": "Analizamos tus necesidades y visitamos el espacio para evaluar la instalación."
+            },
+            {
+                "title": "Diseño y presupuesto",
+                "desc": "Diseñamos la solución óptima y entregamos un presupuesto detallado sin compromiso."
+            },
+            {
+                "title": "Instalación profesional",
+                "desc": "Ejecutamos la instalación con materiales de primera calidad y acabados perfectos."
+            },
+            {
+                "title": "Certificación y entrega",
+                "desc": "Certificamos cada punto de red, entregamos documentación y te formamos en el uso."
+            }
+        ]
+    },
+    "testimonials": {
+        "label": "Opiniones",
+        "title": "Lo que dicen nuestros",
+        "titleHighlight": "clientes",
+        "items": [
+            {
+                "text": "Instalaron la red completa de nuestra oficina en dos días. Trabajo impecable, todo certificado y funcionando perfecto.",
+                "name": "Marta García",
+                "role": "Directora de Operaciones, Estudio Creativo BCN",
+                "initials": "MG"
+            },
+            {
+                "text": "Necesitábamos cableado en nuestra tienda para cámaras y TPV. Vinieron rápido, presupuesto claro, instalación limpia. Perfecto.",
+                "name": "Jordi Recasens",
+                "role": "Propietario, Botiga del Barri",
+                "initials": "JR"
+            },
+            {
+                "text": "Tras reformar mi piso quería puntos de red en todas las habitaciones. Trabajo muy profesional y precio justo. Internet vuela.",
+                "name": "Andrey Sokolov",
+                "role": "Cliente particular, Eixample",
+                "initials": "AS"
+            }
+        ]
+    },
+    "coverage": {
+        "label": "Zona de cobertura",
+        "title": "Servicio en",
+        "titleHighlight": "Barcelona y alrededores",
+        "subtitle": "Cubrimos la ciudad de Barcelona y toda el área metropolitana.",
+        "highlight": {
+            "title": "Respuesta en 24h",
+            "desc": "Solicita tu presupuesto y recibe respuesta en un día laboral. Visitas técnicas gratuitas en toda nuestra zona de cobertura."
+        }
+    },
+    "cta": {
+        "title": "¿Prefieres hablar",
+        "titleHighlight": "directamente",
+        "subtitle": "Llámanos o escríbenos por WhatsApp — estamos aquí para ayudarte."
+    },
+    "contact": {
+        "label": "Contacto",
+        "title": "Solicita tu",
+        "titleHighlight": "presupuesto gratuito",
+        "subtitle": "Cuéntanos qué necesitas y te enviaremos un presupuesto detallado sin compromiso en 24 horas.",
+        "form": {
+            "name": "Nombre completo",
+            "phone": "Teléfono",
+            "email": "Email",
+            "service": "Tipo de servicio",
+            "serviceDefault": "Selecciona un servicio",
+            "message": "Describe tu proyecto",
+            "messagePlaceholder": "Cuéntanos los detalles: ¿cuántos puntos de red necesitas? ¿es obra nueva o reforma? ¿tienes planos?",
+            "submit": "Enviar Solicitud de Presupuesto",
+            "note": "Tus datos están seguros. No compartimos tu información con terceros."
+        },
+        "success": {
+            "title": "¡Solicitud enviada!",
+            "desc": "Gracias por contactarnos. Te responderemos con un presupuesto detallado en 24 horas."
+        }
+    },
+    "footer": {
+        "desc": "Especialistas en instalación de redes y cableado estructurado en Barcelona. Conectamos tu mundo de forma fiable y profesional.",
+        "services": "Servicios",
+        "company": "Empresa",
+        "contactTitle": "Contacto",
+        "rights": "Todos los derechos reservados."
+    }
+}
