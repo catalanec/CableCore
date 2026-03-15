@@ -65,7 +65,7 @@ export function generateQuoteHTML(data: QuotePDFData): string {
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; border-bottom: 3px solid #C9A84C; padding-bottom: 15px;">
       <div>
         <img src="https://cablecore.es/logocablecore.png" alt="CableCore" style="height: 100px; width: auto; display: block;" crossorigin="anonymous" />
-        <p style="color: #8B6914; font-size: 14px; font-style: italic; margin-top: 2px; font-weight: 500;">Conectamos tu negocio</p>
+        <p style="color: #8B6914; font-size: 10px; font-style: italic; margin-top: 2px; font-weight: 500; text-align: center;">Conectamos tu negocio</p>
       </div>
       <div style="text-align: right; font-size: 12px; color: #555; line-height: 1.6;">
         <div style="color: #8B6914; font-size: 18px; font-weight: 700; margin-bottom: 4px;">PRESUPUESTO</div>
