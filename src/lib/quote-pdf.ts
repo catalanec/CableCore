@@ -62,12 +62,12 @@ export function generateQuoteHTML(data: QuotePDFData): string {
   <div style="max-width: 800px; margin: 0 auto; padding: 30px 20px; background: #fff;">
 
     <!-- Header -->
-    <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 30px; border-bottom: 3px solid #C9A84C; padding-bottom: 20px;">
-      <div>
-        <img src="https://cablecore.es/logocablecore.png" alt="CableCore" style="height: 200px; width: auto;" crossorigin="anonymous" />
-        <p style="color: #8B6914; font-size: 13px; font-style: italic; margin-top: 2px; font-weight: 500;">Conectamos tu negocio</p>
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px; border-bottom: 3px solid #C9A84C; padding-bottom: 15px;">
+      <div style="margin-left: -15px;">
+        <img src="https://cablecore.es/logocablecore.png" alt="CableCore" style="height: 200px; width: auto; display: block;" crossorigin="anonymous" />
+        <p style="color: #8B6914; font-size: 14px; font-style: italic; margin-top: 0; font-weight: 500; padding-left: 15px;">Conectamos tu negocio</p>
       </div>
-      <div style="text-align: right; font-size: 12px; color: #555; line-height: 1.6; padding-top: 10px;">
+      <div style="text-align: right; font-size: 12px; color: #555; line-height: 1.6;">
         <div style="color: #8B6914; font-size: 18px; font-weight: 700; margin-bottom: 4px;">PRESUPUESTO</div>
         <div>Nº ${data.quoteNumber}</div>
         <div>Fecha: ${data.date}</div>
