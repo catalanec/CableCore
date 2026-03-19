@@ -1,7 +1,13 @@
+import { Metadata } from 'next';
 import { useTranslations } from 'next-intl';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import Image from 'next/image';
+import { generatePageMetadata, getFAQJsonLd, getBreadcrumbJsonLd, BASE_URL } from '@/lib/seo-metadata';
+
+export function generateMetadata({ params }: { params: { locale: string } }): Metadata {
+    return generatePageMetadata('home', params.locale, '');
+}
 
 export default function HomePage() {
     const t = useTranslations();
@@ -31,9 +37,20 @@ export default function HomePage() {
         'Sant Cugat del Vallès', 'El Prat de Llobregat',
     ];
 
+    const faqJsonLd = getFAQJsonLd([
+        { question: '¿Cuánto cuesta instalar cable de red en Barcelona?', answer: 'El precio depende del tipo de cable (Cat6, Cat6A, Cat7), número de puntos y tipo de instalación. Use nuestra calculadora para un presupuesto orientativo.' },
+        { question: '¿Qué tipo de cable de red necesito?', answer: 'Cat6 es ideal para hogares y oficinas pequeñas (1Gbps). Cat6A para oficinas medianas (10Gbps). Cat7 para naves industriales y data centers.' },
+        { question: '¿Cuánto tarda la instalación de red?', answer: 'Una instalación típica de 4-10 puntos se completa en 1-2 días laborables.' },
+        { question: '¿Ofrecen garantía?', answer: 'Sí, ofrecemos 5 años de garantía en todas nuestras instalaciones de red.' },
+    ]);
+
     return (
         <>
             <Header />
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
+            />
 
             <main className="min-h-screen relative z-10">
 
@@ -43,7 +60,7 @@ export default function HomePage() {
                     <div className="absolute inset-0 z-0">
                         <Image
                             src="/images/hero-bg.png"
-                            alt=""
+                            alt="Instalación profesional de cable de red en Barcelona — CableCore"
                             fill
                             className="object-cover object-center"
                             priority

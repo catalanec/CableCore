@@ -1,7 +1,13 @@
+import { Metadata } from 'next';
 import { useTranslations, useLocale } from 'next-intl';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import Calculator from '@/components/calculator/Calculator';
+import { generatePageMetadata } from '@/lib/seo-metadata';
+
+export function generateMetadata({ params }: { params: { locale: string } }): Metadata {
+    return generatePageMetadata('calculator', params.locale, '/calculator');
+}
 
 export default function CalculatorPage() {
     const locale = useLocale();

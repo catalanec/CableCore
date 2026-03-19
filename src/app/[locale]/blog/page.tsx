@@ -1,8 +1,14 @@
+import { Metadata } from 'next';
 import { useTranslations, useLocale } from 'next-intl';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import { Link } from '@/i18n/routing';
 import { getBlogArticles } from '@/lib/blog-data';
+import { generatePageMetadata } from '@/lib/seo-metadata';
+
+export function generateMetadata({ params }: { params: { locale: string } }): Metadata {
+    return generatePageMetadata('blog', params.locale, '/blog');
+}
 
 export default function BlogPage() {
     const t = useTranslations();

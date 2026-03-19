@@ -5,7 +5,7 @@ const BASE_URL = 'https://cablecore.es';
 const LOCALES = ['es', 'en', 'ru'];
 
 export default function sitemap() {
-    const staticPages = ['', '/servicios', '/proceso', '/proyectos', '/nosotros', '/contacto', '/calculator', '/blog', '/admin'];
+    const staticPages = ['', '/servicios', '/proceso', '/proyectos', '/nosotros', '/contacto', '/calculator', '/blog'];
 
     const staticUrls = LOCALES.flatMap(locale =>
         staticPages.map(page => ({

@@ -1,7 +1,13 @@
+import { Metadata } from 'next';
 import { useTranslations } from 'next-intl';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import { Link } from '@/i18n/routing';
+import { generatePageMetadata } from '@/lib/seo-metadata';
+
+export function generateMetadata({ params }: { params: { locale: string } }): Metadata {
+    return generatePageMetadata('proceso', params.locale, '/proceso');
+}
 
 export default function ProcesoPage() {
     const t = useTranslations();
