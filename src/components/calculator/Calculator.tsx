@@ -2,275 +2,458 @@
 
 import { useState, useCallback, useMemo } from 'react';
 import { useTranslations } from 'next-intl';
-import { Link } from '@/i18n/routing';
-import AIQuoteAssistant from './AIQuoteAssistant';
 import QuoteForm from './QuoteForm';
 
 /* ═════════════════════════════════════
-   PRICING DATA (from user specification)
+   CONFIG — реальные цены Испании
+   (можно менять без изменения UI)
+   ═════════════════════════════════════ */
+
+const CONFIG = {
+    cablePrices: { cat5: 0.30, cat6: 0.55, cat6a: 1.10, cat7: 2.00 },
+    laborPerPoint: { basic: 30, conduit: 50, advanced: 90 },
+    cableMultiplier: { cat5: 1.0, cat6: 1.1, cat6a: 1.25, cat7: 1.4 },
+    installationMultiplier: {
+        external: 1.0, ceiling: 1.1, existing_wall: 1.2,
+        new_wall: 1.0, // штроба считается отдельно
+        industrial: 1.5, trays: 1.4,
+    },
+    /* Стоимость прокладки кабеля за метр (физическая протяжка) */
+    routingPricePerMeter: {
+        external: 3,       // наружная прокладка по кабель-каналу
+        ceiling: 5,        // через подвесной потолок
+        existing_wall: 8,  // через существующие каналы в стене
+        new_wall: 10,      // прокладка в новой штробе
+        industrial: 12,    // промышленные помещения (высота, сложность)
+        trays: 7,          // лотки / бандежи
+    },
+    trenchPricePerMeter: 45,
+    materials: { keystone: 6, socket: 10, trunking: 4, pvc: 2, corrugated: 1, patchPanel: 60 },
+    equipment: { router: 50, switch: 40, accessPoint: 70, configuration: 150 },
+    upsell: { testing: 50, labeling: 20, cableManagement: 50, extendedWarranty: 30 },
+} as const;
+
+const IVA_RATE = 0.21;
+
+/* ═════════════════════════════════════
+   DISPLAY DATA for UI buttons
    ═════════════════════════════════════ */
 
 const CABLE_TYPES = [
-    { id: 'cat5e', name: 'Cat 5e', price: 2.5 },
-    { id: 'cat6', name: 'Cat 6', price: 3 },
-    { id: 'cat6a', name: 'Cat 6A', price: 4 },
-    { id: 'cat7', name: 'Cat 7', price: 5 },
-] as const;
+    { id: 'cat5' as const, name: 'Cat 5e', price: CONFIG.cablePrices.cat5 },
+    { id: 'cat6' as const, name: 'Cat 6', price: CONFIG.cablePrices.cat6 },
+    { id: 'cat6a' as const, name: 'Cat 6A', price: CONFIG.cablePrices.cat6a },
+    { id: 'cat7' as const, name: 'Cat 7', price: CONFIG.cablePrices.cat7 },
+];
 
 const INSTALLATION_TYPES = [
-    { id: 'superficial', price: 12, icon: '📌' },
-    { id: 'techo', price: 10, icon: '🏗️' },
-    { id: 'empotrado_existente', price: 15, icon: '🔩' },
-    { id: 'empotrado_nuevo', price: 22, icon: '🧱' },
-    { id: 'industrial', price: 25, icon: '🏭' },
-] as const;
-
-const MATERIALS = [
-    { id: 'canaleta', price: 8, unit: 'm', icon: '📏' },
-    { id: 'tubo_corrugado', price: 4, unit: 'm', icon: '🔧' },
-    { id: 'regata', price: 20, unit: 'm', icon: '⚒️' },
-] as const;
-
-const ADDITIONAL_WORK = [
-    { id: 'switch', price: 60, icon: '🔌' },
-    { id: 'router', price: 60, icon: '📡' },
-    { id: 'network_config', price: 120, icon: '⚙️' },
-    { id: 'patch_panel', price: 80, icon: '🔗' },
-] as const;
+    { id: 'external' as const, icon: '📌' },
+    { id: 'ceiling' as const, icon: '🏗️' },
+    { id: 'existing_wall' as const, icon: '🔩' },
+    { id: 'new_wall' as const, icon: '🧱' },
+    { id: 'industrial' as const, icon: '🏭' },
+    { id: 'trays' as const, icon: '🔗' },
+];
 
 const RACK_OPTIONS = [
-    { id: 'none', price: 0 },
-    { id: 'small', price: 150, icon: '🗄️' },
-    { id: 'professional', price: 300, icon: '🏗️' },
-    { id: 'with_patch', price: 420, icon: '⚡' },
-] as const;
+    { id: 'none' as const, price: 0 },
+    { id: 'rack_6u' as const, price: 90, icon: '🗄️' },
+    { id: 'rack_9u' as const, price: 130, icon: '🗄️' },
+    { id: 'rack_12u' as const, price: 180, icon: '🗄️' },
+    { id: 'rack_18u' as const, price: 250, icon: '🏗️' },
+    { id: 'rack_22u' as const, price: 380, icon: '🏗️' },
+    { id: 'rack_42u' as const, price: 650, icon: '⚡' },
+];
 
 const URGENCY_LEVELS = [
-    { id: 'normal', multiplier: 1, icon: '🟢' },
-    { id: 'urgente', multiplier: 1.5, icon: '🟡' },
-    { id: 'weekend', multiplier: 2, icon: '🔴' },
-] as const;
+    { id: 'normal' as const, multiplier: 1.0, icon: '🟢' },
+    { id: 'urgente' as const, multiplier: 1.2, icon: '🟡' },
+    { id: 'weekend' as const, multiplier: 1.5, icon: '🔴' },
+];
 
-const IVA_RATE = 0.21;
-const POINT_PRICE = 15; // €per point: RJ45 connector, rosette, termination, testing
+const EQUIPMENT_LIST = [
+    { id: 'router' as const, price: CONFIG.equipment.router, icon: '📡' },
+    { id: 'switch' as const, price: CONFIG.equipment.switch, icon: '🔌' },
+    { id: 'accessPoint' as const, price: CONFIG.equipment.accessPoint, icon: '📶' },
+    { id: 'configuration' as const, price: CONFIG.equipment.configuration, icon: '⚙️' },
+];
 
-/* Translations for calculator labels */
+const UPSELL_LIST = [
+    { id: 'testing' as const, price: CONFIG.upsell.testing, icon: '🔍' },
+    { id: 'labeling' as const, price: CONFIG.upsell.labeling, icon: '🏷️' },
+    { id: 'cableManagement' as const, price: CONFIG.upsell.cableManagement, icon: '📦' },
+    { id: 'extendedWarranty' as const, price: CONFIG.upsell.extendedWarranty, icon: '🛡️' },
+];
+
+const ADDITIONAL_MATERIALS = [
+    { id: 'trunking' as const, price: CONFIG.materials.trunking, unit: 'm', icon: '📏' },
+    { id: 'pvc' as const, price: CONFIG.materials.pvc, unit: 'm', icon: '🔧' },
+    { id: 'corrugated' as const, price: CONFIG.materials.corrugated, unit: 'm', icon: '⚒️' },
+    { id: 'patchPanel' as const, price: CONFIG.materials.patchPanel, unit: 'ud', icon: '🔗' },
+];
+
+/* ═════════════════════════════════════
+   TRANSLATIONS
+   ═════════════════════════════════════ */
+
 const calcLabels: Record<string, Record<string, string>> = {
     es: {
-        pageTitle: 'Calculadora de',
-        pageTitleHighlight: 'Instalación',
-        pageSubtitle: 'Calcula el coste estimado de tu instalación de red. Configura los detalles y obtén un presupuesto al instante.',
-        label: 'Herramienta online',
         cableType: 'Tipo de cable',
         points: 'Puntos de red',
-        pointsHint: 'Cada punto incluye conector RJ45, roseta, terminación y testeo (15€/punto)',
-        cableMeters: 'Metros de cable',
-        cableMetersHint: 'Total de metros lineales de cable necesario',
+        pointsHint: '1 punto = 1 toma de internet / roseta de red',
+        avgLength: 'Longitud media por punto',
+        avgLengthHint: 'Metros de cable promedio por cada punto de red',
         installType: 'Tipo de instalación',
-        installTypeLabel: 'Precio por metro',
-        installMeters: 'Metros de instalación',
-        installMetersHint: 'Metros lineales de canalización / instalación',
+        trench: 'Regata',
+        canaleta: 'Canaleta (cable canal)',
+        canetaFull: 'Longitud completa (= largo total del cable)',
+        canetaManual: 'Introducir metros manualmente',
+        canetaLength: 'Metros de canaleta',
+        canetaHint: 'Sólo se muestra si el tipo es "Superficial"',
+        trenchFull: 'Longitud completa (= largo total del cable)',
+        trenchManual: 'Introducir metros manualmente',
+        trenchLength: 'Metros de regata',
+        trenchHint: 'Sólo se muestra si el tipo es "Empotrado nuevo"',
         materials: 'Materiales adicionales',
-        additionalWork: 'Trabajo adicional',
-        rack: 'Rack de red',
+        equipment: 'Equipamiento',
+        rack: 'Armario de red (Rack)',
+        upsell: 'Servicios adicionales',
         urgency: 'Urgencia',
-        meters: 'metros',
-        quantity: 'Cantidad',
         subtotal: 'Subtotal',
         iva: 'IVA (21%)',
-        urgencyMultiplier: 'Multiplicador urgencia',
+        discount: 'Descuento',
+        urgencyLabel: 'Recargo urgencia',
         total: 'Total estimado',
+        routingCost: 'Tendido de cable',
+        rackCost: 'Armario de red',
+        totalCableLength: 'Longitud total de cable',
+        cableCost: 'Coste del cable',
+        laborCost: 'Coste de mano de obra',
+        trenchCost: 'Coste de regata',
+        materialsCostLabel: 'Materiales por punto',
+        additionalMaterialsCost: 'Materiales adicionales',
+        equipmentCost: 'Equipamiento',
+        upsellCost: 'Servicios adicionales',
         requestQuote: 'Solicitar Presupuesto Detallado',
         disclaimer: 'Precios orientativos. El presupuesto final puede variar según las condiciones del espacio.',
-        superficial: 'Superficial (Canaleta)',
-        techo: 'Techo técnico',
-        empotrado_existente: 'Empotrado existente',
-        empotrado_nuevo: 'Empotrado nuevo',
-        industrial: 'Industrial (Nave / Fábrica)',
-        canaleta: 'Canaleta',
-        tubo_corrugado: 'Tubo corrugado',
-        regata: 'Regata (corte muro)',
-        switch: 'Instalación switch',
-        router: 'Instalación router',
-        network_config: 'Configuración de red',
-        patch_panel: 'Instalación patch panel',
-        none: 'Sin rack',
-        small: 'Rack pequeño',
-        professional: 'Rack profesional',
-        with_patch: 'Rack + Patch panel',
+        recommended: '★ Recomendado',
+        // Installation types
+        external: 'Superficial (Canaleta)',
+        ceiling: 'Techo técnico',
+        existing_wall: 'Empotrado existente',
+        new_wall: 'Empotrado nuevo (regata)',
+        industrial: 'Industrial (Nave)',
+        trays: 'Bandejas portacables',
+        // Racks
+        none: 'Sin armario',
+        rack_6u: 'Rack pared 6U',
+        rack_9u: 'Rack pared 9U',
+        rack_12u: 'Rack pared 12U',
+        rack_18u: 'Rack pared 18U',
+        rack_22u: 'Rack suelo 22U',
+        rack_42u: 'Rack suelo 42U (servidor)',
+        // Equipment
+        router: 'Router',
+        switch: 'Switch gestionable',
+        accessPoint: 'Punto de acceso WiFi',
+        configuration: 'Configuración de red',
+        // Upsell
+        testing: 'Testeo y certificación',
+        labeling: 'Etiquetado profesional',
+        cableManagement: 'Organización de cables',
+        extendedWarranty: 'Garantía extendida',
+        // Materials
+        trunking: 'Canaleta',
+        pvc: 'Tubo PVC',
+        corrugated: 'Tubo corrugado',
+        patchPanel: 'Patch panel',
+        // Urgency
         normal: 'Normal',
-        urgente: 'Urgente (×1.5)',
-        weekend: 'Fin de semana (×2)',
+        urgente: 'Urgente (×1.2)',
+        weekend: 'Fin de semana (×1.5)',
+        meters: 'metros',
     },
     en: {
-        pageTitle: 'Installation',
-        pageTitleHighlight: 'Calculator',
-        pageSubtitle: 'Estimate the cost of your network installation. Configure the details and get an instant quote.',
-        label: 'Online tool',
         cableType: 'Cable type',
         points: 'Network points',
-        pointsHint: 'Each point includes RJ45 connector, faceplate, termination and testing (15€/point)',
-        cableMeters: 'Cable meters',
-        cableMetersHint: 'Total linear meters of cable needed',
+        pointsHint: '1 point = 1 network socket / wall outlet',
+        avgLength: 'Average length per point',
+        avgLengthHint: 'Average cable meters per network point',
         installType: 'Installation type',
-        installTypeLabel: 'Price per meter',
-        installMeters: 'Installation meters',
-        installMetersHint: 'Linear meters of conduit / installation',
+        trench: 'Wall trenching',
+        canaleta: 'Cable trunking',
+        canetaFull: 'Full length (= total cable length)',
+        canetaManual: 'Enter meters manually',
+        canetaLength: 'Trunking meters',
+        canetaHint: 'Only shown if type is "Surface"',
+        trenchFull: 'Full length (= total cable length)',
+        trenchManual: 'Enter meters manually',
+        trenchLength: 'Trench meters',
+        trenchHint: 'Only shown if type is "New wall conduit"',
         materials: 'Additional materials',
-        additionalWork: 'Additional work',
-        rack: 'Network rack',
+        equipment: 'Equipment',
+        rack: 'Network cabinet (Rack)',
+        upsell: 'Additional services',
         urgency: 'Urgency',
-        meters: 'meters',
-        quantity: 'Quantity',
         subtotal: 'Subtotal',
         iva: 'VAT (21%)',
-        urgencyMultiplier: 'Urgency multiplier',
+        discount: 'Discount',
+        urgencyLabel: 'Urgency surcharge',
         total: 'Estimated total',
+        routingCost: 'Cable routing',
+        rackCost: 'Network cabinet',
+        totalCableLength: 'Total cable length',
+        cableCost: 'Cable cost',
+        laborCost: 'Labor cost',
+        trenchCost: 'Trenching cost',
+        materialsCostLabel: 'Materials per point',
+        additionalMaterialsCost: 'Additional materials',
+        equipmentCost: 'Equipment',
+        upsellCost: 'Additional services',
         requestQuote: 'Request Detailed Quote',
-        disclaimer: 'Indicative prices. The final quote may vary depending on space conditions.',
-        superficial: 'Surface (Cable tray)',
-        techo: 'Suspended ceiling',
-        empotrado_existente: 'Existing conduit',
-        empotrado_nuevo: 'New conduit',
-        industrial: 'Industrial (Warehouse / Factory)',
-        canaleta: 'Cable tray',
-        tubo_corrugado: 'Corrugated tube',
-        regata: 'Wall cutting',
-        switch: 'Switch installation',
-        router: 'Router installation',
-        network_config: 'Network configuration',
-        patch_panel: 'Patch panel installation',
-        none: 'No rack',
-        small: 'Small rack',
-        professional: 'Professional rack',
-        with_patch: 'Rack + Patch panel',
+        disclaimer: 'Indicative prices. Final quote may vary depending on site conditions.',
+        recommended: '★ Recommended',
+        external: 'Surface (Cable tray)',
+        ceiling: 'Suspended ceiling',
+        existing_wall: 'Existing conduit',
+        new_wall: 'New wall conduit (trenching)',
+        industrial: 'Industrial (Warehouse)',
+        trays: 'Cable trays',
+        none: 'No cabinet',
+        rack_6u: 'Wall rack 6U',
+        rack_9u: 'Wall rack 9U',
+        rack_12u: 'Wall rack 12U',
+        rack_18u: 'Wall rack 18U',
+        rack_22u: 'Floor rack 22U',
+        rack_42u: 'Floor rack 42U (server)',
+        router: 'Router',
+        switch: 'Managed switch',
+        accessPoint: 'WiFi access point',
+        configuration: 'Network configuration',
+        testing: 'Testing & certification',
+        labeling: 'Professional labeling',
+        cableManagement: 'Cable management',
+        extendedWarranty: 'Extended warranty',
+        trunking: 'Cable trunking',
+        pvc: 'PVC conduit',
+        corrugated: 'Corrugated tube',
+        patchPanel: 'Patch panel',
         normal: 'Normal',
-        urgente: 'Urgent (×1.5)',
-        weekend: 'Weekend (×2)',
+        urgente: 'Urgent (×1.2)',
+        weekend: 'Weekend (×1.5)',
+        meters: 'meters',
     },
     ru: {
-        pageTitle: 'Калькулятор',
-        pageTitleHighlight: 'установки',
-        pageSubtitle: 'Рассчитайте стоимость монтажа сети. Укажите параметры и получите смету мгновенно.',
-        label: 'Онлайн-инструмент',
         cableType: 'Тип кабеля',
         points: 'Сетевые точки',
-        pointsHint: 'Каждая точка: коннектор RJ45, розетка, терминация и тестирование (15€/точка)',
-        cableMeters: 'Метры кабеля',
-        cableMetersHint: 'Общее количество погонных метров кабеля',
+        pointsHint: '1 точка = 1 интернет-розетка',
+        avgLength: 'Средняя длина на точку',
+        avgLengthHint: 'Среднее количество метров кабеля на каждую точку',
         installType: 'Тип монтажа',
-        installTypeLabel: 'Цена за метр',
-        installMeters: 'Метры установки',
-        installMetersHint: 'Погонные метры кабель-канала / монтажа',
+        trench: 'Штроба',
+        canaleta: 'Кабель-канал',
+        canetaFull: 'Полная длина (= общая длина кабеля)',
+        canetaManual: 'Ввести метры вручную',
+        canetaLength: 'Метры кабель-канала',
+        canetaHint: 'Только если тип = «Открытый»',
+        trenchFull: 'Полная длина (= общая длина кабеля)',
+        trenchManual: 'Ввести метры вручную',
+        trenchLength: 'Метры штробы',
+        trenchHint: 'Только если тип = «Новая штроба»',
         materials: 'Доп. материалы',
-        additionalWork: 'Доп. работы',
-        rack: 'Сетевой шкаф',
+        equipment: 'Оборудование',
+        rack: 'Сетевой шкаф (Rack)',
+        upsell: 'Доп. услуги',
         urgency: 'Срочность',
-        meters: 'метров',
-        quantity: 'Количество',
         subtotal: 'Подитог',
         iva: 'НДС (21%)',
-        urgencyMultiplier: 'Множитель срочности',
+        discount: 'Скидка',
+        urgencyLabel: 'Наценка за срочность',
         total: 'Итого (ориентировочно)',
+        routingCost: 'Прокладка кабеля',
+        rackCost: 'Сетевой шкаф',
+        totalCableLength: 'Общая длина кабеля',
+        cableCost: 'Стоимость кабеля',
+        laborCost: 'Стоимость работ',
+        trenchCost: 'Стоимость штробления',
+        materialsCostLabel: 'Материалы на точку',
+        additionalMaterialsCost: 'Доп. материалы',
+        equipmentCost: 'Оборудование',
+        upsellCost: 'Доп. услуги',
         requestQuote: 'Запросить подробную смету',
         disclaimer: 'Цены ориентировочные. Итоговая смета может измениться в зависимости от условий.',
-        superficial: 'Открытый (кабель-канал)',
-        techo: 'Подвесной потолок',
-        empotrado_existente: 'Существующая штроба',
-        empotrado_nuevo: 'Новая штроба',
-        industrial: 'Промышленный (Склад / Завод)',
-        canaleta: 'Кабель-канал',
-        tubo_corrugado: 'Гофра',
-        regata: 'Штробление стены',
-        switch: 'Установка свитча',
-        router: 'Установка роутера',
-        network_config: 'Настройка сети',
-        patch_panel: 'Установка патч-панели',
+        recommended: '★ Рекомендуется',
+        external: 'Открытый (кабель-канал)',
+        ceiling: 'Подвесной потолок',
+        existing_wall: 'Существующая штроба',
+        new_wall: 'Новая штроба',
+        industrial: 'Промышленный (Склад)',
+        trays: 'Лотки кабельные',
         none: 'Без шкафа',
-        small: 'Маленький шкаф',
-        professional: 'Профессиональный шкаф',
-        with_patch: 'Шкаф + Патч-панель',
+        rack_6u: 'Настенный 6U',
+        rack_9u: 'Настенный 9U',
+        rack_12u: 'Настенный 12U',
+        rack_18u: 'Настенный 18U',
+        rack_22u: 'Напольный 22U',
+        rack_42u: 'Напольный 42U (серверный)',
+        router: 'Роутер',
+        switch: 'Управляемый свитч',
+        accessPoint: 'Точка доступа WiFi',
+        configuration: 'Настройка сети',
+        testing: 'Тестирование и сертификация',
+        labeling: 'Профессиональная маркировка',
+        cableManagement: 'Организация кабелей',
+        extendedWarranty: 'Расширенная гарантия',
+        trunking: 'Кабель-канал',
+        pvc: 'Труба ПВХ',
+        corrugated: 'Гофра',
+        patchPanel: 'Патч-панель',
         normal: 'Обычная',
-        urgente: 'Срочно (×1.5)',
-        weekend: 'Выходные (×2)',
+        urgente: 'Срочно (×1.2)',
+        weekend: 'Выходные (×1.5)',
+        meters: 'метров',
     },
 };
+
+/* ═════════════════════════════════════
+   COMPONENT
+   ═════════════════════════════════════ */
 
 export default function Calculator({ locale }: { locale: string }) {
     const l = calcLabels[locale] || calcLabels.es;
 
-    // State
-    const [cableType, setCableType] = useState('cat6');
+    // ── State ──
+    const [cableType, setCableType] = useState<keyof typeof CONFIG.cablePrices>('cat6');
     const [points, setPoints] = useState(4);
-    const [cableMeters, setCableMeters] = useState(20);
-    const [installMeters, setInstallMeters] = useState(15);
-    const [installType, setInstallType] = useState('superficial');
-    const [materialQty, setMaterialQty] = useState<Record<string, number>>({
-        canaleta: 0,
-        tubo_corrugado: 0,
-        regata: 0,
+    const [avgLength, setAvgLength] = useState(15);
+    const [installType, setInstallType] = useState<keyof typeof CONFIG.installationMultiplier>('external');
+    const [trenchMode, setTrenchMode] = useState<'full' | 'manual'>('full');
+    const [trenchLengthInput, setTrenchLengthInput] = useState(0);
+    const [canetaMode, setCanetaMode] = useState<'full' | 'manual'>('full');
+    const [canetaLengthInput, setCanetaLengthInput] = useState(0);
+    const [additionalMaterials, setAdditionalMaterials] = useState<Record<string, number>>({
+        trunking: 0, pvc: 0, corrugated: 0, patchPanel: 0,
     });
-    const [additionalWork, setAdditionalWork] = useState<Record<string, boolean>>({
-        switch: false,
-        router: false,
-        network_config: false,
-        patch_panel: false,
+    const [equipment, setEquipment] = useState<Record<string, number>>({
+        router: 0, switch: 0, accessPoint: 0, configuration: 0,
+    });
+    const [upsellOptions, setUpsellOptions] = useState<Record<string, boolean>>({
+        testing: true, labeling: true, cableManagement: false, extendedWarranty: false,
     });
     const [rack, setRack] = useState('none');
     const [urgency, setUrgency] = useState('normal');
 
-    // AI assistant callback
-    const handleAIApply = useCallback((parsed: any) => {
-        if (parsed.cableType) setCableType(parsed.cableType);
-        if (parsed.points) setPoints(parsed.points);
-        if (parsed.cableMeters) setCableMeters(parsed.cableMeters);
-        if (parsed.installationMeters) setInstallMeters(parsed.installationMeters);
-        if (parsed.installationType) setInstallType(parsed.installationType);
-        if (parsed.rack) setRack(parsed.rack);
-        if (parsed.urgency) setUrgency(parsed.urgency);
-        if (parsed.additionalWork) {
-            setAdditionalWork(prev => ({ ...prev, ...parsed.additionalWork }));
-        }
-        if (parsed.materials) {
-            setMaterialQty(prev => ({ ...prev, ...parsed.materials }));
-        }
-    }, []);
+    // ── MAIN CALCULATION (exact user spec) ──
+    const calc = useMemo(() => {
+        // 1. Длина кабеля
+        const totalCableLength = points * avgLength;
 
-    // Calculations
-    const calculation = useMemo(() => {
-        const cable = CABLE_TYPES.find((c) => c.id === cableType)!;
-        const install = INSTALLATION_TYPES.find((i) => i.id === installType)!;
-        const rackOption = RACK_OPTIONS.find((r) => r.id === rack)!;
-        const urgencyOption = URGENCY_LEVELS.find((u) => u.id === urgency)!;
+        // 2. Кабель
+        const cablePricePerMeter = CONFIG.cablePrices[cableType];
+        const cableCost = totalCableLength * cablePricePerMeter;
 
-        const cablesCost = cableMeters * cable.price;
-        const pointsCost = points * POINT_PRICE;
-        const installCost = installMeters * install.price;
-        const materialsCost = MATERIALS.reduce(
-            (sum, mat) => sum + (materialQty[mat.id] || 0) * mat.price,
-            0
-        );
-        const workCost = ADDITIONAL_WORK.reduce(
-            (sum, work) => sum + (additionalWork[work.id] ? work.price : 0),
-            0
-        );
+        // 3. Работа с коэффициентами
+        let laborType: 'basic' | 'conduit' | 'advanced' = 'basic';
+        if (installType === 'external') laborType = 'basic';
+        if (installType === 'ceiling') laborType = 'conduit';
+        if (installType === 'existing_wall') laborType = 'conduit';
+        if (installType === 'new_wall') laborType = 'advanced';
+        if (installType === 'industrial') laborType = 'advanced';
+        if (installType === 'trays') laborType = 'conduit';
+
+        const baseLabor = CONFIG.laborPerPoint[laborType];
+        const cableMult = CONFIG.cableMultiplier[cableType];
+        const installMult = CONFIG.installationMultiplier[installType];
+        const laborCost = points * baseLabor * cableMult * installMult;
+
+        // 3b. Стоимость прокладки кабеля (физическая протяжка по трассе)
+        const routingPrice = CONFIG.routingPricePerMeter[installType];
+        const routingCost = totalCableLength * routingPrice;
+
+        // 4. ШТРОБА — только для new_wall
+        let trenchLength = 0;
+        if (installType === 'new_wall') {
+            if (trenchMode === 'full') {
+                trenchLength = totalCableLength;
+            } else {
+                trenchLength = trenchLengthInput || 0;
+            }
+        }
+        const trenchCost = trenchLength * CONFIG.trenchPricePerMeter;
+
+        // 4b. CANALETA — только для external (superficial)
+        let canetaLength = 0;
+        if (installType === 'external') {
+            if (canetaMode === 'full') {
+                canetaLength = totalCableLength;
+            } else {
+                canetaLength = canetaLengthInput || 0;
+            }
+        }
+        const canetaCost = canetaLength * CONFIG.materials.trunking;
+
+        // 5. Материалы на точку (автоматически)
+        const materialsPerPoint = (2 * CONFIG.materials.keystone) + CONFIG.materials.socket;
+        const materialsCost = materialsPerPoint * points;
+
+        // 6. Доп материалы (ручной ввод количества)
+        let additionalMaterialsCost = 0;
+        const trunkingQty = additionalMaterials.trunking || 0;
+        const pvcQty = additionalMaterials.pvc || 0;
+        const corrugatedQty = additionalMaterials.corrugated || 0;
+        const patchPanelQty = additionalMaterials.patchPanel || 0;
+        additionalMaterialsCost += trunkingQty * CONFIG.materials.trunking;
+        additionalMaterialsCost += pvcQty * CONFIG.materials.pvc;
+        additionalMaterialsCost += corrugatedQty * CONFIG.materials.corrugated;
+        additionalMaterialsCost += patchPanelQty * CONFIG.materials.patchPanel;
+
+        // 7. Оборудование (количество × цена)
+        let equipmentCost = 0;
+        for (const key in equipment) {
+            const qty = equipment[key] || 0;
+            if (qty > 0) equipmentCost += CONFIG.equipment[key as keyof typeof CONFIG.equipment] * qty || 0;
+        }
+
+        // 7b. Rack
+        const rackOption = RACK_OPTIONS.find(r => r.id === rack) || RACK_OPTIONS[0];
         const rackCost = rackOption.price;
 
-        const subtotal = cablesCost + pointsCost + installCost + materialsCost + workCost + rackCost;
-        const afterUrgency = subtotal * urgencyOption.multiplier;
+        // 8. Upsell
+        let upsellCost = 0;
+        for (const key in upsellOptions) {
+            if (upsellOptions[key]) upsellCost += CONFIG.upsell[key as keyof typeof CONFIG.upsell] || 0;
+        }
+
+        // 9. СУММА до скидки и срочности
+        const subtotal = cableCost + routingCost + laborCost + trenchCost + canetaCost + materialsCost + additionalMaterialsCost + equipmentCost + rackCost + upsellCost;
+
+        // 10. Скидка
+        let discountPercent = 0;
+        if (points >= 10) discountPercent = 10;
+        else if (points >= 4) discountPercent = 5;
+        const discount = subtotal * (discountPercent / 100);
+
+        // 11. Срочность
+        const urgencyOption = URGENCY_LEVELS.find(u => u.id === urgency) || URGENCY_LEVELS[0];
+        const afterUrgency = (subtotal - discount) * urgencyOption.multiplier;
+
+        // 12. IVA
         const iva = afterUrgency * IVA_RATE;
         const total = afterUrgency + iva;
 
-        return { cablesCost, pointsCost, installCost, materialsCost, workCost, rackCost, subtotal, afterUrgency, iva, total, urgencyOption };
-    }, [cableType, cableMeters, installMeters, points, installType, materialQty, additionalWork, rack, urgency]);
+        return {
+            totalCableLength, cableCost, routingCost, routingPrice, laborCost,
+            trenchLength, trenchCost, canetaLength, canetaCost,
+            materialsCost, materialsPerPoint, additionalMaterialsCost,
+            equipmentCost, rackCost, upsellCost, subtotal, discountPercent, discount,
+            urgencyOption, afterUrgency, iva, total,
+        };
+    }, [cableType, points, avgLength, installType, trenchMode, trenchLengthInput, canetaMode, canetaLengthInput, additionalMaterials, equipment, rack, upsellOptions, urgency]);
 
     return (
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             {/* LEFT — Configuration */}
             <div className="lg:col-span-2 space-y-6">
-
-                {/* AI Quote Assistant */}
-                <AIQuoteAssistant locale={locale} onApply={handleAIApply} />
 
                 {/* Cable Type */}
                 <div className="card p-6">
@@ -282,11 +465,16 @@ export default function Calculator({ locale }: { locale: string }) {
                             <button
                                 key={cable.id}
                                 onClick={() => setCableType(cable.id)}
-                                className={`p-4 rounded-lg border text-center transition-all duration-200 ${cableType === cable.id
+                                className={`p-4 rounded-lg border text-center transition-all duration-200 relative ${cableType === cable.id
                                     ? 'bg-[rgba(201,168,76,0.1)] border-brand-gold text-brand-gold'
                                     : 'bg-surface-card border-border-subtle text-brand-gold-muted hover:border-brand-gold/30'
                                     }`}
                             >
+                                {cable.id === 'cat6' && (
+                                    <div className="absolute -top-2 left-1/2 -translate-x-1/2 text-[10px] bg-brand-gold text-black px-2 py-0.5 rounded-full font-bold whitespace-nowrap">
+                                        {l.recommended}
+                                    </div>
+                                )}
                                 <div className="font-heading font-bold text-lg">{cable.name}</div>
                                 <div className="text-sm mt-1">{cable.price}€/m</div>
                             </button>
@@ -304,100 +492,52 @@ export default function Calculator({ locale }: { locale: string }) {
                         <button
                             onClick={() => setPoints(Math.max(1, points - 1))}
                             className="w-12 h-12 rounded-lg bg-surface-card border border-border-subtle text-white hover:border-brand-gold/50 transition-colors text-xl font-bold"
-                        >
-                            −
-                        </button>
+                        >−</button>
                         <div className="flex-1">
-                            <input
-                                type="range"
-                                min={1}
-                                max={100}
-                                value={points}
+                            <input type="range" min={1} max={100} value={points}
                                 onChange={(e) => setPoints(Number(e.target.value))}
-                                className="w-full accent-[#c9a84c] h-2 rounded-full appearance-none bg-surface-card cursor-pointer"
-                            />
+                                className="w-full accent-[#c9a84c] h-2 rounded-full appearance-none bg-surface-card cursor-pointer" />
                         </div>
                         <button
                             onClick={() => setPoints(Math.min(100, points + 1))}
                             className="w-12 h-12 rounded-lg bg-surface-card border border-border-subtle text-white hover:border-brand-gold/50 transition-colors text-xl font-bold"
-                        >
-                            +
-                        </button>
+                        >+</button>
                         <div className="w-16 text-center">
                             <span className="font-heading text-2xl font-bold text-gradient-gold">{points}</span>
                         </div>
                     </div>
+                    {calc.discountPercent > 0 && (
+                        <div className="mt-2 text-xs text-green-400">🎉 {l.discount}: -{calc.discountPercent}% ({points >= 10 ? '10+ puntos' : '4+ puntos'})</div>
+                    )}
                 </div>
 
-                {/* Cable Meters */}
+                {/* Average Length per Point */}
                 <div className="card p-6">
                     <h3 className="font-heading font-semibold text-white mb-1 flex items-center gap-2">
-                        📐 {l.cableMeters}
+                        📐 {l.avgLength}
                     </h3>
-                    <p className="text-xs text-brand-gold-muted mb-4">{l.cableMetersHint}</p>
+                    <p className="text-xs text-brand-gold-muted mb-4">{l.avgLengthHint}</p>
                     <div className="flex items-center gap-4">
                         <button
-                            onClick={() => setCableMeters(Math.max(1, cableMeters - 5))}
+                            onClick={() => setAvgLength(Math.max(1, avgLength - 1))}
                             className="w-12 h-12 rounded-lg bg-surface-card border border-border-subtle text-white hover:border-brand-gold/50 transition-colors text-xl font-bold"
-                        >
-                            −
-                        </button>
+                        >−</button>
                         <div className="flex-1">
-                            <input
-                                type="range"
-                                min={1}
-                                max={5000}
-                                value={cableMeters}
-                                onChange={(e) => setCableMeters(Number(e.target.value))}
-                                className="w-full accent-[#c9a84c] h-2 rounded-full appearance-none bg-surface-card cursor-pointer"
-                            />
+                            <input type="range" min={1} max={100} value={avgLength}
+                                onChange={(e) => setAvgLength(Number(e.target.value))}
+                                className="w-full accent-[#c9a84c] h-2 rounded-full appearance-none bg-surface-card cursor-pointer" />
                         </div>
                         <button
-                            onClick={() => setCableMeters(Math.min(5000, cableMeters + 5))}
+                            onClick={() => setAvgLength(Math.min(100, avgLength + 1))}
                             className="w-12 h-12 rounded-lg bg-surface-card border border-border-subtle text-white hover:border-brand-gold/50 transition-colors text-xl font-bold"
-                        >
-                            +
-                        </button>
+                        >+</button>
                         <div className="w-20 text-center">
-                            <span className="font-heading text-2xl font-bold text-gradient-gold">{cableMeters}</span>
+                            <span className="font-heading text-2xl font-bold text-gradient-gold">{avgLength}</span>
                             <span className="text-xs text-brand-gold-muted ml-1">m</span>
                         </div>
                     </div>
-                </div>
-
-                {/* Installation Meters */}
-                <div className="card p-6">
-                    <h3 className="font-heading font-semibold text-white mb-1 flex items-center gap-2">
-                        📏 {l.installMeters}
-                    </h3>
-                    <p className="text-xs text-brand-gold-muted mb-4">{l.installMetersHint}</p>
-                    <div className="flex items-center gap-4">
-                        <button
-                            onClick={() => setInstallMeters(Math.max(0, installMeters - 5))}
-                            className="w-12 h-12 rounded-lg bg-surface-card border border-border-subtle text-white hover:border-brand-gold/50 transition-colors text-xl font-bold"
-                        >
-                            −
-                        </button>
-                        <div className="flex-1">
-                            <input
-                                type="range"
-                                min={0}
-                                max={2000}
-                                value={installMeters}
-                                onChange={(e) => setInstallMeters(Number(e.target.value))}
-                                className="w-full accent-[#c9a84c] h-2 rounded-full appearance-none bg-surface-card cursor-pointer"
-                            />
-                        </div>
-                        <button
-                            onClick={() => setInstallMeters(Math.min(2000, installMeters + 5))}
-                            className="w-12 h-12 rounded-lg bg-surface-card border border-border-subtle text-white hover:border-brand-gold/50 transition-colors text-xl font-bold"
-                        >
-                            +
-                        </button>
-                        <div className="w-20 text-center">
-                            <span className="font-heading text-2xl font-bold text-gradient-gold">{installMeters}</span>
-                            <span className="text-xs text-brand-gold-muted ml-1">m</span>
-                        </div>
+                    <div className="mt-2 text-xs text-brand-gold-muted">
+                        {l.totalCableLength}: <span className="text-white font-bold">{calc.totalCableLength}m</span> ({points} × {avgLength}m)
                     </div>
                 </div>
 
@@ -421,84 +561,206 @@ export default function Calculator({ locale }: { locale: string }) {
                                     <div className={`font-semibold ${installType === install.id ? 'text-brand-gold' : 'text-white'}`}>
                                         {l[install.id]}
                                     </div>
-                                    <div className="text-sm text-brand-gold-muted">{install.price}€/m</div>
+                                    <div className="text-sm text-brand-gold-muted">
+                                        ×{CONFIG.installationMultiplier[install.id]}
+                                    </div>
                                 </div>
                             </button>
                         ))}
                     </div>
                 </div>
 
-                {/* Additional Materials */}
+                {/* TRENCH — only for new_wall */}
+                {installType === 'new_wall' && (
+                    <div className="card p-6 border-yellow-500/20">
+                        <h3 className="font-heading font-semibold text-white mb-4 flex items-center gap-2">
+                            ⚒️ {l.trench}
+                        </h3>
+                        <p className="text-xs text-brand-gold-muted mb-4">{CONFIG.trenchPricePerMeter}€/m · {l.trenchHint}</p>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-4">
+                            <button
+                                onClick={() => setTrenchMode('full')}
+                                className={`p-4 rounded-lg border text-left transition-all duration-200 ${trenchMode === 'full'
+                                    ? 'bg-[rgba(201,168,76,0.1)] border-brand-gold'
+                                    : 'bg-surface-card border-border-subtle hover:border-brand-gold/30'}`}
+                            >
+                                <div className={`font-semibold text-sm ${trenchMode === 'full' ? 'text-brand-gold' : 'text-white'}`}>
+                                    {l.trenchFull}
+                                </div>
+                                <div className="text-xs text-brand-gold-muted mt-1">{calc.totalCableLength}m = {(calc.totalCableLength * CONFIG.trenchPricePerMeter).toFixed(0)}€</div>
+                            </button>
+                            <button
+                                onClick={() => setTrenchMode('manual')}
+                                className={`p-4 rounded-lg border text-left transition-all duration-200 ${trenchMode === 'manual'
+                                    ? 'bg-[rgba(201,168,76,0.1)] border-brand-gold'
+                                    : 'bg-surface-card border-border-subtle hover:border-brand-gold/30'}`}
+                            >
+                                <div className={`font-semibold text-sm ${trenchMode === 'manual' ? 'text-brand-gold' : 'text-white'}`}>
+                                    {l.trenchManual}
+                                </div>
+                            </button>
+                        </div>
+                        {trenchMode === 'manual' && (
+                            <div className="flex items-center gap-4">
+                                <button onClick={() => setTrenchLengthInput(Math.max(0, trenchLengthInput - 1))}
+                                    className="w-12 h-12 rounded-lg bg-surface-card border border-border-subtle text-white hover:border-brand-gold/50 transition-colors text-xl font-bold">−</button>
+                                <div className="flex-1">
+                                    <input type="range" min={0} max={500} value={trenchLengthInput}
+                                        onChange={(e) => setTrenchLengthInput(Number(e.target.value))}
+                                        className="w-full accent-[#c9a84c] h-2 rounded-full appearance-none bg-surface-card cursor-pointer" />
+                                </div>
+                                <button onClick={() => setTrenchLengthInput(Math.min(500, trenchLengthInput + 1))}
+                                    className="w-12 h-12 rounded-lg bg-surface-card border border-border-subtle text-white hover:border-brand-gold/50 transition-colors text-xl font-bold">+</button>
+                                <div className="w-20 text-center">
+                                    <span className="font-heading text-2xl font-bold text-gradient-gold">{trenchLengthInput}</span>
+                                    <span className="text-xs text-brand-gold-muted ml-1">m</span>
+                                </div>
+                            </div>
+                        )}
+                    </div>
+                )}
+
+                {/* CANALETA — only for external (Superficial) */}
+                {installType === 'external' && (
+                    <div className="card p-6 border-yellow-500/20">
+                        <h3 className="font-heading font-semibold text-white mb-4 flex items-center gap-2">
+                            📏 {l.canaleta}
+                        </h3>
+                        <p className="text-xs text-brand-gold-muted mb-4">{CONFIG.materials.trunking}€/m · {l.canetaHint}</p>
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-4">
+                            <button
+                                onClick={() => setCanetaMode('full')}
+                                className={`p-4 rounded-lg border text-left transition-all duration-200 ${canetaMode === 'full'
+                                    ? 'bg-[rgba(201,168,76,0.1)] border-brand-gold'
+                                    : 'bg-surface-card border-border-subtle hover:border-brand-gold/30'}`}
+                            >
+                                <div className={`font-semibold text-sm ${canetaMode === 'full' ? 'text-brand-gold' : 'text-white'}`}>
+                                    {l.canetaFull}
+                                </div>
+                                <div className="text-xs text-brand-gold-muted mt-1">{calc.totalCableLength}m = {(calc.totalCableLength * CONFIG.materials.trunking).toFixed(0)}€</div>
+                            </button>
+                            <button
+                                onClick={() => setCanetaMode('manual')}
+                                className={`p-4 rounded-lg border text-left transition-all duration-200 ${canetaMode === 'manual'
+                                    ? 'bg-[rgba(201,168,76,0.1)] border-brand-gold'
+                                    : 'bg-surface-card border-border-subtle hover:border-brand-gold/30'}`}
+                            >
+                                <div className={`font-semibold text-sm ${canetaMode === 'manual' ? 'text-brand-gold' : 'text-white'}`}>
+                                    {l.canetaManual}
+                                </div>
+                            </button>
+                        </div>
+                        {canetaMode === 'manual' && (
+                            <div className="flex items-center gap-4">
+                                <button onClick={() => setCanetaLengthInput(Math.max(0, canetaLengthInput - 1))}
+                                    className="w-12 h-12 rounded-lg bg-surface-card border border-border-subtle text-white hover:border-brand-gold/50 transition-colors text-xl font-bold">−</button>
+                                <div className="flex-1">
+                                    <input type="range" min={0} max={500} value={canetaLengthInput}
+                                        onChange={(e) => setCanetaLengthInput(Number(e.target.value))}
+                                        className="w-full accent-[#c9a84c] h-2 rounded-full appearance-none bg-surface-card cursor-pointer" />
+                                </div>
+                                <button onClick={() => setCanetaLengthInput(Math.min(500, canetaLengthInput + 1))}
+                                    className="w-12 h-12 rounded-lg bg-surface-card border border-border-subtle text-white hover:border-brand-gold/50 transition-colors text-xl font-bold">+</button>
+                                <div className="w-20 text-center">
+                                    <span className="font-heading text-2xl font-bold text-gradient-gold">{canetaLengthInput}</span>
+                                    <span className="text-xs text-brand-gold-muted ml-1">m</span>
+                                </div>
+                            </div>
+                        )}
+                    </div>
+                )}
+
+                {/* Additional Materials — quantity inputs */}
                 <div className="card p-6">
                     <h3 className="font-heading font-semibold text-white mb-4 flex items-center gap-2">
                         📦 {l.materials}
                     </h3>
-                    <div className="space-y-3">
-                        {MATERIALS.map((mat) => (
-                            <div key={mat.id} className="flex items-center gap-4 p-3 rounded-lg bg-surface-card border border-border-subtle">
-                                <span className="text-xl">{mat.icon}</span>
-                                <div className="flex-1">
-                                    <div className="text-sm font-medium text-white">{l[mat.id]}</div>
-                                    <div className="text-xs text-brand-gold-muted">{mat.price}€/{mat.unit}</div>
-                                </div>
-                                <div className="flex items-center gap-2">
-                                    <button
-                                        onClick={() => setMaterialQty((prev) => ({ ...prev, [mat.id]: Math.max(0, (prev[mat.id] || 0) - 1) }))}
-                                        className="w-8 h-8 rounded bg-brand-dark text-white border border-border-subtle text-sm hover:border-brand-gold/30 transition-colors"
-                                    >
-                                        −
-                                    </button>
-                                    <span className="w-10 text-center font-heading font-bold text-brand-gold">{materialQty[mat.id] || 0}</span>
-                                    <button
-                                        onClick={() => setMaterialQty((prev) => ({ ...prev, [mat.id]: (prev[mat.id] || 0) + 1 }))}
-                                        className="w-8 h-8 rounded bg-brand-dark text-white border border-border-subtle text-sm hover:border-brand-gold/30 transition-colors"
-                                    >
-                                        +
-                                    </button>
-                                    <span className="text-xs text-brand-gold-muted w-14 text-right shrink-0 whitespace-nowrap">{l.meters}</span>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        {ADDITIONAL_MATERIALS.map((mat) => {
+                            const qty = additionalMaterials[mat.id] || 0;
+                            return (
+                            <div
+                                key={mat.id}
+                                className={`p-4 rounded-lg border transition-all duration-200 ${qty > 0
+                                    ? 'bg-[rgba(201,168,76,0.1)] border-brand-gold'
+                                    : 'bg-surface-card border-border-subtle hover:border-brand-gold/30'}`}
+                            >
+                                <div className="flex items-center gap-3">
+                                    <span className="text-xl">{mat.icon}</span>
+                                    <div className="flex-1">
+                                        <div className={`text-sm font-medium ${qty > 0 ? 'text-brand-gold' : 'text-white'}`}>{l[mat.id]}</div>
+                                        <div className="text-xs text-brand-gold-muted">{mat.price}€/{mat.unit}</div>
+                                    </div>
+                                    <div className="flex items-center gap-2">
+                                        <button
+                                            onClick={() => setAdditionalMaterials(prev => ({ ...prev, [mat.id]: Math.max(0, (prev[mat.id] || 0) - (mat.unit === 'm' ? 5 : 1)) }))}
+                                            className="w-8 h-8 rounded bg-brand-dark text-white border border-border-subtle text-sm hover:border-brand-gold/30 transition-colors"
+                                        >−</button>
+                                        <span className="w-10 text-center font-heading font-bold text-brand-gold text-sm">{qty}{mat.unit === 'm' ? 'm' : ''}</span>
+                                        <button
+                                            onClick={() => setAdditionalMaterials(prev => ({ ...prev, [mat.id]: (prev[mat.id] || 0) + (mat.unit === 'm' ? 5 : 1) }))}
+                                            className="w-8 h-8 rounded bg-brand-dark text-white border border-border-subtle text-sm hover:border-brand-gold/30 transition-colors"
+                                        >+</button>
+                                    </div>
                                 </div>
                             </div>
-                        ))}
+                            );
+                        })}
                     </div>
                 </div>
 
-                {/* Additional Work */}
+                {/* Equipment */}
                 <div className="card p-6">
                     <h3 className="font-heading font-semibold text-white mb-4 flex items-center gap-2">
-                        🛠️ {l.additionalWork}
+                        🖥️ {l.equipment}
                     </h3>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                        {ADDITIONAL_WORK.map((work) => (
-                            <label
-                                key={work.id}
-                                className={`flex items-center gap-3 p-4 rounded-lg border cursor-pointer transition-all duration-200 ${additionalWork[work.id]
+                        {EQUIPMENT_LIST.map((eq) => {
+                            const qty = equipment[eq.id] || 0;
+                            const hasQtyInput = eq.id === 'switch' || eq.id === 'accessPoint';
+                            return (
+                            <div
+                                key={eq.id}
+                                className={`p-4 rounded-lg border transition-all duration-200 ${qty > 0
                                     ? 'bg-[rgba(201,168,76,0.1)] border-brand-gold'
-                                    : 'bg-surface-card border-border-subtle hover:border-brand-gold/30'
-                                    }`}
+                                    : 'bg-surface-card border-border-subtle hover:border-brand-gold/30'}`}
                             >
-                                <input
-                                    type="checkbox"
-                                    checked={additionalWork[work.id]}
-                                    onChange={(e) => setAdditionalWork((prev) => ({ ...prev, [work.id]: e.target.checked }))}
-                                    className="sr-only"
-                                />
-                                <span className="text-xl">{work.icon}</span>
-                                <div className="flex-1">
-                                    <div className={`text-sm font-medium ${additionalWork[work.id] ? 'text-brand-gold' : 'text-white'}`}>
-                                        {l[work.id]}
+                                <div className="flex items-center gap-3">
+                                    <span className="text-xl">{eq.icon}</span>
+                                    <div className="flex-1">
+                                        <div className={`text-sm font-medium ${qty > 0 ? 'text-brand-gold' : 'text-white'}`}>{l[eq.id]}</div>
+                                        <div className="text-xs text-brand-gold-muted">{eq.price}€{hasQtyInput ? '/ud' : ''}</div>
                                     </div>
-                                    <div className="text-xs text-brand-gold-muted">{work.price}€</div>
+                                    {hasQtyInput ? (
+                                        <div className="flex items-center gap-2">
+                                            <button
+                                                onClick={() => setEquipment(prev => ({ ...prev, [eq.id]: Math.max(0, (prev[eq.id] || 0) - 1) }))}
+                                                className="w-8 h-8 rounded bg-brand-dark text-white border border-border-subtle text-sm hover:border-brand-gold/30 transition-colors"
+                                            >−</button>
+                                            <span className="w-8 text-center font-heading font-bold text-brand-gold">{qty}</span>
+                                            <button
+                                                onClick={() => setEquipment(prev => ({ ...prev, [eq.id]: (prev[eq.id] || 0) + 1 }))}
+                                                className="w-8 h-8 rounded bg-brand-dark text-white border border-border-subtle text-sm hover:border-brand-gold/30 transition-colors"
+                                            >+</button>
+                                        </div>
+                                    ) : (
+                                        <label className="cursor-pointer">
+                                            <input type="checkbox" checked={qty > 0}
+                                                onChange={(e) => setEquipment(prev => ({ ...prev, [eq.id]: e.target.checked ? 1 : 0 }))}
+                                                className="sr-only" />
+                                            <div className={`w-5 h-5 rounded border flex items-center justify-center transition-colors ${qty > 0 ? 'bg-brand-gold border-brand-gold text-black' : 'border-border-subtle'}`}>
+                                                {qty > 0 && <span className="text-xs font-bold">✓</span>}
+                                            </div>
+                                        </label>
+                                    )}
                                 </div>
-                                <div className={`w-5 h-5 rounded border flex items-center justify-center transition-colors ${additionalWork[work.id] ? 'bg-brand-gold border-brand-gold text-black' : 'border-border-subtle'
-                                    }`}>
-                                    {additionalWork[work.id] && <span className="text-xs font-bold">✓</span>}
-                                </div>
-                            </label>
-                        ))}
+                            </div>
+                            );
+                        })}
                     </div>
                 </div>
 
-                {/* Rack */}
+                {/* Network Rack */}
                 <div className="card p-6">
                     <h3 className="font-heading font-semibold text-white mb-4 flex items-center gap-2">
                         🗄️ {l.rack}
@@ -522,6 +784,35 @@ export default function Calculator({ locale }: { locale: string }) {
                     </div>
                 </div>
 
+                {/* Upsell Services */}
+                <div className="card p-6">
+                    <h3 className="font-heading font-semibold text-white mb-4 flex items-center gap-2">
+                        ⭐ {l.upsell}
+                    </h3>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                        {UPSELL_LIST.map((up) => (
+                            <label
+                                key={up.id}
+                                className={`flex items-center gap-3 p-4 rounded-lg border cursor-pointer transition-all duration-200 ${upsellOptions[up.id]
+                                    ? 'bg-[rgba(201,168,76,0.1)] border-brand-gold'
+                                    : 'bg-surface-card border-border-subtle hover:border-brand-gold/30'}`}
+                            >
+                                <input type="checkbox" checked={upsellOptions[up.id]}
+                                    onChange={(e) => setUpsellOptions(prev => ({ ...prev, [up.id]: e.target.checked }))}
+                                    className="sr-only" />
+                                <span className="text-xl">{up.icon}</span>
+                                <div className="flex-1">
+                                    <div className={`text-sm font-medium ${upsellOptions[up.id] ? 'text-brand-gold' : 'text-white'}`}>{l[up.id]}</div>
+                                    <div className="text-xs text-brand-gold-muted">{up.price}€</div>
+                                </div>
+                                <div className={`w-5 h-5 rounded border flex items-center justify-center transition-colors ${upsellOptions[up.id] ? 'bg-brand-gold border-brand-gold text-black' : 'border-border-subtle'}`}>
+                                    {upsellOptions[up.id] && <span className="text-xs font-bold">✓</span>}
+                                </div>
+                            </label>
+                        ))}
+                    </div>
+                </div>
+
                 {/* Urgency */}
                 <div className="card p-6">
                     <h3 className="font-heading font-semibold text-white mb-4 flex items-center gap-2">
@@ -534,20 +825,17 @@ export default function Calculator({ locale }: { locale: string }) {
                                 onClick={() => setUrgency(u.id)}
                                 className={`p-4 rounded-lg border text-center transition-all duration-200 ${urgency === u.id
                                     ? 'bg-[rgba(201,168,76,0.1)] border-brand-gold'
-                                    : 'bg-surface-card border-border-subtle hover:border-brand-gold/30'
-                                    }`}
+                                    : 'bg-surface-card border-border-subtle hover:border-brand-gold/30'}`}
                             >
                                 <div className="text-xl mb-1">{u.icon}</div>
-                                <div className={`text-sm font-medium ${urgency === u.id ? 'text-brand-gold' : 'text-white'}`}>
-                                    {l[u.id]}
-                                </div>
+                                <div className={`text-sm font-medium ${urgency === u.id ? 'text-brand-gold' : 'text-white'}`}>{l[u.id]}</div>
                             </button>
                         ))}
                     </div>
                 </div>
             </div>
 
-            {/* RIGHT — Price Summary (Sticky) */}
+            {/* RIGHT — TRANSPARENT PRICE SUMMARY (Sticky) */}
             <div className="lg:col-span-1">
                 <div className="sticky top-24 card p-6 border-brand-gold/20">
                     <h3 className="font-heading font-bold text-xl text-white mb-6 pb-4 border-b border-border-subtle">
@@ -555,63 +843,128 @@ export default function Calculator({ locale }: { locale: string }) {
                     </h3>
 
                     <div className="space-y-3 text-sm mb-6">
+                        {/* Points & cable length */}
                         <div className="flex justify-between text-brand-gold-muted">
-                            <span>{CABLE_TYPES.find((c) => c.id === cableType)!.name} — {cableMeters}m</span>
-                            <span>{calculation.cablesCost.toFixed(2)}€</span>
+                            <span>{l.points}</span>
+                            <span className="text-white font-medium">{points}</span>
                         </div>
                         <div className="flex justify-between text-brand-gold-muted">
-                            <span>{l.points} — {points} × {POINT_PRICE}€</span>
-                            <span>{calculation.pointsCost.toFixed(2)}€</span>
+                            <span>{l.totalCableLength}</span>
+                            <span className="text-white font-medium">{calc.totalCableLength}m</span>
                         </div>
+
+                        <div className="h-px bg-border-subtle" />
+
+                        {/* Cable cost */}
                         <div className="flex justify-between text-brand-gold-muted">
-                            <span>{l.installType} — {installMeters}m</span>
-                            <span>{calculation.installCost.toFixed(2)}€</span>
+                            <span>{l.cableCost} ({CABLE_TYPES.find(c => c.id === cableType)!.name})</span>
+                            <span>{calc.cableCost.toFixed(2)}€</span>
                         </div>
-                        {calculation.materialsCost > 0 && (
-                            <div className="flex justify-between text-brand-gold-muted">
-                                <span>{l.materials}</span>
-                                <span>{calculation.materialsCost.toFixed(2)}€</span>
+
+                        {/* Labor cost */}
+                        <div className="flex justify-between text-brand-gold-muted">
+                            <span>{l.laborCost}</span>
+                            <span>{calc.laborCost.toFixed(2)}€</span>
+                        </div>
+
+                        {/* Routing cost */}
+                        <div className="flex justify-between text-brand-gold-muted">
+                            <span>{l.routingCost} ({calc.routingPrice}€/m × {calc.totalCableLength}m)</span>
+                            <span>{calc.routingCost.toFixed(2)}€</span>
+                        </div>
+
+                        {/* Trench cost — only if > 0 */}
+                        {calc.trenchCost > 0 && (
+                            <div className="flex justify-between text-yellow-400">
+                                <span>{l.trenchCost} ({calc.trenchLength}m)</span>
+                                <span>{calc.trenchCost.toFixed(2)}€</span>
                             </div>
                         )}
-                        {calculation.workCost > 0 && (
-                            <div className="flex justify-between text-brand-gold-muted">
-                                <span>{l.additionalWork}</span>
-                                <span>{calculation.workCost.toFixed(2)}€</span>
+
+                        {/* Canaleta cost — only if > 0 */}
+                        {calc.canetaCost > 0 && (
+                            <div className="flex justify-between text-yellow-400">
+                                <span>{l.canaleta} ({calc.canetaLength}m)</span>
+                                <span>{calc.canetaCost.toFixed(2)}€</span>
                             </div>
                         )}
-                        {calculation.rackCost > 0 && (
+
+                        {/* Materials per point */}
+                        <div className="flex justify-between text-brand-gold-muted">
+                            <span>{l.materialsCostLabel} ({calc.materialsPerPoint}€ × {points})</span>
+                            <span>{calc.materialsCost.toFixed(2)}€</span>
+                        </div>
+
+                        {/* Additional materials */}
+                        {calc.additionalMaterialsCost > 0 && (
                             <div className="flex justify-between text-brand-gold-muted">
-                                <span>{l.rack}</span>
-                                <span>{calculation.rackCost.toFixed(2)}€</span>
+                                <span>{l.additionalMaterialsCost}</span>
+                                <span>{calc.additionalMaterialsCost.toFixed(2)}€</span>
+                            </div>
+                        )}
+
+                        {/* Equipment */}
+                        {calc.equipmentCost > 0 && (
+                            <div className="flex justify-between text-brand-gold-muted">
+                                <span>{l.equipmentCost}</span>
+                                <span>{calc.equipmentCost.toFixed(2)}€</span>
+                            </div>
+                        )}
+
+                        {/* Rack */}
+                        {calc.rackCost > 0 && (
+                            <div className="flex justify-between text-brand-gold-muted">
+                                <span>{l.rackCost}</span>
+                                <span>{calc.rackCost.toFixed(2)}€</span>
+                            </div>
+                        )}
+
+                        {/* Upsell */}
+                        {calc.upsellCost > 0 && (
+                            <div className="flex justify-between text-brand-gold-muted">
+                                <span>{l.upsellCost}</span>
+                                <span>{calc.upsellCost.toFixed(2)}€</span>
                             </div>
                         )}
 
                         <div className="h-px bg-border-subtle" />
 
+                        {/* Subtotal */}
                         <div className="flex justify-between font-medium text-white">
                             <span>{l.subtotal}</span>
-                            <span>{calculation.subtotal.toFixed(2)}€</span>
+                            <span>{calc.subtotal.toFixed(2)}€</span>
                         </div>
 
-                        {urgency !== 'normal' && (
-                            <div className="flex justify-between text-yellow-400">
-                                <span>{l.urgencyMultiplier}</span>
-                                <span>×{calculation.urgencyOption.multiplier}</span>
+                        {/* Discount */}
+                        {calc.discount > 0 && (
+                            <div className="flex justify-between text-green-400">
+                                <span>{l.discount} (-{calc.discountPercent}%)</span>
+                                <span>-{calc.discount.toFixed(2)}€</span>
                             </div>
                         )}
 
+                        {/* Urgency */}
+                        {urgency !== 'normal' && (
+                            <div className="flex justify-between text-yellow-400">
+                                <span>{l.urgencyLabel}</span>
+                                <span>×{calc.urgencyOption.multiplier}</span>
+                            </div>
+                        )}
+
+                        {/* IVA */}
                         <div className="flex justify-between text-brand-gold-muted">
                             <span>{l.iva}</span>
-                            <span>{calculation.iva.toFixed(2)}€</span>
+                            <span>{calc.iva.toFixed(2)}€</span>
                         </div>
 
                         <div className="h-px bg-border-subtle" />
                     </div>
 
+                    {/* TOTAL */}
                     <div className="text-center mb-6">
                         <div className="text-xs text-brand-gold-muted uppercase tracking-wider mb-1">{l.total}</div>
                         <div className="font-heading text-4xl font-extrabold text-gradient-gold">
-                            {calculation.total.toFixed(2)}€
+                            {calc.total.toFixed(2)}€
                         </div>
                     </div>
 
@@ -624,7 +977,7 @@ export default function Calculator({ locale }: { locale: string }) {
 
                     <a
                         href={`https://wa.me/34605974605?text=${encodeURIComponent(
-                            `Hola, me gustaría un presupuesto para ${points} puntos de red, ${cableMeters}m de cable ${CABLE_TYPES.find((c) => c.id === cableType)!.name}, ${installMeters}m de instalación. Estimación: ${calculation.total.toFixed(2)}€`
+                            `Hola, me gustaría un presupuesto para ${points} puntos de red (${calc.totalCableLength}m de cable ${CABLE_TYPES.find(c => c.id === cableType)!.name}). Tipo: ${l[installType]}. Estimación: ${calc.total.toFixed(2)}€`
                         )}`}
                         target="_blank"
                         rel="noopener"
@@ -643,26 +996,26 @@ export default function Calculator({ locale }: { locale: string }) {
                             locale={locale}
                             calculationData={{
                                 cableType,
-                                cableMeters,
+                                cableMeters: calc.totalCableLength,
                                 points,
                                 installationType: installType,
-                                installationMeters: installMeters,
-                                canaleta: materialQty.canaleta || 0,
-                                tubo_corrugado: materialQty.tubo_corrugado || 0,
-                                regata: materialQty.regata || 0,
-                                additionalWork,
+                                installationMeters: calc.trenchLength,
+                                canaleta: calc.canetaLength,
+                                tubo_corrugado: additionalMaterials.corrugated || 0,
+                                regata: calc.trenchLength,
+                                additionalWork: Object.fromEntries(Object.entries(equipment).map(([k, v]) => [k, v > 0])),
                                 rack,
                                 urgency,
-                                cablesCost: calculation.cablesCost,
-                                pointsCost: calculation.pointsCost,
-                                installCost: calculation.installCost,
-                                materialsCost: calculation.materialsCost,
-                                workCost: calculation.workCost,
-                                rackCost: calculation.rackCost,
-                                subtotal: calculation.subtotal,
-                                urgencyMultiplier: calculation.urgencyOption.multiplier,
-                                iva: calculation.iva,
-                                total: calculation.total,
+                                cablesCost: calc.cableCost,
+                                pointsCost: calc.materialsCost,
+                                installCost: calc.laborCost + calc.routingCost,
+                                materialsCost: calc.additionalMaterialsCost,
+                                workCost: calc.equipmentCost,
+                                rackCost: calc.rackCost,
+                                subtotal: calc.subtotal,
+                                urgencyMultiplier: calc.urgencyOption.multiplier,
+                                iva: calc.iva,
+                                total: calc.total,
                             }}
                         />
                     </div>
