@@ -1,0 +1,3684 @@
+[
+  {
+    "slug": "como-instalar-cable-red-casa",
+    "date": "2024-12-15",
+    "readTime": "8 min",
+    "es": {
+      "title": "Cómo instalar cable de red en casa: guía completa",
+      "metaTitle": "Cómo instalar cable de red en casa — Guía profesional 2024",
+      "metaDescription": "Guía paso a paso para instalar cable de red Ethernet en tu hogar. Cat6 vs Cat6A, herramientas necesarias, coste y consejos profesionales.",
+      "excerpt": "Todo lo que necesitas saber para cablear tu hogar con Ethernet: tipos de cable, herramientas, costes y cuándo llamar a un profesional.",
+      "category": "Guías",
+      "tags": [
+        "red doméstica",
+        "ethernet",
+        "cat6",
+        "instalación"
+      ],
+      "content": [
+        {
+          "type": "h2",
+          "text": "¿Por qué instalar cable de red en casa?"
+        },
+        {
+          "type": "p",
+          "text": "El Wi-Fi es cómodo, pero el cable Ethernet ofrece velocidades más estables, menor latencia y mayor fiabilidad. Para gaming, streaming 4K, teletrabajo o domótica, un cableado estructurado marca la diferencia."
+        },
+        {
+          "type": "h2",
+          "text": "Tipos de cable: Cat6 vs Cat6A vs Cat7"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Cat6 — hasta 1 Gbps a 100m. Ideal para la mayoría de hogares. Desde 95€/punto.",
+            "Cat6A — hasta 10 Gbps a 100m. Recomendado para futuras necesidades. Desde 115€/punto.",
+            "Cat7 — hasta 10 Gbps con blindaje extra. Máxima protección contra interferencias. Desde 140€/punto."
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "¿Qué incluye cada punto de red?"
+        },
+        {
+          "type": "p",
+          "text": "Un punto de red profesional incluye: cable Ethernet de la categoría elegida, keystone RJ45, placa de pared, canaleta o tubo corrugado si es necesario, y certificación con equipo Fluke."
+        },
+        {
+          "type": "h2",
+          "text": "Tipos de instalación"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Superficial (canaleta) — 8€/m. Visible pero económica.",
+            "Techo técnico — 6€/m. Se oculta en el falso techo.",
+            "Empotrado existente — 12€/m. Usando conductos existentes.",
+            "Empotrado nuevo — 18€/m. Abriendo nueva roza."
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "¿Cuánto cuesta instalar red en casa?"
+        },
+        {
+          "type": "p",
+          "text": "Un hogar típico con 6–8 puntos de red Cat6 cuesta entre 800€ y 1.200€ (IVA incluido). Puedes calcular tu presupuesto exacto con nuestra calculadora de instalación."
+        },
+        {
+          "type": "tip",
+          "text": "💡 Usa nuestra calculadora gratuita para obtener un presupuesto detallado en segundos."
+        },
+        {
+          "type": "h2",
+          "text": "¿Puedo hacerlo yo mismo?"
+        },
+        {
+          "type": "p",
+          "text": "Si tienes experiencia en bricolaje puedes colocar canaletas o pasar cables. Pero para la terminación (crimpado RJ45, patch panel, certificación), recomendamos un profesional. Un punto mal terminado puede causar pérdida de velocidad y desconexiones."
+        },
+        {
+          "type": "h2",
+          "text": "¿Cuándo llamar a un profesional?"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Más de 4 puntos de red",
+            "Instalación empotrada",
+            "Necesitas rack y patch panel",
+            "Quieres certificación Fluke",
+            "Necesitas VLANs o red segmentada"
+          ]
+        }
+      ]
+    },
+    "en": {
+      "title": "How to install network cable at home: complete guide",
+      "metaTitle": "How to install network cable at home — Professional guide 2024",
+      "metaDescription": "Step-by-step guide to installing Ethernet cable in your home. Cat6 vs Cat6A, tools needed, cost and professional tips.",
+      "excerpt": "Everything you need to know about wiring your home with Ethernet: cable types, tools, costs and when to call a professional.",
+      "category": "Guides",
+      "tags": [
+        "home network",
+        "ethernet",
+        "cat6",
+        "installation"
+      ],
+      "content": [
+        {
+          "type": "h2",
+          "text": "Why install network cable at home?"
+        },
+        {
+          "type": "p",
+          "text": "Wi-Fi is convenient, but Ethernet cable offers more stable speeds, lower latency and greater reliability. For gaming, 4K streaming, remote work or home automation, structured cabling makes a real difference."
+        },
+        {
+          "type": "h2",
+          "text": "Cable types: Cat6 vs Cat6A vs Cat7"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Cat6 — up to 1 Gbps at 100m. Ideal for most homes. From 95€/point.",
+            "Cat6A — up to 10 Gbps at 100m. Recommended for future needs. From 115€/point.",
+            "Cat7 — up to 10 Gbps with extra shielding. Maximum interference protection. From 140€/point."
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "What does each network point include?"
+        },
+        {
+          "type": "p",
+          "text": "A professional network point includes: Ethernet cable of the chosen category, RJ45 keystone, wall plate, cable tray or conduit if needed, and Fluke certification."
+        },
+        {
+          "type": "h2",
+          "text": "Installation types"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Surface (cable tray) — 8€/m. Visible but economical.",
+            "Suspended ceiling — 6€/m. Hidden in the false ceiling.",
+            "Existing conduit — 12€/m. Using existing ducts.",
+            "New conduit — 18€/m. Cutting new channels."
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "How much does home network installation cost?"
+        },
+        {
+          "type": "p",
+          "text": "A typical home with 6–8 Cat6 network points costs between €800 and €1,200 (VAT included). You can calculate your exact budget with our installation calculator."
+        },
+        {
+          "type": "tip",
+          "text": "💡 Use our free calculator to get a detailed quote in seconds."
+        },
+        {
+          "type": "h2",
+          "text": "Can I do it myself?"
+        },
+        {
+          "type": "p",
+          "text": "If you have DIY experience you can install cable trays or run cables. But for termination (RJ45 crimping, patch panel, certification), we recommend a professional. A poorly terminated point can cause speed loss and disconnections."
+        },
+        {
+          "type": "h2",
+          "text": "When to call a professional?"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "More than 4 network points",
+            "Concealed installation",
+            "You need a rack and patch panel",
+            "You want Fluke certification",
+            "You need VLANs or segmented network"
+          ]
+        }
+      ]
+    },
+    "ru": {
+      "title": "Как проложить сетевой кабель дома: полное руководство",
+      "metaTitle": "Как проложить сетевой кабель дома — Профессиональное руководство 2024",
+      "metaDescription": "Пошаговое руководство по прокладке Ethernet-кабеля в доме. Cat6 vs Cat6A, инструменты, стоимость и советы профессионалов.",
+      "excerpt": "Всё, что нужно знать о прокладке Ethernet в доме: типы кабелей, инструменты, стоимость и когда стоит вызвать специалиста.",
+      "category": "Руководства",
+      "tags": [
+        "домашняя сеть",
+        "ethernet",
+        "cat6",
+        "установка"
+      ],
+      "content": [
+        {
+          "type": "h2",
+          "text": "Зачем прокладывать сетевой кабель дома?"
+        },
+        {
+          "type": "p",
+          "text": "Wi-Fi удобен, но Ethernet обеспечивает более стабильную скорость, низкую задержку и высокую надёжность. Для игр, стриминга 4K, удалённой работы или умного дома структурированная кабельная система — это настоящая разница."
+        },
+        {
+          "type": "h2",
+          "text": "Типы кабелей: Cat6 vs Cat6A vs Cat7"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Cat6 — до 1 Гбит/с на 100м. Подходит для большинства домов. От 95€/точка.",
+            "Cat6A — до 10 Гбит/с на 100м. Рекомендован на будущее. От 115€/точка.",
+            "Cat7 — до 10 Гбит/с с усиленным экранированием. Максимальная защита от помех. От 140€/точка."
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "Что входит в каждую сетевую точку?"
+        },
+        {
+          "type": "p",
+          "text": "Профессиональная сетевая точка включает: Ethernet-кабель выбранной категории, keystone RJ45, настенную розетку, кабель-канал или гофру при необходимости и сертификацию Fluke."
+        },
+        {
+          "type": "h2",
+          "text": "Типы монтажа"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Открытый (кабель-канал) — 8€/м. Видимый, но экономичный.",
+            "Подвесной потолок — 6€/м. Скрыт в фальшпотолке.",
+            "Существующая штроба — 12€/м. По имеющимся каналам.",
+            "Новая штроба — 18€/м. Прорезка новых каналов."
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "Сколько стоит монтаж сети дома?"
+        },
+        {
+          "type": "p",
+          "text": "Типичный дом с 6–8 точками Cat6 стоит от 800€ до 1 200€ (включая НДС). Рассчитайте точную стоимость с помощью нашего калькулятора."
+        },
+        {
+          "type": "tip",
+          "text": "💡 Используйте наш бесплатный калькулятор для мгновенного расчёта стоимости."
+        },
+        {
+          "type": "h2",
+          "text": "Можно ли сделать самому?"
+        },
+        {
+          "type": "p",
+          "text": "Если у вас есть опыт, можно проложить кабель-каналы и протянуть кабели. Но для терминации (обжим RJ45, патч-панель, сертификация) рекомендуем профессионала. Плохо обжатая точка снижает скорость и вызывает обрывы связи."
+        },
+        {
+          "type": "h2",
+          "text": "Когда вызывать специалиста?"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Больше 4 сетевых точек",
+            "Скрытая прокладка",
+            "Нужен серверный шкаф и патч-панель",
+            "Хотите сертификацию Fluke",
+            "Нужны VLAN или сегментированная сеть"
+          ]
+        }
+      ]
+    }
+  },
+  {
+    "slug": "cat6-vs-cat6a-vs-cat7-diferencias",
+    "date": "2024-11-20",
+    "readTime": "6 min",
+    "es": {
+      "title": "Cat6 vs Cat6A vs Cat7: ¿cuál elegir?",
+      "metaTitle": "Cat6 vs Cat6A vs Cat7 — Diferencias, precios y recomendaciones",
+      "metaDescription": "Comparativa completa entre cables Cat6, Cat6A y Cat7. Velocidades, precios, usos recomendados.",
+      "excerpt": "Comparativa detallada entre los tres cables Ethernet más populares: velocidad, precio, blindaje y para qué sirve cada uno.",
+      "category": "Comparativas",
+      "tags": [
+        "cat6",
+        "cat6a",
+        "cat7",
+        "comparativa"
+      ],
+      "content": [
+        {
+          "type": "h2",
+          "text": "Tabla comparativa rápida"
+        },
+        {
+          "type": "p",
+          "text": "Cat6: 1 Gbps, hasta 250 MHz, sin blindaje estándar, 95€/punto. Cat6A: 10 Gbps, hasta 500 MHz, blindaje parcial, 115€/punto. Cat7: 10 Gbps, hasta 600 MHz, blindaje completo (S/FTP), 140€/punto."
+        },
+        {
+          "type": "h2",
+          "text": "Cat6 — El estándar para hogares"
+        },
+        {
+          "type": "p",
+          "text": "Cat6 soporta velocidades de hasta 1 Gbps a 100 metros. Es suficiente para la mayoría de hogares y pequeñas oficinas."
+        },
+        {
+          "type": "h2",
+          "text": "Cat6A — La inversión a futuro"
+        },
+        {
+          "type": "p",
+          "text": "Cat6A es la opción recomendada para quien quiere preparar su red para el futuro. Soporta 10 Gbps a 100 metros."
+        },
+        {
+          "type": "h2",
+          "text": "Cat7 — Máxima protección"
+        },
+        {
+          "type": "p",
+          "text": "Cat7 incluye blindaje completo (S/FTP). Es la mejor opción para entornos con muchas interferencias electromagnéticas: naves industriales, hospitales."
+        },
+        {
+          "type": "h2",
+          "text": "¿Cuál elegir?"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Hogar: Cat6 (suficiente para 99% de necesidades)",
+            "Oficina: Cat6A (preparado para 10 Gbps)",
+            "Industrial/Clínica: Cat7 (máxima protección)"
+          ]
+        },
+        {
+          "type": "tip",
+          "text": "📞 Llámanos al +34 605 974 605 o usa nuestra calculadora para comparar precios."
+        }
+      ]
+    },
+    "en": {
+      "title": "Cat6 vs Cat6A vs Cat7: which one to choose?",
+      "metaTitle": "Cat6 vs Cat6A vs Cat7 — Differences, prices and recommendations",
+      "metaDescription": "Complete comparison between Cat6, Cat6A and Cat7 cables. Speeds, prices and recommended uses.",
+      "excerpt": "Detailed comparison of the three most popular Ethernet cables: speed, price, shielding and what each one is for.",
+      "category": "Comparisons",
+      "tags": [
+        "cat6",
+        "cat6a",
+        "cat7",
+        "comparison"
+      ],
+      "content": [
+        {
+          "type": "h2",
+          "text": "Quick comparison table"
+        },
+        {
+          "type": "p",
+          "text": "Cat6: 1 Gbps, up to 250 MHz, no standard shielding, 95€/point. Cat6A: 10 Gbps, up to 500 MHz, partial shielding, 115€/point. Cat7: 10 Gbps, up to 600 MHz, full shielding (S/FTP), 140€/point."
+        },
+        {
+          "type": "h2",
+          "text": "Cat6 — The standard for homes"
+        },
+        {
+          "type": "p",
+          "text": "Cat6 supports speeds up to 1 Gbps at 100 meters. It is sufficient for most homes and small offices."
+        },
+        {
+          "type": "h2",
+          "text": "Cat6A — Future-proof investment"
+        },
+        {
+          "type": "p",
+          "text": "Cat6A is the recommended choice for those who want to prepare their network for the future. Supports 10 Gbps at 100 meters."
+        },
+        {
+          "type": "h2",
+          "text": "Cat7 — Maximum protection"
+        },
+        {
+          "type": "p",
+          "text": "Cat7 includes full shielding (S/FTP). It is the best option for environments with heavy electromagnetic interference: warehouses, hospitals."
+        },
+        {
+          "type": "h2",
+          "text": "Which one to choose?"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Home: Cat6 (enough for 99% of needs)",
+            "Office: Cat6A (ready for 10 Gbps)",
+            "Industrial/Clinic: Cat7 (maximum protection)"
+          ]
+        },
+        {
+          "type": "tip",
+          "text": "📞 Call us at +34 605 974 605 or use our calculator to compare prices."
+        }
+      ]
+    },
+    "ru": {
+      "title": "Cat6 vs Cat6A vs Cat7: что выбрать?",
+      "metaTitle": "Cat6 vs Cat6A vs Cat7 — Различия, цены и рекомендации",
+      "metaDescription": "Полное сравнение кабелей Cat6, Cat6A и Cat7. Скорости, цены и рекомендации по использованию.",
+      "excerpt": "Детальное сравнение трёх самых популярных Ethernet-кабелей: скорость, цена, экранирование и для чего каждый подходит.",
+      "category": "Сравнения",
+      "tags": [
+        "cat6",
+        "cat6a",
+        "cat7",
+        "сравнение"
+      ],
+      "content": [
+        {
+          "type": "h2",
+          "text": "Быстрая сравнительная таблица"
+        },
+        {
+          "type": "p",
+          "text": "Cat6: 1 Гбит/с, до 250 МГц, без экранирования, 95€/точка. Cat6A: 10 Гбит/с, до 500 МГц, частичное экранирование, 115€/точка. Cat7: 10 Гбит/с, до 600 МГц, полное экранирование (S/FTP), 140€/точка."
+        },
+        {
+          "type": "h2",
+          "text": "Cat6 — Стандарт для дома"
+        },
+        {
+          "type": "p",
+          "text": "Cat6 поддерживает скорость до 1 Гбит/с на 100 метрах. Достаточно для большинства домов и небольших офисов."
+        },
+        {
+          "type": "h2",
+          "text": "Cat6A — Инвестиция в будущее"
+        },
+        {
+          "type": "p",
+          "text": "Cat6A — рекомендуемый выбор для тех, кто хочет подготовить сеть к будущему. Поддерживает 10 Гбит/с на 100 метрах."
+        },
+        {
+          "type": "h2",
+          "text": "Cat7 — Максимальная защита"
+        },
+        {
+          "type": "p",
+          "text": "Cat7 имеет полное экранирование (S/FTP). Лучший вариант для помещений с сильными электромагнитными помехами: склады, больницы."
+        },
+        {
+          "type": "h2",
+          "text": "Что выбрать?"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Дом: Cat6 (достаточно для 99% нужд)",
+            "Офис: Cat6A (готово к 10 Гбит/с)",
+            "Промышленность/Клиника: Cat7 (макс. защита)"
+          ]
+        },
+        {
+          "type": "tip",
+          "text": "📞 Звоните +34 605 974 605 или используйте наш калькулятор для сравнения цен."
+        }
+      ]
+    }
+  },
+  {
+    "slug": "como-mejorar-red-wifi-oficina",
+    "date": "2024-10-30",
+    "readTime": "7 min",
+    "es": {
+      "title": "Cómo mejorar la red Wi-Fi en tu oficina",
+      "metaTitle": "Mejorar Wi-Fi en oficina — 7 soluciones profesionales",
+      "metaDescription": "Tu Wi-Fi de oficina es lento? 7 soluciones profesionales para mejorar velocidad y cobertura.",
+      "excerpt": "¿Wi-Fi lento en la oficina? 7 soluciones probadas para mejorar velocidad, cobertura y estabilidad de tu red inalámbrica.",
+      "category": "Consejos",
+      "tags": [
+        "wifi",
+        "oficina",
+        "rendimiento"
+      ],
+      "content": [
+        {
+          "type": "h2",
+          "text": "El problema: Wi-Fi lento y desconexiones"
+        },
+        {
+          "type": "p",
+          "text": "En una oficina con más de 10 dispositivos, el router del operador no da abasto. Interferencias, saturación de canales y mala ubicación son las causas más frecuentes."
+        },
+        {
+          "type": "h2",
+          "text": "7 soluciones profesionales"
+        },
+        {
+          "type": "h3",
+          "text": "1. Cableado Ethernet + Access Points"
+        },
+        {
+          "type": "p",
+          "text": "La solución más efectiva: instalar puntos de red y conectar Access Points profesionales."
+        },
+        {
+          "type": "h3",
+          "text": "2. Separar redes (VLAN)"
+        },
+        {
+          "type": "p",
+          "text": "Crear redes separadas para empleados y visitantes."
+        },
+        {
+          "type": "h3",
+          "text": "3. Usar la banda de 5 GHz"
+        },
+        {
+          "type": "p",
+          "text": "La banda de 5 GHz es menos congestionada y más rápida."
+        },
+        {
+          "type": "h3",
+          "text": "4. Ubicar APs correctamente"
+        },
+        {
+          "type": "p",
+          "text": "Un AP profesional cubre ~150m² en oficina."
+        },
+        {
+          "type": "h3",
+          "text": "5. Switch gestionable"
+        },
+        {
+          "type": "p",
+          "text": "Permite priorizar tráfico (QoS) y crear VLANs. 60€."
+        },
+        {
+          "type": "h3",
+          "text": "6. Cable Cat6A"
+        },
+        {
+          "type": "p",
+          "text": "Actualizarlo a Cat6A te da 10x más velocidad potencial."
+        },
+        {
+          "type": "h3",
+          "text": "7. Configuración profesional"
+        },
+        {
+          "type": "p",
+          "text": "Optimizar canales, potencia, bandas y seguridad. 120€."
+        },
+        {
+          "type": "tip",
+          "text": "🔧 Solicita una consulta gratuita — te visitamos y asesoramos sin compromiso."
+        }
+      ]
+    },
+    "en": {
+      "title": "How to improve Wi-Fi in your office",
+      "metaTitle": "Improve office Wi-Fi — 7 professional solutions",
+      "metaDescription": "Slow office Wi-Fi? 7 professional solutions to improve speed and coverage.",
+      "excerpt": "Slow Wi-Fi at the office? 7 proven solutions to improve speed, coverage and stability of your wireless network.",
+      "category": "Tips",
+      "tags": [
+        "wifi",
+        "office",
+        "performance"
+      ],
+      "content": [
+        {
+          "type": "h2",
+          "text": "The problem: slow Wi-Fi and disconnections"
+        },
+        {
+          "type": "p",
+          "text": "In an office with more than 10 devices, the ISP router cannot keep up. Interference, channel saturation and poor placement are the most common causes."
+        },
+        {
+          "type": "h2",
+          "text": "7 professional solutions"
+        },
+        {
+          "type": "h3",
+          "text": "1. Ethernet cabling + Access Points"
+        },
+        {
+          "type": "p",
+          "text": "The most effective solution: install network points and connect professional Access Points."
+        },
+        {
+          "type": "h3",
+          "text": "2. Separate networks (VLAN)"
+        },
+        {
+          "type": "p",
+          "text": "Create separate networks for employees and visitors."
+        },
+        {
+          "type": "h3",
+          "text": "3. Use the 5 GHz band"
+        },
+        {
+          "type": "p",
+          "text": "The 5 GHz band is less congested and faster."
+        },
+        {
+          "type": "h3",
+          "text": "4. Position APs correctly"
+        },
+        {
+          "type": "p",
+          "text": "A professional AP covers ~150m² in an office."
+        },
+        {
+          "type": "h3",
+          "text": "5. Managed switch"
+        },
+        {
+          "type": "p",
+          "text": "Allows traffic prioritization (QoS) and VLAN creation. €60."
+        },
+        {
+          "type": "h3",
+          "text": "6. Cat6A cable"
+        },
+        {
+          "type": "p",
+          "text": "Upgrading to Cat6A gives you 10x more potential speed."
+        },
+        {
+          "type": "h3",
+          "text": "7. Professional configuration"
+        },
+        {
+          "type": "p",
+          "text": "Optimize channels, power, bands and security. €120."
+        },
+        {
+          "type": "tip",
+          "text": "🔧 Request a free consultation — we'll visit and advise you with no obligation."
+        }
+      ]
+    },
+    "ru": {
+      "title": "Как улучшить Wi-Fi в офисе",
+      "metaTitle": "Улучшить Wi-Fi в офисе — 7 профессиональных решений",
+      "metaDescription": "Медленный Wi-Fi в офисе? 7 профессиональных решений для улучшения скорости и покрытия.",
+      "excerpt": "Медленный Wi-Fi в офисе? 7 проверенных решений для улучшения скорости, покрытия и стабильности беспроводной сети.",
+      "category": "Советы",
+      "tags": [
+        "wifi",
+        "офис",
+        "производительность"
+      ],
+      "content": [
+        {
+          "type": "h2",
+          "text": "Проблема: медленный Wi-Fi и обрывы"
+        },
+        {
+          "type": "p",
+          "text": "В офисе с более чем 10 устройствами роутер провайдера не справляется. Помехи, перегрузка каналов и неправильное размещение — главные причины."
+        },
+        {
+          "type": "h2",
+          "text": "7 профессиональных решений"
+        },
+        {
+          "type": "h3",
+          "text": "1. Ethernet-кабели + точки доступа"
+        },
+        {
+          "type": "p",
+          "text": "Самый эффективный способ: установить сетевые точки и подключить профессиональные точки доступа."
+        },
+        {
+          "type": "h3",
+          "text": "2. Разделение сетей (VLAN)"
+        },
+        {
+          "type": "p",
+          "text": "Создание отдельных сетей для сотрудников и гостей."
+        },
+        {
+          "type": "h3",
+          "text": "3. Использование диапазона 5 ГГц"
+        },
+        {
+          "type": "p",
+          "text": "Диапазон 5 ГГц менее загружен и быстрее."
+        },
+        {
+          "type": "h3",
+          "text": "4. Правильное размещение точек доступа"
+        },
+        {
+          "type": "p",
+          "text": "Профессиональная точка доступа покрывает ~150 м² в офисе."
+        },
+        {
+          "type": "h3",
+          "text": "5. Управляемый коммутатор"
+        },
+        {
+          "type": "p",
+          "text": "Позволяет приоритизировать трафик (QoS) и создавать VLAN. 60€."
+        },
+        {
+          "type": "h3",
+          "text": "6. Кабель Cat6A"
+        },
+        {
+          "type": "p",
+          "text": "Переход на Cat6A даёт 10-кратное увеличение потенциальной скорости."
+        },
+        {
+          "type": "h3",
+          "text": "7. Профессиональная настройка"
+        },
+        {
+          "type": "p",
+          "text": "Оптимизация каналов, мощности, диапазонов и безопасности. 120€."
+        },
+        {
+          "type": "tip",
+          "text": "🔧 Запросите бесплатную консультацию — приедем и проконсультируем без обязательств."
+        }
+      ]
+    }
+  },
+  {
+    "slug": "que-es-cableado-estructurado",
+    "date": "2024-09-15",
+    "readTime": "6 min",
+    "es": {
+      "title": "Qué es el cableado estructurado y por qué lo necesitas",
+      "metaTitle": "Qué es cableado estructurado — Guía completa para empresas",
+      "metaDescription": "Qué es el cableado estructurado, cómo funciona y por qué tu empresa necesita una red profesional.",
+      "excerpt": "El cableado estructurado es la base de toda infraestructura de red moderna. Descubre qué es y por qué lo necesitas.",
+      "category": "Educación",
+      "tags": [
+        "cableado estructurado",
+        "red profesional",
+        "infraestructura"
+      ],
+      "content": [
+        {
+          "type": "h2",
+          "text": "¿Qué es el cableado estructurado?"
+        },
+        {
+          "type": "p",
+          "text": "Es un sistema de cableado de red estandarizado que conecta todos los dispositivos de un edificio a través de una infraestructura organizada, certificada y fácil de mantener."
+        },
+        {
+          "type": "h2",
+          "text": "Componentes del cableado estructurado"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Cable Ethernet (Cat6/Cat6A/Cat7)",
+            "Patch panels",
+            "Rack de telecomunicaciones",
+            "Keystones RJ45 y placas de pared",
+            "Switchs y routers",
+            "Canaletas y gestión de cables"
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "Ventajas"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Velocidad y estabilidad garantizadas",
+            "Fácil de ampliar",
+            "Cumple estándares TIA/EIA-568",
+            "Menores costes de mantenimiento",
+            "Certificable con Fluke"
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "¿Cuándo lo necesitas?"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Oficinas con más de 5 equipos",
+            "Empresas en crecimiento",
+            "Clínicas, hoteles, tiendas",
+            "Edificios nuevos o reformas"
+          ]
+        },
+        {
+          "type": "tip",
+          "text": "📋 Solicita tu presupuesto — diseñamos la red perfecta para tu negocio."
+        }
+      ]
+    },
+    "en": {
+      "title": "What is structured cabling and why you need it",
+      "metaTitle": "What is structured cabling — Complete guide for businesses",
+      "metaDescription": "What is structured cabling, how it works and why your business needs a professional network.",
+      "excerpt": "Structured cabling is the foundation of all modern network infrastructure. Discover what it is and why you need it.",
+      "category": "Education",
+      "tags": [
+        "structured cabling",
+        "professional network",
+        "infrastructure"
+      ],
+      "content": [
+        {
+          "type": "h2",
+          "text": "What is structured cabling?"
+        },
+        {
+          "type": "p",
+          "text": "A standardized network cabling system that connects all devices in a building through an organized, certified and easy-to-maintain infrastructure."
+        },
+        {
+          "type": "h2",
+          "text": "Components of structured cabling"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Ethernet cable (Cat6/Cat6A/Cat7)",
+            "Patch panels",
+            "Telecommunications rack",
+            "RJ45 keystones and wall plates",
+            "Switches and routers",
+            "Cable trays and management"
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "Advantages"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Guaranteed speed and stability",
+            "Easy to expand",
+            "TIA/EIA-568 compliant",
+            "Lower maintenance costs",
+            "Fluke certifiable"
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "When do you need it?"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Offices with more than 5 devices",
+            "Growing businesses",
+            "Clinics, hotels, shops",
+            "New buildings or renovations"
+          ]
+        },
+        {
+          "type": "tip",
+          "text": "📋 Request your quote — we design the perfect network for your business."
+        }
+      ]
+    },
+    "ru": {
+      "title": "Что такое структурированная кабельная система и зачем она нужна",
+      "metaTitle": "Что такое СКС — Полное руководство для бизнеса",
+      "metaDescription": "Что такое структурированная кабельная система, как работает и зачем нужна вашему бизнесу.",
+      "excerpt": "Структурированная кабельная система — основа всей современной сетевой инфраструктуры. Узнайте, что это и зачем она нужна.",
+      "category": "Образование",
+      "tags": [
+        "СКС",
+        "профессиональная сеть",
+        "инфраструктура"
+      ],
+      "content": [
+        {
+          "type": "h2",
+          "text": "Что такое структурированная кабельная система?"
+        },
+        {
+          "type": "p",
+          "text": "Стандартизированная система кабельной разводки, объединяющая все устройства здания через организованную, сертифицированную и легко обслуживаемую инфраструктуру."
+        },
+        {
+          "type": "h2",
+          "text": "Компоненты СКС"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Ethernet-кабель (Cat6/Cat6A/Cat7)",
+            "Патч-панели",
+            "Телекоммуникационный шкаф",
+            "Keystone RJ45 и розетки",
+            "Коммутаторы и маршрутизаторы",
+            "Кабель-каналы"
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "Преимущества"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Гарантированная скорость и стабильность",
+            "Легко расширять",
+            "Соответствие стандартам TIA/EIA-568",
+            "Снижение затрат на обслуживание",
+            "Сертификация Fluke"
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "Когда это нужно?"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Офисы с более чем 5 устройствами",
+            "Растущий бизнес",
+            "Клиники, отели, магазины",
+            "Новые здания или ремонт"
+          ]
+        },
+        {
+          "type": "tip",
+          "text": "📋 Запросите смету — мы спроектируем идеальную сеть для вашего бизнеса."
+        }
+      ]
+    }
+  },
+  {
+    "slug": "como-instalar-rack-de-red",
+    "date": "2024-08-20",
+    "readTime": "7 min",
+    "es": {
+      "title": "Cómo instalar un rack de red: guía para empresas",
+      "metaTitle": "Cómo instalar rack de red — Tipos, tamaños y precios",
+      "metaDescription": "Guía completa para instalar un rack de red. Tipos, tamaños, componentes y precios.",
+      "excerpt": "Guía completa para elegir e instalar el rack de red perfecto para tu empresa: tipos, tamaños, componentes y coste.",
+      "category": "Guías",
+      "tags": [
+        "rack",
+        "patch panel",
+        "servidor"
+      ],
+      "content": [
+        {
+          "type": "h2",
+          "text": "¿Qué es un rack de red?"
+        },
+        {
+          "type": "p",
+          "text": "Un rack de red es el centro neurálgico de tu red. Aquí se conectan todos los cables y se alojan los equipos: switches, routers, patch panels."
+        },
+        {
+          "type": "h2",
+          "text": "Tipos de rack"
+        },
+        {
+          "type": "h3",
+          "text": "Rack mural (6U–12U)"
+        },
+        {
+          "type": "p",
+          "text": "Se fija a la pared. Ideal para pequeñas oficinas. Desde 150€."
+        },
+        {
+          "type": "h3",
+          "text": "Rack de suelo (22U–42U)"
+        },
+        {
+          "type": "p",
+          "text": "Para empresas medianas y grandes. Mayor capacidad. Desde 350€."
+        },
+        {
+          "type": "h2",
+          "text": "Componentes esenciales"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Patch panel (24/48 puertos)",
+            "Switch gestionable",
+            "Organizador de cables",
+            "Bandeja para router",
+            "Regleta PDU",
+            "Ventilación"
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "Precios de instalación"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Rack mural básico (6U): ~250€",
+            "Rack mural completo (12U): ~450€",
+            "Rack suelo profesional (22U+): ~750€–1.200€"
+          ]
+        },
+        {
+          "type": "tip",
+          "text": "🗄️ Usa nuestra calculadora para incluir el rack en tu presupuesto."
+        }
+      ]
+    },
+    "en": {
+      "title": "How to install a network rack: guide for businesses",
+      "metaTitle": "How to install a network rack — Types, sizes and prices",
+      "metaDescription": "Complete guide to installing a network rack. Types, sizes, components and prices.",
+      "excerpt": "Complete guide to choosing and installing the perfect network rack for your business: types, sizes, components and cost.",
+      "category": "Guides",
+      "tags": [
+        "rack",
+        "patch panel",
+        "server"
+      ],
+      "content": [
+        {
+          "type": "h2",
+          "text": "What is a network rack?"
+        },
+        {
+          "type": "p",
+          "text": "A network rack is the nerve center of your network. All cables connect here and equipment is housed: switches, routers, patch panels."
+        },
+        {
+          "type": "h2",
+          "text": "Rack types"
+        },
+        {
+          "type": "h3",
+          "text": "Wall-mounted rack (6U–12U)"
+        },
+        {
+          "type": "p",
+          "text": "Mounted on the wall. Ideal for small offices. From €150."
+        },
+        {
+          "type": "h3",
+          "text": "Floor-standing rack (22U–42U)"
+        },
+        {
+          "type": "p",
+          "text": "For medium and large companies. Greater capacity. From €350."
+        },
+        {
+          "type": "h2",
+          "text": "Essential components"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Patch panel (24/48 ports)",
+            "Managed switch",
+            "Cable organizer",
+            "Router shelf",
+            "PDU power strip",
+            "Ventilation"
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "Installation prices"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Basic wall rack (6U): ~€250",
+            "Complete wall rack (12U): ~€450",
+            "Professional floor rack (22U+): ~€750–€1,200"
+          ]
+        },
+        {
+          "type": "tip",
+          "text": "🗄️ Use our calculator to include the rack in your quote."
+        }
+      ]
+    },
+    "ru": {
+      "title": "Как установить серверный шкаф: руководство для бизнеса",
+      "metaTitle": "Как установить серверный шкаф — Типы, размеры и цены",
+      "metaDescription": "Полное руководство по установке серверного шкафа. Типы, размеры, компоненты и цены.",
+      "excerpt": "Полное руководство по выбору и установке серверного шкафа для вашего бизнеса: типы, размеры, компоненты и стоимость.",
+      "category": "Руководства",
+      "tags": [
+        "шкаф",
+        "патч-панель",
+        "сервер"
+      ],
+      "content": [
+        {
+          "type": "h2",
+          "text": "Что такое серверный шкаф?"
+        },
+        {
+          "type": "p",
+          "text": "Серверный шкаф — нервный центр вашей сети. Здесь подключаются все кабели и размещается оборудование: коммутаторы, маршрутизаторы, патч-панели."
+        },
+        {
+          "type": "h2",
+          "text": "Типы шкафов"
+        },
+        {
+          "type": "h3",
+          "text": "Настенный шкаф (6U–12U)"
+        },
+        {
+          "type": "p",
+          "text": "Крепится на стену. Идеально для небольших офисов. От 150€."
+        },
+        {
+          "type": "h3",
+          "text": "Напольный шкаф (22U–42U)"
+        },
+        {
+          "type": "p",
+          "text": "Для средних и крупных компаний. Больше ёмкость. От 350€."
+        },
+        {
+          "type": "h2",
+          "text": "Основные компоненты"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Патч-панель (24/48 портов)",
+            "Управляемый коммутатор",
+            "Органайзер кабелей",
+            "Полка для роутера",
+            "Блок розеток PDU",
+            "Вентиляция"
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "Цены на установку"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Базовый настенный (6U): ~250€",
+            "Полный настенный (12U): ~450€",
+            "Профессиональный напольный (22U+): ~750€–1 200€"
+          ]
+        },
+        {
+          "type": "tip",
+          "text": "🗄️ Используйте наш калькулятор, чтобы включить шкаф в смету."
+        }
+      ]
+    }
+  },
+  {
+    "slug": "errores-comunes-instalacion-red",
+    "date": "2024-07-10",
+    "readTime": "5 min",
+    "es": {
+      "title": "6 errores comunes en la instalación de red (y cómo evitarlos)",
+      "metaTitle": "Errores comunes instalación de red — Cómo evitarlos",
+      "metaDescription": "6 errores frecuentes al instalar red Ethernet. Aprende a evitarlos.",
+      "excerpt": "Errores que cuestan dinero: 6 fallos frecuentes en instalaciones de red domésticas y de oficina.",
+      "category": "Consejos",
+      "tags": [
+        "errores",
+        "instalación",
+        "consejos"
+      ],
+      "content": [
+        {
+          "type": "h2",
+          "text": "1. Usar cable de baja calidad"
+        },
+        {
+          "type": "p",
+          "text": "Cables baratos sin certificación pueden no cumplir especificaciones. Siempre usa cable certificado."
+        },
+        {
+          "type": "h2",
+          "text": "2. No respetar el radio de curvatura"
+        },
+        {
+          "type": "p",
+          "text": "El cable no debe doblarse más de 4 veces su diámetro. Usa curvas suaves."
+        },
+        {
+          "type": "h2",
+          "text": "3. Mezclar categorías de cable"
+        },
+        {
+          "type": "p",
+          "text": "Si instalas Cat6A pero usas un patch cord Cat5e, tu velocidad se limita al componente más lento."
+        },
+        {
+          "type": "h2",
+          "text": "4. No certificar los puntos"
+        },
+        {
+          "type": "p",
+          "text": "Sin certificación no puedes saber si un punto funciona al 100%. Insiste en certificación Fluke."
+        },
+        {
+          "type": "h2",
+          "text": "5. Cables junto a líneas eléctricas"
+        },
+        {
+          "type": "p",
+          "text": "Mantén al menos 20cm de separación o usa cable blindado (Cat7)."
+        },
+        {
+          "type": "h2",
+          "text": "6. No planificar la escalabilidad"
+        },
+        {
+          "type": "p",
+          "text": "Instala siempre más puntos de los que necesitas hoy. Añadir después es mucho más caro."
+        },
+        {
+          "type": "tip",
+          "text": "✅ Evita estos errores: confía en un instalador profesional certificado."
+        }
+      ]
+    },
+    "en": {
+      "title": "6 common network installation mistakes (and how to avoid them)",
+      "metaTitle": "Common network installation mistakes — How to avoid them",
+      "metaDescription": "6 common mistakes when installing Ethernet. Learn how to avoid them.",
+      "excerpt": "Costly mistakes: 6 common errors in home and office network installations.",
+      "category": "Tips",
+      "tags": [
+        "mistakes",
+        "installation",
+        "tips"
+      ],
+      "content": [
+        {
+          "type": "h2",
+          "text": "1. Using low-quality cable"
+        },
+        {
+          "type": "p",
+          "text": "Cheap uncertified cables may not meet specifications. Always use certified cable."
+        },
+        {
+          "type": "h2",
+          "text": "2. Not respecting the bend radius"
+        },
+        {
+          "type": "p",
+          "text": "Cable should not be bent more than 4 times its diameter. Use smooth curves."
+        },
+        {
+          "type": "h2",
+          "text": "3. Mixing cable categories"
+        },
+        {
+          "type": "p",
+          "text": "If you install Cat6A but use a Cat5e patch cord, speed is limited to the weakest component."
+        },
+        {
+          "type": "h2",
+          "text": "4. Not certifying points"
+        },
+        {
+          "type": "p",
+          "text": "Without certification you can't know if a point works at 100%. Insist on Fluke certification."
+        },
+        {
+          "type": "h2",
+          "text": "5. Cables next to electrical lines"
+        },
+        {
+          "type": "p",
+          "text": "Keep at least 20cm of separation or use shielded cable (Cat7)."
+        },
+        {
+          "type": "h2",
+          "text": "6. Not planning for scalability"
+        },
+        {
+          "type": "p",
+          "text": "Always install more points than you need today. Adding later is much more expensive."
+        },
+        {
+          "type": "tip",
+          "text": "✅ Avoid these mistakes: trust a certified professional installer."
+        }
+      ]
+    },
+    "ru": {
+      "title": "6 частых ошибок при монтаже сети (и как их избежать)",
+      "metaTitle": "Ошибки при монтаже сети — Как их избежать",
+      "metaDescription": "6 частых ошибок при прокладке Ethernet. Узнайте, как их избежать.",
+      "excerpt": "Ошибки, которые стоят денег: 6 частых промахов при монтаже домашних и офисных сетей.",
+      "category": "Советы",
+      "tags": [
+        "ошибки",
+        "монтаж",
+        "советы"
+      ],
+      "content": [
+        {
+          "type": "h2",
+          "text": "1. Использование дешёвого кабеля"
+        },
+        {
+          "type": "p",
+          "text": "Дешёвые несертифицированные кабели могут не соответствовать стандартам. Всегда используйте сертифицированный кабель."
+        },
+        {
+          "type": "h2",
+          "text": "2. Нарушение радиуса изгиба"
+        },
+        {
+          "type": "p",
+          "text": "Кабель нельзя сгибать больше, чем на 4 диаметра. Используйте плавные изгибы."
+        },
+        {
+          "type": "h2",
+          "text": "3. Смешивание категорий кабеля"
+        },
+        {
+          "type": "p",
+          "text": "Если прокладываете Cat6A, но используете патч-корд Cat5e — скорость ограничится самым слабым компонентом."
+        },
+        {
+          "type": "h2",
+          "text": "4. Отсутствие сертификации точек"
+        },
+        {
+          "type": "p",
+          "text": "Без сертификации невозможно знать, работает ли точка на 100%. Настаивайте на сертификации Fluke."
+        },
+        {
+          "type": "h2",
+          "text": "5. Кабели рядом с электропроводкой"
+        },
+        {
+          "type": "p",
+          "text": "Держите минимум 20 см расстояния или используйте экранированный кабель (Cat7)."
+        },
+        {
+          "type": "h2",
+          "text": "6. Отсутствие планирования масштабирования"
+        },
+        {
+          "type": "p",
+          "text": "Всегда устанавливайте больше точек, чем нужно сейчас. Добавлять потом — намного дороже."
+        },
+        {
+          "type": "tip",
+          "text": "✅ Избегайте этих ошибок: доверьтесь сертифицированному профессионалу."
+        }
+      ]
+    }
+  },
+  {
+    "slug": "cuanto-cuesta-instalar-red-oficina-barcelona",
+    "date": "2025-03-15",
+    "readTime": "6 min",
+    "es": {
+      "title": "Cuánto cuesta instalar red en una oficina en Barcelona (2025)",
+      "metaTitle": "Precio instalación red en oficina Barcelona 2025 — Guía de costes",
+      "metaDescription": "Descubre cuánto cuesta instalar red Ethernet en una oficina en Barcelona. Precios reales por punto, por metro y por rack.",
+      "excerpt": "Guía actualizada de precios de instalación de red para oficinas en Barcelona: coste por punto, por metro y por rack.",
+      "category": "Precios",
+      "tags": [
+        "precio",
+        "oficina",
+        "Barcelona",
+        "red"
+      ],
+      "content": [
+        {
+          "type": "h2",
+          "text": "¿Cuánto cuesta instalar red en una oficina?"
+        },
+        {
+          "type": "p",
+          "text": "El precio de instalar una red profesional en una oficina en Barcelona depende de tres factores: número de puntos de red, tipo de cable y tipo de instalación. Aquí te damos precios reales de 2025."
+        },
+        {
+          "type": "h2",
+          "text": "Precios por punto de red (IVA incluido)"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Cat6 — 95€/punto (ideal para oficinas pequeñas)",
+            "Cat6A — 115€/punto (recomendado para oficinas medianas)",
+            "Cat7 — 140€/punto (empresas con alta demanda)"
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "Precios por tipo de instalación"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Superficial (canaleta): 8€/m",
+            "Techo técnico: 6€/m",
+            "Empotrado existente: 12€/m",
+            "Empotrado nuevo (regata): 18€/m + 45€/m de regata"
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "Ejemplo: oficina de 10 puntos Cat6A"
+        },
+        {
+          "type": "p",
+          "text": "10 puntos Cat6A con instalación en techo técnico, rack mural 12U y switch gestionable. Total estimado: 1.800€–2.200€ (IVA incluido). Incluye certificación Fluke de cada punto."
+        },
+        {
+          "type": "h2",
+          "text": "Equipamiento adicional"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Rack mural 6U: 150€",
+            "Rack mural 12U: 250€",
+            "Switch gestionable 24 puertos: 180€",
+            "Access Point Wi-Fi: 120€",
+            "Patch panel 24 puertos: 60€"
+          ]
+        },
+        {
+          "type": "tip",
+          "text": "🧮 Calcula tu presupuesto exacto con nuestra calculadora gratuita — ¡en 30 segundos!"
+        }
+      ]
+    },
+    "en": {
+      "title": "How much does it cost to install a network in an office in Barcelona (2025)",
+      "metaTitle": "Office network installation cost Barcelona 2025 — Price guide",
+      "metaDescription": "Find out how much it costs to install Ethernet network in a Barcelona office. Real prices per point, per meter and per rack.",
+      "excerpt": "Updated 2025 pricing guide for office network installation in Barcelona: cost per point, per meter and per rack.",
+      "category": "Pricing",
+      "tags": [
+        "price",
+        "office",
+        "Barcelona",
+        "network"
+      ],
+      "content": [
+        {
+          "type": "h2",
+          "text": "How much does office network installation cost?"
+        },
+        {
+          "type": "p",
+          "text": "The price of installing a professional network in a Barcelona office depends on three factors: number of network points, cable type and installation type. Here are real 2025 prices."
+        },
+        {
+          "type": "h2",
+          "text": "Prices per network point (VAT included)"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Cat6 — €95/point (ideal for small offices)",
+            "Cat6A — €115/point (recommended for medium offices)",
+            "Cat7 — €140/point (high-demand businesses)"
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "Prices by installation type"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Surface (cable tray): €8/m",
+            "Suspended ceiling: €6/m",
+            "Existing conduit: €12/m",
+            "New conduit (channel): €18/m + €45/m for channel"
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "Example: 10-point Cat6A office"
+        },
+        {
+          "type": "p",
+          "text": "10 Cat6A points with suspended ceiling installation, 12U wall rack and managed switch. Estimated total: €1,800–€2,200 (VAT included). Includes Fluke certification for each point."
+        },
+        {
+          "type": "h2",
+          "text": "Additional equipment"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "6U wall rack: €150",
+            "12U wall rack: €250",
+            "24-port managed switch: €180",
+            "Wi-Fi Access Point: €120",
+            "24-port patch panel: €60"
+          ]
+        },
+        {
+          "type": "tip",
+          "text": "🧮 Calculate your exact budget with our free calculator — in 30 seconds!"
+        }
+      ]
+    },
+    "ru": {
+      "title": "Сколько стоит установка сети в офисе в Барселоне (2025)",
+      "metaTitle": "Стоимость установки сети в офисе Барселона 2025 — Гид по ценам",
+      "metaDescription": "Узнайте, сколько стоит прокладка Ethernet в офисе в Барселоне. Реальные цены за точку, за метр и за шкаф.",
+      "excerpt": "Актуальный гид по ценам на установку сети в офисах Барселоны: стоимость за точку, за метр и за шкаф.",
+      "category": "Цены",
+      "tags": [
+        "цена",
+        "офис",
+        "Барселона",
+        "сеть"
+      ],
+      "content": [
+        {
+          "type": "h2",
+          "text": "Сколько стоит установка сети в офисе?"
+        },
+        {
+          "type": "p",
+          "text": "Стоимость установки профессиональной сети в офисе Барселоны зависит от трёх факторов: количество сетевых точек, тип кабеля и способ монтажа. Здесь представлены реальные цены 2025 года."
+        },
+        {
+          "type": "h2",
+          "text": "Цены за сетевую точку (с НДС)"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Cat6 — 95€/точка (небольшие офисы)",
+            "Cat6A — 115€/точка (средние офисы)",
+            "Cat7 — 140€/точка (крупные компании)"
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "Цены по типу монтажа"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Открытый (кабель-канал): 8€/м",
+            "Подвесной потолок: 6€/м",
+            "Существующая штроба: 12€/м",
+            "Новая штроба: 18€/м + 45€/м за штробу"
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "Пример: офис на 10 точек Cat6A"
+        },
+        {
+          "type": "p",
+          "text": "10 точек Cat6A с монтажом в подвесном потолке, настенный шкаф 12U и управляемый коммутатор. Ориентировочный итого: 1800€–2200€ (с НДС). Включена сертификация Fluke."
+        },
+        {
+          "type": "h2",
+          "text": "Дополнительное оборудование"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Настенный шкаф 6U: 150€",
+            "Настенный шкаф 12U: 250€",
+            "Управляемый коммутатор 24 порта: 180€",
+            "Точка доступа Wi-Fi: 120€",
+            "Патч-панель 24 порта: 60€"
+          ]
+        },
+        {
+          "type": "tip",
+          "text": "🧮 Рассчитайте точную стоимость с помощью нашего бесплатного калькулятора — за 30 секунд!"
+        }
+      ]
+    }
+  },
+  {
+    "slug": "fibra-optica-vs-ethernet-que-necesitas",
+    "date": "2025-02-28",
+    "readTime": "5 min",
+    "es": {
+      "title": "Fibra óptica vs Ethernet: ¿qué necesita tu empresa?",
+      "metaTitle": "Fibra óptica vs Ethernet — Diferencias y cuál elegir para tu empresa",
+      "metaDescription": "Comparativa entre fibra óptica y cable Ethernet. Ventajas, costes y cuándo usar cada uno.",
+      "excerpt": "Fibra óptica o Ethernet: ¿cuál es mejor para tu negocio? Comparamos velocidad, coste y casos de uso reales.",
+      "category": "Comparativas",
+      "tags": [
+        "fibra óptica",
+        "ethernet",
+        "comparativa",
+        "empresa"
+      ],
+      "content": [
+        {
+          "type": "h2",
+          "text": "¿Qué diferencia hay entre fibra y Ethernet?"
+        },
+        {
+          "type": "p",
+          "text": "La fibra óptica transmite datos con luz, mientras que el cable Ethernet (cobre) usa señales eléctricas. Ambos tienen ventajas según el escenario."
+        },
+        {
+          "type": "h2",
+          "text": "Ethernet (cobre) — ventajas"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Más económico (cable + conectores)",
+            "Compatible con PoE (alimenta cámaras, APs)",
+            "Más fácil de instalar y reparar",
+            "Ideal para distancias hasta 100m"
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "Fibra óptica — ventajas"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Velocidades de 10–100 Gbps",
+            "Sin interferencias electromagnéticas",
+            "Distancias de hasta 10 km",
+            "Ideal para backbone entre edificios"
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "¿Cuándo usar cada uno?"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Oficina estándar: Ethernet Cat6/Cat6A",
+            "Nave industrial: Ethernet Cat7 (blindado)",
+            "Conexión entre edificios: Fibra óptica",
+            "Data center: Fibra + Ethernet combinados"
+          ]
+        },
+        {
+          "type": "tip",
+          "text": "💡 El 95% de las oficinas en Barcelona solo necesitan Ethernet Cat6A. La fibra se usa para tramos de más de 100m."
+        }
+      ]
+    },
+    "en": {
+      "title": "Fiber optic vs Ethernet: what does your business need?",
+      "metaTitle": "Fiber optic vs Ethernet — Differences and which to choose",
+      "metaDescription": "Comparison between fiber optic and Ethernet cable. Advantages, costs and when to use each.",
+      "excerpt": "Fiber optic or Ethernet: which is better for your business? We compare speed, cost and real use cases.",
+      "category": "Comparisons",
+      "tags": [
+        "fiber optic",
+        "ethernet",
+        "comparison",
+        "business"
+      ],
+      "content": [
+        {
+          "type": "h2",
+          "text": "What is the difference between fiber and Ethernet?"
+        },
+        {
+          "type": "p",
+          "text": "Fiber optic transmits data with light, while Ethernet cable (copper) uses electrical signals. Both have advantages depending on the scenario."
+        },
+        {
+          "type": "h2",
+          "text": "Ethernet (copper) — advantages"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "More affordable (cable + connectors)",
+            "PoE compatible (powers cameras, APs)",
+            "Easier to install and repair",
+            "Ideal for distances up to 100m"
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "Fiber optic — advantages"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Speeds of 10–100 Gbps",
+            "No electromagnetic interference",
+            "Distances up to 10 km",
+            "Ideal for backbone between buildings"
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "When to use each?"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Standard office: Ethernet Cat6/Cat6A",
+            "Industrial warehouse: Ethernet Cat7 (shielded)",
+            "Between buildings: Fiber optic",
+            "Data center: Fiber + Ethernet combined"
+          ]
+        },
+        {
+          "type": "tip",
+          "text": "💡 95% of Barcelona offices only need Ethernet Cat6A. Fiber is for runs over 100m."
+        }
+      ]
+    },
+    "ru": {
+      "title": "Оптоволокно vs Ethernet: что нужно вашему бизнесу?",
+      "metaTitle": "Оптоволокно vs Ethernet — Различия и что выбрать",
+      "metaDescription": "Сравнение оптоволокна и Ethernet-кабеля. Преимущества, стоимость и когда что использовать.",
+      "excerpt": "Оптоволокно или Ethernet: что лучше для бизнеса? Сравниваем скорость, стоимость и реальные сценарии.",
+      "category": "Сравнения",
+      "tags": [
+        "оптоволокно",
+        "ethernet",
+        "сравнение",
+        "бизнес"
+      ],
+      "content": [
+        {
+          "type": "h2",
+          "text": "В чём разница между оптоволокном и Ethernet?"
+        },
+        {
+          "type": "p",
+          "text": "Оптоволокно передаёт данные светом, а Ethernet (медь) — электрическими сигналами. У каждого есть свои преимущества."
+        },
+        {
+          "type": "h2",
+          "text": "Ethernet (медь) — преимущества"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Дешевле (кабель + коннекторы)",
+            "Поддержка PoE (питание камер, точек доступа)",
+            "Проще монтаж и ремонт",
+            "Расстояния до 100м"
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "Оптоволокно — преимущества"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Скорости 10–100 Гбит/с",
+            "Иммунитет к электромагнитным помехам",
+            "Расстояния до 10 км",
+            "Идеально для магистрали между зданиями"
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "Когда что использовать?"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Стандартный офис: Ethernet Cat6/Cat6A",
+            "Промышленное помещение: Ethernet Cat7 (экранированный)",
+            "Между зданиями: Оптоволокно",
+            "Дата-центр: Оптоволокно + Ethernet"
+          ]
+        },
+        {
+          "type": "tip",
+          "text": "💡 95% офисов в Барселоне используют только Ethernet Cat6A. Оптоволокно — для трасс более 100м."
+        }
+      ]
+    }
+  },
+  {
+    "slug": "como-disenar-red-oficina-moderna",
+    "date": "2025-02-10",
+    "readTime": "8 min",
+    "es": {
+      "title": "Cómo diseñar la red de una oficina moderna",
+      "metaTitle": "Diseño de red para oficina moderna — Guía profesional",
+      "metaDescription": "Guía paso a paso para diseñar la red de tu oficina. Topología, equipos, puntos de red y cableado.",
+      "excerpt": "Diseña la red perfecta para tu oficina: topología, equipamiento, cuántos puntos necesitas y dónde colocarlos.",
+      "category": "Guías",
+      "tags": [
+        "diseño de red",
+        "oficina",
+        "topología",
+        "planificación"
+      ],
+      "content": [
+        {
+          "type": "h2",
+          "text": "¿Por qué es importante un buen diseño de red?"
+        },
+        {
+          "type": "p",
+          "text": "Una red mal planificada causa cuellos de botella, zonas sin cobertura y costes de mantenimiento elevados. Un buen diseño garantiza rendimiento, escalabilidad y seguridad."
+        },
+        {
+          "type": "h2",
+          "text": "Paso 1: Evaluar necesidades"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Número de empleados actuales y previstos",
+            "Dispositivos por puesto (PC, teléfono IP, impresora)",
+            "Requisitos especiales (videoconferencia, VoIP, NAS)",
+            "Presupuesto disponible"
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "Paso 2: Topología estrella"
+        },
+        {
+          "type": "p",
+          "text": "La topología estrella es el estándar: todos los dispositivos se conectan a un switch central ubicado en el rack. Esto facilita el diagnóstico y la gestión."
+        },
+        {
+          "type": "h2",
+          "text": "Paso 3: Calcular puntos de red"
+        },
+        {
+          "type": "p",
+          "text": "Regla de oro: 2 puntos por puesto de trabajo + 1 punto por cada zona común (impresora, TV, AP). Para una oficina de 20 personas: ~50 puntos."
+        },
+        {
+          "type": "h2",
+          "text": "Paso 4: Elegir el equipamiento"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Switch gestionable PoE (alimenta APs y teléfonos)",
+            "Rack mural o de suelo según espacio",
+            "Access Points Wi-Fi 6 (1 por cada 150m²)",
+            "UPS para proteger equipos de red"
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "Paso 5: Planificar la escalabilidad"
+        },
+        {
+          "type": "p",
+          "text": "Siempre instala un 30% más de puntos de los que necesitas hoy. Es 5x más barato hacerlo durante la instalación que después."
+        },
+        {
+          "type": "tip",
+          "text": "📐 ¿Necesitas ayuda con el diseño? Ofrecemos consulta gratuita y diseño de red sin compromiso."
+        }
+      ]
+    },
+    "en": {
+      "title": "How to design a modern office network",
+      "metaTitle": "Modern office network design — Professional guide",
+      "metaDescription": "Step-by-step guide to designing your office network. Topology, equipment, network points and cabling.",
+      "excerpt": "Design the perfect network for your office: topology, equipment, how many points you need and where to place them.",
+      "category": "Guides",
+      "tags": [
+        "network design",
+        "office",
+        "topology",
+        "planning"
+      ],
+      "content": [
+        {
+          "type": "h2",
+          "text": "Why is good network design important?"
+        },
+        {
+          "type": "p",
+          "text": "A poorly planned network causes bottlenecks, dead zones and high maintenance costs. Good design ensures performance, scalability and security."
+        },
+        {
+          "type": "h2",
+          "text": "Step 1: Assess needs"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Current and projected number of employees",
+            "Devices per workstation (PC, IP phone, printer)",
+            "Special requirements (video conferencing, VoIP, NAS)",
+            "Available budget"
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "Step 2: Star topology"
+        },
+        {
+          "type": "p",
+          "text": "Star topology is the standard: all devices connect to a central switch in the rack. This simplifies diagnostics and management."
+        },
+        {
+          "type": "h2",
+          "text": "Step 3: Calculate network points"
+        },
+        {
+          "type": "p",
+          "text": "Golden rule: 2 points per workstation + 1 point per common area (printer, TV, AP). For a 20-person office: ~50 points."
+        },
+        {
+          "type": "h2",
+          "text": "Step 4: Choose equipment"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "PoE managed switch (powers APs and phones)",
+            "Wall or floor rack depending on space",
+            "Wi-Fi 6 Access Points (1 per 150m²)",
+            "UPS to protect network equipment"
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "Step 5: Plan for scalability"
+        },
+        {
+          "type": "p",
+          "text": "Always install 30% more points than you need today. It is 5x cheaper to do it during installation than afterwards."
+        },
+        {
+          "type": "tip",
+          "text": "📐 Need help with design? We offer free consultation and no-obligation network design."
+        }
+      ]
+    },
+    "ru": {
+      "title": "Как спроектировать сеть для современного офиса",
+      "metaTitle": "Проектирование сети для офиса — Профессиональное руководство",
+      "metaDescription": "Пошаговое руководство по проектированию офисной сети. Топология, оборудование, точки и кабели.",
+      "excerpt": "Спроектируйте идеальную сеть для офиса: топология, оборудование, сколько точек нужно и где их разместить.",
+      "category": "Руководства",
+      "tags": [
+        "проектирование сети",
+        "офис",
+        "топология",
+        "планирование"
+      ],
+      "content": [
+        {
+          "type": "h2",
+          "text": "Почему важно правильное проектирование сети?"
+        },
+        {
+          "type": "p",
+          "text": "Плохо спланированная сеть вызывает узкие места, мёртвые зоны и высокие затраты на обслуживание. Хороший проект гарантирует производительность, масштабируемость и безопасность."
+        },
+        {
+          "type": "h2",
+          "text": "Шаг 1: Оценка потребностей"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Текущее и планируемое количество сотрудников",
+            "Устройства на рабочем месте (ПК, IP-телефон, принтер)",
+            "Специальные требования (видеоконференции, VoIP, NAS)",
+            "Доступный бюджет"
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "Шаг 2: Топология «звезда»"
+        },
+        {
+          "type": "p",
+          "text": "Топология «звезда» — стандарт: все устройства подключаются к центральному коммутатору в шкафу. Это упрощает диагностику и управление."
+        },
+        {
+          "type": "h2",
+          "text": "Шаг 3: Расчёт сетевых точек"
+        },
+        {
+          "type": "p",
+          "text": "Золотое правило: 2 точки на рабочее место + 1 точка на общую зону (принтер, ТВ, точка доступа). Для офиса на 20 человек: ~50 точек."
+        },
+        {
+          "type": "h2",
+          "text": "Шаг 4: Выбор оборудования"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Управляемый PoE-коммутатор (питает точки доступа и телефоны)",
+            "Настенный или напольный шкаф",
+            "Точки доступа Wi-Fi 6 (1 на 150 м²)",
+            "ИБП для защиты оборудования"
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "Шаг 5: Планирование масштабируемости"
+        },
+        {
+          "type": "p",
+          "text": "Устанавливайте на 30% больше точек, чем нужно сейчас. Это в 5 раз дешевле, чем добавлять потом."
+        },
+        {
+          "type": "tip",
+          "text": "📐 Нужна помощь с проектированием? Предоставляем бесплатную консультацию и проект сети без обязательств."
+        }
+      ]
+    }
+  },
+  {
+    "slug": "como-elegir-instalador-red-barcelona",
+    "date": "2025-01-20",
+    "readTime": "5 min",
+    "es": {
+      "title": "Cómo elegir un instalador de red en Barcelona",
+      "metaTitle": "Cómo elegir instalador de red en Barcelona — 5 criterios clave",
+      "metaDescription": "Guía para elegir el mejor instalador de cable de red en Barcelona. 5 criterios profesionales.",
+      "excerpt": "5 criterios clave para elegir un buen instalador de red en Barcelona y evitar problemas.",
+      "category": "Consejos",
+      "tags": [
+        "instalador",
+        "Barcelona",
+        "elegir",
+        "profesional"
+      ],
+      "content": [
+        {
+          "type": "h2",
+          "text": "¿Por qué importa elegir bien?"
+        },
+        {
+          "type": "p",
+          "text": "Una mala instalación de red causa desconexiones, velocidad baja y costes de reparación. Elegir al profesional correcto es una inversión, no un gasto."
+        },
+        {
+          "type": "h2",
+          "text": "5 criterios para elegir instalador"
+        },
+        {
+          "type": "h3",
+          "text": "1. Certificación y experiencia"
+        },
+        {
+          "type": "p",
+          "text": "Busca instaladores con experiencia demostrable en cableado estructurado. Pide ver proyectos anteriores."
+        },
+        {
+          "type": "h3",
+          "text": "2. Certificación Fluke"
+        },
+        {
+          "type": "p",
+          "text": "Un instalador profesional certifica cada punto con equipo Fluke. Sin certificación, no sabes si tu red funciona al 100%."
+        },
+        {
+          "type": "h3",
+          "text": "3. Garantía por escrito"
+        },
+        {
+          "type": "p",
+          "text": "Exige mínimo 3 años de garantía. Los buenos instaladores ofrecen 5 años."
+        },
+        {
+          "type": "h3",
+          "text": "4. Presupuesto detallado"
+        },
+        {
+          "type": "p",
+          "text": "Un presupuesto profesional desglosa: cable, puntos, materiales, obra y certificación. Desconfía de «precios cerrados»."
+        },
+        {
+          "type": "h3",
+          "text": "5. Respuesta rápida"
+        },
+        {
+          "type": "p",
+          "text": "En Barcelona, un buen instalador visita en 24–48h. Si tarda una semana en contestar, imagina si hay un problema."
+        },
+        {
+          "type": "tip",
+          "text": "✅ En CableCore cumplimos los 5 criterios: certificación Fluke, 5 años de garantía y visita gratuita en 24h."
+        }
+      ]
+    },
+    "en": {
+      "title": "How to choose a network installer in Barcelona",
+      "metaTitle": "How to choose a network installer in Barcelona — 5 key criteria",
+      "metaDescription": "Guide to choosing the best network cable installer in Barcelona. 5 professional criteria.",
+      "excerpt": "5 key criteria for choosing a good network installer in Barcelona and avoiding problems.",
+      "category": "Tips",
+      "tags": [
+        "installer",
+        "Barcelona",
+        "choose",
+        "professional"
+      ],
+      "content": [
+        {
+          "type": "h2",
+          "text": "Why does choosing well matter?"
+        },
+        {
+          "type": "p",
+          "text": "A bad network installation causes disconnections, slow speeds and repair costs. Choosing the right professional is an investment, not an expense."
+        },
+        {
+          "type": "h2",
+          "text": "5 criteria for choosing an installer"
+        },
+        {
+          "type": "h3",
+          "text": "1. Certification and experience"
+        },
+        {
+          "type": "p",
+          "text": "Look for installers with proven structured cabling experience. Ask to see previous projects."
+        },
+        {
+          "type": "h3",
+          "text": "2. Fluke certification"
+        },
+        {
+          "type": "p",
+          "text": "A professional installer certifies each point with Fluke equipment. Without certification, you don't know if your network works at 100%."
+        },
+        {
+          "type": "h3",
+          "text": "3. Written warranty"
+        },
+        {
+          "type": "p",
+          "text": "Demand at least 3 years warranty. Good installers offer 5 years."
+        },
+        {
+          "type": "h3",
+          "text": "4. Detailed quote"
+        },
+        {
+          "type": "p",
+          "text": "A professional quote itemizes: cable, points, materials, labor and certification. Be wary of \"fixed prices\"."
+        },
+        {
+          "type": "h3",
+          "text": "5. Quick response"
+        },
+        {
+          "type": "p",
+          "text": "In Barcelona, a good installer visits within 24–48h. If they take a week to reply, imagine when there's a problem."
+        },
+        {
+          "type": "tip",
+          "text": "✅ At CableCore we meet all 5 criteria: Fluke certification, 5-year warranty and free visit within 24h."
+        }
+      ]
+    },
+    "ru": {
+      "title": "Как выбрать монтажника сетей в Барселоне",
+      "metaTitle": "Как выбрать монтажника сетей в Барселоне — 5 ключевых критериев",
+      "metaDescription": "Руководство по выбору лучшего монтажника сетевого кабеля в Барселоне. 5 профессиональных критериев.",
+      "excerpt": "5 ключевых критериев для выбора надёжного монтажника сетей в Барселоне.",
+      "category": "Советы",
+      "tags": [
+        "монтажник",
+        "Барселона",
+        "выбор",
+        "профессионал"
+      ],
+      "content": [
+        {
+          "type": "h2",
+          "text": "Почему важно выбрать правильно?"
+        },
+        {
+          "type": "p",
+          "text": "Плохой монтаж вызывает обрывы связи, низкую скорость и расходы на ремонт. Выбор правильного специалиста — это инвестиция."
+        },
+        {
+          "type": "h2",
+          "text": "5 критериев выбора монтажника"
+        },
+        {
+          "type": "h3",
+          "text": "1. Сертификация и опыт"
+        },
+        {
+          "type": "p",
+          "text": "Ищите монтажников с подтверждённым опытом в СКС. Попросите показать предыдущие проекты."
+        },
+        {
+          "type": "h3",
+          "text": "2. Сертификация Fluke"
+        },
+        {
+          "type": "p",
+          "text": "Профессионал сертифицирует каждую точку оборудованием Fluke. Без сертификации нельзя быть уверенным в качестве."
+        },
+        {
+          "type": "h3",
+          "text": "3. Гарантия в письменном виде"
+        },
+        {
+          "type": "p",
+          "text": "Требуйте минимум 3 года гарантии. Хорошие монтажники дают 5 лет."
+        },
+        {
+          "type": "h3",
+          "text": "4. Подробная смета"
+        },
+        {
+          "type": "p",
+          "text": "Профессиональная смета расписывает: кабель, точки, материалы, работу и сертификацию."
+        },
+        {
+          "type": "h3",
+          "text": "5. Быстрый отклик"
+        },
+        {
+          "type": "p",
+          "text": "В Барселоне хороший монтажник приезжает за 24-48 часов. Если неделю отвечает — представьте, что будет при проблеме."
+        },
+        {
+          "type": "tip",
+          "text": "✅ CableCore соответствует всем 5 критериям: сертификация Fluke, 5 лет гарантии и бесплатный выезд за 24ч."
+        }
+      ]
+    }
+  },
+  {
+    "slug": "red-para-pyme-guia-completa",
+    "date": "2025-01-05",
+    "readTime": "7 min",
+    "es": {
+      "title": "Red para PYME: guía completa de infraestructura de red",
+      "metaTitle": "Red para PYME — Guía completa de infraestructura de red",
+      "metaDescription": "Todo lo que una PYME necesita saber sobre infraestructura de red: cableado, WiFi, seguridad y equipos.",
+      "excerpt": "Guía completa de red para pequeñas y medianas empresas: qué necesitas, cuánto cuesta y cómo empezar.",
+      "category": "Guías",
+      "tags": [
+        "PYME",
+        "infraestructura",
+        "red empresarial",
+        "guía"
+      ],
+      "content": [
+        {
+          "type": "h2",
+          "text": "¿Qué red necesita una PYME?"
+        },
+        {
+          "type": "p",
+          "text": "Las pequeñas y medianas empresas necesitan una red fiable, segura y escalable. No hace falta gastar una fortuna, pero sí invertir en los componentes correctos."
+        },
+        {
+          "type": "h2",
+          "text": "Componentes esenciales"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Router profesional (no el del operador)",
+            "Switch gestionable PoE",
+            "Cableado Cat6A o superior",
+            "Access Points Wi-Fi 6",
+            "Rack organizado con patch panel",
+            "UPS para proteger equipos"
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "Seguridad básica de red"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Firewall integrado en router",
+            "Red Wi-Fi separada para invitados",
+            "VLANs para segmentar tráfico",
+            "Contraseñas fuertes y WPA3",
+            "Actualizaciones de firmware regulares"
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "Presupuesto orientativo"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "PYME pequeña (5–10 puestos): 1.500€–3.000€",
+            "PYME mediana (10–30 puestos): 3.000€–8.000€",
+            "PYME grande (30–50 puestos): 8.000€–15.000€"
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "Errores comunes en PYMEs"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Usar el router del operador como único equipo",
+            "No separar red de invitados",
+            "Cable de baja calidad",
+            "No planificar el crecimiento",
+            "No tener UPS"
+          ]
+        },
+        {
+          "type": "tip",
+          "text": "🏢 ¿Eres PYME? Te hacemos un diseño de red gratuito. Llámanos o usa WhatsApp."
+        }
+      ]
+    },
+    "en": {
+      "title": "Network for SMEs: complete infrastructure guide",
+      "metaTitle": "Network for SMEs — Complete infrastructure guide",
+      "metaDescription": "Everything an SME needs to know about network infrastructure: cabling, WiFi, security and equipment.",
+      "excerpt": "Complete network guide for small and medium businesses: what you need, how much it costs and how to start.",
+      "category": "Guides",
+      "tags": [
+        "SME",
+        "infrastructure",
+        "business network",
+        "guide"
+      ],
+      "content": [
+        {
+          "type": "h2",
+          "text": "What network does an SME need?"
+        },
+        {
+          "type": "p",
+          "text": "Small and medium businesses need a reliable, secure and scalable network. You don't need to spend a fortune, but you do need to invest in the right components."
+        },
+        {
+          "type": "h2",
+          "text": "Essential components"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Professional router (not the ISP one)",
+            "PoE managed switch",
+            "Cat6A or higher cabling",
+            "Wi-Fi 6 Access Points",
+            "Organized rack with patch panel",
+            "UPS to protect equipment"
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "Basic network security"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Router integrated firewall",
+            "Separate guest Wi-Fi",
+            "VLANs to segment traffic",
+            "Strong passwords and WPA3",
+            "Regular firmware updates"
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "Budget estimates"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Small SME (5–10 workstations): €1,500–€3,000",
+            "Medium SME (10–30 workstations): €3,000–€8,000",
+            "Large SME (30–50 workstations): €8,000–€15,000"
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "Common SME mistakes"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Using the ISP router as the only equipment",
+            "Not separating guest network",
+            "Low-quality cables",
+            "Not planning for growth",
+            "No UPS"
+          ]
+        },
+        {
+          "type": "tip",
+          "text": "🏢 Are you an SME? We do free network design. Call us or use WhatsApp."
+        }
+      ]
+    },
+    "ru": {
+      "title": "Сеть для малого бизнеса: полное руководство по инфраструктуре",
+      "metaTitle": "Сеть для МСБ — Полное руководство по инфраструктуре",
+      "metaDescription": "Всё, что малому бизнесу нужно знать о сетевой инфраструктуре: кабели, WiFi, безопасность и оборудование.",
+      "excerpt": "Полное руководство по сетям для малого и среднего бизнеса: что нужно, сколько стоит и с чего начать.",
+      "category": "Руководства",
+      "tags": [
+        "МСБ",
+        "инфраструктура",
+        "бизнес-сеть",
+        "руководство"
+      ],
+      "content": [
+        {
+          "type": "h2",
+          "text": "Какая сеть нужна малому бизнесу?"
+        },
+        {
+          "type": "p",
+          "text": "Малому и среднему бизнесу нужна надёжная, безопасная и масштабируемая сеть. Не обязательно тратить целое состояние, но нужно вложить в правильные компоненты."
+        },
+        {
+          "type": "h2",
+          "text": "Основные компоненты"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Профессиональный роутер (не от провайдера)",
+            "Управляемый PoE-коммутатор",
+            "Кабель Cat6A или выше",
+            "Точки доступа Wi-Fi 6",
+            "Организованный шкаф с патч-панелью",
+            "ИБП для защиты оборудования"
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "Базовая безопасность сети"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Встроенный файрвол в роутере",
+            "Отдельная Wi-Fi сеть для гостей",
+            "VLAN для сегментации трафика",
+            "Надёжные пароли и WPA3",
+            "Регулярные обновления прошивки"
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "Ориентировочный бюджет"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Малый бизнес (5–10 мест): 1500€–3000€",
+            "Средний бизнес (10–30 мест): 3000€–8000€",
+            "Крупный МСБ (30–50 мест): 8000€–15000€"
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "Типичные ошибки МСБ"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Использование роутера провайдера как единственного оборудования",
+            "Отсутствие гостевой сети",
+            "Дешёвые кабели",
+            "Отсутствие плана роста",
+            "Нет ИБП"
+          ]
+        },
+        {
+          "type": "tip",
+          "text": "🏢 У вас МСБ? Мы делаем бесплатный проект сети. Звоните или пишите в WhatsApp."
+        }
+      ]
+    }
+  },
+  {
+    "slug": "que-es-poe-power-over-ethernet",
+    "date": "2026-03-20",
+    "readTime": "6 min",
+    "es": {
+      "title": "Qué es PoE (Power over Ethernet) y para qué sirve",
+      "metaTitle": "PoE Power over Ethernet: Guía completa | CableCore Barcelona",
+      "metaDescription": "Qué es PoE, tipos (802.3af, at, bt), ventajas y aplicaciones. Alimenta cámaras, APs WiFi y teléfonos IP por el cable de red.",
+      "excerpt": "Aprende cómo PoE permite alimentar dispositivos a través del cable de red, eliminando cables de corriente adicionales.",
+      "category": "Tecnología",
+      "tags": [
+        "PoE",
+        "cámaras IP",
+        "WiFi",
+        "switches"
+      ],
+      "content": [
+        {
+          "type": "p",
+          "text": "Power over Ethernet (PoE) es una tecnología que permite transmitir datos y energía eléctrica simultáneamente a través de un solo cable de red Ethernet. Esto significa que dispositivos como cámaras IP, puntos de acceso WiFi y teléfonos VoIP pueden funcionar con un único cable, sin necesidad de enchufes eléctricos cercanos."
+        },
+        {
+          "type": "h2",
+          "text": "Estándares PoE"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "IEEE 802.3af (PoE): Hasta 15.4W por puerto — ideal para teléfonos IP y cámaras básicas",
+            "IEEE 802.3at (PoE+): Hasta 30W por puerto — para cámaras PTZ y APs WiFi 6",
+            "IEEE 802.3bt (PoE++): Hasta 60-100W por puerto — para pantallas, puntos de acceso WiFi 6E y dispositivos de alta potencia"
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "Ventajas de PoE"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Un solo cable para datos y electricidad",
+            "Instalación más rápida y económica",
+            "No necesitas enchufes cerca de cada dispositivo",
+            "Gestión centralizada desde el switch PoE",
+            "Reinicio remoto de dispositivos"
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "Aplicaciones principales"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Cámaras de videovigilancia IP",
+            "Puntos de acceso WiFi empresariales",
+            "Teléfonos VoIP",
+            "Sistemas de control de acceso",
+            "Sensores IoT y domótica",
+            "Iluminación LED inteligente"
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "Requisitos de cableado para PoE"
+        },
+        {
+          "type": "p",
+          "text": "Para PoE es fundamental utilizar cable de calidad: Cat5e como mínimo, aunque Cat6 o Cat6A es recomendable. Los cables de baja calidad pueden provocar caídas de voltaje, sobrecalentamiento y fallos en los dispositivos."
+        },
+        {
+          "type": "tip",
+          "text": "💡 Si planeas usar PoE en tu oficina, consulta con CableCore. Instalamos switches PoE y cableado preparado para alimentar todos tus dispositivos."
+        }
+      ]
+    },
+    "en": {
+      "title": "What is PoE (Power over Ethernet) and how it works",
+      "metaTitle": "PoE Power over Ethernet: Complete Guide | CableCore Barcelona",
+      "metaDescription": "What is PoE, types (802.3af, at, bt), benefits and applications. Power cameras, WiFi APs and IP phones through network cable.",
+      "excerpt": "Learn how PoE lets you power devices through network cable, eliminating the need for separate power outlets.",
+      "category": "Technology",
+      "tags": [
+        "PoE",
+        "IP cameras",
+        "WiFi",
+        "switches"
+      ],
+      "content": [
+        {
+          "type": "p",
+          "text": "Power over Ethernet (PoE) is a technology that transmits both data and electrical power simultaneously over a single Ethernet cable. This means devices like IP cameras, WiFi access points, and VoIP phones can operate with just one cable, without needing nearby electrical outlets."
+        },
+        {
+          "type": "h2",
+          "text": "PoE Standards"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "IEEE 802.3af (PoE): Up to 15.4W per port — ideal for IP phones and basic cameras",
+            "IEEE 802.3at (PoE+): Up to 30W per port — for PTZ cameras and WiFi 6 APs",
+            "IEEE 802.3bt (PoE++): Up to 60-100W per port — for displays, WiFi 6E APs and high-power devices"
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "Advantages of PoE"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Single cable for data and power",
+            "Faster and cheaper installation",
+            "No need for outlets near each device",
+            "Centralized management from PoE switch",
+            "Remote device reboot capability"
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "Main Applications"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "IP surveillance cameras",
+            "Enterprise WiFi access points",
+            "VoIP phones",
+            "Access control systems",
+            "IoT sensors and home automation",
+            "Smart LED lighting"
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "Cabling Requirements for PoE"
+        },
+        {
+          "type": "p",
+          "text": "For PoE, quality cabling is essential: Cat5e minimum, though Cat6 or Cat6A is recommended. Low-quality cables can cause voltage drops, overheating, and device failures."
+        },
+        {
+          "type": "tip",
+          "text": "💡 Planning to use PoE in your office? Contact CableCore. We install PoE switches and prepared cabling to power all your devices."
+        }
+      ]
+    },
+    "ru": {
+      "title": "Что такое PoE (Power over Ethernet) и как это работает",
+      "metaTitle": "PoE Power over Ethernet: Полное руководство | CableCore Барселона",
+      "metaDescription": "Что такое PoE, типы (802.3af, at, bt), преимущества и применение. Питайте камеры, точки WiFi и IP-телефоны через сетевой кабель.",
+      "excerpt": "Узнайте, как PoE позволяет питать устройства через сетевой кабель, убирая необходимость в отдельных розетках.",
+      "category": "Технологии",
+      "tags": [
+        "PoE",
+        "IP-камеры",
+        "WiFi",
+        "свитчи"
+      ],
+      "content": [
+        {
+          "type": "p",
+          "text": "Power over Ethernet (PoE) — технология одновременной передачи данных и электропитания по одному кабелю Ethernet. Это значит, что IP-камеры, точки доступа WiFi и VoIP-телефоны работают от одного кабеля без необходимости подводить электрику."
+        },
+        {
+          "type": "h2",
+          "text": "Стандарты PoE"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "IEEE 802.3af (PoE): До 15,4 Вт — для IP-телефонов и базовых камер",
+            "IEEE 802.3at (PoE+): До 30 Вт — для PTZ-камер и точек WiFi 6",
+            "IEEE 802.3bt (PoE++): До 60-100 Вт — для мониторов, WiFi 6E и мощных устройств"
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "Преимущества PoE"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Один кабель для данных и питания",
+            "Быстрый и дешёвый монтаж",
+            "Не нужны розетки рядом с устройствами",
+            "Централизованное управление через PoE-свитч",
+            "Удалённая перезагрузка устройств"
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "Основные применения"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "IP-камеры видеонаблюдения",
+            "Корпоративные точки доступа WiFi",
+            "VoIP-телефоны",
+            "Системы контроля доступа",
+            "IoT-датчики и умный дом",
+            "Умное LED-освещение"
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "Требования к кабелю для PoE"
+        },
+        {
+          "type": "p",
+          "text": "Для PoE критически важен качественный кабель: минимум Cat5e, рекомендуется Cat6 или Cat6A. Дешёвые кабели приводят к падению напряжения, перегреву и выходу устройств из строя."
+        },
+        {
+          "type": "tip",
+          "text": "💡 Планируете PoE в офисе? Обратитесь в CableCore — устанавливаем PoE-свитчи и подготовленную кабельную систему."
+        }
+      ]
+    }
+  },
+  {
+    "slug": "guia-wifi-6e-empresas",
+    "date": "2026-03-18",
+    "readTime": "7 min",
+    "es": {
+      "title": "WiFi 6E para empresas: guía completa de implementación",
+      "metaTitle": "WiFi 6E para Empresas: Guía Completa | CableCore Barcelona",
+      "metaDescription": "WiFi 6E en empresas: qué es, ventajas sobre WiFi 6, cableado necesario y cómo implementarlo. Guía profesional.",
+      "excerpt": "Todo lo que necesitas saber sobre WiFi 6E: más velocidad, menos interferencias y cómo preparar tu infraestructura de red.",
+      "category": "WiFi",
+      "tags": [
+        "WiFi 6E",
+        "WiFi empresarial",
+        "access points",
+        "cableado"
+      ],
+      "content": [
+        {
+          "type": "p",
+          "text": "WiFi 6E (802.11ax en la banda de 6 GHz) es la última evolución de la conectividad inalámbrica. Ofrece hasta 9,6 Gbps teóricos, menor latencia y canales más amplios — ideal para empresas que necesitan conexión de alto rendimiento."
+        },
+        {
+          "type": "h2",
+          "text": "WiFi 6E vs WiFi 6: diferencias clave"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Banda de 6 GHz adicional: 1.200 MHz de espectro nuevo sin interferencias",
+            "Canales de 160 MHz: más ancho de banda por dispositivo",
+            "Menor latencia: ideal para videoconferencias y aplicaciones en tiempo real",
+            "Menos concentración: la banda de 6 GHz aún tiene poca congestión",
+            "Retrocompatible con WiFi 6 y WiFi 5"
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "Requisitos de infraestructura"
+        },
+        {
+          "type": "p",
+          "text": "WiFi 6E aprovecha al máximo sus capacidades solo con la infraestructura adecuada. Los puntos de acceso necesitan conexión por cable al backbone de la red:"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Cable Cat6A o superior (para soportar 2.5/5/10 Gbps al AP)",
+            "Switch con puertos multi-gigabit",
+            "PoE+ o PoE++ para alimentar los APs",
+            "Planificación de cobertura con estudio de site survey"
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "Puntos de acceso WiFi 6E recomendados"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Ubiquiti U6 Enterprise: Excelente para PYMES, WiFi 6E tri-banda",
+            "Aruba AP-635: Gama alta empresarial, 2.5 GbE uplink",
+            "Cisco Meraki MR57: Gestión cloud, ideal para entornos corporativos",
+            "TP-Link Omada EAP690E HD: Opción económica con buenas prestaciones"
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "Cuántos APs necesito"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Oficina abierta: 1 AP cada 150-200 m²",
+            "Oficinas con paredes: 1 AP cada 80-120 m²",
+            "Almacén/nave: 1 AP industrial cada 300-500 m²",
+            "Hotel/restaurante: 1 AP cada 4-6 habitaciones o cada 100 m²"
+          ]
+        },
+        {
+          "type": "tip",
+          "text": "📡 CableCore instala puntos de acceso WiFi 6E con cableado Cat6A. Hacemos site survey gratuito para diseñar la cobertura perfecta. ☎ 605 974 605"
+        }
+      ]
+    },
+    "en": {
+      "title": "WiFi 6E for businesses: complete implementation guide",
+      "metaTitle": "WiFi 6E for Businesses: Complete Guide | CableCore Barcelona",
+      "metaDescription": "WiFi 6E in businesses: what it is, advantages over WiFi 6, required cabling and implementation. Professional guide.",
+      "excerpt": "Everything you need to know about WiFi 6E: more speed, less interference, and how to prepare your network infrastructure.",
+      "category": "WiFi",
+      "tags": [
+        "WiFi 6E",
+        "enterprise WiFi",
+        "access points",
+        "cabling"
+      ],
+      "content": [
+        {
+          "type": "p",
+          "text": "WiFi 6E (802.11ax on the 6 GHz band) is the latest evolution in wireless connectivity. It offers up to 9.6 Gbps theoretical speed, lower latency and wider channels — ideal for businesses that need high-performance connections."
+        },
+        {
+          "type": "h2",
+          "text": "WiFi 6E vs WiFi 6: key differences"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Additional 6 GHz band: 1,200 MHz of new interference-free spectrum",
+            "160 MHz channels: more bandwidth per device",
+            "Lower latency: ideal for video calls and real-time applications",
+            "Less congestion: the 6 GHz band is still uncrowded",
+            "Backward compatible with WiFi 6 and WiFi 5"
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "Infrastructure requirements"
+        },
+        {
+          "type": "p",
+          "text": "WiFi 6E only reaches its full potential with proper infrastructure. Access points need wired backbone connections:"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Cat6A or higher cable (to support 2.5/5/10 Gbps to the AP)",
+            "Switch with multi-gigabit ports",
+            "PoE+ or PoE++ to power the APs",
+            "Coverage planning with site survey study"
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "Recommended WiFi 6E Access Points"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Ubiquiti U6 Enterprise: Excellent for SMBs, tri-band WiFi 6E",
+            "Aruba AP-635: Enterprise-grade, 2.5 GbE uplink",
+            "Cisco Meraki MR57: Cloud management, ideal for corporate",
+            "TP-Link Omada EAP690E HD: Budget option with good performance"
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "How many APs do I need"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Open office: 1 AP per 150-200 m²",
+            "Offices with walls: 1 AP per 80-120 m²",
+            "Warehouse: 1 industrial AP per 300-500 m²",
+            "Hotel/restaurant: 1 AP per 4-6 rooms or 100 m²"
+          ]
+        },
+        {
+          "type": "tip",
+          "text": "📡 CableCore installs WiFi 6E access points with Cat6A cabling. We offer free site surveys to design perfect coverage. ☎ 605 974 605"
+        }
+      ]
+    },
+    "ru": {
+      "title": "WiFi 6E для бизнеса: полное руководство по внедрению",
+      "metaTitle": "WiFi 6E для бизнеса: Полное руководство | CableCore Барселона",
+      "metaDescription": "WiFi 6E в бизнесе: что это, преимущества над WiFi 6, требования к кабелям и внедрение. Профессиональный гид.",
+      "excerpt": "Всё о WiFi 6E: больше скорости, меньше помех, и как подготовить сетевую инфраструктуру.",
+      "category": "WiFi",
+      "tags": [
+        "WiFi 6E",
+        "корпоративный WiFi",
+        "точки доступа",
+        "кабельная система"
+      ],
+      "content": [
+        {
+          "type": "p",
+          "text": "WiFi 6E (802.11ax в диапазоне 6 ГГц) — новейшая технология беспроводной связи. Скорость до 9,6 Гбит/с, низкая задержка и широкие каналы — идеально для бизнеса с высокими требованиями к сети."
+        },
+        {
+          "type": "h2",
+          "text": "WiFi 6E vs WiFi 6: ключевые отличия"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Дополнительный диапазон 6 ГГц: 1200 МГц нового спектра без помех",
+            "Каналы 160 МГц: больше пропускной способности на устройство",
+            "Меньшая задержка: для видеозвонков и приложений реального времени",
+            "Меньше загруженности: 6 ГГц пока свободен",
+            "Обратная совместимость с WiFi 6 и WiFi 5"
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "Требования к инфраструктуре"
+        },
+        {
+          "type": "p",
+          "text": "WiFi 6E раскрывается полностью только с правильной инфраструктурой. Точки доступа должны быть подключены кабелем к магистрали:"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Кабель Cat6A или выше (для 2.5/5/10 Гбит/с к точке)",
+            "Свитч с мульти-гигабитными портами",
+            "PoE+ или PoE++ для питания точек",
+            "Планирование покрытия с site survey"
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "Рекомендуемые точки доступа WiFi 6E"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Ubiquiti U6 Enterprise: отлично для МСБ, три диапазона",
+            "Aruba AP-635: корпоративный класс, 2.5 GbE uplink",
+            "Cisco Meraki MR57: облачное управление, для корпораций",
+            "TP-Link Omada EAP690E HD: бюджетный вариант с хорошей производительностью"
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "Сколько точек доступа нужно"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Открытый офис: 1 AP на 150-200 м²",
+            "Офис с перегородками: 1 AP на 80-120 м²",
+            "Склад/ангар: 1 промышленный AP на 300-500 м²",
+            "Отель/ресторан: 1 AP на 4-6 номеров или 100 м²"
+          ]
+        },
+        {
+          "type": "tip",
+          "text": "📡 CableCore устанавливает WiFi 6E с кабелем Cat6A. Бесплатный site survey для идеального покрытия. ☎ 605 974 605"
+        }
+      ]
+    }
+  },
+  {
+    "slug": "cableado-camaras-seguridad-ip",
+    "date": "2026-03-15",
+    "readTime": "6 min",
+    "es": {
+      "title": "Cableado para cámaras de seguridad IP: guía de instalación",
+      "metaTitle": "Cableado Cámaras Seguridad IP: Guía Instalación | CableCore",
+      "metaDescription": "Cómo cablear cámaras de seguridad IP. Cable Cat6, PoE, NVR y mejores prácticas. Guía de instalación profesional.",
+      "excerpt": "Aprende cómo instalar el cableado para un sistema de videovigilancia IP: desde la elección del cable hasta la conexión al NVR.",
+      "category": "Seguridad",
+      "tags": [
+        "CCTV",
+        "cámaras IP",
+        "PoE",
+        "NVR",
+        "videovigilancia"
+      ],
+      "content": [
+        {
+          "type": "p",
+          "text": "Las cámaras de seguridad IP han reemplazado a los sistemas analógicos por su calidad de imagen superior (2K/4K), facilidad de gestión y la posibilidad de usar un solo cable para datos y alimentación gracias a PoE."
+        },
+        {
+          "type": "h2",
+          "text": "Componentes del sistema"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Cámaras IP (interior/exterior, domo/bullet)",
+            "Cable de red Cat6 (recomendado para CCTV)",
+            "Switch PoE con suficientes puertos y potencia",
+            "NVR (grabador) o servidor con software de gestión",
+            "Disco duro para almacenamiento (1-4 TB según cámaras)"
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "Qué cable usar para cámaras IP"
+        },
+        {
+          "type": "p",
+          "text": "Recomendamos Cat6 para instalaciones de CCTV por su capacidad de transmitir datos a alta velocidad en distancias de hasta 100 metros. Para exteriores, usa cable con cubierta PE (polietileno) resistente a la intemperie."
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Interior: Cat6 UTP estándar",
+            "Exterior: Cat6 con funda PE para intemperie",
+            "Enterrado: Cat6 con doble funda o en tubo corrugado",
+            "Distancia máxima: 100 metros por tramo (con PoE)"
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "Cuántas cámaras puedo alimentar con PoE"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Switch PoE 8 puertos (120W): 8 cámaras estándar",
+            "Switch PoE 16 puertos (240W): 16 cámaras o 8 PTZ",
+            "Switch PoE 24 puertos (370W): para grandes instalaciones"
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "Consejos para la instalación"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Planifica antes de cablear: define puntos de cámara en plano",
+            "Usa tubo corrugado en exterior para proteger el cable",
+            "Deja cable extra en cada punto (30-50 cm) para ajustes",
+            "Etiqueta cada cable en ambos extremos",
+            "Testea cada tramo antes de montar las cámaras"
+          ]
+        },
+        {
+          "type": "tip",
+          "text": "📹 CableCore instala sistemas de videovigilancia IP con cableado Cat6 y PoE. Desde 4 cámaras. Presupuesto gratis ☎ 605 974 605"
+        }
+      ]
+    },
+    "en": {
+      "title": "Cabling for IP security cameras: installation guide",
+      "metaTitle": "IP Security Camera Cabling: Installation Guide | CableCore",
+      "metaDescription": "How to wire IP security cameras. Cat6 cable, PoE, NVR and best practices. Professional installation guide.",
+      "excerpt": "Learn how to install cabling for an IP surveillance system: from cable selection to NVR connection.",
+      "category": "Security",
+      "tags": [
+        "CCTV",
+        "IP cameras",
+        "PoE",
+        "NVR",
+        "surveillance"
+      ],
+      "content": [
+        {
+          "type": "p",
+          "text": "IP security cameras have replaced analog systems thanks to superior image quality (2K/4K), easy management, and the ability to use a single cable for data and power through PoE."
+        },
+        {
+          "type": "h2",
+          "text": "System Components"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "IP cameras (indoor/outdoor, dome/bullet)",
+            "Cat6 network cable (recommended for CCTV)",
+            "PoE switch with enough ports and wattage",
+            "NVR (recorder) or server with management software",
+            "Hard drive for storage (1-4 TB depending on cameras)"
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "What cable to use for IP cameras"
+        },
+        {
+          "type": "p",
+          "text": "We recommend Cat6 for CCTV installations due to its high-speed data transmission capability over distances up to 100 meters. For outdoor use, choose cable with PE (polyethylene) jacket for weather resistance."
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Indoor: Standard Cat6 UTP",
+            "Outdoor: Cat6 with PE jacket for weather protection",
+            "Underground: Cat6 with double jacket or in conduit",
+            "Maximum distance: 100 meters per run (with PoE)"
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "How many cameras can PoE power"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "8-port PoE switch (120W): 8 standard cameras",
+            "16-port PoE switch (240W): 16 cameras or 8 PTZ",
+            "24-port PoE switch (370W): for large installations"
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "Installation tips"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Plan before wiring: mark camera positions on floor plan",
+            "Use conduit outdoors to protect cable",
+            "Leave extra cable at each point (30-50 cm) for adjustments",
+            "Label each cable at both ends",
+            "Test each run before mounting cameras"
+          ]
+        },
+        {
+          "type": "tip",
+          "text": "📹 CableCore installs IP surveillance systems with Cat6 cabling and PoE. From 4 cameras. Free quote ☎ 605 974 605"
+        }
+      ]
+    },
+    "ru": {
+      "title": "Кабельная система для IP-камер видеонаблюдения: руководство",
+      "metaTitle": "Кабель для IP-камер видеонаблюдения: Руководство | CableCore",
+      "metaDescription": "Как прокладывать кабель для IP-камер. Cat6, PoE, NVR и лучшие практики монтажа. Профессиональное руководство.",
+      "excerpt": "Узнайте, как установить кабельную систему для IP-видеонаблюдения: от выбора кабеля до подключения NVR.",
+      "category": "Безопасность",
+      "tags": [
+        "видеонаблюдение",
+        "IP-камеры",
+        "PoE",
+        "NVR"
+      ],
+      "content": [
+        {
+          "type": "p",
+          "text": "IP-камеры заменили аналоговые системы благодаря качеству изображения (2K/4K), удобству управления и возможности использовать один кабель для данных и питания через PoE."
+        },
+        {
+          "type": "h2",
+          "text": "Компоненты системы"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "IP-камеры (внутренние/наружные, купольные/цилиндрические)",
+            "Сетевой кабель Cat6 (рекомендуется для CCTV)",
+            "PoE-свитч с достаточным количеством портов",
+            "NVR (видеорегистратор) или сервер",
+            "Жёсткий диск для хранения (1-4 ТБ)"
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "Какой кабель использовать для IP-камер"
+        },
+        {
+          "type": "p",
+          "text": "Рекомендуем Cat6 для видеонаблюдения — поддерживает высокую скорость на расстоянии до 100 м. Для улицы — кабель с оболочкой PE, устойчивой к погодным условиям."
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Внутри помещения: стандартный Cat6 UTP",
+            "На улице: Cat6 с оболочкой PE",
+            "В земле: Cat6 с двойной оболочкой или в гофре",
+            "Максимальное расстояние: 100 м на участок"
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "Сколько камер можно подключить через PoE"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "PoE-свитч 8 портов (120 Вт): 8 обычных камер",
+            "PoE-свитч 16 портов (240 Вт): 16 камер или 8 PTZ",
+            "PoE-свитч 24 порта (370 Вт): для крупных объектов"
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "Советы по монтажу"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Спланируйте точки камер на плане",
+            "Используйте гофру для наружной прокладки",
+            "Оставляйте запас кабеля 30-50 см",
+            "Маркируйте кабели с обоих концов",
+            "Тестируйте каждый участок до монтажа камер"
+          ]
+        },
+        {
+          "type": "tip",
+          "text": "📹 CableCore устанавливает системы IP-видеонаблюдения с Cat6 и PoE. От 4 камер. Бесплатная смета ☎ 605 974 605"
+        }
+      ]
+    }
+  },
+  {
+    "slug": "como-cablear-casa-inteligente",
+    "date": "2026-03-10",
+    "readTime": "7 min",
+    "es": {
+      "title": "Cómo cablear una casa inteligente: guía de infraestructura",
+      "metaTitle": "Cablear Casa Inteligente: Guía Infraestructura | CableCore",
+      "metaDescription": "Guía completa para cablear una smart home. Red Ethernet, WiFi mesh, domótica y automatización del hogar.",
+      "excerpt": "Descubre qué cableado necesitas para una casa inteligente: desde Ethernet para streaming hasta conexiones para domótica.",
+      "category": "Smart Home",
+      "tags": [
+        "smart home",
+        "domótica",
+        "cableado",
+        "WiFi mesh"
+      ],
+      "content": [
+        {
+          "type": "p",
+          "text": "Una casa inteligente necesita una base sólida: una red cableada fiable. WiFi solo no es suficiente para un smart home moderno con múltiples dispositivos, streaming 4K, cámaras y automatización."
+        },
+        {
+          "type": "h2",
+          "text": "Por qué necesitas cable en una smart home"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Estabilidad: el cable nunca pierde señal como el WiFi",
+            "Velocidad: 1-10 Gbps constantes vs WiFi variable",
+            "Latencia: crítica para gaming y videoconferencias",
+            "Backbone para WiFi mesh: los nodos mesh funcionan mejor conectados por cable",
+            "Fiabilidad: dispositivos de seguridad deben ir por cable"
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "Puntos de red recomendados por habitación"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Salón: 2-3 puntos (TV, consola, AP WiFi)",
+            "Despacho/oficina: 2 puntos (PC, impresora)",
+            "Dormitorios: 1-2 puntos (Smart TV, teletrabajo)",
+            "Cocina: 1 punto (electrodomésticos conectados)",
+            "Entrada: 1 punto (cámara, videoportero)",
+            "Zona técnica: panel central con router, switch y NAS"
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "Tecnologías para smart home"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Ethernet Cat6: base de la red, conecta dispositivos fijos",
+            "WiFi 6/6E mesh: cobertura inalámbrica total",
+            "PoE: alimenta cámaras y APs sin enchufes",
+            "Zigbee/Z-Wave: para sensores y dispositivos IoT pequeños",
+            "Cable HDMI/óptico: distribución de vídeo entre habitaciones"
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "Planificación de la instalación"
+        },
+        {
+          "type": "p",
+          "text": "Lo ideal es cablear durante una reforma o construcción nueva. Pero también podemos instalar en viviendas existentes usando canaleta decorativa, falso techo o aprovechando tubos de electricidad existentes."
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Define tus necesidades actuales y futuras",
+            "Ubica el panel central cerca de la entrada de fibra",
+            "Pasa cables con holgura: siempre es mejor tener puntos de más",
+            "Usa Cat6A si quieres preparar la casa para 10 Gbps"
+          ]
+        },
+        {
+          "type": "tip",
+          "text": "🏠 CableCore diseña e instala la infraestructura de red para casas inteligentes en Barcelona. Desde 4 puntos. Presupuesto gratis ☎ 605 974 605"
+        }
+      ]
+    },
+    "en": {
+      "title": "How to wire a smart home: infrastructure guide",
+      "metaTitle": "Smart Home Wiring: Infrastructure Guide | CableCore Barcelona",
+      "metaDescription": "Complete guide to wiring a smart home. Ethernet, WiFi mesh, home automation and network infrastructure.",
+      "excerpt": "Discover what cabling you need for a smart home: from Ethernet for streaming to connections for home automation.",
+      "category": "Smart Home",
+      "tags": [
+        "smart home",
+        "home automation",
+        "cabling",
+        "WiFi mesh"
+      ],
+      "content": [
+        {
+          "type": "p",
+          "text": "A smart home needs a solid foundation: a reliable wired network. WiFi alone is not enough for a modern smart home with multiple devices, 4K streaming, cameras, and automation."
+        },
+        {
+          "type": "h2",
+          "text": "Why you need cable in a smart home"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Stability: cable never drops signal like WiFi",
+            "Speed: constant 1-10 Gbps vs variable WiFi",
+            "Latency: critical for gaming and video calls",
+            "WiFi mesh backbone: mesh nodes work better wired",
+            "Reliability: security devices should always be wired"
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "Recommended network points per room"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Living room: 2-3 points (TV, console, WiFi AP)",
+            "Office: 2 points (PC, printer)",
+            "Bedrooms: 1-2 points (Smart TV, remote work)",
+            "Kitchen: 1 point (connected appliances)",
+            "Entry: 1 point (camera, video intercom)",
+            "Tech area: central panel with router, switch, and NAS"
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "Smart home technologies"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Cat6 Ethernet: network backbone, connects fixed devices",
+            "WiFi 6/6E mesh: total wireless coverage",
+            "PoE: powers cameras and APs without outlets",
+            "Zigbee/Z-Wave: for small IoT sensors",
+            "HDMI/optical cable: video distribution between rooms"
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "Installation planning"
+        },
+        {
+          "type": "p",
+          "text": "Ideally, wire during renovation or new construction. But we can also install in existing homes using decorative trunking, false ceilings, or existing electrical conduits."
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Define current and future needs",
+            "Place central panel near fiber entry point",
+            "Run cables with slack: more points is always better",
+            "Use Cat6A for 10 Gbps future-proofing"
+          ]
+        },
+        {
+          "type": "tip",
+          "text": "🏠 CableCore designs and installs smart home network infrastructure in Barcelona. From 4 points. Free quote ☎ 605 974 605"
+        }
+      ]
+    },
+    "ru": {
+      "title": "Как проложить кабели для умного дома: руководство",
+      "metaTitle": "Кабельная система для умного дома | CableCore Барселона",
+      "metaDescription": "Полное руководство по проводке умного дома. Ethernet, WiFi mesh, домашняя автоматизация и сетевая инфраструктура.",
+      "excerpt": "Узнайте, какой кабель нужен для умного дома: от Ethernet для стриминга до подключений для автоматизации.",
+      "category": "Умный дом",
+      "tags": [
+        "умный дом",
+        "автоматизация",
+        "кабельная система",
+        "WiFi mesh"
+      ],
+      "content": [
+        {
+          "type": "p",
+          "text": "Умному дому нужна надёжная основа — проводная сеть. WiFi один не справится с множеством устройств, 4K-стримингом, камерами и автоматизацией."
+        },
+        {
+          "type": "h2",
+          "text": "Зачем нужен кабель в умном доме"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Стабильность: кабель не теряет сигнал",
+            "Скорость: постоянные 1-10 Гбит/с",
+            "Задержка: критично для игр и видеозвонков",
+            "Основа для WiFi mesh: узлы работают лучше по проводу",
+            "Надёжность: устройства безопасности должны быть проводными"
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "Рекомендуемые точки по комнатам"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Гостиная: 2-3 точки (ТВ, приставка, AP WiFi)",
+            "Кабинет: 2 точки (ПК, принтер)",
+            "Спальни: 1-2 точки (Smart TV, удалённая работа)",
+            "Кухня: 1 точка (умная техника)",
+            "Вход: 1 точка (камера, видеодомофон)",
+            "Техзона: центральный шкаф с роутером, свитчем, NAS"
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "Технологии для умного дома"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Ethernet Cat6: основа сети для стационарных устройств",
+            "WiFi 6/6E mesh: полное беспроводное покрытие",
+            "PoE: питание камер и точек без розеток",
+            "Zigbee/Z-Wave: для мелких IoT-датчиков",
+            "HDMI/оптика: распределение видео между комнатами"
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "Планирование монтажа"
+        },
+        {
+          "type": "p",
+          "text": "Идеально прокладывать кабели при ремонте. Но мы также монтируем в готовых квартирах: используем кабель-каналы, подвесные потолки или существующие электротрубы."
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Определите текущие и будущие потребности",
+            "Разместите шкаф рядом с вводом оптики",
+            "Прокладывайте с запасом — лучше больше точек",
+            "Используйте Cat6A для 10 Гбит/с на будущее"
+          ]
+        },
+        {
+          "type": "tip",
+          "text": "🏠 CableCore проектирует и устанавливает сетевую инфраструктуру для умных домов в Барселоне. От 4 точек. ☎ 605 974 605"
+        }
+      ]
+    }
+  },
+  {
+    "slug": "tendencias-redes-2026",
+    "date": "2026-03-05",
+    "readTime": "5 min",
+    "es": {
+      "title": "Tendencias en redes 2026: lo que viene para empresas y hogares",
+      "metaTitle": "Tendencias Redes 2026 | CableCore Barcelona",
+      "metaDescription": "Las principales tendencias en redes para 2026: WiFi 7, 25GbE, IA en gestión de redes, edge computing y más.",
+      "excerpt": "Las tecnologías de red que marcarán 2026: desde WiFi 7 hasta la gestión de redes con inteligencia artificial.",
+      "category": "Tendencias",
+      "tags": [
+        "WiFi 7",
+        "25GbE",
+        "IA",
+        "edge computing",
+        "tendencias"
+      ],
+      "content": [
+        {
+          "type": "p",
+          "text": "El mundo de las redes evoluciona rápidamente. En 2026, varias tecnologías están transformando cómo conectamos oficinas y hogares. Te contamos las tendencias más importantes y cómo preparar tu infraestructura."
+        },
+        {
+          "type": "h2",
+          "text": "1. WiFi 7 (802.11be)"
+        },
+        {
+          "type": "p",
+          "text": "WiFi 7 ya está llegando al mercado con velocidades de hasta 46 Gbps teóricos, Multi-Link Operation (MLO) que permite usar múltiples bandas simultáneamente, y canales de 320 MHz. La clave: necesitas cableado Cat6A o superior para aprovechar estas velocidades."
+        },
+        {
+          "type": "h2",
+          "text": "2. Ethernet 25 Gbps en oficinas"
+        },
+        {
+          "type": "p",
+          "text": "El estándar 25GbE está bajando de precio y empezando a llegar a oficinas medianas. Con el aumento del tráfico por IA, videoconferencias 4K y cloud computing, 10 Gbps ya se queda corto en algunas empresas."
+        },
+        {
+          "type": "h2",
+          "text": "3. IA en gestión de redes"
+        },
+        {
+          "type": "p",
+          "text": "Herramientas de AIOps pueden detectar problemas en la red antes de que afecten a los usuarios, optimizar el rendimiento automáticamente y predecir necesidades de capacidad."
+        },
+        {
+          "type": "h2",
+          "text": "4. Edge Computing"
+        },
+        {
+          "type": "p",
+          "text": "Más procesamiento se hace en el borde de la red (edge) en lugar del cloud. Esto mejora la latencia para aplicaciones de IA, IoT industrial y automatización. Las empresas necesitan infraestructura de red local más potente."
+        },
+        {
+          "type": "h2",
+          "text": "5. Cableado preparado para el futuro"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Cat6A es ahora el mínimo recomendado para nuevas instalaciones",
+            "Fibra óptica para backbones entre edificios/plantas",
+            "PoE++ para dispositivos cada vez más potentes",
+            "Infraestructura modular para facilitar upgrades"
+          ]
+        },
+        {
+          "type": "tip",
+          "text": "🚀 CableCore instala infraestructura de red preparada para el futuro. Desde Cat6A hasta fibra óptica. Llámanos ☎ 605 974 605"
+        }
+      ]
+    },
+    "en": {
+      "title": "Network trends 2026: what is coming for businesses and homes",
+      "metaTitle": "Network Trends 2026 | CableCore Barcelona",
+      "metaDescription": "Top network trends for 2026: WiFi 7, 25GbE, AI network management, edge computing and more.",
+      "excerpt": "Network technologies shaping 2026: from WiFi 7 to AI-powered network management.",
+      "category": "Trends",
+      "tags": [
+        "WiFi 7",
+        "25GbE",
+        "AI",
+        "edge computing",
+        "trends"
+      ],
+      "content": [
+        {
+          "type": "p",
+          "text": "The networking world is evolving rapidly. In 2026, several technologies are transforming how we connect offices and homes. Here are the most important trends and how to prepare your infrastructure."
+        },
+        {
+          "type": "h2",
+          "text": "1. WiFi 7 (802.11be)"
+        },
+        {
+          "type": "p",
+          "text": "WiFi 7 is hitting the market with theoretical speeds up to 46 Gbps, Multi-Link Operation (MLO) for simultaneous multi-band usage, and 320 MHz channels. The key: you need Cat6A or higher cabling to leverage these speeds."
+        },
+        {
+          "type": "h2",
+          "text": "2. 25 Gbps Ethernet in offices"
+        },
+        {
+          "type": "p",
+          "text": "25GbE is becoming more affordable and reaching mid-sized offices. With growing traffic from AI, 4K video conferencing, and cloud computing, 10 Gbps is already insufficient for some businesses."
+        },
+        {
+          "type": "h2",
+          "text": "3. AI in network management"
+        },
+        {
+          "type": "p",
+          "text": "AIOps tools can detect network issues before they affect users, automatically optimize performance, and predict capacity needs."
+        },
+        {
+          "type": "h2",
+          "text": "4. Edge Computing"
+        },
+        {
+          "type": "p",
+          "text": "More processing happens at the network edge instead of the cloud. This improves latency for AI applications, industrial IoT, and automation. Companies need more powerful local network infrastructure."
+        },
+        {
+          "type": "h2",
+          "text": "5. Future-proof cabling"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Cat6A is now the minimum recommended for new installations",
+            "Fiber optics for backbones between buildings/floors",
+            "PoE++ for increasingly powerful devices",
+            "Modular infrastructure for easy upgrades"
+          ]
+        },
+        {
+          "type": "tip",
+          "text": "🚀 CableCore installs future-ready network infrastructure. From Cat6A to fiber optics. Call us ☎ 605 974 605"
+        }
+      ]
+    },
+    "ru": {
+      "title": "Тренды сетей 2026: что ждёт бизнес и домашние сети",
+      "metaTitle": "Тренды сетей 2026 | CableCore Барселона",
+      "metaDescription": "Главные тренды сетей 2026: WiFi 7, 25GbE, ИИ в управлении сетями, edge computing и многое другое.",
+      "excerpt": "Сетевые технологии, определяющие 2026 год: от WiFi 7 до управления сетями с помощью ИИ.",
+      "category": "Тренды",
+      "tags": [
+        "WiFi 7",
+        "25GbE",
+        "ИИ",
+        "edge computing",
+        "тренды"
+      ],
+      "content": [
+        {
+          "type": "p",
+          "text": "Мир сетей стремительно меняется. В 2026 несколько технологий трансформируют подключение офисов и домов. Расскажем о главных трендах и как подготовить инфраструктуру."
+        },
+        {
+          "type": "h2",
+          "text": "1. WiFi 7 (802.11be)"
+        },
+        {
+          "type": "p",
+          "text": "WiFi 7 выходит на рынок: скорость до 46 Гбит/с, Multi-Link Operation (MLO) для одновременного использования нескольких диапазонов, каналы 320 МГц. Главное: для таких скоростей нужен кабель Cat6A или выше."
+        },
+        {
+          "type": "h2",
+          "text": "2. Ethernet 25 Гбит/с в офисах"
+        },
+        {
+          "type": "p",
+          "text": "25GbE становится доступнее и приходит в средние офисы. С ростом трафика от ИИ, видеозвонков 4K и облачных вычислений, 10 Гбит/с уже не хватает."
+        },
+        {
+          "type": "h2",
+          "text": "3. ИИ в управлении сетями"
+        },
+        {
+          "type": "p",
+          "text": "Инструменты AIOps обнаруживают проблемы до того, как они повлияют на пользователей, автоматически оптимизируют производительность и прогнозируют потребности."
+        },
+        {
+          "type": "h2",
+          "text": "4. Edge Computing"
+        },
+        {
+          "type": "p",
+          "text": "Всё больше обработки происходит на краю сети, а не в облаке. Это улучшает задержку для ИИ, промышленного IoT и автоматизации. Компаниям нужна более мощная локальная инфраструктура."
+        },
+        {
+          "type": "h2",
+          "text": "5. Кабели, готовые к будущему"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Cat6A — теперь минимальная рекомендация для новых объектов",
+            "Оптоволокно для магистралей между зданиями/этажами",
+            "PoE++ для всё более мощных устройств",
+            "Модульная инфраструктура для лёгких апгрейдов"
+          ]
+        },
+        {
+          "type": "tip",
+          "text": "🚀 CableCore устанавливает сетевую инфраструктуру, готовую к будущему. От Cat6A до оптоволокна. ☎ 605 974 605"
+        }
+      ]
+    }
+  }
+]
