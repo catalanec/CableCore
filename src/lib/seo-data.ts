@@ -232,6 +232,30 @@ export const SEO_PAGES: SEOPageConfig[] = [
        ═══════════════════════════════════════════ */
 
     {
+        slug: 'instalacion-red-barcelona',
+        title: 'Instalación de Red en Barcelona | CableCore — Expertos en Redes',
+        h1: 'Instalación de red en Barcelona',
+        h2s: ['Servicios de red en Barcelona', 'Tipos de instalación', 'Preguntas frecuentes'],
+        intro: 'Servicio profesional de instalación de redes en Barcelona y área metropolitana. Cableado estructurado, puntos de red, WiFi empresarial y redes domésticas. Más de 500 instalaciones realizadas con garantía de 5 años.',
+        metaDescription: 'Instalación de red en Barcelona. Cableado estructurado, puntos Ethernet, racks y WiFi profesional. +500 instalaciones. Presupuesto gratis ☎ +34 605 974 605',
+        cta: '¿Necesitas instalar red en Barcelona?',
+        features: [
+            { icon: '🌐', title: 'Todo tipo de redes', text: 'Cableado Cat6, Cat6A, Cat7, fibra óptica, WiFi empresarial y redes IoT para cualquier necesidad.' },
+            { icon: '🏢', title: 'Oficinas y empresas', text: 'Redes completas llave en mano: diseño, cableado, rack, switch, WiFi y configuración.' },
+            { icon: '🏠', title: 'Hogares', text: 'Red Ethernet para teletrabajo, gaming y streaming 4K. Desde 180€ por 2 puntos instalados.' },
+            { icon: '🏭', title: 'Naves industriales', text: 'Cableado industrial con protección IP para fábricas, almacenes y centros logísticos.' },
+            { icon: '📍', title: 'Toda Barcelona', text: 'Cubrimos Barcelona ciudad, Badalona, Hospitalet, Sabadell, Terrassa y todo el área metropolitana.' },
+            { icon: '✅', title: 'Garantía 5 años', text: 'Todas las instalaciones con certificación Fluke y garantía de 5 años en materiales y mano de obra.' },
+        ],
+        faq: [
+            { q: '¿Cuánto cuesta instalar red en Barcelona?', a: 'Desde 95€ por punto Cat6 instalado. Una oficina de 10 puestos desde 1.500€. Pide presupuesto gratis sin compromiso.' },
+            { q: '¿Cuánto tarda una instalación de red?', a: 'Un hogar (4-8 puntos) en 1 día. Oficina mediana (20 puntos) en 2-3 días. Proyectos grandes en 1-2 semanas.' },
+            { q: '¿Trabajáis en toda Barcelona?', a: 'Sí, cubrimos Barcelona ciudad y toda el área metropolitana: Badalona, Hospitalet, Sabadell, Terrassa, Sant Cugat, Mataró y más.' },
+            { q: '¿Qué tipo de cable necesito?', a: 'Cat6 para hogar, Cat6A para oficinas (10 Gbps), Cat7 para industria. Te asesoramos según tus necesidades.' },
+        ],
+    },
+
+    {
         slug: 'instalacion-red-hospitalet',
         title: "Instalación Red L'Hospitalet de Llobregat | CableCore",
         h1: "Instalación de red en L'Hospitalet de Llobregat",
