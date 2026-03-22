@@ -1,0 +1,71 @@
+{
+  "name": "CableCore — Auto Blog Generator",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [{"field": "weeks", "weeksInterval": 1, "triggerAtDay": [1], "triggerAtHour": 9}]
+        }
+      },
+      "id": "trigger",
+      "name": "Every Monday 9AM",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [250, 300]
+    },
+    {
+      "parameters": {
+        "resource": "chat",
+        "model": "gpt-4o-mini",
+        "messages": {
+          "values": [
+            {
+              "content": "You are an expert SEO content writer for CableCore, a network cable installation company in Barcelona, Spain. Your target audience is businesses and homeowners in Barcelona who need ethernet/network cable installation.\n\nGenerate a detailed, SEO-optimized blog article in SPANISH about network installation. The article must:\n1. Be 800-1200 words\n2. Target a specific long-tail keyword related to network installation in Barcelona\n3. Include practical advice and real pricing (Cat6: 95€/punto, Cat6A: 115€/punto, Cat7: 140€/punto)\n4. Include a CTA to contact CableCore or use the calculator at cablecore.es/calculator\n5. Be formatted in HTML with h2, h3, p, ul tags\n6. Include meta title (max 60 chars) and meta description (max 155 chars)\n\nChoose a NEW topic from this list (pick randomly):\n- Cómo preparar tu oficina para fibra óptica\n- Red para coworking: guía completa\n- Instalación de red en reforma integral\n- Cableado para videovigilancia IP\n- Red Wi-Fi mesh vs cableado Ethernet\n- Cuántos puntos de red necesita mi oficina\n- Cableado para teletrabajo profesional\n- Red para clínica dental/médica\n- Instalación de red en local comercial\n- Red para hotel pequeño/hostal\n\nReturn JSON with: {\"title\", \"metaTitle\", \"metaDescription\", \"slug\", \"content\", \"tags\"}",
+              "role": "user"
+            }
+          ]
+        },
+        "options": {
+          "temperature": 0.7,
+          "maxTokens": 2000
+        }
+      },
+      "id": "openai",
+      "name": "Generate Article (OpenAI)",
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.2,
+      "position": [470, 300],
+      "credentials": {
+        "openAiApi": {
+          "id": "REPLACE_WITH_YOUR_OPENAI_CREDENTIAL_ID",
+          "name": "OpenAI CableCore"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.telegram.org/bot{{$env.TELEGRAM_BOT_TOKEN}}/sendMessage",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {"name": "chat_id", "value": "275618298"},
+            {"name": "text", "value": "📝 Nuevo artículo generado para el blog:\n\n{{ $json.message.content }}"},
+            {"name": "parse_mode", "value": "HTML"}
+          ]
+        }
+      },
+      "id": "telegram_notify",
+      "name": "Notify via Telegram",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [690, 300]
+    }
+  ],
+  "connections": {
+    "Every Monday 9AM": {"main": [[{"node": "Generate Article (OpenAI)", "type": "main", "index": 0}]]},
+    "Generate Article (OpenAI)": {"main": [[{"node": "Notify via Telegram", "type": "main", "index": 0}]]}
+  },
+  "settings": {"executionOrder": "v1"},
+  "tags": [{"name": "CableCore"}]
+}

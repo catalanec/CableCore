@@ -1,0 +1,66 @@
+{
+  "name": "CableCore — Google Position Tracker",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [{"field": "days", "daysInterval": 1, "triggerAtHour": 8}]
+        }
+      },
+      "id": "daily_trigger",
+      "name": "Every Day 8AM",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [250, 300]
+    },
+    {
+      "parameters": {
+        "resource": "chat",
+        "model": "gpt-4o-mini",
+        "messages": {
+          "values": [
+            {
+              "content": "I want to track the Google search position for the website cablecore.es for these keywords:\n1. instalación cable de red Barcelona\n2. cableado estructurado Barcelona\n3. instalar red oficina Barcelona\n4. precio punto de red Barcelona\n5. instalador red ethernet Barcelona\n\nPlease provide a summary report with the estimated positions based on your knowledge. Format as a simple text report with emoji indicators:\n🟢 = Top 10\n🟡 = Top 20\n🔴 = Beyond 20\n⚪ = Not found\n\nNote: This is an estimation based on SEO best practices analysis, not real-time data.",
+              "role": "user"
+            }
+          ]
+        }
+      },
+      "id": "openai_check",
+      "name": "Analyze Positions (OpenAI)",
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.2,
+      "position": [470, 300],
+      "credentials": {
+        "openAiApi": {
+          "id": "REPLACE_WITH_YOUR_OPENAI_CREDENTIAL_ID",
+          "name": "OpenAI CableCore"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.telegram.org/bot{{$env.TELEGRAM_BOT_TOKEN}}/sendMessage",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {"name": "chat_id", "value": "275618298"},
+            {"name": "text", "value": "📊 Informe SEO diario CableCore\n\n{{ $json.message.content }}"}
+          ]
+        }
+      },
+      "id": "telegram_report",
+      "name": "Send Report to Telegram",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [690, 300]
+    }
+  ],
+  "connections": {
+    "Every Day 8AM": {"main": [[{"node": "Analyze Positions (OpenAI)", "type": "main", "index": 0}]]},
+    "Analyze Positions (OpenAI)": {"main": [[{"node": "Send Report to Telegram", "type": "main", "index": 0}]]}
+  },
+  "settings": {"executionOrder": "v1"},
+  "tags": [{"name": "CableCore"}]
+}

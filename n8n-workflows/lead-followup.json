@@ -1,0 +1,88 @@
+{
+  "name": "CableCore — Lead Follow-up",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "cablecore-lead",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "id": "webhook",
+      "name": "Webhook (receives leads)",
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2,
+      "position": [250, 300],
+      "webhookId": "cablecore-lead"
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.telegram.org/bot{{$env.TELEGRAM_BOT_TOKEN}}/sendMessage",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {"name": "chat_id", "value": "275618298"},
+            {"name": "text", "value": "🔔 NUEVO LEAD CableCore\n\n👤 {{ $json.body.name }}\n📞 {{ $json.body.phone }}\n📧 {{ $json.body.email }}\n🔧 {{ $json.body.service }}\n💬 {{ $json.body.message }}\n\n⚡ ¡Contacta al cliente en menos de 5 minutos!"},
+            {"name": "parse_mode", "value": "HTML"}
+          ]
+        }
+      },
+      "id": "telegram",
+      "name": "Send to Telegram",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [470, 200]
+    },
+    {
+      "parameters": {
+        "resource": "chat",
+        "model": "gpt-4o-mini",
+        "messages": {
+          "values": [
+            {
+              "content": "Genera un email de seguimiento profesional y personalizado en español para un cliente potencial de CableCore (empresa de instalación de cable de red en Barcelona).\n\nDatos del cliente:\n- Nombre: {{ $json.body.name }}\n- Servicio solicitado: {{ $json.body.service }}\n- Mensaje: {{ $json.body.message }}\n\nEl email debe:\n1. Agradecer la solicitud\n2. Confirmar que revisarán su caso en menos de 24h\n3. Incluir un CTA para llamar al +34 605 974 605\n4. Ser profesional pero cercano\n5. Firmado por 'Equipo CableCore'",
+              "role": "user"
+            }
+          ]
+        }
+      },
+      "id": "openai_email",
+      "name": "Generate Follow-up Email",
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.2,
+      "position": [470, 400],
+      "credentials": {
+        "openAiApi": {
+          "id": "REPLACE_WITH_YOUR_OPENAI_CREDENTIAL_ID",
+          "name": "OpenAI CableCore"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={\"success\": true}"
+      },
+      "id": "respond",
+      "name": "Respond OK",
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.1,
+      "position": [690, 300]
+    }
+  ],
+  "connections": {
+    "Webhook (receives leads)": {
+      "main": [
+        [
+          {"node": "Send to Telegram", "type": "main", "index": 0},
+          {"node": "Generate Follow-up Email", "type": "main", "index": 0}
+        ]
+      ]
+    },
+    "Send to Telegram": {"main": [[{"node": "Respond OK", "type": "main", "index": 0}]]},
+    "Generate Follow-up Email": {"main": [[{"node": "Respond OK", "type": "main", "index": 0}]]}
+  },
+  "settings": {"executionOrder": "v1"},
+  "tags": [{"name": "CableCore"}]
+}
