@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { sendLeadNotification } from '@/lib/email';
+import { notifyNewLead } from '@/lib/telegram';
 
 export async function POST(request: NextRequest) {
     try {
@@ -34,6 +35,16 @@ export async function POST(request: NextRequest) {
 
         // Send email notification to admin
         await sendLeadNotification({
+            name: data.name,
+            phone: data.phone,
+            email: data.email,
+            service: data.service,
+            message: data.message,
+            source: data.source || 'contact_form',
+        });
+
+        // Send Telegram notification (instant)
+        await notifyNewLead({
             name: data.name,
             phone: data.phone,
             email: data.email,

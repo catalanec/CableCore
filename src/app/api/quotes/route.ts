@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { sendQuoteNotification } from '@/lib/email';
+import { notifyNewQuote } from '@/lib/telegram';
 
 export async function POST(request: NextRequest) {
     try {
@@ -78,6 +79,18 @@ export async function POST(request: NextRequest) {
             clientEmail: data.client_email,
             cableType: data.cableType,
             cableMeters: data.cableMeters,
+            networkPoints: data.points,
+            installationType: data.installationType,
+            total: data.total,
+            quoteNumber,
+        });
+
+        // Send Telegram notification (instant)
+        await notifyNewQuote({
+            clientName: data.client_name,
+            clientPhone: data.client_phone,
+            clientEmail: data.client_email,
+            cableType: data.cableType,
             networkPoints: data.points,
             installationType: data.installationType,
             total: data.total,
