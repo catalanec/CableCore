@@ -1,0 +1,178 @@
+{
+  "name": "CableCore — Auto Blog Generator V2 (GitHub Integration)",
+  "nodes": [
+    {
+      "parameters": {
+        "rule": {
+          "interval": [
+            {
+              "field": "weeks",
+              "weeksInterval": 1,
+              "triggerAtDay": [1],
+              "triggerAtHour": 9
+            }
+          ]
+        }
+      },
+      "id": "trigger",
+      "name": "Every Monday 9AM",
+      "type": "n8n-nodes-base.scheduleTrigger",
+      "typeVersion": 1.2,
+      "position": [0, 300]
+    },
+    {
+      "parameters": {
+        "resource": "chat",
+        "model": "gpt-4o",
+        "messages": {
+          "values": [
+            {
+              "content": "You are an expert SEO content writer for CableCore, a network cable installation company in Barcelona. Generate a technical blog article. IT MUST BE STRICTLY IN JSON FORMAT (No markdown code blocks, just raw JSON). The JSON must exactly match this interface:\n\n{\n  \"slug\": \"string\",\n  \"date\": \"YYYY-MM-DD\",\n  \"readTime\": \"X min\",\n  \"es\": { \"title\": \"\", \"metaTitle\": \"\", \"metaDescription\": \"\", \"excerpt\": \"\", \"category\": \"Guías\", \"tags\": [\"red\", \"barcelona\"], \"content\": [ { \"type\": \"h2\", \"text\": \"heading\" }, { \"type\": \"p\", \"text\": \"paragraph\" }, { \"type\": \"ul\", \"items\": [\"list item 1\", \"list item 2\"] } ] },\n  \"en\": { ...same structure but in english... },\n  \"ru\": { ...same structure but in russian... }\n}\n\nTopics to choose strictly from:\n- WiFi 6 vs WiFi 6E para oficinas\n- Cableado estructurado en naves industriales\n- PoE+ (Power over Ethernet) para cámaras de seguridad\n- Certificación de red en Barcelona\n- Rack de servidores doméstico\n\nEnsure valid JSON output.",
+              "role": "user"
+            }
+          ]
+        },
+        "options": {
+          "temperature": 0.5,
+          "maxTokens": 4000
+        }
+      },
+      "id": "openai",
+      "name": "Generate Article (JSON)",
+      "type": "@n8n/n8n-nodes-langchain.openAi",
+      "typeVersion": 1.2,
+      "position": [220, 300]
+    },
+    {
+      "parameters": {
+        "authentication": "accessToken",
+        "resource": "file",
+        "operation": "get",
+        "owner": "catalanec",
+        "repository": "CableCore",
+        "filePath": "src/lib/blog-data.json",
+        "asString": true
+      },
+      "id": "github_get",
+      "name": "Get Existing Blogs (GitHub)",
+      "type": "n8n-nodes-base.github",
+      "typeVersion": 1,
+      "position": [440, 300]
+    },
+    {
+      "parameters": {
+        "jsCode": "const newArticleJson = JSON.parse($items(\"Generate Article (JSON)\")[0].json.message.content);\nconst currentBlogsStr = $items(\"Get Existing Blogs (GitHub)\")[0].json.content;\nconst currentBlogs = JSON.parse(currentBlogsStr);\n\n// Add new article to the top of the array\ncurrentBlogs.unshift(newArticleJson);\n\nreturn [\n  {\n    json: {\n      updatedArrayString: JSON.stringify(currentBlogs, null, 4),\n      articleTitle: newArticleJson.es.title,\n      url: `https://cablecore.es/es/blog/${newArticleJson.slug}`\n    }\n  }\n];"
+      },
+      "id": "code_merge",
+      "name": "Merge Array (Code)",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [660, 300]
+    },
+    {
+      "parameters": {
+        "authentication": "accessToken",
+        "resource": "file",
+        "operation": "edit",
+        "owner": "catalanec",
+        "repository": "CableCore",
+        "filePath": "src/lib/blog-data.json",
+        "fileContent": "={{ $json.updatedArrayString }}",
+        "commitMessage": "=Content: Auto-publish '{{ $json.articleTitle }}'"
+      },
+      "id": "github_edit",
+      "name": "Update File (GitHub)",
+      "type": "n8n-nodes-base.github",
+      "typeVersion": 1,
+      "position": [880, 300]
+    },
+    {
+      "parameters": {
+        "method": "POST",
+        "url": "https://api.telegram.org/bot{{$env.TELEGRAM_BOT_TOKEN}}/sendMessage",
+        "sendBody": true,
+        "bodyParameters": {
+          "parameters": [
+            {
+              "name": "chat_id",
+              "value": "275618298"
+            },
+            {
+              "name": "text",
+              "value": "=✅ Новая статья была успешно сгенерирована и автоматически опубликована на сайте!\n\nНазвание: {{ $json.articleTitle }}\nСсылка: {{ $json.url }}\nСайт обновится через пару минут."
+            },
+            {
+              "name": "parse_mode",
+              "value": "HTML"
+            }
+          ]
+        }
+      },
+      "id": "telegram_notify",
+      "name": "Notify Telegram",
+      "type": "n8n-nodes-base.httpRequest",
+      "typeVersion": 4.2,
+      "position": [1100, 300]
+    }
+  ],
+  "connections": {
+    "Every Monday 9AM": {
+      "main": [
+        [
+          {
+            "node": "Generate Article (JSON)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Generate Article (JSON)": {
+      "main": [
+        [
+          {
+            "node": "Get Existing Blogs (GitHub)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Get Existing Blogs (GitHub)": {
+      "main": [
+        [
+          {
+            "node": "Merge Array (Code)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Merge Array (Code)": {
+      "main": [
+        [
+          {
+            "node": "Update File (GitHub)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Update File (GitHub)": {
+      "main": [
+        [
+          {
+            "node": "Notify Telegram",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  }
+}

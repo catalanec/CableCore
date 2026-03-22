@@ -57,6 +57,29 @@ export async function sendLeadNotification(data: LeadEmailData) {
         </p>
     </div>`;
 
+    const clientHtml = `
+    <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; background: #1a1a1a; color: #fff; padding: 30px; border-radius: 12px;">
+        <div style="text-align: center; margin-bottom: 20px;">
+            <h1 style="color: #C9A84C; margin: 0;">CableCore</h1>
+            <p style="color: #999; font-size: 14px;">Hemos recibido tu solicitud</p>
+        </div>
+        <div style="background: #222; padding: 20px; border-radius: 8px; border-left: 4px solid #C9A84C;">
+            <h2 style="color: #C9A84C; font-size: 16px; margin-top: 0;">Hola ${data.name},</h2>
+            <p>Gracias por contactar con <strong>CableCore</strong>. Hemos recibido tu solicitud correctamente.</p>
+            <p>Nuestro equipo técnico revisará los datos proporcionados y se pondrá en contacto contigo lo antes posible para ayudarte con tu proyecto.</p>
+        </div>
+        <div style="text-align: center; margin-top: 20px;">
+            <p style="color: #ccc;">¿Tu solicitud es urgente?</p>
+            <a href="https://wa.me/34605974605" style="display: inline-block; background: #C9A84C; color: #000; padding: 12px 24px; border-radius: 8px; text-decoration: none; font-weight: bold;">
+                💬 Hablar por WhatsApp
+            </a>
+        </div>
+        <div style="text-align: center; margin-top: 20px; color: #666; font-size: 12px;">
+            <p>CableCore — Instalación profesional de redes y fibra óptica en Barcelona</p>
+            <p>📞 +34 605 974 605 | ✉️ info@cablecore.es</p>
+        </div>
+    </div>`;
+
     try {
         await transporter.sendMail({
             from: `"CableCore" <${process.env.SMTP_USER || 'info@cablecore.es'}>`,
@@ -64,9 +87,19 @@ export async function sendLeadNotification(data: LeadEmailData) {
             subject: `🔔 Nuevo lead: ${data.name} — ${data.service || 'Sin especificar'}`,
             html: adminHtml,
         });
-        console.log('Admin notification email sent');
+
+        if (data.email) {
+            await transporter.sendMail({
+                from: `"CableCore" <${process.env.SMTP_USER || 'info@cablecore.es'}>`,
+                to: data.email,
+                subject: `Hemos recibido tu solicitud — CableCore`,
+                html: clientHtml,
+            });
+        }
+        
+        console.log('Admin notification and client auto-responder emails sent');
     } catch (err) {
-        console.error('Failed to send admin email:', err);
+        console.error('Failed to send lead emails:', err);
     }
 }
 
