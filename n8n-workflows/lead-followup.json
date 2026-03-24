@@ -23,7 +23,7 @@
         "bodyParameters": {
           "parameters": [
             {"name": "chat_id", "value": "275618298"},
-            {"name": "text", "value": "🔔 NUEVO LEAD CableCore\n\n👤 {{ $json.body.name }}\n📞 {{ $json.body.phone }}\n📧 {{ $json.body.email }}\n🔧 {{ $json.body.service }}\n💬 {{ $json.body.message }}\n\n⚡ ¡Contacta al cliente en menos de 5 minutos!"},
+            {"name": "text", "value": "=🔔 NUEVO LEAD CableCore\n\n👤 {{ $json.body.name }}\n📞 {{ $json.body.phone }}\n📧 {{ $json.body.email }}\n🔧 {{ $json.body.service }}\n💬 {{ $json.body.message }}\n\n⚡ ¡Contacta al cliente en menos de 5 minutos!"},
             {"name": "parse_mode", "value": "HTML"}
           ]
         }
@@ -41,7 +41,7 @@
         "messages": {
           "values": [
             {
-              "content": "Genera un email de seguimiento profesional y personalizado en español para un cliente potencial de CableCore (empresa de instalación de cable de red en Barcelona).\n\nDatos del cliente:\n- Nombre: {{ $json.body.name }}\n- Servicio solicitado: {{ $json.body.service }}\n- Mensaje: {{ $json.body.message }}\n\nEl email debe:\n1. Agradecer la solicitud\n2. Confirmar que revisarán su caso en menos de 24h\n3. Incluir un CTA para llamar al +34 605 974 605\n4. Ser profesional pero cercano\n5. Firmado por 'Equipo CableCore'",
+              "content": "=Genera un email de seguimiento profesional y personalizado en español para un cliente potencial de CableCore (empresa de instalación de cable de red en Barcelona).\n\nDatos del cliente:\n- Nombre: {{ $json.body.name }}\n- Servicio solicitado: {{ $json.body.service }}\n- Mensaje: {{ $json.body.message }}\n\nEl email debe:\n1. Agradecer la solicitud\n2. Confirmar que revisarán su caso en menos de 24h\n3. Incluir un CTA para llamar al +34 605 974 605\n4. Ser profesional pero cercano\n5. Firmado por 'Equipo CableCore'",
               "role": "user"
             }
           ]

@@ -50,7 +50,7 @@
         "bodyParameters": {
           "parameters": [
             {"name": "chat_id", "value": "275618298"},
-            {"name": "text", "value": "📝 Nuevo artículo generado para el blog:\n\n{{ $json.message.content }}"},
+            {"name": "text", "value": "=📝 Nuevo artículo generado para el blog:\n\n{{ $json.message.content }}"},
             {"name": "parse_mode", "value": "HTML"}
           ]
         }

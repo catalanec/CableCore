@@ -4,7 +4,13 @@
     {
       "parameters": {
         "rule": {
-          "interval": [{"field": "days", "daysInterval": 1, "triggerAtHour": 8}]
+          "interval": [
+            {
+              "field": "days",
+              "daysInterval": 1,
+              "triggerAtHour": 8
+            }
+          ]
         }
       },
       "id": "daily_trigger",
@@ -15,26 +21,43 @@
     },
     {
       "parameters": {
-        "resource": "chat",
-        "model": "gpt-4o-mini",
-        "messages": {
-          "values": [
-            {
-              "content": "I want to track the Google search position for the website cablecore.es for these keywords:\n1. instalación cable de red Barcelona\n2. cableado estructurado Barcelona\n3. instalar red oficina Barcelona\n4. precio punto de red Barcelona\n5. instalador red ethernet Barcelona\n\nPlease provide a summary report with the estimated positions based on your knowledge. Format as a simple text report with emoji indicators:\n🟢 = Top 10\n🟡 = Top 20\n🔴 = Beyond 20\n⚪ = Not found\n\nNote: This is an estimation based on SEO best practices analysis, not real-time data.",
-              "role": "user"
-            }
-          ]
-        }
+        "text": "I want to track the Google search ranking positions for the website cablecore.es for these keywords:\n1. instalación cable de red Barcelona\n2. cableado estructurado Barcelona\n3. instalar red oficina Barcelona\n4. precio punto de red Barcelona\n5. instalador red ethernet Barcelona\n\nPlease use the SerpAPI search tool to find the exact ranking positions for these keywords (search location: Barcelona, Spain). Do not hallucinate. Actually run the searches. Look through the search results and find where 'cablecore.es' is ranked.\n\nProvide a summary report with the extracted positions. Format as a simple text report with emoji indicators:\n🟢 = Top 10\n🟡 = Top 20\n🔴 = Beyond 20\n⚪ = Not found",
+        "options": {}
       },
-      "id": "openai_check",
-      "name": "Analyze Positions (OpenAI)",
-      "type": "@n8n/n8n-nodes-langchain.openAi",
-      "typeVersion": 1.2,
-      "position": [470, 300],
+      "id": "agent",
+      "name": "AI Agent",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 1.6,
+      "position": [470, 300]
+    },
+    {
+      "parameters": {
+        "model": "gpt-4o",
+        "options": {}
+      },
+      "id": "model",
+      "name": "OpenAI Chat Model",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1,
+      "position": [440, 500],
       "credentials": {
         "openAiApi": {
           "id": "REPLACE_WITH_YOUR_OPENAI_CREDENTIAL_ID",
           "name": "OpenAI CableCore"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "id": "serpapi",
+      "name": "SerpAPI",
+      "type": "@n8n/n8n-nodes-langchain.toolSerpApi",
+      "typeVersion": 1,
+      "position": [620, 500],
+      "credentials": {
+        "serpApiApi": {
+          "id": "REPLACE_WITH_YOUR_SERPAPI_CREDENTIAL",
+          "name": "SerpAPI"
         }
       }
     },
@@ -45,8 +68,14 @@
         "sendBody": true,
         "bodyParameters": {
           "parameters": [
-            {"name": "chat_id", "value": "275618298"},
-            {"name": "text", "value": "📊 Informe SEO diario CableCore\n\n{{ $json.message.content }}"}
+            {
+              "name": "chat_id",
+              "value": "275618298"
+            },
+            {
+              "name": "text",
+              "value": "=📊 Informe SEO diario CableCore\n\n{{ $json.output }}"
+            }
           ]
         }
       },
@@ -54,13 +83,61 @@
       "name": "Send Report to Telegram",
       "type": "n8n-nodes-base.httpRequest",
       "typeVersion": 4.2,
-      "position": [690, 300]
+      "position": [820, 300]
     }
   ],
   "connections": {
-    "Every Day 8AM": {"main": [[{"node": "Analyze Positions (OpenAI)", "type": "main", "index": 0}]]},
-    "Analyze Positions (OpenAI)": {"main": [[{"node": "Send Report to Telegram", "type": "main", "index": 0}]]}
+    "Every Day 8AM": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "AI Agent": {
+      "main": [
+        [
+          {
+            "node": "Send Report to Telegram",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "SerpAPI": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    }
   },
-  "settings": {"executionOrder": "v1"},
-  "tags": [{"name": "CableCore"}]
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "tags": [
+    {
+      "name": "CableCore"
+    }
+  ]
 }

@@ -3,6 +3,7 @@ import { useTranslations, useLocale } from 'next-intl';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import Calculator from '@/components/calculator/Calculator';
+import PinLock from '@/components/calculator/PinLock';
 import { generatePageMetadata } from '@/lib/seo-metadata';
 
 export function generateMetadata({ params }: { params: { locale: string } }): Metadata {
@@ -41,15 +42,17 @@ export default function CalculatorPage() {
             <main className="min-h-screen relative z-10 pt-20">
                 <section className="py-16 lg:py-24">
                     <div className="container-custom">
-                        <div className="text-center max-w-2xl mx-auto mb-12">
-                            <span className="section-label mx-auto">{l.label}</span>
-                            <h1 className="font-heading text-3xl sm:text-4xl lg:text-5xl font-bold mt-5 mb-4">
-                                {l.title}{' '}
-                                <span className="text-gradient-gold">{l.highlight}</span>
-                            </h1>
-                            <p className="text-brand-gold-muted leading-relaxed">{l.subtitle}</p>
-                        </div>
-                        <Calculator locale={locale} />
+                        <PinLock locale={locale}>
+                            <div className="text-center max-w-2xl mx-auto mb-12">
+                                <span className="section-label mx-auto">{l.label}</span>
+                                <h1 className="font-heading text-3xl sm:text-4xl lg:text-5xl font-bold mt-5 mb-4">
+                                    {l.title}{' '}
+                                    <span className="text-gradient-gold">{l.highlight}</span>
+                                </h1>
+                                <p className="text-brand-gold-muted leading-relaxed">{l.subtitle}</p>
+                            </div>
+                            <Calculator locale={locale} />
+                        </PinLock>
                     </div>
                 </section>
             </main>
