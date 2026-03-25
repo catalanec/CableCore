@@ -19,7 +19,17 @@ export default function PinLock({ children, locale }: { children: React.ReactNod
   useEffect(() => {
     setIsMounted(true);
     const saved = localStorage.getItem("cablecore_calc_unlocked");
-    if (saved === "0205") setIsUnlocked(true);
+    const urlParams = new URLSearchParams(window.location.search);
+    const token = urlParams.get("token");
+
+    if (saved === "0205") {
+      setIsUnlocked(true);
+    } else if (token === "cablecore_pro") {
+      localStorage.setItem("cablecore_calc_unlocked", "0205");
+      setIsUnlocked(true);
+      // Clean up the URL so the token isn't visible
+      window.history.replaceState({}, document.title, window.location.pathname);
+    }
   }, []);
 
   const handleSubmit = (e: React.FormEvent) => {
