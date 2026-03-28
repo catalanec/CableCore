@@ -74,7 +74,7 @@
             },
             {
               "name": "text",
-              "value": "=📊 Informe SEO diario CableCore\n\n{{ $json.output }}"
+              "value": "=📊 Informe SEO diario CableCore\n\n{{ $json.output || $json.text || $json.message?.content || '⚠️ Отчет пуст: агент не вернул данные. Проверьте лимиты SerpAPI или выводы ноды в N8N.' }}"
             }
           ]
         }
