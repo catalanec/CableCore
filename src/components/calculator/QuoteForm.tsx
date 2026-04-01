@@ -190,10 +190,15 @@ export default function QuoteForm({ locale, calculationData }: QuoteFormProps) {
                     notes,
                 }),
             });
-            if (res.ok) setSaved(true);
-        } catch {
-            // Silently fail if Supabase not configured yet
-            setSaved(true);
+            if (res.ok) {
+                setSaved(true);
+            } else {
+                const data = await res.json();
+                alert('No se pudo guardar: ' + (data.error || 'Error desconocido'));
+            }
+        } catch (err) {
+            alert('Error de red al guardar en CRM');
+            console.error(err);
         }
     };
 
