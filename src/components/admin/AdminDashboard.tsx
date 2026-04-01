@@ -596,7 +596,7 @@ export default function AdminDashboard({ initialQuotes, initialLeads, initialMat
                                     <div className="p-3 bg-black/20 rounded-lg space-y-2 text-gray-300">
                                         <div className="flex justify-between border-b border-white/5 pb-1"><span>Materiales</span> <span>{Number(selectedQuote.materials_cost).toFixed(2)}€</span></div>
                                         <div className="flex justify-between border-b border-white/5 pb-1"><span>Cable</span> <span>{Number(selectedQuote.cable_cost).toFixed(2)}€</span></div>
-                                        <div className="flex justify-between border-b border-white/5 pb-1"><span>Mano de Obra</span> <span>{Number(selectedQuote.work_cost).toFixed(2)}€</span></div>
+                                        <div className="flex justify-between border-b border-white/5 pb-1"><span>Mano de Obra (Técnicos)</span> <span>{Number(selectedQuote.work_cost).toFixed(2)}€</span></div>
                                         <div className="flex justify-between text-white font-bold text-lg pt-2 border-t border-brand-gold/30">
                                             <span>TOTAL EUR</span> <span className="text-brand-gold">{Number(selectedQuote.total).toFixed(2)}€</span>
                                         </div>
@@ -623,6 +623,16 @@ export default function AdminDashboard({ initialQuotes, initialLeads, initialMat
                         </div>
                         <div className="p-6 border-t border-border-subtle bg-black/20 flex justify-end gap-4">
                             <button onClick={() => {
+                                const installTitles: Record<string, string> = {
+                                    external: 'Superficial',
+                                    ceiling: 'Falso techo',
+                                    existing_wall: 'Tubos existentes',
+                                    new_wall: 'Regata nueva',
+                                    industrial: 'Nave industrial',
+                                    trays: 'Bandejas'
+                                };
+                                const instName = installTitles[selectedQuote.installation_type] || selectedQuote.installation_type;
+
                                 const pdfData: QuotePDFData = {
                                     quoteNumber: selectedQuote.id.split('-')[0].toUpperCase(),
                                     date: new Date(selectedQuote.created_at).toLocaleDateString(),
@@ -634,9 +644,9 @@ export default function AdminDashboard({ initialQuotes, initialLeads, initialMat
                                     },
                                     items: [
                                         { description: 'Cableado ' + selectedQuote.cable_type, quantity: selectedQuote.cable_meters + 'm', unitPrice: '-', total: Number(selectedQuote.cable_cost).toFixed(2) + '€' },
-                                        { description: 'Puntos de Red', quantity: selectedQuote.network_points, unitPrice: '-', total: Number(selectedQuote.points_cost).toFixed(2) + '€' },
-                                        { description: 'Instalación ' + selectedQuote.installation_type, quantity: selectedQuote.installation_meters + 'm', unitPrice: '-', total: Number(selectedQuote.installation_cost).toFixed(2) + '€' },
-                                        { description: 'Mano de Obra', quantity: '1', unitPrice: '-', total: Number(selectedQuote.work_cost).toFixed(2) + '€' }
+                                        { description: 'Puntos de Red', quantity: selectedQuote.network_points.toString(), unitPrice: '-', total: Number(selectedQuote.points_cost).toFixed(2) + '€' },
+                                        { description: 'Tendido de cable (' + instName + ')', quantity: selectedQuote.cable_meters + 'm', unitPrice: '-', total: Number(selectedQuote.installation_cost).toFixed(2) + '€' },
+                                        { description: 'Mano de obra (operarios y técnicos)', quantity: 'Global', unitPrice: '-', total: Number(selectedQuote.work_cost).toFixed(2) + '€' }
                                     ],
                                     subtotal: Number(selectedQuote.subtotal).toFixed(2) + '€',
                                     iva: Number(selectedQuote.iva).toFixed(2) + '€',

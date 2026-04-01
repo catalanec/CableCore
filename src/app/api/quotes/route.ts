@@ -58,7 +58,7 @@ export async function POST(request: NextRequest) {
 
             if (error) {
                 console.error('Supabase error:', error);
-                return NextResponse.json({ error: error.message || error.details || 'Database error', raw: error }, { status: 500 });
+                return NextResponse.json({ error: 'Database error' }, { status: 500 });
             }
 
             const { error: leadError } = await supabase.from('leads').insert({
