@@ -3,20 +3,24 @@ import { NextResponse } from 'next/server';
 export const maxDuration = 60; // Allow function to run up to 60 seconds (critical for LLM generation)
 export const dynamic = 'force-dynamic';
 
-function sendTelegramMessage(message: string) {
+async function sendTelegramMessage(message: string) {
     const BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
     const CHAT_ID = process.env.TELEGRAM_CHAT_ID;
     if (!BOT_TOKEN || !CHAT_ID) return;
 
-    fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-            chat_id: CHAT_ID,
-            text: message,
-            parse_mode: 'HTML',
-        }),
-    }).catch(console.error);
+    try {
+        await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                chat_id: CHAT_ID,
+                text: message,
+                parse_mode: 'HTML',
+            }),
+        });
+    } catch (e) {
+        console.error('Failed to send telegram message', e);
+    }
 }
 
 export async function GET(request: Request) {
@@ -34,7 +38,7 @@ export async function GET(request: Request) {
     const GITHUB_FILE_PATH = 'src/lib/blog-data.json';
 
     if (!OPENAI_API_KEY || !GITHUB_TOKEN) {
-        sendTelegramMessage(`⚠️ <b>Error (Blog Agent):</b> Faltan variables de entorno (OPENAI_API_KEY o GITHUB_TOKEN) en Vercel.`);
+        await sendTelegramMessage(`⚠️ <b>Error (Blog Agent):</b> Faltan variables de entorno (OPENAI_API_KEY o GITHUB_TOKEN) en Vercel.`);
         return NextResponse.json({ error: 'Missing environment variables' }, { status: 500 });
     }
 
@@ -145,7 +149,7 @@ Generate a deep, professional tech blog post translated accurately into 3 langua
         const articleUrl = `https://cablecore.es/es/blog/${newArticle.slug}`;
 
         // 6. Notify success
-        sendTelegramMessage(
+        await sendTelegramMessage(
             `🚀 <b>¡Nueva publicación en el Blog! (Auto-Agent)</b>\n\n` +
             `📝 <b>Tema:</b> ${newArticle.es.title}\n` +
             `🔗 <b>Enlace:</b> <a href="${articleUrl}">${articleUrl}</a>\n\n` +
@@ -155,7 +159,7 @@ Generate a deep, professional tech blog post translated accurately into 3 langua
         return NextResponse.json({ success: true, slug: newArticle.slug });
 
     } catch (error: any) {
-        sendTelegramMessage(`❌ <b>Error (Blog Agent):</b> ${error.message}`);
+        await sendTelegramMessage(`❌ <b>Error (Blog Agent):</b> ${error.message}`);
         return NextResponse.json({ error: error.message }, { status: 500 });
     }
 }
