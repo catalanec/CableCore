@@ -36,6 +36,8 @@ export default function AdminDashboard({ initialQuotes, initialLeads, initialMat
     const [searchTerm, setSearchTerm] = useState('');
     const [selectedQuote, setSelectedQuote] = useState<any>(null);
     const [selectedLead, setSelectedLead] = useState<any>(null);
+    const [showAddMaterial, setShowAddMaterial] = useState(false);
+    const [newMat, setNewMat] = useState({ name: '', category: 'cable', unit: 'm', cost_price: 0, sell_price: 0, stock: 0, min_stock: 5 });
     
     // Convert to local states to allow optimistic UI updates (but server actions will revalidate props too)
     const [quotes, setQuotes] = useState(initialQuotes);
@@ -431,21 +433,7 @@ export default function AdminDashboard({ initialQuotes, initialLeads, initialMat
             )}
 
             {/* ═══════ MATERIALS ═══════ */}
-            {activeTab === 'materials' && (() => {
-                const [showAddModal, setShowAddModal] = useState(false);
-                const [newMat, setNewMat] = useState({ name: '', category: 'cable', unit: 'm', cost_price: 0, sell_price: 0, stock: 0, min_stock: 5 });
-                const categories = ['cable', 'conector', 'herramienta', 'rack', 'canaleta', 'tubo', 'otro'];
-                const units = ['m', 'ud', 'rollo', 'caja', 'kg'];
-
-                const handleAddMaterial = async () => {
-                    if (!newMat.name.trim()) return;
-                    await addMaterial(newMat);
-                    setMaterials([...materials, { ...newMat, id: 'temp-' + Date.now(), stock: newMat.stock }]);
-                    setNewMat({ name: '', category: 'cable', unit: 'm', cost_price: 0, sell_price: 0, stock: 0, min_stock: 5 });
-                    setShowAddModal(false);
-                };
-
-                return (
+            {activeTab === 'materials' && (
                 <div className="space-y-6">
                     {/* Summary cards */}
                     <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
@@ -484,7 +472,7 @@ export default function AdminDashboard({ initialQuotes, initialLeads, initialMat
                         <div className="p-4 border-b border-border-subtle flex items-center justify-between">
                             <h3 className="font-heading font-semibold text-white">Inventario de Materiales</h3>
                             <button
-                                onClick={() => setShowAddModal(true)}
+                                onClick={() => setShowAddMaterial(true)}
                                 className="px-4 py-2 bg-brand-gold text-black rounded-lg text-sm font-bold hover:bg-brand-gold/90 transition-colors"
                             >
                                 + Añadir Material
@@ -573,8 +561,8 @@ export default function AdminDashboard({ initialQuotes, initialLeads, initialMat
                     </div>
 
                     {/* Add Material Modal */}
-                    {showAddModal && (
-                        <div className="fixed inset-0 bg-black/70 z-50 flex items-center justify-center p-4" onClick={() => setShowAddModal(false)}>
+                    {showAddMaterial && (
+                        <div className="fixed inset-0 bg-black/70 z-50 flex items-center justify-center p-4" onClick={() => setShowAddMaterial(false)}>
                             <div className="bg-surface-card border border-border-subtle rounded-xl w-full max-w-lg p-6" onClick={e => e.stopPropagation()}>
                                 <h3 className="font-heading text-xl font-bold text-white mb-6">📦 Añadir Material</h3>
                                 <div className="space-y-4">
@@ -596,7 +584,7 @@ export default function AdminDashboard({ initialQuotes, initialLeads, initialMat
                                                 onChange={e => setNewMat({ ...newMat, category: e.target.value })}
                                                 className="w-full bg-brand-dark border border-border-subtle rounded-lg p-3 text-white focus:outline-none focus:border-brand-gold/50"
                                             >
-                                                {categories.map(c => <option key={c} value={c}>{c.charAt(0).toUpperCase() + c.slice(1)}</option>)}
+                                                {['cable', 'conector', 'herramienta', 'rack', 'canaleta', 'tubo', 'otro'].map(c => <option key={c} value={c}>{c.charAt(0).toUpperCase() + c.slice(1)}</option>)}
                                             </select>
                                         </div>
                                         <div>
@@ -606,7 +594,7 @@ export default function AdminDashboard({ initialQuotes, initialLeads, initialMat
                                                 onChange={e => setNewMat({ ...newMat, unit: e.target.value })}
                                                 className="w-full bg-brand-dark border border-border-subtle rounded-lg p-3 text-white focus:outline-none focus:border-brand-gold/50"
                                             >
-                                                {units.map(u => <option key={u} value={u}>{u}</option>)}
+                                                {['m', 'ud', 'rollo', 'caja', 'kg'].map(u => <option key={u} value={u}>{u}</option>)}
                                             </select>
                                         </div>
                                     </div>
@@ -663,14 +651,19 @@ export default function AdminDashboard({ initialQuotes, initialLeads, initialMat
                                 </div>
                                 <div className="flex justify-end gap-3 mt-6">
                                     <button
-                                        onClick={() => setShowAddModal(false)}
+                                        onClick={() => setShowAddMaterial(false)}
                                         className="px-4 py-2 border border-border-subtle rounded-lg text-brand-gold-muted hover:text-white transition-colors"
                                     >
                                         Cancelar
                                     </button>
                                     <button
-                                        onClick={handleAddMaterial}
-                                        disabled={!newMat.name.trim()}
+                                        onClick={async () => {
+                                            if (!newMat.name.trim()) return;
+                                            await addMaterial(newMat);
+                                            setMaterials([...materials, { ...newMat, id: 'temp-' + Date.now(), stock: newMat.stock }]);
+                                            setNewMat({ name: '', category: 'cable', unit: 'm', cost_price: 0, sell_price: 0, stock: 0, min_stock: 5 });
+                                            setShowAddMaterial(false);
+                                        }}
                                         className="px-6 py-2 bg-brand-gold text-black rounded-lg font-bold hover:bg-brand-gold/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
                                     >
                                         Guardar Material
@@ -680,8 +673,7 @@ export default function AdminDashboard({ initialQuotes, initialLeads, initialMat
                         </div>
                     )}
                 </div>
-                );
-            })()}
+            )}
 
             {/* ═══════ PROJECTS ═══════ */}
             {activeTab === 'projects' && (
