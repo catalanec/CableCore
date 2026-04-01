@@ -4,6 +4,7 @@
 -- ===================
 -- QUOTES TABLE
 -- ===================
+DROP TABLE IF EXISTS quotes CASCADE;
 CREATE TABLE IF NOT EXISTS quotes (
   id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
   created_at TIMESTAMPTZ DEFAULT NOW(),
@@ -60,6 +61,7 @@ CREATE TABLE IF NOT EXISTS quotes (
 -- ===================
 -- LEADS TABLE
 -- ===================
+DROP TABLE IF EXISTS leads CASCADE;
 CREATE TABLE IF NOT EXISTS leads (
   id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
   created_at TIMESTAMPTZ DEFAULT NOW(),
@@ -77,6 +79,7 @@ CREATE TABLE IF NOT EXISTS leads (
 -- ===================
 -- MATERIALS TABLE
 -- ===================
+DROP TABLE IF EXISTS materials CASCADE;
 CREATE TABLE IF NOT EXISTS materials (
   id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
   name TEXT NOT NULL,
@@ -91,6 +94,7 @@ CREATE TABLE IF NOT EXISTS materials (
 -- ===================
 -- PROJECTS TABLE
 -- ===================
+DROP TABLE IF EXISTS projects CASCADE;
 CREATE TABLE IF NOT EXISTS projects (
   id UUID DEFAULT gen_random_uuid() PRIMARY KEY,
   created_at TIMESTAMPTZ DEFAULT NOW(),
@@ -115,13 +119,24 @@ ALTER TABLE materials ENABLE ROW LEVEL SECURITY;
 ALTER TABLE projects ENABLE ROW LEVEL SECURITY;
 
 -- Allow authenticated users full access
+DROP POLICY IF EXISTS "auth_quotes" ON quotes;
 CREATE POLICY "auth_quotes" ON quotes FOR ALL USING (auth.role() = 'authenticated');
+
+DROP POLICY IF EXISTS "auth_leads" ON leads;
 CREATE POLICY "auth_leads" ON leads FOR ALL USING (auth.role() = 'authenticated');
+
+DROP POLICY IF EXISTS "auth_materials" ON materials;
 CREATE POLICY "auth_materials" ON materials FOR ALL USING (auth.role() = 'authenticated');
+
+DROP POLICY IF EXISTS "auth_projects" ON projects;
 CREATE POLICY "auth_projects" ON projects FOR ALL USING (auth.role() = 'authenticated');
 
+
 -- Allow anonymous inserts for contact form and calculator
+DROP POLICY IF EXISTS "anon_insert_leads" ON leads;
 CREATE POLICY "anon_insert_leads" ON leads FOR INSERT WITH CHECK (true);
+
+DROP POLICY IF EXISTS "anon_insert_quotes" ON quotes;
 CREATE POLICY "anon_insert_quotes" ON quotes FOR INSERT WITH CHECK (true);
 
 -- Indexes

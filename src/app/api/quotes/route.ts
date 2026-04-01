@@ -58,11 +58,10 @@ export async function POST(request: NextRequest) {
 
             if (error) {
                 console.error('Supabase error:', error);
-                return NextResponse.json({ error: 'Database error' }, { status: 500 });
+                return NextResponse.json({ error: error.message || error.details || 'Database error', raw: error }, { status: 500 });
             }
 
-            // Also save lead
-            await supabase.from('leads').insert({
+            const { error: leadError } = await supabase.from('leads').insert({
                 name: data.client_name,
                 phone: data.client_phone,
                 email: data.client_email,
@@ -70,6 +69,9 @@ export async function POST(request: NextRequest) {
                 source: 'calculator',
                 status: 'new',
             });
+            if (leadError) {
+                console.error('Supabase lead error:', leadError);
+            }
         }
 
         // Send email notifications (admin + client)
