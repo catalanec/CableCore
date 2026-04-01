@@ -123,7 +123,7 @@ Generate a deep, professional tech blog post translated accurately into 3 langua
 
         // 4. Prepend to current blogs
         currentBlogs.unshift(newArticle);
-        const updatedBlogsStr = JSON.stringify(currentBlogs, null, 2) + '\\n';
+        const updatedBlogsStr = JSON.stringify(currentBlogs, null, 2) + '\n';
         const updatedContentBase64 = Buffer.from(updatedBlogsStr).toString('base64');
 
         // 5. Commit to GitHub
