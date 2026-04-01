@@ -3,7 +3,11 @@ import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import AdminDashboard from '@/components/admin/AdminDashboard';
 
-export default function AdminPage() {
+import { createClient } from '@supabase/supabase-js';
+
+export const dynamic = 'force-dynamic';
+
+export default async function AdminPage() {
     const locale = useLocale();
 
     const labels: Record<string, { title: string; highlight: string; subtitle: string; label: string }> = {
@@ -29,6 +33,30 @@ export default function AdminPage() {
 
     const l = labels[locale] || labels.es;
 
+    let quotes: any[] = [];
+    let leads: any[] = [];
+    let materials: any[] = [];
+    let projects: any[] = [];
+
+    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+    const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+
+    if (supabaseUrl && supabaseKey) {
+        const supabase = createClient(supabaseUrl, supabaseKey);
+        
+        const [qRes, lRes, mRes, pRes] = await Promise.all([
+            supabase.from('quotes').select('*').order('created_at', { ascending: false }),
+            supabase.from('leads').select('*').order('created_at', { ascending: false }),
+            supabase.from('materials').select('*').order('name', { ascending: true }),
+            supabase.from('projects').select('*').order('created_at', { ascending: false })
+        ]);
+
+        quotes = qRes.data || [];
+        leads = lRes.data || [];
+        materials = mRes.data || [];
+        projects = pRes.data || [];
+    }
+
     return (
         <>
             <Header />
@@ -43,7 +71,12 @@ export default function AdminPage() {
                             </h1>
                             <p className="text-brand-gold-muted leading-relaxed">{l.subtitle}</p>
                         </div>
-                        <AdminDashboard />
+                        <AdminDashboard 
+                            initialQuotes={quotes} 
+                            initialLeads={leads} 
+                            initialMaterials={materials} 
+                            initialProjects={projects} 
+                        />
                     </div>
                 </section>
             </main>
