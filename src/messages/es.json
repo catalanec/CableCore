@@ -18,7 +18,7 @@
     "badge": "Barcelona y alrededores",
     "title": "Instalación profesional de",
     "titleHighlight": "cableado de red en Barcelona",
-    "subtitle": "Especialistas en redes Ethernet Cat6, Cat6A y Cat7 para hogares, oficinas y negocios. Soluciones a medida con garantía total.",
+    "subtitle": "Especialistas en redes corporativas LAN / WLAN (Wi-Fi), cableado estructurado Cat6, Cat6A y Cat7 para hogares, oficinas y negocios. Soluciones a medida con certificación Fluke.",
     "cta": "Solicitar Presupuesto",
     "ctaWhatsapp": "Contactar por WhatsApp",
     "stats": {
@@ -49,7 +49,7 @@
         "Cableado estructurado certificado",
         "Racks y patch panels",
         "VoIP y telefonía IP",
-        "Redes segmentadas (VLAN)"
+        "Redes segmentadas (VLAN) y WLAN corporativo"
       ]
     },
     "retail": {
@@ -69,7 +69,7 @@
         "Fibra óptica interior",
         "Salas de servidores",
         "Redundancia y failover",
-        "Certificación Fluke"
+        "Certificación oficial Fluke Networks"
       ]
     }
   },
@@ -267,7 +267,7 @@
       },
       {
         "title": "Certificación y pruebas",
-        "desc": "Certificamos cada punto de red con equipo Fluke. Verificamos velocidad, continuidad y cumplimiento de estándares."
+        "desc": "Certificamos cada punto de red con analizadores de cableado Fluke Networks. Verificamos velocidad, continuidad y cumplimiento de normativas ISO/TIA."
       },
       {
         "title": "Entrega y soporte",
