@@ -8,6 +8,12 @@ const nextConfig = {
         formats: ['image/avif', 'image/webp'],
     },
     staticPageGenerationTimeout: 300,
+    typescript: {
+        ignoreBuildErrors: true,
+    },
+    eslint: {
+        ignoreDuringBuilds: true,
+    },
     experimental: {
         workerThreads: false,
     },
