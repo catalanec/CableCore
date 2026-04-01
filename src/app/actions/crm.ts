@@ -68,3 +68,56 @@ export async function updateMaterialStock(id: string, newStock: number) {
         return { success: false, error: error.message };
     }
 }
+
+export async function deleteLead(id: string) {
+    try {
+        const supabase = getSupabase();
+        const { error } = await supabase.from('leads').delete().eq('id', id);
+        if (error) throw error;
+        revalidatePath('/[locale]/admin', 'page');
+        return { success: true };
+    } catch (error: any) {
+        console.error('Failed to delete lead:', error);
+        return { success: false, error: error.message };
+    }
+}
+
+export async function deleteQuote(id: string) {
+    try {
+        const supabase = getSupabase();
+        const { error } = await supabase.from('quotes').delete().eq('id', id);
+        if (error) throw error;
+        revalidatePath('/[locale]/admin', 'page');
+        return { success: true };
+    } catch (error: any) {
+        console.error('Failed to delete quote:', error);
+        return { success: false, error: error.message };
+    }
+}
+
+export async function updateLeadNotes(id: string, notes: string) {
+    try {
+        const supabase = getSupabase();
+        const { error } = await supabase.from('leads').update({ notes }).eq('id', id);
+        if (error) throw error;
+        revalidatePath('/[locale]/admin', 'page');
+        return { success: true };
+    } catch (error: any) {
+        console.error('Failed to update lead notes:', error);
+        return { success: false, error: error.message };
+    }
+}
+
+export async function updateQuoteNotes(id: string, internal_notes: string) {
+    try {
+        const supabase = getSupabase();
+        // Save to internal_notes to hide from client PDF if regenerated
+        const { error } = await supabase.from('quotes').update({ internal_notes }).eq('id', id);
+        if (error) throw error;
+        revalidatePath('/[locale]/admin', 'page');
+        return { success: true };
+    } catch (error: any) {
+        console.error('Failed to update quote notes:', error);
+        return { success: false, error: error.message };
+    }
+}

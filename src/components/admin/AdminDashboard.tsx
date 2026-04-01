@@ -1,8 +1,9 @@
 'use client';
 
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 
-import { updateLeadStatus, updateQuoteStatus, updateMaterialStock } from '@/app/actions/crm';
+import { updateLeadStatus, updateQuoteStatus, updateMaterialStock, deleteLead, deleteQuote, updateLeadNotes, updateQuoteNotes } from '@/app/actions/crm';
+import { downloadQuotePDF, type QuotePDFData } from '@/lib/quote-pdf';
 
 interface AdminDashboardProps {
     initialQuotes: any[];
@@ -32,6 +33,9 @@ const STATUS_COLORS: Record<string, string> = {
 
 export default function AdminDashboard({ initialQuotes, initialLeads, initialMaterials, initialProjects }: AdminDashboardProps) {
     const [activeTab, setActiveTab] = useState<Tab>('overview');
+    const [searchTerm, setSearchTerm] = useState('');
+    const [selectedQuote, setSelectedQuote] = useState<any>(null);
+    const [selectedLead, setSelectedLead] = useState<any>(null);
     
     // Convert to local states to allow optimistic UI updates (but server actions will revalidate props too)
     const [quotes, setQuotes] = useState(initialQuotes);
@@ -40,12 +44,24 @@ export default function AdminDashboard({ initialQuotes, initialLeads, initialMat
     const [projects, setProjects] = useState(initialProjects);
 
     // Keep it synced with incoming props from server via revalidatePath
-    useMemo(() => {
+    useEffect(() => {
         setQuotes(initialQuotes);
         setLeads(initialLeads);
         setMaterials(initialMaterials);
         setProjects(initialProjects);
     }, [initialQuotes, initialLeads, initialMaterials, initialProjects]);
+
+    const filteredQuotes = useMemo(() => quotes.filter(q => 
+        (q.client_name || q.client || '').toLowerCase().includes(searchTerm.toLowerCase()) || 
+        (q.client_email || q.email || '').toLowerCase().includes(searchTerm.toLowerCase()) ||
+        (q.id || '').toLowerCase().includes(searchTerm.toLowerCase())
+    ), [quotes, searchTerm]);
+
+    const filteredLeads = useMemo(() => leads.filter(l => 
+        (l.name || '').toLowerCase().includes(searchTerm.toLowerCase()) ||
+        (l.email || '').toLowerCase().includes(searchTerm.toLowerCase()) ||
+        (l.phone || '').toLowerCase().includes(searchTerm.toLowerCase())
+    ), [leads, searchTerm]);
 
     // ──────── Analytics data ────────
     const analytics = useMemo(() => {
@@ -63,16 +79,27 @@ export default function AdminDashboard({ initialQuotes, initialLeads, initialMat
         return { totalRevenue, totalCost, totalProfit, profitMargin, totalQuotes, pendingQuotes, completedProjects, newLeads, conversionRate, lowStock, avgQuoteValue };
     }, [quotes, leads, projects, materials]);
 
-    // Monthly revenue for chart (simple bar chart via CSS)
-    const monthlyData = [
-        { month: 'Oct', revenue: 8200, cost: 2800 },
-        { month: 'Nov', revenue: 11500, cost: 3900 },
-        { month: 'Dic', revenue: 9800, cost: 3200 },
-        { month: 'Ene', revenue: 14200, cost: 4700 },
-        { month: 'Feb', revenue: 12800, cost: 4100 },
-        { month: 'Mar', revenue: analytics.totalRevenue, cost: analytics.totalCost },
-    ];
-    const maxRevenue = Math.max(...monthlyData.map(d => d.revenue));
+    // Monthly revenue for chart (dynamic last 6 months based on DB data)
+    const monthlyData = useMemo(() => {
+        const months: { month: string, monthIdx: number, year: number, revenue: number, cost: number }[] = [];
+        const monthNames = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'];
+        const now = new Date();
+        for (let i = 5; i >= 0; i--) {
+            const d = new Date(now.getFullYear(), now.getMonth() - i, 1);
+            months.push({ month: monthNames[d.getMonth()], monthIdx: d.getMonth(), year: d.getFullYear(), revenue: 0, cost: 0 });
+        }
+        projects.forEach(p => {
+            if (p.status !== 'completed') return;
+            const pd = new Date(p.created_at || p.date || new Date());
+            const entry = months.find(m => m.monthIdx === pd.getMonth() && m.year === pd.getFullYear());
+            if (entry) {
+                entry.revenue += (Number(p.total_revenue) || p.revenue || 0);
+                entry.cost += (Number(p.total_cost) || p.cost || 0);
+            }
+        });
+        return months;
+    }, [projects]);
+    const maxRevenue = Math.max(...monthlyData.map(d => d.revenue), 1000);
 
     const tabs: { id: Tab; label: string; icon: string }[] = [
         { id: 'overview', label: 'Panel General', icon: '📊' },
@@ -84,20 +111,34 @@ export default function AdminDashboard({ initialQuotes, initialLeads, initialMat
 
     return (
         <div>
-            {/* Tabs */}
-            <div className="flex flex-wrap gap-2 mb-8">
-                {tabs.map(tab => (
-                    <button
-                        key={tab.id}
-                        onClick={() => setActiveTab(tab.id)}
-                        className={`px-4 py-2.5 rounded-lg text-sm font-medium transition-all ${activeTab === tab.id
-                                ? 'bg-[rgba(201,168,76,0.15)] text-brand-gold border border-brand-gold/30'
-                                : 'bg-surface-card text-brand-gold-muted border border-border-subtle hover:border-brand-gold/20'
-                            }`}
-                    >
-                        {tab.icon} {tab.label}
-                    </button>
-                ))}
+            {/* Top Bar: Tabs & Search */}
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
+                <div className="flex flex-wrap gap-2">
+                    {tabs.map(tab => (
+                        <button
+                            key={tab.id}
+                            onClick={() => setActiveTab(tab.id)}
+                            className={`px-4 py-2.5 rounded-lg text-sm font-medium transition-all ${activeTab === tab.id
+                                    ? 'bg-[rgba(201,168,76,0.15)] text-brand-gold border border-brand-gold/30'
+                                    : 'bg-surface-card text-brand-gold-muted border border-border-subtle hover:border-brand-gold/20'
+                                }`}
+                        >
+                            {tab.icon} {tab.label}
+                        </button>
+                    ))}
+                </div>
+                
+                {/* Search Bar */}
+                <div className="relative w-full md:w-72">
+                    <span className="absolute left-3 top-1/2 -translate-y-1/2 text-brand-gold-muted text-sm">🔍</span>
+                    <input 
+                        type="search" 
+                        placeholder="Buscar cliente, email o teléfono..." 
+                        value={searchTerm}
+                        onChange={e => setSearchTerm(e.target.value)}
+                        className="w-full bg-surface-card border border-border-subtle rounded-lg py-2 pl-9 pr-4 text-sm text-white focus:outline-none focus:border-brand-gold/50 transition-colors"
+                    />
+                </div>
             </div>
 
             {/* ═══════ OVERVIEW ═══════ */}
@@ -223,10 +264,11 @@ export default function AdminDashboard({ initialQuotes, initialLeads, initialMat
                                     <th className="text-right p-4">Total</th>
                                     <th className="text-center p-4">Estado</th>
                                     <th className="text-right p-4">Fecha</th>
+                                    <th className="text-center p-4">Acciones</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                {quotes.map(q => (
+                                {filteredQuotes.map(q => (
                                     <tr key={q.id} className="border-b border-border-subtle/50 hover:bg-[rgba(201,168,76,0.03)] transition-colors">
                                         <td className="p-4 text-brand-gold font-mono text-xs">{q.id.slice(0,8)}...</td>
                                         <td className="p-4">
@@ -255,6 +297,17 @@ export default function AdminDashboard({ initialQuotes, initialLeads, initialMat
                                             </select>
                                         </td>
                                         <td className="p-4 text-right text-brand-gold-muted text-xs">{new Date(q.created_at || q.date).toLocaleDateString()}</td>
+                                        <td className="p-4 text-center">
+                                            <div className="flex gap-2 justify-center">
+                                                <button onClick={() => setSelectedQuote(q)} className="text-blue-400 hover:text-blue-300 transition-colors uppercase text-[10px] tracking-wider font-bold">Ver</button>
+                                                <button onClick={async () => {
+                                                    if(confirm('¿Eliminar presupuesto permanentemente?')) {
+                                                        await deleteQuote(q.id);
+                                                        setQuotes(quotes.filter(x => x.id !== q.id));
+                                                    }
+                                                }} className="text-red-400 hover:text-red-300 transition-colors uppercase text-[10px] tracking-wider font-bold">Del</button>
+                                            </div>
+                                        </td>
                                     </tr>
                                 ))}
                             </tbody>
@@ -291,10 +344,11 @@ export default function AdminDashboard({ initialQuotes, initialLeads, initialMat
                                         <th className="text-center p-4">Fuente</th>
                                         <th className="text-center p-4">Estado</th>
                                         <th className="text-right p-4">Fecha</th>
+                                        <th className="text-center p-4">Acciones</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {leads.map(lead => (
+                                    {filteredLeads.map(lead => (
                                         <tr key={lead.id} className="border-b border-border-subtle/50 hover:bg-[rgba(201,168,76,0.03)] transition-colors">
                                             <td className="p-4 font-medium text-white">{lead.name}</td>
                                             <td className="p-4">
@@ -324,6 +378,17 @@ export default function AdminDashboard({ initialQuotes, initialLeads, initialMat
                                                 </select>
                                             </td>
                                             <td className="p-4 text-right text-brand-gold-muted text-xs">{new Date(lead.created_at || lead.date).toLocaleDateString()}</td>
+                                            <td className="p-4 text-center">
+                                                <div className="flex gap-2 justify-center">
+                                                    <button onClick={() => setSelectedLead(lead)} className="text-blue-400 hover:text-blue-300 transition-colors uppercase text-[10px] tracking-wider font-bold">Ver</button>
+                                                    <button onClick={async () => {
+                                                        if(confirm('¿Eliminar lead permanentemente?')) {
+                                                            await deleteLead(lead.id);
+                                                            setLeads(leads.filter(x => x.id !== lead.id));
+                                                        }
+                                                    }} className="text-red-400 hover:text-red-300 transition-colors uppercase text-[10px] tracking-wider font-bold">Del</button>
+                                                </div>
+                                            </td>
                                         </tr>
                                     ))}
                                 </tbody>
@@ -492,6 +557,146 @@ export default function AdminDashboard({ initialQuotes, initialLeads, initialMat
                                     })}
                                 </tbody>
                             </table>
+                        </div>
+                    </div>
+                </div>
+            )}
+            
+            {/* ═══════ MODALS ═══════ */}
+            {/* Quote Modal Overlay */}
+            {selectedQuote && (
+                <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
+                    <div className="bg-surface-card border border-brand-gold/30 rounded-xl w-full max-w-3xl max-h-[90vh] overflow-y-auto shadow-2xl">
+                        <div className="flex justify-between items-center p-6 border-b border-border-subtle sticky top-0 bg-surface-card z-10">
+                            <h3 className="text-xl font-heading font-bold text-white">Detalles del Presupuesto <span className="text-brand-gold text-sm font-mono ml-2">#{selectedQuote.id.slice(0, 8)}</span></h3>
+                            <button onClick={() => setSelectedQuote(null)} className="text-gray-400 hover:text-white transition-colors">✕</button>
+                        </div>
+                        <div className="p-6 grid grid-cols-1 md:grid-cols-2 gap-6 text-sm">
+                            <div className="space-y-4">
+                                <div>
+                                    <h4 className="text-brand-gold-muted text-xs uppercase mb-2">Cliente</h4>
+                                    <div className="p-3 bg-black/20 rounded-lg">
+                                        <p className="font-bold text-white">{selectedQuote.client_name || selectedQuote.client}</p>
+                                        <p className="text-gray-300">📞 {selectedQuote.client_phone || selectedQuote.phone}</p>
+                                        <p className="text-gray-300">✉️ {selectedQuote.client_email || selectedQuote.email}</p>
+                                    </div>
+                                </div>
+                                <div>
+                                    <h4 className="text-brand-gold-muted text-xs uppercase mb-2">Instalación</h4>
+                                    <div className="p-3 bg-black/20 rounded-lg space-y-1 text-gray-300">
+                                        <p>Cable: <span className="text-brand-gold font-mono">{selectedQuote.cable_type || selectedQuote.cable}</span> ({selectedQuote.cable_meters}m)</p>
+                                        <p>Puntos de Red: <span className="text-white font-bold">{selectedQuote.network_points || selectedQuote.points}</span></p>
+                                        <p>Tipo instalación: <span className="text-white">{selectedQuote.installation_type}</span> ({selectedQuote.installation_meters}m)</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="space-y-4">
+                                <div>
+                                    <h4 className="text-brand-gold-muted text-xs uppercase mb-2">Desglose de Costes</h4>
+                                    <div className="p-3 bg-black/20 rounded-lg space-y-2 text-gray-300">
+                                        <div className="flex justify-between border-b border-white/5 pb-1"><span>Materiales</span> <span>{Number(selectedQuote.materials_cost).toFixed(2)}€</span></div>
+                                        <div className="flex justify-between border-b border-white/5 pb-1"><span>Cable</span> <span>{Number(selectedQuote.cable_cost).toFixed(2)}€</span></div>
+                                        <div className="flex justify-between border-b border-white/5 pb-1"><span>Mano de Obra</span> <span>{Number(selectedQuote.work_cost).toFixed(2)}€</span></div>
+                                        <div className="flex justify-between text-white font-bold text-lg pt-2 border-t border-brand-gold/30">
+                                            <span>TOTAL EUR</span> <span className="text-brand-gold">{Number(selectedQuote.total).toFixed(2)}€</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div className="flex justify-between text-xs mb-2">
+                                        <h4 className="text-brand-gold-muted uppercase">Notas Internas</h4>
+                                        <span className="text-white/30 italic">Autoguardado al hacer click fuera</span>
+                                    </div>
+                                    <textarea 
+                                        className="w-full bg-black/30 border border-brand-gold/20 rounded-lg p-3 text-white text-sm focus:border-brand-gold outline-none min-h-[100px]"
+                                        placeholder="Escribe aquí notas internas, seguimiento, etc..."
+                                        defaultValue={selectedQuote.internal_notes || ''}
+                                        onBlur={async (e) => {
+                                            const newNotes = e.target.value;
+                                            setSelectedQuote({...selectedQuote, internal_notes: newNotes});
+                                            setQuotes(quotes.map(q => q.id === selectedQuote.id ? {...q, internal_notes: newNotes} : q));
+                                            await updateQuoteNotes(selectedQuote.id, newNotes);
+                                        }}
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                        <div className="p-6 border-t border-border-subtle bg-black/20 flex justify-end gap-4">
+                            <button onClick={() => {
+                                const pdfData: QuotePDFData = {
+                                    quoteNumber: selectedQuote.id.split('-')[0].toUpperCase(),
+                                    date: new Date(selectedQuote.created_at).toLocaleDateString(),
+                                    client: {
+                                        name: selectedQuote.client_name,
+                                        phone: selectedQuote.client_phone,
+                                        email: selectedQuote.client_email,
+                                        address: selectedQuote.client_address
+                                    },
+                                    items: [
+                                        { description: 'Cableado ' + selectedQuote.cable_type, quantity: selectedQuote.cable_meters + 'm', unitPrice: '-', total: Number(selectedQuote.cable_cost).toFixed(2) + '€' },
+                                        { description: 'Puntos de Red', quantity: selectedQuote.network_points, unitPrice: '-', total: Number(selectedQuote.points_cost).toFixed(2) + '€' },
+                                        { description: 'Instalación ' + selectedQuote.installation_type, quantity: selectedQuote.installation_meters + 'm', unitPrice: '-', total: Number(selectedQuote.installation_cost).toFixed(2) + '€' },
+                                        { description: 'Mano de Obra', quantity: '1', unitPrice: '-', total: Number(selectedQuote.work_cost).toFixed(2) + '€' }
+                                    ],
+                                    subtotal: Number(selectedQuote.subtotal).toFixed(2) + '€',
+                                    iva: Number(selectedQuote.iva).toFixed(2) + '€',
+                                    total: Number(selectedQuote.total).toFixed(2) + '€'
+                                };
+                                downloadQuotePDF(pdfData);
+                            }} className="px-4 py-2.5 bg-brand-gold text-black font-bold rounded-lg hover:bg-white transition-colors flex items-center gap-2">
+                                📄 Descargar Oferta PDF
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            {/* Lead Modal Overlay */}
+            {selectedLead && (
+                <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
+                    <div className="bg-surface-card border border-brand-gold/30 rounded-xl w-full max-w-2xl shadow-2xl">
+                        <div className="flex justify-between items-center p-6 border-b border-border-subtle">
+                            <h3 className="text-xl font-heading font-bold text-white">Detalles del Contacto</h3>
+                            <button onClick={() => setSelectedLead(null)} className="text-gray-400 hover:text-white transition-colors">✕</button>
+                        </div>
+                        <div className="p-6 space-y-6 text-sm">
+                            <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+                                <div><span className="text-brand-gold-muted text-xs uppercase block">Nombre</span><span className="text-white font-bold">{selectedLead.name}</span></div>
+                                <div><span className="text-brand-gold-muted text-xs uppercase block">Fuente</span><span className="text-brand-gold font-mono">{selectedLead.source}</span></div>
+                                <div className="col-span-2"><span className="text-brand-gold-muted text-xs uppercase block">Contacto</span><span className="text-gray-300">{selectedLead.phone} / {selectedLead.email}</span></div>
+                            </div>
+                            
+                            {selectedLead.service && (
+                                <div>
+                                    <span className="text-brand-gold-muted text-xs uppercase block mb-1">Servicio Solicitado</span>
+                                    <div className="px-3 py-2 bg-brand-dark/50 text-brand-gold rounded font-medium">{selectedLead.service}</div>
+                                </div>
+                            )}
+
+                            {selectedLead.message && (
+                                <div>
+                                    <span className="text-brand-gold-muted text-xs uppercase block mb-1">Mensaje Extra</span>
+                                    <div className="p-4 bg-black/30 text-gray-300 rounded border border-white/5 line-clamp-4 overflow-y-auto max-h-32">{selectedLead.message}</div>
+                                </div>
+                            )}
+
+                            <div>
+                                <div className="flex justify-between text-xs mb-2">
+                                    <h4 className="text-brand-gold-muted uppercase">Notas de Seguimiento</h4>
+                                    <span className="text-white/30 italic">Autoguardado al cerrar</span>
+                                </div>
+                                <textarea 
+                                    className="w-full bg-black/30 border border-brand-gold/20 rounded-lg p-3 text-white text-sm focus:border-brand-gold outline-none min-h-[100px]"
+                                    placeholder="Ej: Le llamé el lunes, me pidió presupuesto para la semana que viene..."
+                                    defaultValue={selectedLead.notes || ''}
+                                    onBlur={async (e) => {
+                                        const newNotes = e.target.value;
+                                        setSelectedLead({...selectedLead, notes: newNotes});
+                                        setLeads(leads.map(l => l.id === selectedLead.id ? {...l, notes: newNotes} : l));
+                                        await updateLeadNotes(selectedLead.id, newNotes);
+                                    }}
+                                />
+                            </div>
                         </div>
                     </div>
                 </div>
