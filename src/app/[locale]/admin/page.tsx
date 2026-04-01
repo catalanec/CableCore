@@ -1,4 +1,4 @@
-import { useLocale } from 'next-intl';
+
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import AdminDashboard from '@/components/admin/AdminDashboard';
@@ -7,8 +7,8 @@ import { createClient } from '@supabase/supabase-js';
 
 export const dynamic = 'force-dynamic';
 
-export default async function AdminPage() {
-    const locale = useLocale();
+export default async function AdminPage({ params: { locale } }: { params: { locale: string } }) {
+
 
     const labels: Record<string, { title: string; highlight: string; subtitle: string; label: string }> = {
         es: {
