@@ -2,7 +2,7 @@
 
 import { useState, useMemo, useEffect } from 'react';
 
-import { updateLeadStatus, updateQuoteStatus, updateMaterialStock, deleteLead, deleteQuote, updateLeadNotes, updateQuoteNotes } from '@/app/actions/crm';
+import { updateLeadStatus, updateQuoteStatus, updateMaterialStock, deleteLead, deleteQuote, updateLeadNotes, updateQuoteNotes, addMaterial, deleteMaterial, updateMaterial } from '@/app/actions/crm';
 import { downloadQuotePDF, type QuotePDFData } from '@/lib/quote-pdf';
 
 interface AdminDashboardProps {
@@ -65,18 +65,31 @@ export default function AdminDashboard({ initialQuotes, initialLeads, initialMat
 
     // ──────── Analytics data ────────
     const analytics = useMemo(() => {
-        const totalRevenue = projects.filter(p => p.status === 'completed').reduce((s, p) => s + (Number(p.total_revenue) || 0), 0);
-        const totalCost = projects.filter(p => p.status === 'completed').reduce((s, p) => s + (Number(p.total_cost) || 0), 0);
+        // Revenue from completed projects
+        const projectRevenue = projects.filter(p => p.status === 'completed').reduce((s, p) => s + (Number(p.total_revenue) || 0), 0);
+        const projectCost = projects.filter(p => p.status === 'completed').reduce((s, p) => s + (Number(p.total_cost) || 0), 0);
+        // Fallback: if no projects, use completed quotes
+        const quoteRevenue = quotes.filter(q => q.status === 'completed').reduce((s, q) => s + (Number(q.total) || 0), 0);
+        const quoteCost = quotes.filter(q => q.status === 'completed').reduce((s, q) => s + (Number(q.materials_cost) || 0) + (Number(q.work_cost) || 0) + (Number(q.cable_cost) || 0), 0);
+        const totalRevenue = projectRevenue > 0 ? projectRevenue : quoteRevenue;
+        const totalCost = projectCost > 0 ? projectCost : quoteCost;
         const totalProfit = totalRevenue - totalCost;
         const profitMargin = totalRevenue > 0 ? ((totalProfit / totalRevenue) * 100).toFixed(1) : '0';
         const totalQuotes = quotes.length;
         const pendingQuotes = quotes.filter(q => q.status === 'pending' || q.status === 'sent').length;
-        const completedProjects = projects.filter(p => p.status === 'completed').length;
+        const completedProjects = projects.filter(p => p.status === 'completed').length || quotes.filter(q => q.status === 'completed').length;
         const newLeads = leads.filter(l => l.status === 'new').length;
         const conversionRate = leads.length > 0 ? ((leads.filter(l => l.status === 'won').length / leads.length) * 100).toFixed(0) : '0';
         const lowStock = materials.filter(m => m.stock <= m.min_stock).length;
         const avgQuoteValue = quotes.length > 0 ? (quotes.reduce((s, q) => s + (Number(q.total) || 0), 0) / quotes.length) : 0;
-        return { totalRevenue, totalCost, totalProfit, profitMargin, totalQuotes, pendingQuotes, completedProjects, newLeads, conversionRate, lowStock, avgQuoteValue };
+        
+        // Monthly revenue for current month
+        const now = new Date();
+        const currentMonthRevenue = quotes
+            .filter(q => q.status === 'completed' && new Date(q.created_at).getMonth() === now.getMonth() && new Date(q.created_at).getFullYear() === now.getFullYear())
+            .reduce((s, q) => s + (Number(q.total) || 0), 0);
+        
+        return { totalRevenue, totalCost, totalProfit, profitMargin, totalQuotes, pendingQuotes, completedProjects, newLeads, conversionRate, lowStock, avgQuoteValue, currentMonthRevenue };
     }, [quotes, leads, projects, materials]);
 
     // Monthly revenue for chart (dynamic last 6 months based on DB data)
@@ -88,17 +101,31 @@ export default function AdminDashboard({ initialQuotes, initialLeads, initialMat
             const d = new Date(now.getFullYear(), now.getMonth() - i, 1);
             months.push({ month: monthNames[d.getMonth()], monthIdx: d.getMonth(), year: d.getFullYear(), revenue: 0, cost: 0 });
         }
+        // Use projects if available
         projects.forEach(p => {
             if (p.status !== 'completed') return;
             const pd = new Date(p.created_at || p.date || new Date());
             const entry = months.find(m => m.monthIdx === pd.getMonth() && m.year === pd.getFullYear());
             if (entry) {
-                entry.revenue += (Number(p.total_revenue) || p.revenue || 0);
-                entry.cost += (Number(p.total_cost) || p.cost || 0);
+                entry.revenue += (Number(p.total_revenue) || 0);
+                entry.cost += (Number(p.total_cost) || 0);
             }
         });
+        // Fallback: also add completed quotes if projects are empty
+        const hasProjectData = months.some(m => m.revenue > 0);
+        if (!hasProjectData) {
+            quotes.forEach(q => {
+                if (q.status !== 'completed') return;
+                const qd = new Date(q.created_at || new Date());
+                const entry = months.find(m => m.monthIdx === qd.getMonth() && m.year === qd.getFullYear());
+                if (entry) {
+                    entry.revenue += (Number(q.total) || 0);
+                    entry.cost += (Number(q.materials_cost) || 0) + (Number(q.work_cost) || 0) + (Number(q.cable_cost) || 0);
+                }
+            });
+        }
         return months;
-    }, [projects]);
+    }, [projects, quotes]);
     const maxRevenue = Math.max(...monthlyData.map(d => d.revenue), 1000);
 
     const tabs: { id: Tab; label: string; icon: string }[] = [
@@ -147,7 +174,7 @@ export default function AdminDashboard({ initialQuotes, initialLeads, initialMat
                     {/* KPI Cards */}
                     <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
                         {[
-                            { label: 'Ingresos (mes)', value: `${analytics.totalRevenue.toLocaleString('es-ES', { minimumFractionDigits: 2 })}€`, icon: '💰', trend: '+18%', color: 'text-green-400' },
+                            { label: 'Ingresos (mes)', value: `${analytics.currentMonthRevenue.toLocaleString('es-ES', { minimumFractionDigits: 2 })}€`, icon: '💰', trend: `${analytics.totalRevenue > 0 ? '+' + ((analytics.currentMonthRevenue / analytics.totalRevenue) * 100).toFixed(0) + '%' : '—'}`, color: 'text-green-400' },
                             { label: 'Beneficio neto', value: `${analytics.totalProfit.toLocaleString('es-ES', { minimumFractionDigits: 2 })}€`, icon: '📈', trend: `${analytics.profitMargin}% margen`, color: 'text-emerald-400' },
                             { label: 'Presupuestos', value: analytics.totalQuotes.toString(), icon: '📋', trend: `${analytics.pendingQuotes} pendientes`, color: 'text-yellow-400' },
                             { label: 'Leads nuevos', value: analytics.newLeads.toString(), icon: '👥', trend: `${analytics.conversionRate}% conversión`, color: 'text-cyan-400' },
@@ -171,16 +198,21 @@ export default function AdminDashboard({ initialQuotes, initialLeads, initialMat
                         <div className="flex items-end gap-4 h-48">
                             {monthlyData.map((d, i) => (
                                 <div key={i} className="flex-1 flex flex-col items-center gap-1">
-                                    <div className="w-full flex gap-1 justify-center items-end" style={{ height: '160px' }}>
+                                    {d.revenue > 0 && (
+                                        <div className="text-[10px] text-brand-gold font-bold mb-1">
+                                            {d.revenue >= 1000 ? `${(d.revenue / 1000).toFixed(1)}k` : d.revenue.toFixed(0)}€
+                                        </div>
+                                    )}
+                                    <div className="w-full flex gap-1 justify-center items-end" style={{ height: '140px' }}>
                                         <div
                                             className="w-5 bg-gradient-to-t from-[#c9a84c] to-[#e8d48b] rounded-t-sm transition-all"
-                                            style={{ height: `${(d.revenue / maxRevenue) * 100}%` }}
-                                            title={`Ingresos: ${d.revenue}€`}
+                                            style={{ height: `${Math.max((d.revenue / maxRevenue) * 100, d.revenue > 0 ? 5 : 0)}%` }}
+                                            title={`Ingresos: ${d.revenue.toFixed(2)}€`}
                                         />
                                         <div
                                             className="w-5 bg-gradient-to-t from-[#444] to-[#666] rounded-t-sm transition-all"
-                                            style={{ height: `${(d.cost / maxRevenue) * 100}%` }}
-                                            title={`Costes: ${d.cost}€`}
+                                            style={{ height: `${Math.max((d.cost / maxRevenue) * 100, d.cost > 0 ? 5 : 0)}%` }}
+                                            title={`Costes: ${d.cost.toFixed(2)}€`}
                                         />
                                     </div>
                                     <span className="text-xs text-brand-gold-muted">{d.month}</span>
@@ -399,7 +431,21 @@ export default function AdminDashboard({ initialQuotes, initialLeads, initialMat
             )}
 
             {/* ═══════ MATERIALS ═══════ */}
-            {activeTab === 'materials' && (
+            {activeTab === 'materials' && (() => {
+                const [showAddModal, setShowAddModal] = useState(false);
+                const [newMat, setNewMat] = useState({ name: '', category: 'cable', unit: 'm', cost_price: 0, sell_price: 0, stock: 0, min_stock: 5 });
+                const categories = ['cable', 'conector', 'herramienta', 'rack', 'canaleta', 'tubo', 'otro'];
+                const units = ['m', 'ud', 'rollo', 'caja', 'kg'];
+
+                const handleAddMaterial = async () => {
+                    if (!newMat.name.trim()) return;
+                    await addMaterial(newMat);
+                    setMaterials([...materials, { ...newMat, id: 'temp-' + Date.now(), stock: newMat.stock }]);
+                    setNewMat({ name: '', category: 'cable', unit: 'm', cost_price: 0, sell_price: 0, stock: 0, min_stock: 5 });
+                    setShowAddModal(false);
+                };
+
+                return (
                 <div className="space-y-6">
                     {/* Summary cards */}
                     <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
@@ -411,14 +457,16 @@ export default function AdminDashboard({ initialQuotes, initialLeads, initialMat
                         <div className="card p-5 border-brand-gold/10">
                             <div className="text-2xl mb-2">💰</div>
                             <div className="font-heading text-2xl font-bold text-white">
-                                {materials.reduce((s, m) => s + m.stock * (Number(m.cost_price) || m.costPrice), 0).toFixed(0)}€
+                                {materials.reduce((s, m) => s + m.stock * (Number(m.cost_price) || 0), 0).toFixed(0)}€
                             </div>
                             <div className="text-xs text-brand-gold-muted">Valor inventario (coste)</div>
                         </div>
                         <div className="card p-5 border-brand-gold/10">
                             <div className="text-2xl mb-2">📊</div>
                             <div className="font-heading text-2xl font-bold text-white">
-                                {materials.length > 0 ? ((1 - materials.reduce((s, m) => s + (Number(m.cost_price) || m.costPrice), 0) / materials.reduce((s, m) => s + (Number(m.sell_price) || m.sellPrice), 0)) * 100).toFixed(0) : '0'}%
+                                {materials.length > 0 && materials.reduce((s, m) => s + (Number(m.sell_price) || 0), 0) > 0
+                                    ? ((1 - materials.reduce((s, m) => s + (Number(m.cost_price) || 0), 0) / materials.reduce((s, m) => s + (Number(m.sell_price) || 0), 0)) * 100).toFixed(0)
+                                    : '0'}%
                             </div>
                             <div className="text-xs text-brand-gold-muted">Margen medio</div>
                         </div>
@@ -433,6 +481,15 @@ export default function AdminDashboard({ initialQuotes, initialLeads, initialMat
 
                     {/* Materials table */}
                     <div className="card border-brand-gold/10 overflow-hidden">
+                        <div className="p-4 border-b border-border-subtle flex items-center justify-between">
+                            <h3 className="font-heading font-semibold text-white">Inventario de Materiales</h3>
+                            <button
+                                onClick={() => setShowAddModal(true)}
+                                className="px-4 py-2 bg-brand-gold text-black rounded-lg text-sm font-bold hover:bg-brand-gold/90 transition-colors"
+                            >
+                                + Añadir Material
+                            </button>
+                        </div>
                         <div className="overflow-x-auto">
                             <table className="w-full text-sm">
                                 <thead>
@@ -444,14 +501,24 @@ export default function AdminDashboard({ initialQuotes, initialLeads, initialMat
                                         <th className="text-right p-4">Margen</th>
                                         <th className="text-right p-4">Stock</th>
                                         <th className="text-center p-4">Estado</th>
+                                        <th className="text-center p-4">Acciones</th>
                                     </tr>
                                 </thead>
                                 <tbody>
+                                    {materials.length === 0 && (
+                                        <tr>
+                                            <td colSpan={8} className="p-8 text-center text-brand-gold-muted">
+                                                <div className="text-4xl mb-3">📦</div>
+                                                <div className="text-sm">No hay materiales todavía</div>
+                                                <div className="text-xs mt-1">Usa el botón «+ Añadir Material» para empezar</div>
+                                            </td>
+                                        </tr>
+                                    )}
                                     {materials.map(m => {
-                                        const costPrice = Number(m.cost_price) || m.costPrice;
-                                        const sellPrice = Number(m.sell_price) || m.sellPrice;
-                                        const minStock = m.min_stock || m.minStock;
-                                        const margin = (((sellPrice - costPrice) / sellPrice) * 100).toFixed(0);
+                                        const costPrice = Number(m.cost_price) || 0;
+                                        const sellPrice = Number(m.sell_price) || 0;
+                                        const minStock = m.min_stock || 0;
+                                        const margin = sellPrice > 0 ? (((sellPrice - costPrice) / sellPrice) * 100).toFixed(0) : '0';
                                         const isLow = m.stock <= minStock;
                                         const isWarn = m.stock <= minStock * 1.5;
                                         return (
@@ -463,27 +530,39 @@ export default function AdminDashboard({ initialQuotes, initialLeads, initialMat
                                                 <td className="p-4 text-right text-brand-gold-muted">{costPrice.toFixed(2)}€/{m.unit}</td>
                                                 <td className="p-4 text-right text-white">{sellPrice.toFixed(2)}€/{m.unit}</td>
                                                 <td className="p-4 text-right text-green-400">{margin}%</td>
-                                                <td className="p-4 text-right flex justify-end items-center gap-2">
-                                                    <button onClick={async () => {
-                                                        const newVal = Math.max(0, m.stock - 1);
-                                                        setMaterials(materials.map(x => x.id === m.id ? { ...x, stock: newVal } : x));
-                                                        await updateMaterialStock(m.id, newVal);
-                                                    }} className="px-2 bg-brand-dark rounded text-xs">-</button>
-                                                    <span className={isLow ? 'text-red-400 font-bold' : isWarn ? 'text-yellow-400' : 'text-white'}>
-                                                        {m.stock}
-                                                    </span>
-                                                    <button onClick={async () => {
-                                                        const newVal = m.stock + 1;
-                                                        setMaterials(materials.map(x => x.id === m.id ? { ...x, stock: newVal } : x));
-                                                        await updateMaterialStock(m.id, newVal);
-                                                    }} className="px-2 bg-brand-dark rounded text-xs">+</button>
-                                                    <span className="text-brand-gold-muted text-xs ml-1">/ {minStock} mín</span>
+                                                <td className="p-4 text-right">
+                                                    <div className="flex justify-end items-center gap-2">
+                                                        <button onClick={async () => {
+                                                            const newVal = Math.max(0, m.stock - 1);
+                                                            setMaterials(materials.map(x => x.id === m.id ? { ...x, stock: newVal } : x));
+                                                            await updateMaterialStock(m.id, newVal);
+                                                        }} className="px-2 bg-brand-dark rounded text-xs hover:bg-brand-gold/20 transition-colors">-</button>
+                                                        <span className={isLow ? 'text-red-400 font-bold' : isWarn ? 'text-yellow-400' : 'text-white'}>
+                                                            {m.stock}
+                                                        </span>
+                                                        <button onClick={async () => {
+                                                            const newVal = m.stock + 1;
+                                                            setMaterials(materials.map(x => x.id === m.id ? { ...x, stock: newVal } : x));
+                                                            await updateMaterialStock(m.id, newVal);
+                                                        }} className="px-2 bg-brand-dark rounded text-xs hover:bg-brand-gold/20 transition-colors">+</button>
+                                                        <span className="text-brand-gold-muted text-xs ml-1">/ {minStock} mín</span>
+                                                    </div>
                                                 </td>
                                                 <td className="p-4 text-center">
                                                     <span className={`text-xs px-2 py-1 rounded-full ${isLow ? 'bg-red-400/10 text-red-400' : isWarn ? 'bg-yellow-400/10 text-yellow-400' : 'bg-green-400/10 text-green-400'
                                                         }`}>
                                                         {isLow ? '⚠️ Bajo' : isWarn ? '⚡ Medio' : '✅ OK'}
                                                     </span>
+                                                </td>
+                                                <td className="p-4 text-center">
+                                                    <button onClick={async () => {
+                                                        if(confirm(`¿Eliminar "${m.name}" del inventario?`)) {
+                                                            await deleteMaterial(m.id);
+                                                            setMaterials(materials.filter(x => x.id !== m.id));
+                                                        }
+                                                    }} className="text-red-400 hover:text-red-300 transition-colors uppercase text-[10px] tracking-wider font-bold">
+                                                        Eliminar
+                                                    </button>
                                                 </td>
                                             </tr>
                                         );
@@ -492,8 +571,117 @@ export default function AdminDashboard({ initialQuotes, initialLeads, initialMat
                             </table>
                         </div>
                     </div>
+
+                    {/* Add Material Modal */}
+                    {showAddModal && (
+                        <div className="fixed inset-0 bg-black/70 z-50 flex items-center justify-center p-4" onClick={() => setShowAddModal(false)}>
+                            <div className="bg-surface-card border border-border-subtle rounded-xl w-full max-w-lg p-6" onClick={e => e.stopPropagation()}>
+                                <h3 className="font-heading text-xl font-bold text-white mb-6">📦 Añadir Material</h3>
+                                <div className="space-y-4">
+                                    <div>
+                                        <label className="text-xs text-brand-gold-muted uppercase tracking-wider block mb-1">Nombre *</label>
+                                        <input
+                                            type="text"
+                                            value={newMat.name}
+                                            onChange={e => setNewMat({ ...newMat, name: e.target.value })}
+                                            placeholder="Ej: Cable Cat6 UTP"
+                                            className="w-full bg-brand-dark border border-border-subtle rounded-lg p-3 text-white focus:outline-none focus:border-brand-gold/50"
+                                        />
+                                    </div>
+                                    <div className="grid grid-cols-2 gap-4">
+                                        <div>
+                                            <label className="text-xs text-brand-gold-muted uppercase tracking-wider block mb-1">Categoría</label>
+                                            <select
+                                                value={newMat.category}
+                                                onChange={e => setNewMat({ ...newMat, category: e.target.value })}
+                                                className="w-full bg-brand-dark border border-border-subtle rounded-lg p-3 text-white focus:outline-none focus:border-brand-gold/50"
+                                            >
+                                                {categories.map(c => <option key={c} value={c}>{c.charAt(0).toUpperCase() + c.slice(1)}</option>)}
+                                            </select>
+                                        </div>
+                                        <div>
+                                            <label className="text-xs text-brand-gold-muted uppercase tracking-wider block mb-1">Unidad</label>
+                                            <select
+                                                value={newMat.unit}
+                                                onChange={e => setNewMat({ ...newMat, unit: e.target.value })}
+                                                className="w-full bg-brand-dark border border-border-subtle rounded-lg p-3 text-white focus:outline-none focus:border-brand-gold/50"
+                                            >
+                                                {units.map(u => <option key={u} value={u}>{u}</option>)}
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div className="grid grid-cols-2 gap-4">
+                                        <div>
+                                            <label className="text-xs text-brand-gold-muted uppercase tracking-wider block mb-1">Precio coste (€)</label>
+                                            <input
+                                                type="number"
+                                                step="0.01"
+                                                value={newMat.cost_price || ''}
+                                                onChange={e => setNewMat({ ...newMat, cost_price: parseFloat(e.target.value) || 0 })}
+                                                className="w-full bg-brand-dark border border-border-subtle rounded-lg p-3 text-white focus:outline-none focus:border-brand-gold/50"
+                                            />
+                                        </div>
+                                        <div>
+                                            <label className="text-xs text-brand-gold-muted uppercase tracking-wider block mb-1">Precio venta (€)</label>
+                                            <input
+                                                type="number"
+                                                step="0.01"
+                                                value={newMat.sell_price || ''}
+                                                onChange={e => setNewMat({ ...newMat, sell_price: parseFloat(e.target.value) || 0 })}
+                                                className="w-full bg-brand-dark border border-border-subtle rounded-lg p-3 text-white focus:outline-none focus:border-brand-gold/50"
+                                            />
+                                        </div>
+                                    </div>
+                                    <div className="grid grid-cols-2 gap-4">
+                                        <div>
+                                            <label className="text-xs text-brand-gold-muted uppercase tracking-wider block mb-1">Stock actual</label>
+                                            <input
+                                                type="number"
+                                                value={newMat.stock || ''}
+                                                onChange={e => setNewMat({ ...newMat, stock: parseInt(e.target.value) || 0 })}
+                                                className="w-full bg-brand-dark border border-border-subtle rounded-lg p-3 text-white focus:outline-none focus:border-brand-gold/50"
+                                            />
+                                        </div>
+                                        <div>
+                                            <label className="text-xs text-brand-gold-muted uppercase tracking-wider block mb-1">Stock mínimo</label>
+                                            <input
+                                                type="number"
+                                                value={newMat.min_stock || ''}
+                                                onChange={e => setNewMat({ ...newMat, min_stock: parseInt(e.target.value) || 0 })}
+                                                className="w-full bg-brand-dark border border-border-subtle rounded-lg p-3 text-white focus:outline-none focus:border-brand-gold/50"
+                                            />
+                                        </div>
+                                    </div>
+                                    {newMat.sell_price > 0 && newMat.cost_price > 0 && (
+                                        <div className="bg-brand-dark/50 rounded-lg p-3 text-center">
+                                            <span className="text-xs text-brand-gold-muted">Margen estimado: </span>
+                                            <span className="text-green-400 font-bold">
+                                                {(((newMat.sell_price - newMat.cost_price) / newMat.sell_price) * 100).toFixed(0)}%
+                                            </span>
+                                        </div>
+                                    )}
+                                </div>
+                                <div className="flex justify-end gap-3 mt-6">
+                                    <button
+                                        onClick={() => setShowAddModal(false)}
+                                        className="px-4 py-2 border border-border-subtle rounded-lg text-brand-gold-muted hover:text-white transition-colors"
+                                    >
+                                        Cancelar
+                                    </button>
+                                    <button
+                                        onClick={handleAddMaterial}
+                                        disabled={!newMat.name.trim()}
+                                        className="px-6 py-2 bg-brand-gold text-black rounded-lg font-bold hover:bg-brand-gold/90 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                                    >
+                                        Guardar Material
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    )}
                 </div>
-            )}
+                );
+            })()}
 
             {/* ═══════ PROJECTS ═══════ */}
             {activeTab === 'projects' && (

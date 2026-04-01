@@ -20,6 +20,7 @@ interface QuoteFormProps {
         cablesCost: number;
         pointsCost: number;
         installCost: number;
+        laborCost: number;
         materialsCost: number;
         workCost: number;
         rackCost: number;
@@ -70,11 +71,12 @@ const formLabels: Record<string, Record<string, string>> = {
 };
 
 const installLabels: Record<string, string> = {
-    superficial: 'Superficial (Canaleta)',
-    techo: 'Techo técnico',
-    empotrado_existente: 'Empotrado existente',
-    empotrado_nuevo: 'Empotrado nuevo',
+    external: 'Superficial (Canaleta)',
+    ceiling: 'Techo técnico (falso techo)',
+    existing_wall: 'Empotrado (tubos existentes)',
+    new_wall: 'Empotrado nuevo (regata)',
     industrial: 'Industrial (Nave / Fábrica)',
+    trays: 'Bandejas portacables',
 };
 
 const workLabels: Record<string, string> = {
@@ -85,10 +87,13 @@ const workLabels: Record<string, string> = {
 };
 
 const rackLabels: Record<string, string> = {
-    none: 'Sin rack',
-    small: 'Rack pequeño',
-    professional: 'Rack profesional',
-    with_patch: 'Rack + Patch panel',
+    none: 'Sin armario de red',
+    rack_6u: 'Rack pared 6U',
+    rack_9u: 'Rack pared 9U',
+    rack_12u: 'Rack pared 12U',
+    rack_18u: 'Rack pared 18U',
+    rack_22u: 'Rack suelo 22U',
+    rack_42u: 'Rack suelo 42U (servidor)',
 };
 
 export default function QuoteForm({ locale, calculationData }: QuoteFormProps) {
@@ -108,25 +113,36 @@ export default function QuoteForm({ locale, calculationData }: QuoteFormProps) {
         const items: QuotePDFData['items'] = [];
 
         items.push({
-            description: `Cable ${d.cableType.toUpperCase()}`,
+            description: `Cableado ${d.cableType.toUpperCase()} — suministro de cable`,
             quantity: `${d.cableMeters}m`,
-            unitPrice: `${(d.cablesCost / d.cableMeters).toFixed(2)}€`,
+            unitPrice: `${(d.cablesCost / Math.max(1, d.cableMeters)).toFixed(2)}€`,
             total: `${d.cablesCost.toFixed(2)}€`,
         });
 
         items.push({
-            description: `Puntos de red (RJ45, roseta, test)`,
+            description: `Puntos de red — roseta RJ45, keystone, caja, testeo`,
             quantity: `${d.points} uds`,
-            unitPrice: `15.00€`,
+            unitPrice: `${(d.pointsCost / Math.max(1, d.points)).toFixed(2)}€`,
             total: `${d.pointsCost.toFixed(2)}€`,
         });
 
-        items.push({
-            description: `Instalación — ${installLabels[d.installationType] || d.installationType}`,
-            quantity: `${d.installationMeters}m`,
-            unitPrice: `${(d.installCost / Math.max(1, d.installationMeters)).toFixed(2)}€`,
-            total: `${d.installCost.toFixed(2)}€`,
-        });
+        if (d.installCost > 0) {
+            items.push({
+                description: `Tendido de cable — ${installLabels[d.installationType] || d.installationType}`,
+                quantity: `${d.cableMeters}m`,
+                unitPrice: `${(d.installCost / Math.max(1, d.cableMeters)).toFixed(2)}€`,
+                total: `${d.installCost.toFixed(2)}€`,
+            });
+        }
+
+        if (d.laborCost > 0) {
+            items.push({
+                description: 'Mano de obra — operarios, montaje, terminación, verificación',
+                quantity: `${d.points} ptos`,
+                unitPrice: `${(d.laborCost / Math.max(1, d.points)).toFixed(2)}€`,
+                total: `${d.laborCost.toFixed(2)}€`,
+            });
+        }
 
         if (d.canaleta > 0) {
             items.push({ description: 'Canaleta', quantity: `${d.canaleta}m`, unitPrice: '8.00€', total: `${(d.canaleta * 8).toFixed(2)}€` });
@@ -151,11 +167,14 @@ export default function QuoteForm({ locale, calculationData }: QuoteFormProps) {
         });
 
         if (d.rack !== 'none') {
-            const rackPrices: Record<string, number> = { small: 150, professional: 300, with_patch: 420 };
+            const rackPrices: Record<string, number> = { 
+                rack_6u: 90, rack_9u: 130, rack_12u: 180, 
+                rack_18u: 250, rack_22u: 380, rack_42u: 650 
+            };
             items.push({
                 description: rackLabels[d.rack] || d.rack,
                 quantity: '1',
-                unitPrice: `${rackPrices[d.rack]?.toFixed(2) || '0.00'}€`,
+                unitPrice: `${rackPrices[d.rack]?.toFixed(2) || d.rackCost.toFixed(2)}€`,
                 total: `${d.rackCost.toFixed(2)}€`,
             });
         }
