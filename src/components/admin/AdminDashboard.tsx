@@ -839,6 +839,7 @@ export default function AdminDashboard({ initialQuotes, initialLeads, initialMat
                                         <th className="text-center p-3">Pago</th>
                                         <th className="text-center p-3">Fecha pago</th>
                                         <th className="text-center p-3">Estado</th>
+                                        <th className="text-center p-3">Acción</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -928,6 +929,43 @@ export default function AdminDashboard({ initialQuotes, initialLeads, initialMat
                                             </td>
                                             <td className="p-3 text-center">
                                                 <span className={`text-xs px-3 py-1 rounded-full ${STATUS_COLORS[p.status]}`}>{p.status}</span>
+                                            </td>
+                                            <td className="p-3 text-center">
+                                                {p.payment_status !== 'paid' && rev > 0 ? (
+                                                    <button
+                                                        onClick={async () => {
+                                                            try {
+                                                                const res = await fetch('/api/stripe/checkout', {
+                                                                    method: 'POST',
+                                                                    headers: { 'Content-Type': 'application/json' },
+                                                                    body: JSON.stringify({
+                                                                        amount: rev,
+                                                                        clientName: p.client_name || p.client || '',
+                                                                        projectId: p.id,
+                                                                        description: `Proyecto ${(p.quote_id || '').slice(0, 8)}`,
+                                                                    }),
+                                                                });
+                                                                const data = await res.json();
+                                                                if (data.url) {
+                                                                    // Copy link to clipboard and show
+                                                                    await navigator.clipboard.writeText(data.url);
+                                                                    alert(`✅ Link de pago copiado al portapapeles!\n\n${data.url}`);
+                                                                } else {
+                                                                    alert('❌ Error: ' + (data.error || 'No URL'));
+                                                                }
+                                                            } catch (err: any) {
+                                                                alert('❌ Error: ' + err.message);
+                                                            }
+                                                        }}
+                                                        className="text-xs px-3 py-1.5 bg-purple-500/20 text-purple-300 border border-purple-500/30 rounded-full hover:bg-purple-500/30 transition-colors font-bold"
+                                                    >
+                                                        💳 Cobrar
+                                                    </button>
+                                                ) : p.payment_status === 'paid' ? (
+                                                    <span className="text-xs text-green-400">✅ Pagado</span>
+                                                ) : (
+                                                    <span className="text-xs text-brand-gold-muted">—</span>
+                                                )}
                                             </td>
                                         </tr>
                                         );
