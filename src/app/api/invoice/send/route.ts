@@ -124,9 +124,9 @@ export async function POST(req: NextRequest) {
 
         const emailSubject = generateInvoiceEmailSubject({ paymentType: type, quoteNumber });
 
-        // 6. Send email via Resend
+        const fromEmail = process.env.RESEND_FROM_EMAIL || 'CableCore <onboarding@resend.dev>';
         const { data: emailResult, error: emailError } = await resend.emails.send({
-            from: 'CableCore <info@cablecore.es>',
+            from: fromEmail,
             to: [clientEmail],
             subject: emailSubject,
             html: emailHTML,
