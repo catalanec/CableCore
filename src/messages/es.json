@@ -71,6 +71,16 @@
         "Redundancia y failover",
         "Certificación oficial Fluke Networks"
       ]
+    },
+    "fiber": {
+      "title": "Fibra Óptica",
+      "desc": "Instalación de fibra óptica monomodo y multimodo. Fusión, certificación OTDR y FTTH.",
+      "features": [
+        "Fusión por arco profesional",
+        "Conectores SC/APC",
+        "Certificación OTDR",
+        "FTTH para edificios"
+      ]
     }
   },
   "trust": {

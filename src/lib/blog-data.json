@@ -3877,5 +3877,144 @@
         }
       ]
     }
+  },
+  {
+    "slug": "guia-instalacion-fibra-optica",
+    "date": "2026-04-02",
+    "readTime": "10 min",
+    "es": {
+      "title": "Guía completa de instalación de fibra óptica interior",
+      "metaTitle": "Guía instalación fibra óptica interior - CableCore",
+      "metaDescription": "Todo lo que necesitas saber sobre la instalación de fibra óptica interior: tipos de cable, fusión, conectores SC/APC, racks y certificación OTDR.",
+      "excerpt": "La fibra óptica es el futuro de las telecomunicaciones. En esta guía explicamos todo sobre la instalación de fibra interior: materiales, técnicas de fusión y certificación profesional.",
+      "category": "Guías",
+      "tags": ["fibra óptica", "instalación", "fusión"],
+      "content": [
+        { "type": "h2", "text": "¿Qué es la fibra óptica y por qué instalarla?" },
+        { "type": "p", "text": "La fibra óptica transmite datos mediante pulsos de luz a través de hilos de vidrio ultrafinos. A diferencia del cable de cobre (Ethernet), la fibra ofrece velocidades prácticamente ilimitadas, inmunidad a interferencias electromagnéticas y capacidad para cubrir distancias de hasta 100 km sin degradación de señal." },
+        { "type": "h2", "text": "Tipos de fibra óptica" },
+        { "type": "h3", "text": "Fibra monomodo (SM — Single Mode)" },
+        { "type": "p", "text": "La fibra monomodo tiene un núcleo de 9 µm y transmite un solo modo de luz. Es la más utilizada en instalaciones FTTH y enlaces de larga distancia. Soporta velocidades de 10 Gbps a más de 100 km. El cable más común para interiores es el monomodo de 2 fibras (duplex) con conector SC/APC." },
+        { "type": "h3", "text": "Fibra multimodo (MM — Multi Mode)" },
+        { "type": "p", "text": "La fibra multimodo (OM3/OM4) tiene un núcleo de 50 µm y transmite múltiples modos de luz. Es ideal para distancias cortas dentro de edificios (hasta 300-550m). Velocidades de 10-100 Gbps. Más económica que la monomodo para enlaces cortos." },
+        { "type": "h2", "text": "Componentes de una instalación de fibra" },
+        { "type": "list", "items": ["Cable de fibra óptica monomodo o multimodo", "Rosetas ópticas de 2 puertos SC/APC", "Pigtails SC/APC para fusión", "Acopladores SC/APC hembra-hembra (duplex)", "Bandeja de empalme 1U para rack", "Rack de fibra óptica o caja mural", "Patch cords SC/APC-SC/APC duplex", "Protectores de empalme (splice protectors)"] },
+        { "type": "h2", "text": "Proceso de instalación" },
+        { "type": "h3", "text": "1. Diseño y planificación" },
+        { "type": "p", "text": "Se determina el recorrido del cable, el número de puntos de fibra, el tipo de instalación (falso techo, canaleta, conductos existentes) y la ubicación del rack central." },
+        { "type": "h3", "text": "2. Tendido de cable" },
+        { "type": "p", "text": "El cable de fibra se tiende por el recorrido planificado. Es fundamental respetar el radio de curvatura mínimo (típicamente 30mm para cable interior) para evitar atenuación o rotura de las fibras." },
+        { "type": "h3", "text": "3. Fusión (empalme por arco)" },
+        { "type": "p", "text": "La fusión es el proceso de unir dos fibras mediante un arco eléctrico que funde el vidrio. Se utiliza una fusionadora profesional que alinea las fibras automáticamente y produce un empalme con atenuación típica inferior a 0.02 dB. Cada fibra se fusiona con un pigtail SC/APC que permite la conexión al panel." },
+        { "type": "h3", "text": "4. Terminación y rack" },
+        { "type": "p", "text": "Los pigtails fusionados se organizan en la bandeja de empalme dentro del rack. Los acopladores SC/APC hembra-hembra se instalan en el frontal del panel, permitiendo conectar patch cords para enlazar con equipos activos (ONT, switches, media converters)." },
+        { "type": "h3", "text": "5. Certificación OTDR" },
+        { "type": "p", "text": "Cada enlace de fibra se mide con un reflectómetro óptico (OTDR) que genera un mapa completo de la fibra: longitud, atenuación, empalmes, conectores y posibles defectos. El resultado se documenta en un informe de certificación." },
+        { "type": "tip", "text": "🔆 CableCore instala fibra óptica monomodo y multimodo con fusión profesional y certificación OTDR. Presupuesto gratis: ☎ 605 974 605" }
+      ]
+    },
+    "en": {
+      "title": "Complete guide to indoor fiber optic installation",
+      "metaTitle": "Indoor fiber optic installation guide - CableCore",
+      "metaDescription": "Everything you need to know about indoor fiber optic installation: cable types, fusion splicing, SC/APC connectors, racks and OTDR certification.",
+      "excerpt": "Fiber optics is the future of telecommunications. In this guide we explain everything about indoor fiber installation: materials, fusion techniques and professional certification.",
+      "category": "Guides",
+      "tags": ["fiber optics", "installation", "fusion"],
+      "content": [
+        { "type": "h2", "text": "What is fiber optics and why install it?" },
+        { "type": "p", "text": "Fiber optics transmits data using pulses of light through ultra-thin glass strands. Unlike copper cable (Ethernet), fiber offers virtually unlimited speeds, immunity to electromagnetic interference, and the ability to cover distances up to 100 km without signal degradation." },
+        { "type": "h2", "text": "Types of fiber optic cable" },
+        { "type": "h3", "text": "Single-mode fiber (SM)" },
+        { "type": "p", "text": "Single-mode fiber has a 9 µm core and transmits a single mode of light. It is the most common for FTTH and long-distance links. Supports 10 Gbps over 100+ km. The most common indoor cable is 2-fiber (duplex) single-mode with SC/APC connectors." },
+        { "type": "h3", "text": "Multi-mode fiber (MM — OM3/OM4)" },
+        { "type": "p", "text": "Multi-mode fiber (OM3/OM4) has a 50 µm core and transmits multiple modes of light. Ideal for short distances within buildings (up to 300-550m). 10-100 Gbps speeds. More economical than single-mode for short links." },
+        { "type": "h2", "text": "Components of a fiber installation" },
+        { "type": "list", "items": ["Single-mode or multi-mode fiber optic cable", "2-port SC/APC optical outlets", "SC/APC pigtails for fusion", "SC/APC female-female adapters (duplex)", "1U splice tray for rack", "Fiber optic rack or wall box", "SC/APC-SC/APC duplex patch cords", "Splice protectors"] },
+        { "type": "h2", "text": "Installation process" },
+        { "type": "p", "text": "The installation involves 5 key steps: design and planning, cable routing (respecting minimum bend radius), fusion splicing with professional equipment (typical loss < 0.02 dB), rack termination with splice trays and SC/APC adapters, and OTDR certification of every link." },
+        { "type": "tip", "text": "🔆 CableCore installs single-mode and multi-mode fiber with professional fusion splicing and OTDR certification. Free quote: ☎ 605 974 605" }
+      ]
+    },
+    "ru": {
+      "title": "Полное руководство по монтажу оптоволокна в помещениях",
+      "metaTitle": "Руководство по монтажу оптоволокна - CableCore",
+      "metaDescription": "Всё о монтаже оптоволокна внутри зданий: типы кабеля, сварка, коннекторы SC/APC, шкафы и сертификация OTDR.",
+      "excerpt": "Оптоволокно — будущее телекоммуникаций. В этом руководстве объясняем всё о монтаже: материалы, техника сварки и профессиональная сертификация.",
+      "category": "Руководства",
+      "tags": ["оптоволокно", "монтаж", "сварка"],
+      "content": [
+        { "type": "h2", "text": "Что такое оптоволокно и зачем его монтировать?" },
+        { "type": "p", "text": "Оптоволокно передаёт данные с помощью импульсов света по ультратонким стеклянным нитям. В отличие от медного кабеля, оптоволокно обеспечивает практически неограниченные скорости, иммунитет к электромагнитным помехам и способность покрывать расстояния до 100 км без деградации сигнала." },
+        { "type": "h2", "text": "Типы оптоволокна" },
+        { "type": "p", "text": "Одномодовое (SM) — ядро 9 мкм, для больших расстояний (FTTH, магистрали). Многомодовое (OM3/OM4) — ядро 50 мкм, для коротких дистанций внутри зданий (до 300-550 м), скорости 10-100 Гбит/с." },
+        { "type": "h2", "text": "Процесс монтажа" },
+        { "type": "p", "text": "Монтаж включает 5 этапов: проектирование, прокладка кабеля (с соблюдением минимального радиуса изгиба), дуговая сварка (типичное затухание < 0.02 дБ), терминация в шкафу со сплайс-кассетами и адаптерами SC/APC, сертификация OTDR каждого звена." },
+        { "type": "tip", "text": "🔆 CableCore монтирует одномодовое и многомодовое оптоволокно с профессиональной сваркой и сертификацией OTDR. Бесплатная смета: ☎ 605 974 605" }
+      ]
+    }
+  },
+  {
+    "slug": "fusion-vs-conectores-mecanicos-fibra",
+    "date": "2026-04-02",
+    "readTime": "6 min",
+    "es": {
+      "title": "Fusión vs conectores mecánicos: ¿qué método elegir para fibra óptica?",
+      "metaTitle": "Fusión vs conectores mecánicos fibra óptica - CableCore",
+      "metaDescription": "Comparativa entre fusión por arco y conectores mecánicos para fibra óptica. Ventajas, desventajas y cuándo usar cada método.",
+      "excerpt": "¿Fusión por arco o conector mecánico? Analizamos las ventajas y desventajas de cada método de terminación de fibra óptica para que elijas el más adecuado para tu instalación.",
+      "category": "Guías",
+      "tags": ["fibra óptica", "fusión", "conectores"],
+      "content": [
+        { "type": "h2", "text": "Fusión por arco (empalme)" },
+        { "type": "p", "text": "La fusión por arco es el método profesional estándar. Consiste en alinear dos fibras ópticas y fundirlas mediante un arco eléctrico de alta precisión. El resultado es una unión permanente con atenuación extremadamente baja (< 0.02 dB típica)." },
+        { "type": "h3", "text": "Ventajas de la fusión" },
+        { "type": "list", "items": ["Atenuación mínima (< 0.02 dB por empalme)", "Unión permanente y fiable", "Mayor resistencia mecánica", "Menor reflexión (mejor calidad de señal)", "Estándar de la industria para instalaciones profesionales"] },
+        { "type": "h3", "text": "Desventajas de la fusión" },
+        { "type": "list", "items": ["Requiere fusionadora profesional (equipo costoso)", "Necesita técnico especializado", "No es reparable en campo rápidamente"] },
+        { "type": "h2", "text": "Conectores mecánicos" },
+        { "type": "p", "text": "Los conectores mecánicos son dispositivos que alinean y sujetan dos fibras sin fusionarlas. Usan un gel de índice para reducir la reflexión en la unión. Son útiles para reparaciones temporales o instalaciones donde no se dispone de fusionadora." },
+        { "type": "h3", "text": "Ventajas de los conectores mecánicos" },
+        { "type": "list", "items": ["No requieren equipo costoso", "Instalación rápida en campo", "Reutilizables", "Útiles para reparaciones temporales"] },
+        { "type": "h3", "text": "Desventajas de los conectores mecánicos" },
+        { "type": "list", "items": ["Mayor atenuación (0.1-0.5 dB por conexión)", "Mayor reflexión", "Menor fiabilidad a largo plazo", "El gel de índice puede degradarse", "No recomendados para instalaciones permanentes"] },
+        { "type": "h2", "text": "¿Cuándo usar cada método?" },
+        { "type": "p", "text": "Para instalaciones permanentes (FTTH, backbone, racks) siempre recomendamos fusión por arco. Los conectores mecánicos son aceptables para reparaciones de emergencia en campo o instalaciones temporales donde no se dispone de fusionadora." },
+        { "type": "tip", "text": "🔥 En CableCore realizamos todas las instalaciones de fibra con fusión profesional por arco y certificación OTDR. ☎ 605 974 605" }
+      ]
+    },
+    "en": {
+      "title": "Fusion vs mechanical connectors: which method to choose for fiber optics?",
+      "metaTitle": "Fusion vs mechanical connectors fiber optics - CableCore",
+      "metaDescription": "Comparison between arc fusion and mechanical connectors for fiber optics. Advantages, disadvantages and when to use each method.",
+      "excerpt": "Arc fusion or mechanical connector? We analyze the pros and cons of each fiber optic termination method to help you choose the right one.",
+      "category": "Guides",
+      "tags": ["fiber optics", "fusion", "connectors"],
+      "content": [
+        { "type": "h2", "text": "Arc fusion (splicing)" },
+        { "type": "p", "text": "Arc fusion is the professional standard. It aligns two fibers and fuses them with a precision electric arc. The result is a permanent joint with extremely low loss (< 0.02 dB typical)." },
+        { "type": "h2", "text": "Mechanical connectors" },
+        { "type": "p", "text": "Mechanical connectors align and hold fibers without fusing them. They use index-matching gel to reduce reflection. Useful for temporary repairs or where a fusion splicer is not available." },
+        { "type": "h2", "text": "When to use each method?" },
+        { "type": "p", "text": "For permanent installations (FTTH, backbone, racks) always use arc fusion. Mechanical connectors are acceptable for emergency field repairs or temporary installations." },
+        { "type": "tip", "text": "🔥 CableCore performs all fiber installations with professional arc fusion and OTDR certification. ☎ 605 974 605" }
+      ]
+    },
+    "ru": {
+      "title": "Сварка vs механические коннекторы: какой метод выбрать?",
+      "metaTitle": "Сварка vs механические коннекторы оптоволокно - CableCore",
+      "metaDescription": "Сравнение дуговой сварки и механических коннекторов для оптоволокна. Преимущества, недостатки и когда использовать каждый метод.",
+      "excerpt": "Дуговая сварка или механический коннектор? Анализируем плюсы и минусы каждого метода соединения оптоволокна.",
+      "category": "Руководства",
+      "tags": ["оптоволокно", "сварка", "коннекторы"],
+      "content": [
+        { "type": "h2", "text": "Дуговая сварка (сплайсинг)" },
+        { "type": "p", "text": "Дуговая сварка — профессиональный стандарт. Две волокна выравниваются и сплавляются электрической дугой. Результат — постоянное соединение с потерями < 0.02 дБ." },
+        { "type": "h2", "text": "Механические коннекторы" },
+        { "type": "p", "text": "Механические коннекторы выравнивают и фиксируют волокна без сварки. Полезны для временных ремонтов, но имеют большие потери (0.1-0.5 дБ) и меньшую надёжность." },
+        { "type": "h2", "text": "Рекомендации" },
+        { "type": "p", "text": "Для постоянных установок (FTTH, магистрали, шкафы) — всегда дуговая сварка. Механические коннекторы допустимы только для аварийного ремонта в поле." },
+        { "type": "tip", "text": "🔥 CableCore выполняет все монтажи оптоволокна с профессиональной дуговой сваркой и сертификацией OTDR. ☎ 605 974 605" }
+      ]
+    }
   }
 ]

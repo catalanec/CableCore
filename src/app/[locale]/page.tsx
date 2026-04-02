@@ -12,8 +12,8 @@ export function generateMetadata({ params }: { params: { locale: string } }): Me
 export default function HomePage() {
     const t = useTranslations();
 
-    const serviceIcons = ['🏠', '🏢', '🛍️', '🏭'];
-    const serviceKeys = ['home', 'office', 'retail', 'business'] as const;
+    const serviceIcons = ['🏠', '🏢', '🛍️', '🏭', '🔆'];
+    const serviceKeys = ['home', 'office', 'retail', 'business', 'fiber'] as const;
 
     const trustItems = [
         { icon: '🏅', key: 'certified' as const },
@@ -130,7 +130,7 @@ export default function HomePage() {
                             <p className="text-brand-gold-muted leading-relaxed">{t('services.subtitle')}</p>
                         </div>
 
-                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-5">
                             {serviceKeys.map((key, i) => {
                                 const features = t.raw(`services.${key}.features`) as string[];
                                 return (
@@ -382,6 +382,9 @@ export default function HomePage() {
                                     <option>Cat6</option>
                                     <option>Cat6A</option>
                                     <option>Cat7</option>
+                                    <option>Fibra Óptica (Monomodo)</option>
+                                    <option>Fibra Óptica (Multimodo)</option>
+                                    <option>Fusión de Fibra</option>
                                     <option>Wi-Fi / Access Point</option>
                                     <option>Rack / Patch Panel</option>
                                 </select>

@@ -3,6 +3,7 @@
 import { useState, useCallback, useMemo } from 'react';
 import { useTranslations } from 'next-intl';
 import QuoteForm from './QuoteForm';
+import FiberCalculator, { FiberCalcResult } from './FiberCalculator';
 
 /* ═════════════════════════════════════
    CONFIG — реальные цены Испании
@@ -322,6 +323,10 @@ const calcLabels: Record<string, Record<string, string>> = {
 export default function Calculator({ locale }: { locale: string }) {
     const l = calcLabels[locale] || calcLabels.es;
 
+    // ── Mode: ethernet vs fiber ──
+    const [calcMode, setCalcMode] = useState<'ethernet' | 'fiber'>('ethernet');
+    const [fiberCalcData, setFiberCalcData] = useState<FiberCalcResult | null>(null);
+
     // ── State ──
     const [cableType, setCableType] = useState<keyof typeof CONFIG.cablePrices>('cat6');
     const [points, setPoints] = useState(4);
@@ -451,6 +456,38 @@ export default function Calculator({ locale }: { locale: string }) {
     }, [cableType, points, avgLength, installType, trenchMode, trenchLengthInput, canetaMode, canetaLengthInput, additionalMaterials, equipment, rack, upsellOptions, urgency]);
 
     return (
+        <div className="space-y-6">
+            {/* ═══ TABS: Ethernet / Fibra ═══ */}
+            <div className="flex gap-2 justify-center">
+                <button
+                    onClick={() => setCalcMode('ethernet')}
+                    className={`px-6 py-3 rounded-xl font-heading font-bold text-sm transition-all duration-300 flex items-center gap-2 ${
+                        calcMode === 'ethernet'
+                            ? 'bg-[rgba(201,168,76,0.15)] border-2 border-brand-gold text-brand-gold shadow-[0_0_20px_rgba(201,168,76,0.15)]'
+                            : 'bg-surface-card border-2 border-border-subtle text-brand-gold-muted hover:border-brand-gold/30'
+                    }`}
+                >
+                    🌐 {locale === 'ru' ? 'Сеть Ethernet' : locale === 'en' ? 'Ethernet Network' : 'Red Ethernet'}
+                </button>
+                <button
+                    onClick={() => setCalcMode('fiber')}
+                    className={`px-6 py-3 rounded-xl font-heading font-bold text-sm transition-all duration-300 flex items-center gap-2 ${
+                        calcMode === 'fiber'
+                            ? 'bg-[rgba(0,180,255,0.1)] border-2 border-cyan-400 text-cyan-300 shadow-[0_0_20px_rgba(0,180,255,0.15)]'
+                            : 'bg-surface-card border-2 border-border-subtle text-brand-gold-muted hover:border-cyan-400/30'
+                    }`}
+                >
+                    🔆 {locale === 'ru' ? 'Оптоволокно' : locale === 'en' ? 'Fiber Optic' : 'Fibra Óptica'}
+                </button>
+            </div>
+
+            {/* ═══ FIBER CALCULATOR ═══ */}
+            {calcMode === 'fiber' && (
+                <FiberCalculator locale={locale} onCalcUpdate={setFiberCalcData} />
+            )}
+
+            {/* ═══ ETHERNET CALCULATOR ═══ */}
+            {calcMode === 'ethernet' && (
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             {/* LEFT — Configuration */}
             <div className="lg:col-span-2 space-y-6">
@@ -1022,6 +1059,31 @@ export default function Calculator({ locale }: { locale: string }) {
                     </div>
                 </div>
             </div>
+        </div>
+            )}
+
+            {/* ═══ COMBINED SUMMARY (if both calculators used) ═══ */}
+            {fiberCalcData && fiberCalcData.total > 0 && calcMode === 'ethernet' && (
+                <div className="card p-6 border-cyan-400/20 mt-6">
+                    <h3 className="font-heading font-semibold text-white text-lg mb-4 text-center">
+                        🧾 {locale === 'ru' ? 'Сводная смета' : locale === 'en' ? 'Combined Estimate' : 'Presupuesto combinado'}
+                    </h3>
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 text-center">
+                        <div className="card p-4 border-brand-gold/20">
+                            <div className="text-xs text-brand-gold-muted uppercase tracking-wider">🌐 Red Ethernet</div>
+                            <div className="font-heading text-2xl font-bold text-gradient-gold mt-1">{calc.total.toFixed(2)}€</div>
+                        </div>
+                        <div className="card p-4 border-cyan-400/20">
+                            <div className="text-xs text-brand-gold-muted uppercase tracking-wider">🔆 Fibra Óptica</div>
+                            <div className="font-heading text-2xl font-bold text-cyan-300 mt-1">{fiberCalcData.total.toFixed(2)}€</div>
+                        </div>
+                        <div className="card p-4 border-green-400/20">
+                            <div className="text-xs text-brand-gold-muted uppercase tracking-wider">💰 Total combinado</div>
+                            <div className="font-heading text-2xl font-bold text-green-400 mt-1">{(calc.total + fiberCalcData.total).toFixed(2)}€</div>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     );
 }

@@ -71,6 +71,16 @@
         "Redundancy & failover",
         "Fluke certification"
       ]
+    },
+    "fiber": {
+      "title": "Fiber Optics",
+      "desc": "Single-mode and multi-mode fiber optic installation. Fusion splicing, OTDR certification and FTTH.",
+      "features": [
+        "Professional arc fusion",
+        "SC/APC connectors",
+        "OTDR certification",
+        "FTTH for buildings"
+      ]
     }
   },
   "trust": {

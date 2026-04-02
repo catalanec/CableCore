@@ -462,6 +462,120 @@ export const SEO_PAGES: SEOPageConfig[] = [
             { q: '¿Hacéis instalaciones en Granollers?', a: 'Sí, cubrimos Granollers y todo el Vallès Oriental. Mismos precios que en Barcelona.' },
         ],
     },
+
+    /* ═══════════════════════════════════════════
+       FIBRA ÓPTICA — SEO Pages
+       ═══════════════════════════════════════════ */
+
+    {
+        slug: 'instalacion-fibra-optica-barcelona',
+        title: 'Instalación de Fibra Óptica Barcelona | CableCore',
+        h1: 'Instalación de fibra óptica en Barcelona',
+        h2s: ['¿Por qué instalar fibra óptica?', 'Tipos de instalación', 'Preguntas frecuentes'],
+        intro: 'Servicio profesional de instalación de fibra óptica en Barcelona. Fusión por arco, cableado monomodo y multimodo, rosetas SC/APC y certificación OTDR. Para empresas, edificios residenciales y comunidades de vecinos.',
+        metaDescription: 'Instalación de fibra óptica en Barcelona. Fusión, cableado monomodo/multimodo, certificación OTDR. Presupuesto gratis. ☎ +34 605 974 605',
+        cta: '¿Necesitas instalar fibra óptica en Barcelona?',
+        features: [
+            { icon: '🔆', title: 'Fibra monomodo y multimodo', text: 'Instalamos fibra monomodo (SM) de 2, 4 y 12 hilos, y multimodo OM3/OM4 para distancias cortas.' },
+            { icon: '🔥', title: 'Fusión por arco', text: 'Empalme de fibras con fusionadora profesional para mínima atenuación y máxima fiabilidad.' },
+            { icon: '🔌', title: 'Conectores SC/APC', text: 'Terminación con conectores SC/APC, pigtails y acopladores hembra-hembra para conexiones limpias.' },
+            { icon: '🗄️', title: 'Racks y bandejas', text: 'Instalación de racks de fibra, bandejas de empalme y cajas murales para organización profesional.' },
+            { icon: '📊', title: 'Certificación OTDR', text: 'Medición y certificación de cada fibra con reflectómetro óptico (OTDR).' },
+            { icon: '🏢', title: 'Edificios y comunidades', text: 'Cableado vertical FTTH para edificios: desde el rack comunitario hasta cada vivienda con rosetas de 2 puertos.' },
+        ],
+        faq: [
+            { q: '¿Cuánto cuesta instalar fibra óptica en Barcelona?', a: 'El precio depende del número de puntos y metros. Un punto de fibra instalado con fusión y certificación cuesta desde 55€. Pide presupuesto gratis.' },
+            { q: '¿Qué diferencia hay entre monomodo y multimodo?', a: 'El monomodo (SM) es para distancias largas (hasta 100 km) y es el más usado en FTTH. El multimodo (OM3/OM4) es para distancias cortas (dentro de edificios) con velocidades de 10-100 Gbps.' },
+            { q: '¿Hacéis fusión de fibra óptica?', a: 'Sí, realizamos empalmes por fusión con fusionadora de arco profesional. Cada empalme se mide con OTDR para garantizar la calidad.' },
+            { q: '¿Instaláis fibra en edificios de viviendas?', a: 'Sí, hacemos instalaciones FTTH verticales: desde el rack del sótano hasta cada piso con cable monomodo y rosetas SC/APC de 2 puertos.' },
+        ],
+    },
+    {
+        slug: 'instalacion-fibra-optica-empresas-barcelona',
+        title: 'Fibra Óptica para Empresas Barcelona | CableCore',
+        h1: 'Instalación de fibra óptica para empresas en Barcelona',
+        h2s: ['Soluciones de fibra empresarial', 'Tecnología y equipamiento', 'Preguntas frecuentes'],
+        intro: 'Fibra óptica para empresas en Barcelona. Interconexión de sedes, backbone de red, enlaces de alta velocidad y redes de campus con fibra monomodo y multimodo. Certificación profesional.',
+        metaDescription: 'Fibra óptica para empresas en Barcelona. Backbone de red, interconexión de sedes, enlaces 10/40/100 Gbps. Presupuesto gratis. ☎ +34 605 974 605',
+        cta: '¿Tu empresa necesita fibra óptica?',
+        features: [
+            { icon: '🚀', title: 'Alta velocidad', text: 'Enlaces de 10, 40 y 100 Gbps con fibra monomodo y multimodo OM4.' },
+            { icon: '🏢', title: 'Interconexión de sedes', text: 'Conectamos oficinas, almacenes y centros de datos con enlaces de fibra dedicados.' },
+            { icon: '📡', title: 'Backbone de red', text: 'Fibra óptica como columna vertebral de la red empresarial para máximo rendimiento.' },
+            { icon: '🔒', title: 'Seguridad', text: 'La fibra óptica es inmune a interferencias electromagnéticas y difícil de interceptar.' },
+            { icon: '📐', title: 'Diseño a medida', text: 'Diseñamos la topología de fibra ideal para tu infraestructura empresarial.' },
+            { icon: '✅', title: 'Certificación completa', text: 'Cada enlace certificado con OTDR e informe técnico detallado.' },
+        ],
+        faq: [
+            { q: '¿Merece la pena fibra óptica para mi empresa?', a: 'Si manejas grandes volúmenes de datos, tienes varias sedes o necesitas enlaces superiores a 1 Gbps, la fibra óptica es la opción más rentable a largo plazo.' },
+            { q: '¿Se puede usar fibra óptica junto con cable Ethernet?', a: 'Sí, es lo más habitual. La fibra se usa como backbone entre plantas o edificios, y el Ethernet Cat6A para la distribución a los puestos de trabajo.' },
+        ],
+    },
+    {
+        slug: 'cableado-fibra-optica-interior-barcelona',
+        title: 'Cableado de Fibra Óptica Interior Barcelona | CableCore',
+        h1: 'Cableado de fibra óptica interior en Barcelona',
+        h2s: ['Tipos de cableado interior', 'Materiales y acabados', 'Preguntas frecuentes'],
+        intro: 'Instalación de cableado de fibra óptica en interiores en Barcelona. Fibra tight-buffer para distribución interior, con canaleta, falso techo o conductos existentes. Acabados profesionales y discretos.',
+        metaDescription: 'Cableado de fibra óptica interior en Barcelona. Instalación profesional, acabados discretos. Presupuesto gratis. ☎ +34 605 974 605',
+        cta: '¿Necesitas cableado de fibra interior?',
+        features: [
+            { icon: '🏠', title: 'Fibra interior', text: 'Cable tight-buffer LSZH para instalaciones interiores, conforme a normativa de incendios CPR.' },
+            { icon: '📏', title: 'Canaleta decorativa', text: 'Instalación con canaleta para mantener la estética del espacio.' },
+            { icon: '🏗️', title: 'Falso techo', text: 'Tendido de fibra por falso techo para instalaciones invisibles.' },
+            { icon: '🔧', title: 'Conductos existentes', text: 'Aprovechamos canalizaciones existentes para minimizar obra.' },
+            { icon: '🔌', title: 'Rosetas SC/APC', text: 'Puntos de conexión con rosetas ópticas de 2 puertos SC/APC.' },
+            { icon: '🗄️', title: 'Cajas murales', text: 'Cajas de terminación de fibra para organización en cada punto.' },
+        ],
+        faq: [
+            { q: '¿Se nota la instalación de fibra interior?', a: 'No si se hace bien. Usamos canaleta mini decorativa o falso techo para que la instalación sea prácticamente invisible.' },
+            { q: '¿Qué tipo de cable se usa en interior?', a: 'Usamos cable tight-buffer monomodo con cubierta LSZH (baja emisión de humos), cumpliendo la normativa CPR de seguridad contra incendios.' },
+        ],
+    },
+    {
+        slug: 'fusion-fibra-optica-barcelona',
+        title: 'Fusión de Fibra Óptica Barcelona | Empalme Profesional | CableCore',
+        h1: 'Servicio de fusión de fibra óptica en Barcelona',
+        h2s: ['Proceso de fusión', 'Equipamiento profesional', 'Preguntas frecuentes'],
+        intro: 'Servicio profesional de fusión (empalme) de fibra óptica en Barcelona. Fusionadora de arco de última generación, pigtails SC/APC, bandejas de empalme y certificación OTDR de cada fusión.',
+        metaDescription: 'Fusión de fibra óptica en Barcelona. Empalme por arco profesional, certificación OTDR. Atenuación < 0.05 dB. ☎ +34 605 974 605',
+        cta: '¿Necesitas fusionar fibra óptica?',
+        features: [
+            { icon: '🔥', title: 'Fusión por arco', text: 'Empalme con fusionadora de arco eléctrico de última generación. Atenuación típica < 0.02 dB.' },
+            { icon: '📊', title: 'Medición OTDR', text: 'Cada fusión se verifica con reflectómetro óptico para garantizar la calidad del empalme.' },
+            { icon: '🔌', title: 'Pigtails SC/APC', text: 'Terminación con pigtails SC/APC de alta calidad para conexión directa a equipos.' },
+            { icon: '📋', title: 'Bandejas organizadas', text: 'Cada empalme se protege en bandeja de empalme 1U dentro del rack.' },
+            { icon: '🏢', title: 'Edificios FTTH', text: 'Fusiones en cajas de segregación, registros y cuartos de telecomunicaciones.' },
+            { icon: '⚡', title: 'Servicio urgente', text: 'Reparación de fibra cortada o dañada con servicio de urgencia 24/7.' },
+        ],
+        faq: [
+            { q: '¿Cuánto cuesta una fusión de fibra óptica?', a: 'El precio por fusión (empalme) es de 15€ por fibra, incluyendo protector de empalme y pigtail SC/APC.' },
+            { q: '¿Cuánto tarda una fusión?', a: 'Una fusión individual tarda menos de 2 minutos. Un proyecto de 12-24 fusiones se completa en 2-3 horas incluyendo certificación.' },
+            { q: '¿Qué atenuación tiene una fusión?', a: 'Con nuestro equipo profesional, las fusiones tienen una atenuación típica inferior a 0.02 dB, muy por debajo del máximo aceptable de 0.1 dB.' },
+        ],
+    },
+    {
+        slug: 'instalacion-ftth-edificios-barcelona',
+        title: 'Instalación FTTH Edificios Barcelona | CableCore',
+        h1: 'Instalación FTTH para edificios en Barcelona',
+        h2s: ['¿Qué es FTTH?', 'Proceso de instalación', 'Preguntas frecuentes'],
+        intro: 'Instalación FTTH (Fiber To The Home) en edificios de Barcelona. Cableado vertical de fibra óptica desde el rack comunitario hasta cada vivienda. Rosetas SC/APC de 2 puertos en cada piso. Ideal para comunidades de vecinos.',
+        metaDescription: 'Instalación FTTH en edificios de Barcelona. Fibra óptica hasta cada vivienda. Rack, fusión, rosetas SC/APC. ☎ +34 605 974 605',
+        cta: '¿Tu edificio necesita FTTH?',
+        features: [
+            { icon: '🏢', title: 'Cableado vertical', text: 'Fibra monomodo desde el sótano o cuarto de telecomunicaciones hasta cada planta del edificio.' },
+            { icon: '🔌', title: 'Roseta en cada vivienda', text: 'Punto de fibra con roseta SC/APC de 2 puertos en el interior de cada vivienda.' },
+            { icon: '🗄️', title: 'Rack comunitario', text: 'Rack de fibra centralizado con bandejas de empalme y acopladores para conectar con los operadores.' },
+            { icon: '🔥', title: 'Fusión profesional', text: 'Todos los empalmes realizados con fusionadora de arco y certificados con OTDR.' },
+            { icon: '📐', title: 'Proyecto ICT', text: 'Cumplimos con la normativa ICT2 para infraestructuras de telecomunicaciones en edificios.' },
+            { icon: '🤝', title: 'Comunidades de vecinos', text: 'Trabajamos con administradores de fincas y comunidades para presupuestos colectivos.' },
+        ],
+        faq: [
+            { q: '¿Qué es FTTH?', a: 'FTTH (Fiber To The Home) significa fibra hasta el hogar. Es la instalación de cable de fibra óptica directamente hasta cada vivienda del edificio.' },
+            { q: '¿Cuánto cuesta instalar FTTH en un edificio?', a: 'Depende del número de plantas y viviendas. Un edificio de 10 viviendas está en torno a 2.000-4.000€ con rack, fusiones y rosetas incluidas.' },
+            { q: '¿Los vecinos pueden contratar operadores diferentes?', a: 'Sí, la instalación FTTH es neutra. Cada operador puede conectar su fibra al rack comunitario y dar servicio a los vecinos que contraten.' },
+        ],
+    },
 ];
 
 export function getPageBySlug(slug: string): SEOPageConfig | undefined {
