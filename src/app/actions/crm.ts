@@ -6,6 +6,8 @@ import { revalidatePath } from 'next/cache';
 // Initialize superservice client that bypasses RLS
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
 const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '';
+const telegramBotToken = process.env.TELEGRAM_BOT_TOKEN || '';
+const telegramChatId = process.env.TELEGRAM_CHAT_ID || '';
 
 const getSupabase = () => {
     if (!supabaseUrl || !supabaseKey) {
@@ -15,6 +17,93 @@ const getSupabase = () => {
 };
 
 const revalidate = () => revalidatePath('/[locale]/admin', 'page');
+
+// ═══════════════════════════════════
+// TELEGRAM NOTIFICATIONS
+// ═══════════════════════════════════
+
+async function sendTelegram(message: string) {
+    if (!telegramBotToken || !telegramChatId) return;
+    try {
+        await fetch(`https://api.telegram.org/bot${telegramBotToken}/sendMessage`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                chat_id: telegramChatId,
+                text: message,
+                parse_mode: 'HTML',
+            }),
+        });
+    } catch (e) {
+        console.error('Telegram send failed:', e);
+    }
+}
+
+export async function sendLowStockAlerts() {
+    try {
+        const supabase = getSupabase();
+        const { data: mats } = await supabase.from('materials').select('*');
+        if (!mats) return { success: true, sent: 0 };
+
+        const lowItems = mats.filter(m => m.stock <= m.min_stock);
+        if (lowItems.length === 0) return { success: true, sent: 0 };
+
+        const lines = lowItems.map(m =>
+            `⚠️ <b>${m.name}</b> — ${m.stock} ${m.unit} (mín: ${m.min_stock})`
+        );
+        const msg = `🚨 <b>Alerta Stock Bajo — CableCore</b>\n\n${lines.join('\n')}\n\n📦 Total: ${lowItems.length} productos requieren reposición`;
+        await sendTelegram(msg);
+        return { success: true, sent: lowItems.length };
+    } catch (error: any) {
+        console.error('Failed to send low stock alerts:', error);
+        return { success: false, error: error.message };
+    }
+}
+
+// ═══════════════════════════════════
+// CSV EXPORT
+// ═══════════════════════════════════
+
+export async function exportMaterialsCSV(): Promise<{ success: boolean; csv?: string; error?: string }> {
+    try {
+        const supabase = getSupabase();
+        const { data: mats, error } = await supabase.from('materials').select('*').order('name');
+        if (error) throw error;
+        if (!mats || mats.length === 0) return { success: true, csv: '' };
+
+        const header = 'Nombre,Categoría,Unidad,Coste,Venta,Margen(%),Stock,Stock Mín,Estado';
+        const rows = mats.map(m => {
+            const margin = m.sell_price > 0 ? (((m.sell_price - m.cost_price) / m.sell_price) * 100).toFixed(1) : '0';
+            const status = m.stock <= m.min_stock ? 'BAJO' : m.stock <= m.min_stock * 1.5 ? 'MEDIO' : 'OK';
+            return `"${m.name}","${m.category}","${m.unit}",${m.cost_price},${m.sell_price},${margin},${m.stock},${m.min_stock},${status}`;
+        });
+        return { success: true, csv: [header, ...rows].join('\n') };
+    } catch (error: any) {
+        return { success: false, error: error.message };
+    }
+}
+
+export async function exportProjectsCSV(): Promise<{ success: boolean; csv?: string; error?: string }> {
+    try {
+        const supabase = getSupabase();
+        const { data: projs, error } = await supabase.from('projects').select('*').order('created_at', { ascending: false });
+        if (error) throw error;
+        if (!projs || projs.length === 0) return { success: true, csv: '' };
+
+        const header = 'Cliente,Ingresos,Mat.Real,M.O.Real,Otros,Coste Total,Beneficio,Estado Pago,Fecha Pago,Estado,Fecha';
+        const rows = projs.map(p => {
+            const matC = Number(p.actual_material_cost) || 0;
+            const labC = Number(p.actual_labor_cost) || 0;
+            const othC = Number(p.actual_other_cost) || 0;
+            const totalC = matC + labC + othC || Number(p.total_cost) || 0;
+            const profit = (Number(p.total_revenue) || 0) - totalC;
+            return `"${p.client_name || ''}",${Number(p.total_revenue) || 0},${matC},${labC},${othC},${totalC},${profit},"${p.payment_status || 'pending'}","${p.payment_date || ''}","${p.status || ''}","${p.created_at || ''}"`;
+        });
+        return { success: true, csv: [header, ...rows].join('\n') };
+    } catch (error: any) {
+        return { success: false, error: error.message };
+    }
+}
 
 export async function updateLeadStatus(id: string, newStatus: string) {
     try {

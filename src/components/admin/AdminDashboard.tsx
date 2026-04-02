@@ -2,7 +2,7 @@
 
 import { useState, useMemo, useEffect } from 'react';
 
-import { updateLeadStatus, updateQuoteStatus, updateMaterialStock, deleteLead, deleteQuote, updateLeadNotes, updateQuoteNotes, addMaterial, deleteMaterial, updateMaterial, updateProjectCosts, updateProjectPayment, seedMaterials } from '@/app/actions/crm';
+import { updateLeadStatus, updateQuoteStatus, updateMaterialStock, deleteLead, deleteQuote, updateLeadNotes, updateQuoteNotes, addMaterial, deleteMaterial, updateMaterial, updateProjectCosts, updateProjectPayment, seedMaterials, sendLowStockAlerts, exportMaterialsCSV, exportProjectsCSV } from '@/app/actions/crm';
 import { downloadQuotePDF, type QuotePDFData } from '@/lib/quote-pdf';
 
 interface AdminDashboardProps {
@@ -37,9 +37,22 @@ export default function AdminDashboard({ initialQuotes, initialLeads, initialMat
     const [selectedQuote, setSelectedQuote] = useState<any>(null);
     const [selectedLead, setSelectedLead] = useState<any>(null);
     const [showAddMaterial, setShowAddMaterial] = useState(false);
+    const [editMaterial, setEditMaterial] = useState<any>(null);
     const [categoryFilter, setCategoryFilter] = useState('all');
     const [chartPeriod, setChartPeriod] = useState(6);
     const [newMat, setNewMat] = useState({ name: '', category: 'cable', unit: 'm', cost_price: 0, sell_price: 0, stock: 0, min_stock: 5 });
+
+    // CSV export helper
+    const downloadCSV = (csv: string, filename: string) => {
+        const BOM = '\uFEFF';
+        const blob = new Blob([BOM + csv], { type: 'text/csv;charset=utf-8;' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = filename;
+        a.click();
+        URL.revokeObjectURL(url);
+    };
     
     // Convert to local states to allow optimistic UI updates (but server actions will revalidate props too)
     const [quotes, setQuotes] = useState(initialQuotes);
@@ -522,6 +535,32 @@ export default function AdminDashboard({ initialQuotes, initialLeads, initialMat
                                     </button>
                                 )}
                                 <button
+                                    onClick={async () => {
+                                        const result = await exportMaterialsCSV();
+                                        if (result.success && result.csv) {
+                                            downloadCSV(result.csv, `materiales_cablecore_${new Date().toISOString().split('T')[0]}.csv`);
+                                        } else {
+                                            alert('❌ Error exportando: ' + (result.error || 'sin datos'));
+                                        }
+                                    }}
+                                    className="px-3 py-2 bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 rounded-lg text-xs font-bold hover:bg-emerald-500/30 transition-colors"
+                                >
+                                    📥 CSV
+                                </button>
+                                <button
+                                    onClick={async () => {
+                                        const result = await sendLowStockAlerts();
+                                        if (result.success) {
+                                            alert((result.sent ?? 0) > 0 ? `✅ Alerta enviada via Telegram (${result.sent ?? 0} productos)` : '✅ Sin productos con stock bajo');
+                                        } else {
+                                            alert('❌ Error: ' + result.error);
+                                        }
+                                    }}
+                                    className="px-3 py-2 bg-blue-500/20 text-blue-300 border border-blue-500/30 rounded-lg text-xs font-bold hover:bg-blue-500/30 transition-colors"
+                                >
+                                    📲 Alertas
+                                </button>
+                                <button
                                     onClick={() => setShowAddMaterial(true)}
                                     className="px-4 py-2 bg-brand-gold text-black rounded-lg text-sm font-bold hover:bg-brand-gold/90 transition-colors"
                                 >
@@ -594,14 +633,19 @@ export default function AdminDashboard({ initialQuotes, initialLeads, initialMat
                                                     </span>
                                                 </td>
                                                 <td className="p-4 text-center">
-                                                    <button onClick={async () => {
-                                                        if(confirm(`¿Eliminar "${m.name}" del inventario?`)) {
-                                                            await deleteMaterial(m.id);
-                                                            setMaterials(materials.filter(x => x.id !== m.id));
-                                                        }
-                                                    }} className="text-red-400 hover:text-red-300 transition-colors uppercase text-[10px] tracking-wider font-bold">
-                                                        Eliminar
-                                                    </button>
+                                                    <div className="flex items-center justify-center gap-2">
+                                                        <button onClick={() => setEditMaterial(m)} className="text-brand-gold hover:text-brand-gold/80 transition-colors uppercase text-[10px] tracking-wider font-bold">
+                                                            ✏️ Editar
+                                                        </button>
+                                                        <button onClick={async () => {
+                                                            if(confirm(`¿Eliminar "${m.name}" del inventario?`)) {
+                                                                await deleteMaterial(m.id);
+                                                                setMaterials(materials.filter(x => x.id !== m.id));
+                                                            }
+                                                        }} className="text-red-400 hover:text-red-300 transition-colors uppercase text-[10px] tracking-wider font-bold">
+                                                            🗑️
+                                                        </button>
+                                                    </div>
                                                 </td>
                                             </tr>
                                         );
@@ -766,6 +810,22 @@ export default function AdminDashboard({ initialQuotes, initialLeads, initialMat
 
                     {/* Projects table */}
                     <div className="card border-brand-gold/10 overflow-hidden">
+                        <div className="p-4 border-b border-border-subtle flex items-center justify-between">
+                            <h3 className="font-heading font-semibold text-white">📋 Historial de Proyectos</h3>
+                            <button
+                                onClick={async () => {
+                                    const result = await exportProjectsCSV();
+                                    if (result.success && result.csv) {
+                                        downloadCSV(result.csv, `proyectos_cablecore_${new Date().toISOString().split('T')[0]}.csv`);
+                                    } else {
+                                        alert('❌ Error exportando: ' + (result.error || 'sin datos'));
+                                    }
+                                }}
+                                className="px-3 py-2 bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 rounded-lg text-xs font-bold hover:bg-emerald-500/30 transition-colors"
+                            >
+                                📥 Exportar CSV
+                            </button>
+                        </div>
                         <div className="overflow-x-auto">
                             <table className="w-full text-sm">
                                 <thead>
@@ -1024,6 +1084,125 @@ export default function AdminDashboard({ initialQuotes, initialLeads, initialMat
                                     }}
                                 />
                             </div>
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            {/* Edit Material Modal */}
+            {editMaterial && (
+                <div className="fixed inset-0 bg-black/70 z-50 flex items-center justify-center p-4" onClick={() => setEditMaterial(null)}>
+                    <div className="bg-surface-card border border-border-subtle rounded-xl w-full max-w-lg p-6" onClick={e => e.stopPropagation()}>
+                        <h3 className="font-heading text-xl font-bold text-white mb-6">✏️ Editar Material</h3>
+                        <div className="space-y-4">
+                            <div>
+                                <label className="text-xs text-brand-gold-muted uppercase tracking-wider block mb-1">Nombre</label>
+                                <input
+                                    type="text"
+                                    defaultValue={editMaterial.name}
+                                    onChange={e => setEditMaterial({ ...editMaterial, name: e.target.value })}
+                                    className="w-full bg-brand-dark border border-border-subtle rounded-lg p-3 text-white focus:outline-none focus:border-brand-gold/50"
+                                />
+                            </div>
+                            <div className="grid grid-cols-2 gap-4">
+                                <div>
+                                    <label className="text-xs text-brand-gold-muted uppercase tracking-wider block mb-1">Categoría</label>
+                                    <select
+                                        value={editMaterial.category}
+                                        onChange={e => setEditMaterial({ ...editMaterial, category: e.target.value })}
+                                        className="w-full bg-brand-dark border border-border-subtle rounded-lg p-3 text-white focus:outline-none focus:border-brand-gold/50"
+                                    >
+                                        {['cable', 'conector', 'fibra', 'conector_fibra', 'rack_fibra', 'rack', 'canaleta', 'tubo', 'herramienta', 'otro'].map(c => <option key={c} value={c}>{c.charAt(0).toUpperCase() + c.slice(1).replace('_', ' ')}</option>)}
+                                    </select>
+                                </div>
+                                <div>
+                                    <label className="text-xs text-brand-gold-muted uppercase tracking-wider block mb-1">Unidad</label>
+                                    <select
+                                        value={editMaterial.unit}
+                                        onChange={e => setEditMaterial({ ...editMaterial, unit: e.target.value })}
+                                        className="w-full bg-brand-dark border border-border-subtle rounded-lg p-3 text-white focus:outline-none focus:border-brand-gold/50"
+                                    >
+                                        {['m', 'ud', 'rollo', 'caja', 'kg'].map(u => <option key={u} value={u}>{u}</option>)}
+                                    </select>
+                                </div>
+                            </div>
+                            <div className="grid grid-cols-2 gap-4">
+                                <div>
+                                    <label className="text-xs text-brand-gold-muted uppercase tracking-wider block mb-1">Precio coste (€)</label>
+                                    <input
+                                        type="number"
+                                        step="0.01"
+                                        defaultValue={editMaterial.cost_price}
+                                        onChange={e => setEditMaterial({ ...editMaterial, cost_price: parseFloat(e.target.value) || 0 })}
+                                        className="w-full bg-brand-dark border border-border-subtle rounded-lg p-3 text-white focus:outline-none focus:border-brand-gold/50"
+                                    />
+                                </div>
+                                <div>
+                                    <label className="text-xs text-brand-gold-muted uppercase tracking-wider block mb-1">Precio venta (€)</label>
+                                    <input
+                                        type="number"
+                                        step="0.01"
+                                        defaultValue={editMaterial.sell_price}
+                                        onChange={e => setEditMaterial({ ...editMaterial, sell_price: parseFloat(e.target.value) || 0 })}
+                                        className="w-full bg-brand-dark border border-border-subtle rounded-lg p-3 text-white focus:outline-none focus:border-brand-gold/50"
+                                    />
+                                </div>
+                            </div>
+                            <div className="grid grid-cols-2 gap-4">
+                                <div>
+                                    <label className="text-xs text-brand-gold-muted uppercase tracking-wider block mb-1">Stock actual</label>
+                                    <input
+                                        type="number"
+                                        defaultValue={editMaterial.stock}
+                                        onChange={e => setEditMaterial({ ...editMaterial, stock: parseInt(e.target.value) || 0 })}
+                                        className="w-full bg-brand-dark border border-border-subtle rounded-lg p-3 text-white focus:outline-none focus:border-brand-gold/50"
+                                    />
+                                </div>
+                                <div>
+                                    <label className="text-xs text-brand-gold-muted uppercase tracking-wider block mb-1">Stock mínimo</label>
+                                    <input
+                                        type="number"
+                                        defaultValue={editMaterial.min_stock}
+                                        onChange={e => setEditMaterial({ ...editMaterial, min_stock: parseInt(e.target.value) || 0 })}
+                                        className="w-full bg-brand-dark border border-border-subtle rounded-lg p-3 text-white focus:outline-none focus:border-brand-gold/50"
+                                    />
+                                </div>
+                            </div>
+                            {editMaterial.sell_price > 0 && editMaterial.cost_price > 0 && (
+                                <div className="bg-brand-dark/50 rounded-lg p-3 text-center">
+                                    <span className="text-xs text-brand-gold-muted">Margen: </span>
+                                    <span className="text-green-400 font-bold">
+                                        {(((editMaterial.sell_price - editMaterial.cost_price) / editMaterial.sell_price) * 100).toFixed(0)}%
+                                    </span>
+                                </div>
+                            )}
+                        </div>
+                        <div className="flex justify-end gap-3 mt-6">
+                            <button
+                                onClick={() => setEditMaterial(null)}
+                                className="px-4 py-2 border border-border-subtle rounded-lg text-brand-gold-muted hover:text-white transition-colors"
+                            >
+                                Cancelar
+                            </button>
+                            <button
+                                onClick={async () => {
+                                    const { id, created_at, ...data } = editMaterial;
+                                    await updateMaterial(id, {
+                                        name: data.name,
+                                        category: data.category,
+                                        unit: data.unit,
+                                        cost_price: data.cost_price,
+                                        sell_price: data.sell_price,
+                                        stock: data.stock,
+                                        min_stock: data.min_stock,
+                                    });
+                                    setMaterials(materials.map(x => x.id === id ? { ...x, ...data } : x));
+                                    setEditMaterial(null);
+                                }}
+                                className="px-6 py-2 bg-brand-gold text-black rounded-lg font-bold hover:bg-brand-gold/90 transition-colors"
+                            >
+                                💾 Guardar Cambios
+                            </button>
                         </div>
                     </div>
                 </div>
