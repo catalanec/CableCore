@@ -107,6 +107,16 @@ CREATE TABLE IF NOT EXISTS projects (
   total_revenue NUMERIC(10,2) DEFAULT 0,
   total_cost NUMERIC(10,2) DEFAULT 0,
   profit NUMERIC(10,2) DEFAULT 0,
+
+  -- Actual costs (entered manually after project completion)
+  actual_material_cost NUMERIC(10,2),
+  actual_labor_cost NUMERIC(10,2),
+  actual_other_cost NUMERIC(10,2),
+
+  -- Payment tracking
+  payment_date DATE,
+  payment_status TEXT DEFAULT 'pending' CHECK (payment_status IN ('pending','partial','paid')),
+
   notes TEXT
 );
 

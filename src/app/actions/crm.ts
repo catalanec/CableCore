@@ -227,3 +227,111 @@ export async function deleteMaterial(id: string) {
         return { success: false, error: error.message };
     }
 }
+
+// ═══════════════════════════════════
+// PROJECT COST & PAYMENT TRACKING
+// ═══════════════════════════════════
+
+export async function updateProjectCosts(id: string, costs: {
+    actual_material_cost?: number;
+    actual_labor_cost?: number;
+    actual_other_cost?: number;
+}) {
+    try {
+        const supabase = getSupabase();
+        
+        // Calculate new total_cost and profit
+        const { data: project } = await supabase.from('projects').select('*').eq('id', id).single();
+        if (!project) throw new Error('Project not found');
+
+        const matCost = costs.actual_material_cost ?? project.actual_material_cost ?? 0;
+        const labCost = costs.actual_labor_cost ?? project.actual_labor_cost ?? 0;
+        const othCost = costs.actual_other_cost ?? project.actual_other_cost ?? 0;
+        const totalCost = Number(matCost) + Number(labCost) + Number(othCost);
+        const profit = (Number(project.total_revenue) || 0) - totalCost;
+
+        const { error } = await supabase.from('projects').update({
+            ...costs,
+            total_cost: totalCost,
+            profit: profit,
+        }).eq('id', id);
+
+        if (error) throw error;
+        revalidate();
+        return { success: true };
+    } catch (error: any) {
+        console.error('Failed to update project costs:', error);
+        return { success: false, error: error.message };
+    }
+}
+
+export async function updateProjectPayment(id: string, data: {
+    payment_status?: string;
+    payment_date?: string | null;
+}) {
+    try {
+        const supabase = getSupabase();
+        const { error } = await supabase.from('projects').update(data).eq('id', id);
+        if (error) throw error;
+        revalidate();
+        return { success: true };
+    } catch (error: any) {
+        console.error('Failed to update project payment:', error);
+        return { success: false, error: error.message };
+    }
+}
+
+// ═══════════════════════════════════
+// SEED MATERIALS (one-time)
+// ═══════════════════════════════════
+
+export async function seedMaterials() {
+    try {
+        const supabase = getSupabase();
+
+        const materialsData = [
+            // Fiber cables
+            { name: 'Fibra Monomodo 2F SM G.657A', category: 'fibra', unit: 'm', cost_price: 0.30, sell_price: 0.45, stock: 500, min_stock: 100 },
+            { name: 'Fibra Monomodo 4F SM', category: 'fibra', unit: 'm', cost_price: 0.45, sell_price: 0.65, stock: 200, min_stock: 50 },
+            { name: 'Fibra Monomodo 12F SM', category: 'fibra', unit: 'm', cost_price: 0.85, sell_price: 1.20, stock: 100, min_stock: 30 },
+            { name: 'Fibra Multimodo OM3', category: 'fibra', unit: 'm', cost_price: 0.60, sell_price: 0.90, stock: 100, min_stock: 30 },
+            { name: 'Fibra Multimodo OM4', category: 'fibra', unit: 'm', cost_price: 0.95, sell_price: 1.40, stock: 50, min_stock: 20 },
+            // Fiber connectors
+            { name: 'Pigtail SC/APC', category: 'conector_fibra', unit: 'ud', cost_price: 2.50, sell_price: 4.00, stock: 50, min_stock: 20 },
+            { name: 'Patch cord SC/APC duplex 3m', category: 'conector_fibra', unit: 'ud', cost_price: 3.00, sell_price: 5.00, stock: 30, min_stock: 10 },
+            { name: 'Acoplador SC/APC hembra-hembra', category: 'conector_fibra', unit: 'ud', cost_price: 1.80, sell_price: 3.00, stock: 40, min_stock: 15 },
+            { name: 'Roseta óptica 2 puertos SC/APC', category: 'conector_fibra', unit: 'ud', cost_price: 7.00, sell_price: 12.00, stock: 30, min_stock: 10 },
+            // Fiber racks
+            { name: 'Bandeja empalme 1U 12F', category: 'rack_fibra', unit: 'ud', cost_price: 30.00, sell_price: 45.00, stock: 5, min_stock: 2 },
+            { name: 'Bandeja empalme 1U 24F', category: 'rack_fibra', unit: 'ud', cost_price: 42.00, sell_price: 65.00, stock: 3, min_stock: 1 },
+            { name: 'Caja mural fibra 8F', category: 'rack_fibra', unit: 'ud', cost_price: 22.00, sell_price: 35.00, stock: 5, min_stock: 2 },
+            { name: 'Rack fibra pared 6U', category: 'rack_fibra', unit: 'ud', cost_price: 80.00, sell_price: 120.00, stock: 2, min_stock: 1 },
+            { name: 'Rack fibra pared 12U', category: 'rack_fibra', unit: 'ud', cost_price: 140.00, sell_price: 200.00, stock: 1, min_stock: 1 },
+            { name: 'Rack fibra suelo 22U', category: 'rack_fibra', unit: 'ud', cost_price: 280.00, sell_price: 400.00, stock: 1, min_stock: 1 },
+            // Ethernet cables
+            { name: 'Cable Cat5e UTP', category: 'cable', unit: 'm', cost_price: 0.18, sell_price: 0.30, stock: 1000, min_stock: 200 },
+            { name: 'Cable Cat6 UTP', category: 'cable', unit: 'm', cost_price: 0.35, sell_price: 0.55, stock: 500, min_stock: 100 },
+            { name: 'Cable Cat6A FTP', category: 'cable', unit: 'm', cost_price: 0.70, sell_price: 1.10, stock: 200, min_stock: 50 },
+            { name: 'Cable Cat7 SFTP', category: 'cable', unit: 'm', cost_price: 1.30, sell_price: 2.00, stock: 100, min_stock: 30 },
+            // Ethernet connectors
+            { name: 'Conector RJ45 Cat6', category: 'conector', unit: 'ud', cost_price: 0.80, sell_price: 1.50, stock: 200, min_stock: 50 },
+            { name: 'Keystone Jack Cat6', category: 'conector', unit: 'ud', cost_price: 3.50, sell_price: 6.00, stock: 50, min_stock: 20 },
+            { name: 'Roseta de red doble', category: 'conector', unit: 'ud', cost_price: 5.50, sell_price: 10.00, stock: 30, min_stock: 10 },
+            // Infrastructure
+            { name: 'Canaleta PVC 40×40', category: 'canaleta', unit: 'm', cost_price: 2.00, sell_price: 4.00, stock: 100, min_stock: 30 },
+            { name: 'Tubo corrugado 25mm', category: 'tubo', unit: 'm', cost_price: 0.60, sell_price: 1.00, stock: 200, min_stock: 50 },
+            // Racks
+            { name: 'Patch Panel 24p Cat6', category: 'rack', unit: 'ud', cost_price: 35.00, sell_price: 60.00, stock: 3, min_stock: 1 },
+            { name: 'Rack pared 6U', category: 'rack', unit: 'ud', cost_price: 65.00, sell_price: 110.00, stock: 2, min_stock: 1 },
+            { name: 'Rack pared 12U', category: 'rack', unit: 'ud', cost_price: 120.00, sell_price: 190.00, stock: 1, min_stock: 1 },
+        ];
+
+        const { error } = await supabase.from('materials').insert(materialsData);
+        if (error) throw error;
+        revalidate();
+        return { success: true, count: materialsData.length };
+    } catch (error: any) {
+        console.error('Failed to seed materials:', error);
+        return { success: false, error: error.message };
+    }
+}

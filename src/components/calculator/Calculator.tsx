@@ -138,6 +138,16 @@ const calcLabels: Record<string, Record<string, string>> = {
         requestQuote: 'Solicitar Presupuesto Detallado',
         disclaimer: 'Precios orientativos. El presupuesto final puede variar según las condiciones del espacio.',
         recommended: '★ Recomendado',
+        // Tooltips
+        tipCable: 'Coste del cable de red según el tipo seleccionado. A mayor categoría (Cat5e→Cat7), mayor velocidad y blindaje, pero mayor coste.',
+        tipLabor: 'Trabajo de los técnicos: instalación de rosetas, conexión de cables (crimpado), montaje y testeo de cada punto. Se calcula por tipo: Básico (30€/pto), Conducto (50€/pto), Avanzado (90€/pto).',
+        tipRouting: 'Tendido físico del cable por la ruta: pasar cables por el techo, canaletas o paredes. El precio varía según el tipo de instalación.',
+        tipTrench: 'Apertura de regata (canal en la pared) para empotrar el cable. Incluye corte, colocación del tubo y sellado posterior.',
+        tipCanaleta: 'Canal de plástico que se fija a la pared o techo para proteger y ocultar los cables. Precio por metro lineal.',
+        tipMaterials: 'Materiales por punto: 2 conectores Keystone (6€ c/u) + 1 roseta de red (10€). Se aplica automáticamente por cada punto.',
+        tipRack: 'Armario de red para centralizar las conexiones. Contiene patch panels, switches y organizadores de cables.',
+        tipEquipment: 'Equipos activos de red: routers, switches gestionables, puntos de acceso WiFi y configuración profesional.',
+        tipUpsell: 'Servicios adicionales: certificación con equipo profesional, etiquetado de cada cable, gestión y organización dentro del rack.',
         // Installation types
         external: 'Superficial (Canaleta)',
         ceiling: 'Techo técnico',
@@ -214,6 +224,16 @@ const calcLabels: Record<string, Record<string, string>> = {
         requestQuote: 'Request Detailed Quote',
         disclaimer: 'Indicative prices. Final quote may vary depending on site conditions.',
         recommended: '★ Recommended',
+        // Tooltips
+        tipCable: 'Network cable cost by selected type. Higher category (Cat5e→Cat7) means faster speeds and better shielding, but higher cost.',
+        tipLabor: 'Technician labor: outlet installation, cable crimping, mounting and testing each point. Calculated by type: Basic (30€/pt), Conduit (50€/pt), Advanced (90€/pt).',
+        tipRouting: 'Physical cable routing: pulling cables through ceiling, trunking or walls. Price varies by installation type.',
+        tipTrench: 'Wall trenching (chase) to embed the cable. Includes cutting, tube placement and sealing.',
+        tipCanaleta: 'Plastic trunking fixed to wall or ceiling to protect and conceal cables. Price per linear meter.',
+        tipMaterials: 'Materials per point: 2 Keystone connectors (6€ ea) + 1 network outlet (10€). Applied automatically per point.',
+        tipRack: 'Network cabinet to centralize connections. Houses patch panels, switches and cable organizers.',
+        tipEquipment: 'Active network equipment: routers, managed switches, WiFi access points and professional configuration.',
+        tipUpsell: 'Additional services: professional certification, cable labeling, rack cable management and organization.',
         external: 'Surface (Cable tray)',
         ceiling: 'Suspended ceiling',
         existing_wall: 'Existing conduit',
@@ -284,6 +304,16 @@ const calcLabels: Record<string, Record<string, string>> = {
         requestQuote: 'Запросить подробную смету',
         disclaimer: 'Цены ориентировочные. Итоговая смета может измениться в зависимости от условий.',
         recommended: '★ Рекомендуется',
+        // Tooltips
+        tipCable: 'Стоимость сетевого кабеля. Чем выше категория (Cat5e→Cat7), тем выше скорость и экранирование, но дороже.',
+        tipLabor: 'Работа техников: установка розеток, обжим кабеля, монтаж и тестирование каждой точки. По типу: Базовый (30€/тчк), Кондуит (50€/тчк), Сложный (90€/тчк).',
+        tipRouting: 'Прокладка кабеля: протяжка через потолок, кабель-каналы или стены. Цена зависит от типа установки.',
+        tipTrench: 'Штроба (канал в стене) для скрытой прокладки кабеля. Включает нарезку, укладку трубы и заделку.',
+        tipCanaleta: 'Пластиковый кабель-канал на стену или потолок для защиты и скрытия проводов. Цена за погонный метр.',
+        tipMaterials: 'Материалы на точку: 2 коннектора Keystone (6€ шт) + 1 розетка (10€). Применяется автоматически на каждую точку.',
+        tipRack: 'Сетевой шкаф для централизации подключений. Вмещает патч-панели, коммутаторы и органайзеры.',
+        tipEquipment: 'Активное оборудование: роутеры, управляемые коммутаторы, точки доступа WiFi и профессиональная настройка.',
+        tipUpsell: 'Дополнительные услуги: сертификация, маркировка кабелей, организация проводов в шкафу.',
         external: 'Открытый (кабель-канал)',
         ceiling: 'Подвесной потолок',
         existing_wall: 'Существующая штроба',
@@ -893,27 +923,27 @@ export default function Calculator({ locale }: { locale: string }) {
                         <div className="h-px bg-border-subtle" />
 
                         {/* Cable cost */}
-                        <div className="flex justify-between text-brand-gold-muted">
-                            <span>{l.cableCost} ({CABLE_TYPES.find(c => c.id === cableType)!.name})</span>
+                        <div className="flex justify-between text-brand-gold-muted group/tip relative">
+                            <span className="flex items-center gap-1">{l.cableCost} ({CABLE_TYPES.find(c => c.id === cableType)!.name}) <span className="text-xs opacity-50 cursor-help" title={l.tipCable}>ℹ️</span></span>
                             <span>{calc.cableCost.toFixed(2)}€</span>
                         </div>
 
                         {/* Labor cost */}
                         <div className="flex justify-between text-brand-gold-muted">
-                            <span>{l.laborCost}</span>
+                            <span className="flex items-center gap-1">{l.laborCost} <span className="text-xs opacity-50 cursor-help" title={l.tipLabor}>ℹ️</span></span>
                             <span>{calc.laborCost.toFixed(2)}€</span>
                         </div>
 
                         {/* Routing cost */}
                         <div className="flex justify-between text-brand-gold-muted">
-                            <span>{l.routingCost} ({calc.routingPrice}€/m × {calc.totalCableLength}m)</span>
+                            <span className="flex items-center gap-1">{l.routingCost} ({calc.routingPrice}€/m × {calc.totalCableLength}m) <span className="text-xs opacity-50 cursor-help" title={l.tipRouting}>ℹ️</span></span>
                             <span>{calc.routingCost.toFixed(2)}€</span>
                         </div>
 
                         {/* Trench cost — only if > 0 */}
                         {calc.trenchCost > 0 && (
                             <div className="flex justify-between text-yellow-400">
-                                <span>{l.trenchCost} ({calc.trenchLength}m)</span>
+                                <span className="flex items-center gap-1">{l.trenchCost} ({calc.trenchLength}m) <span className="text-xs opacity-50 cursor-help" title={l.tipTrench}>ℹ️</span></span>
                                 <span>{calc.trenchCost.toFixed(2)}€</span>
                             </div>
                         )}
@@ -921,14 +951,14 @@ export default function Calculator({ locale }: { locale: string }) {
                         {/* Canaleta cost — only if > 0 */}
                         {calc.canetaCost > 0 && (
                             <div className="flex justify-between text-yellow-400">
-                                <span>{l.canaleta} ({calc.canetaLength}m)</span>
+                                <span className="flex items-center gap-1">{l.canaleta} ({calc.canetaLength}m) <span className="text-xs opacity-50 cursor-help" title={l.tipCanaleta}>ℹ️</span></span>
                                 <span>{calc.canetaCost.toFixed(2)}€</span>
                             </div>
                         )}
 
                         {/* Materials per point */}
                         <div className="flex justify-between text-brand-gold-muted">
-                            <span>{l.materialsCostLabel} ({calc.materialsPerPoint}€ × {points})</span>
+                            <span className="flex items-center gap-1">{l.materialsCostLabel} ({calc.materialsPerPoint}€ × {points}) <span className="text-xs opacity-50 cursor-help" title={l.tipMaterials}>ℹ️</span></span>
                             <span>{calc.materialsCost.toFixed(2)}€</span>
                         </div>
 
@@ -951,7 +981,7 @@ export default function Calculator({ locale }: { locale: string }) {
                         {/* Rack */}
                         {calc.rackCost > 0 && (
                             <div className="flex justify-between text-brand-gold-muted">
-                                <span>{l.rackCost}</span>
+                                <span className="flex items-center gap-1">{l.rackCost} <span className="text-xs opacity-50 cursor-help" title={l.tipRack}>ℹ️</span></span>
                                 <span>{calc.rackCost.toFixed(2)}€</span>
                             </div>
                         )}
@@ -959,7 +989,7 @@ export default function Calculator({ locale }: { locale: string }) {
                         {/* Upsell */}
                         {calc.upsellCost > 0 && (
                             <div className="flex justify-between text-brand-gold-muted">
-                                <span>{l.upsellCost}</span>
+                                <span className="flex items-center gap-1">{l.upsellCost} <span className="text-xs opacity-50 cursor-help" title={l.tipUpsell}>ℹ️</span></span>
                                 <span>{calc.upsellCost.toFixed(2)}€</span>
                             </div>
                         )}

@@ -2,7 +2,7 @@
 
 import { useState, useMemo, useEffect } from 'react';
 
-import { updateLeadStatus, updateQuoteStatus, updateMaterialStock, deleteLead, deleteQuote, updateLeadNotes, updateQuoteNotes, addMaterial, deleteMaterial, updateMaterial } from '@/app/actions/crm';
+import { updateLeadStatus, updateQuoteStatus, updateMaterialStock, deleteLead, deleteQuote, updateLeadNotes, updateQuoteNotes, addMaterial, deleteMaterial, updateMaterial, updateProjectCosts, updateProjectPayment, seedMaterials } from '@/app/actions/crm';
 import { downloadQuotePDF, type QuotePDFData } from '@/lib/quote-pdf';
 
 interface AdminDashboardProps {
@@ -37,6 +37,8 @@ export default function AdminDashboard({ initialQuotes, initialLeads, initialMat
     const [selectedQuote, setSelectedQuote] = useState<any>(null);
     const [selectedLead, setSelectedLead] = useState<any>(null);
     const [showAddMaterial, setShowAddMaterial] = useState(false);
+    const [categoryFilter, setCategoryFilter] = useState('all');
+    const [chartPeriod, setChartPeriod] = useState(6);
     const [newMat, setNewMat] = useState({ name: '', category: 'cable', unit: 'm', cost_price: 0, sell_price: 0, stock: 0, min_stock: 5 });
     
     // Convert to local states to allow optimistic UI updates (but server actions will revalidate props too)
@@ -94,23 +96,24 @@ export default function AdminDashboard({ initialQuotes, initialLeads, initialMat
         return { totalRevenue, totalCost, totalProfit, profitMargin, totalQuotes, pendingQuotes, completedProjects, newLeads, conversionRate, lowStock, avgQuoteValue, currentMonthRevenue };
     }, [quotes, leads, projects, materials]);
 
-    // Monthly revenue for chart (dynamic last 6 months based on DB data)
+    // Monthly revenue for chart (dynamic based on chartPeriod)
     const monthlyData = useMemo(() => {
         const months: { month: string, monthIdx: number, year: number, revenue: number, cost: number }[] = [];
         const monthNames = ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun', 'Jul', 'Ago', 'Sep', 'Oct', 'Nov', 'Dic'];
         const now = new Date();
-        for (let i = 5; i >= 0; i--) {
+        for (let i = chartPeriod - 1; i >= 0; i--) {
             const d = new Date(now.getFullYear(), now.getMonth() - i, 1);
             months.push({ month: monthNames[d.getMonth()], monthIdx: d.getMonth(), year: d.getFullYear(), revenue: 0, cost: 0 });
         }
-        // Use projects if available
+        // Use projects — prefer payment_date for paid projects
         projects.forEach(p => {
             if (p.status !== 'completed') return;
-            const pd = new Date(p.created_at || p.date || new Date());
+            const dateStr = (p.payment_status === 'paid' && p.payment_date) ? p.payment_date : (p.created_at || p.date || new Date());
+            const pd = new Date(dateStr);
             const entry = months.find(m => m.monthIdx === pd.getMonth() && m.year === pd.getFullYear());
             if (entry) {
                 entry.revenue += (Number(p.total_revenue) || 0);
-                entry.cost += (Number(p.total_cost) || 0);
+                entry.cost += (Number(p.actual_material_cost) || 0) + (Number(p.actual_labor_cost) || 0) + (Number(p.actual_other_cost) || 0) || (Number(p.total_cost) || 0);
             }
         });
         // Fallback: also add completed quotes if projects are empty
@@ -127,7 +130,7 @@ export default function AdminDashboard({ initialQuotes, initialLeads, initialMat
             });
         }
         return months;
-    }, [projects, quotes]);
+    }, [projects, quotes, chartPeriod]);
     const maxRevenue = Math.max(...monthlyData.map(d => d.revenue), 1000);
 
     const tabs: { id: Tab; label: string; icon: string }[] = [
@@ -194,9 +197,18 @@ export default function AdminDashboard({ initialQuotes, initialLeads, initialMat
 
                     {/* Revenue Chart */}
                     <div className="card p-6 border-brand-gold/10">
-                        <h3 className="font-heading font-semibold text-white mb-6 flex items-center gap-2">
-                            📊 Ingresos vs Costes (últimos 6 meses)
-                        </h3>
+                        <div className="flex items-center justify-between mb-6">
+                            <h3 className="font-heading font-semibold text-white flex items-center gap-2">
+                                📊 Ingresos vs Costes
+                            </h3>
+                            <div className="flex gap-1">
+                                {[{ label: '3m', val: 3 }, { label: '6m', val: 6 }, { label: '1a', val: 12 }, { label: 'Todo', val: 24 }].map(p => (
+                                    <button key={p.val} onClick={() => setChartPeriod(p.val)}
+                                        className={`px-2.5 py-1 text-xs rounded-md font-medium transition-all ${chartPeriod === p.val ? 'bg-brand-gold/20 text-brand-gold border border-brand-gold/30' : 'text-brand-gold-muted hover:text-white'}`}
+                                    >{p.label}</button>
+                                ))}
+                            </div>
+                        </div>
                         <div className="flex items-end gap-4 h-48">
                             {monthlyData.map((d, i) => (
                                 <div key={i} className="flex-1 flex flex-col items-center gap-1">
@@ -469,14 +481,51 @@ export default function AdminDashboard({ initialQuotes, initialLeads, initialMat
 
                     {/* Materials table */}
                     <div className="card border-brand-gold/10 overflow-hidden">
-                        <div className="p-4 border-b border-border-subtle flex items-center justify-between">
+                        <div className="p-4 border-b border-border-subtle flex flex-wrap items-center justify-between gap-3">
                             <h3 className="font-heading font-semibold text-white">Inventario de Materiales</h3>
-                            <button
-                                onClick={() => setShowAddMaterial(true)}
-                                className="px-4 py-2 bg-brand-gold text-black rounded-lg text-sm font-bold hover:bg-brand-gold/90 transition-colors"
-                            >
-                                + Añadir Material
-                            </button>
+                            <div className="flex items-center gap-2">
+                                <select
+                                    value={categoryFilter}
+                                    onChange={e => setCategoryFilter(e.target.value)}
+                                    className="bg-surface-card border border-border-subtle rounded-lg px-3 py-2 text-xs text-white focus:outline-none focus:border-brand-gold/50"
+                                >
+                                    <option value="all">Todas las categorías</option>
+                                    <option value="cable">🔌 Cable Ethernet</option>
+                                    <option value="conector">🔗 Conectores Ethernet</option>
+                                    <option value="fibra">🔆 Fibra óptica</option>
+                                    <option value="conector_fibra">💎 Conectores fibra</option>
+                                    <option value="rack_fibra">📡 Racks fibra</option>
+                                    <option value="rack">🗄️ Racks Ethernet</option>
+                                    <option value="canaleta">📏 Canaleta</option>
+                                    <option value="tubo">🔧 Tubo</option>
+                                    <option value="herramienta">🛠️ Herramientas</option>
+                                    <option value="otro">📦 Otro</option>
+                                </select>
+                                {materials.length === 0 && (
+                                    <button
+                                        onClick={async () => {
+                                            if (confirm('¿Cargar 27 materiales iniciales (Ethernet + Fibra)?')) {
+                                                const result = await seedMaterials();
+                                                if (result.success) {
+                                                    alert(`✅ ${result.count} materiales cargados. Recargando...`);
+                                                    window.location.reload();
+                                                } else {
+                                                    alert('❌ Error: ' + result.error);
+                                                }
+                                            }
+                                        }}
+                                        className="px-3 py-2 bg-cyan-500/20 text-cyan-300 border border-cyan-500/30 rounded-lg text-xs font-bold hover:bg-cyan-500/30 transition-colors"
+                                    >
+                                        🌱 Cargar Inventario Inicial
+                                    </button>
+                                )}
+                                <button
+                                    onClick={() => setShowAddMaterial(true)}
+                                    className="px-4 py-2 bg-brand-gold text-black rounded-lg text-sm font-bold hover:bg-brand-gold/90 transition-colors"
+                                >
+                                    + Añadir Material
+                                </button>
+                            </div>
                         </div>
                         <div className="overflow-x-auto">
                             <table className="w-full text-sm">
@@ -493,16 +542,16 @@ export default function AdminDashboard({ initialQuotes, initialLeads, initialMat
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {materials.length === 0 && (
+                                    {materials.filter(m => categoryFilter === 'all' || m.category === categoryFilter).length === 0 && (
                                         <tr>
                                             <td colSpan={8} className="p-8 text-center text-brand-gold-muted">
                                                 <div className="text-4xl mb-3">📦</div>
-                                                <div className="text-sm">No hay materiales todavía</div>
-                                                <div className="text-xs mt-1">Usa el botón «+ Añadir Material» para empezar</div>
+                                                <div className="text-sm">{materials.length === 0 ? 'No hay materiales todavía' : 'No hay materiales en esta categoría'}</div>
+                                                <div className="text-xs mt-1">{materials.length === 0 ? 'Usa «🌱 Cargar Inventario Inicial» o «+ Añadir Material»' : 'Cambia el filtro de categoría'}</div>
                                             </td>
                                         </tr>
                                     )}
-                                    {materials.map(m => {
+                                    {materials.filter(m => categoryFilter === 'all' || m.category === categoryFilter).map(m => {
                                         const costPrice = Number(m.cost_price) || 0;
                                         const sellPrice = Number(m.sell_price) || 0;
                                         const minStock = m.min_stock || 0;
@@ -584,7 +633,7 @@ export default function AdminDashboard({ initialQuotes, initialLeads, initialMat
                                                 onChange={e => setNewMat({ ...newMat, category: e.target.value })}
                                                 className="w-full bg-brand-dark border border-border-subtle rounded-lg p-3 text-white focus:outline-none focus:border-brand-gold/50"
                                             >
-                                                {['cable', 'conector', 'herramienta', 'rack', 'canaleta', 'tubo', 'otro'].map(c => <option key={c} value={c}>{c.charAt(0).toUpperCase() + c.slice(1)}</option>)}
+                                                {['cable', 'conector', 'fibra', 'conector_fibra', 'rack_fibra', 'rack', 'canaleta', 'tubo', 'herramienta', 'otro'].map(c => <option key={c} value={c}>{c.charAt(0).toUpperCase() + c.slice(1).replace('_', ' ')}</option>)}
                                             </select>
                                         </div>
                                         <div>
@@ -679,25 +728,37 @@ export default function AdminDashboard({ initialQuotes, initialLeads, initialMat
             {activeTab === 'projects' && (
                 <div className="space-y-6">
                     {/* Profit summary */}
-                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
+                    <div className="grid grid-cols-1 lg:grid-cols-4 gap-4">
                         <div className="card p-6 border-green-500/20">
                             <div className="text-xs text-brand-gold-muted uppercase tracking-wider mb-2">Ingresos totales</div>
-                            <div className="font-heading text-3xl font-bold text-green-400">
-                                {projects.filter(p => p.status === 'completed').reduce((s, p) => s + (Number(p.total_revenue) || p.revenue), 0).toLocaleString('es-ES', { minimumFractionDigits: 2 })}€
+                            <div className="font-heading text-2xl font-bold text-green-400">
+                                {projects.filter(p => p.status === 'completed').reduce((s, p) => s + (Number(p.total_revenue) || 0), 0).toLocaleString('es-ES', { minimumFractionDigits: 2 })}€
                             </div>
                         </div>
                         <div className="card p-6 border-red-500/20">
-                            <div className="text-xs text-brand-gold-muted uppercase tracking-wider mb-2">Costes totales</div>
-                            <div className="font-heading text-3xl font-bold text-red-400">
-                                {projects.filter(p => p.status === 'completed').reduce((s, p) => s + (Number(p.total_cost) || p.cost), 0).toLocaleString('es-ES', { minimumFractionDigits: 2 })}€
+                            <div className="text-xs text-brand-gold-muted uppercase tracking-wider mb-2">Costes reales</div>
+                            <div className="font-heading text-2xl font-bold text-red-400">
+                                {projects.filter(p => p.status === 'completed').reduce((s, p) => {
+                                    const actual = (Number(p.actual_material_cost) || 0) + (Number(p.actual_labor_cost) || 0) + (Number(p.actual_other_cost) || 0);
+                                    return s + (actual > 0 ? actual : (Number(p.total_cost) || 0));
+                                }, 0).toLocaleString('es-ES', { minimumFractionDigits: 2 })}€
                             </div>
                         </div>
                         <div className="card p-6 border-brand-gold/20">
                             <div className="text-xs text-brand-gold-muted uppercase tracking-wider mb-2">Beneficio neto</div>
-                            <div className="font-heading text-3xl font-bold text-gradient-gold">
+                            <div className="font-heading text-2xl font-bold text-gradient-gold">
                                 {analytics.totalProfit.toLocaleString('es-ES', { minimumFractionDigits: 2 })}€
                             </div>
                             <div className="text-xs text-emerald-400 mt-1">{analytics.profitMargin}% margen</div>
+                        </div>
+                        <div className="card p-6 border-cyan-500/20">
+                            <div className="text-xs text-brand-gold-muted uppercase tracking-wider mb-2">Cobrado</div>
+                            <div className="font-heading text-2xl font-bold text-cyan-400">
+                                {projects.filter(p => p.payment_status === 'paid').reduce((s, p) => s + (Number(p.total_revenue) || 0), 0).toLocaleString('es-ES', { minimumFractionDigits: 2 })}€
+                            </div>
+                            <div className="text-xs text-brand-gold-muted mt-1">
+                                {projects.filter(p => p.payment_status === 'pending' || !p.payment_status).length} pendientes
+                            </div>
                         </div>
                     </div>
 
@@ -707,31 +768,105 @@ export default function AdminDashboard({ initialQuotes, initialLeads, initialMat
                             <table className="w-full text-sm">
                                 <thead>
                                     <tr className="border-b border-border-subtle text-brand-gold-muted text-xs uppercase tracking-wider">
-                                        <th className="text-left p-4">Cliente</th>
-                                        <th className="text-left p-4">Presupuesto</th>
-                                        <th className="text-right p-4">Ingresos</th>
-                                        <th className="text-right p-4">Costes</th>
-                                        <th className="text-right p-4">Beneficio</th>
-                                        <th className="text-center p-4">Estado</th>
-                                        <th className="text-right p-4">Fecha</th>
+                                        <th className="text-left p-3">Cliente</th>
+                                        <th className="text-right p-3">Ingresos</th>
+                                        <th className="text-right p-3">Mat. Real</th>
+                                        <th className="text-right p-3">M.O. Real</th>
+                                        <th className="text-right p-3">Otros</th>
+                                        <th className="text-right p-3">Beneficio</th>
+                                        <th className="text-center p-3">Pago</th>
+                                        <th className="text-center p-3">Fecha pago</th>
+                                        <th className="text-center p-3">Estado</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     {projects.map(p => {
-                                        const rev = Number(p.total_revenue) || p.revenue || 0;
-                                        const cst = Number(p.total_cost) || p.cost || 0;
-                                        const prf = Number(p.profit) || p.profit || 0;
+                                        const rev = Number(p.total_revenue) || 0;
+                                        const matReal = Number(p.actual_material_cost) || 0;
+                                        const labReal = Number(p.actual_labor_cost) || 0;
+                                        const othReal = Number(p.actual_other_cost) || 0;
+                                        const hasActual = matReal > 0 || labReal > 0 || othReal > 0;
+                                        const totalCost = hasActual ? matReal + labReal + othReal : (Number(p.total_cost) || 0);
+                                        const prf = rev - totalCost;
                                         return (
                                         <tr key={p.id} className="border-b border-border-subtle/50 hover:bg-[rgba(201,168,76,0.03)] transition-colors">
-                                            <td className="p-4 font-medium text-white">{p.client_name || p.client}</td>
-                                            <td className="p-4 text-brand-gold font-mono text-xs">{p.quote_id || p.quoteId}</td>
-                                            <td className="p-4 text-right text-green-400">{rev.toFixed(2)}€</td>
-                                            <td className="p-4 text-right text-red-400">{cst > 0 ? `${cst.toFixed(2)}€` : '—'}</td>
-                                            <td className="p-4 text-right font-bold text-brand-gold">{prf > 0 ? `${prf.toFixed(2)}€` : '—'}</td>
-                                            <td className="p-4 text-center">
+                                            <td className="p-3">
+                                                <div className="font-medium text-white">{p.client_name || p.client}</div>
+                                                <div className="text-[10px] text-brand-gold-muted font-mono">{(p.quote_id || '').slice(0, 8)}</div>
+                                            </td>
+                                            <td className="p-3 text-right text-green-400 font-bold">{rev.toFixed(2)}€</td>
+                                            <td className="p-3 text-right">
+                                                <input type="number" step="0.01" placeholder="0.00"
+                                                    className="w-20 bg-transparent border-b border-border-subtle text-right text-red-400 text-xs focus:outline-none focus:border-brand-gold"
+                                                    defaultValue={matReal > 0 ? matReal : ''}
+                                                    onBlur={async (e) => {
+                                                        const val = parseFloat(e.target.value) || 0;
+                                                        await updateProjectCosts(p.id, { actual_material_cost: val });
+                                                        setProjects(projects.map(x => x.id === p.id ? { ...x, actual_material_cost: val } : x));
+                                                    }}
+                                                />
+                                            </td>
+                                            <td className="p-3 text-right">
+                                                <input type="number" step="0.01" placeholder="0.00"
+                                                    className="w-20 bg-transparent border-b border-border-subtle text-right text-red-400 text-xs focus:outline-none focus:border-brand-gold"
+                                                    defaultValue={labReal > 0 ? labReal : ''}
+                                                    onBlur={async (e) => {
+                                                        const val = parseFloat(e.target.value) || 0;
+                                                        await updateProjectCosts(p.id, { actual_labor_cost: val });
+                                                        setProjects(projects.map(x => x.id === p.id ? { ...x, actual_labor_cost: val } : x));
+                                                    }}
+                                                />
+                                            </td>
+                                            <td className="p-3 text-right">
+                                                <input type="number" step="0.01" placeholder="0.00"
+                                                    className="w-20 bg-transparent border-b border-border-subtle text-right text-red-400 text-xs focus:outline-none focus:border-brand-gold"
+                                                    defaultValue={othReal > 0 ? othReal : ''}
+                                                    onBlur={async (e) => {
+                                                        const val = parseFloat(e.target.value) || 0;
+                                                        await updateProjectCosts(p.id, { actual_other_cost: val });
+                                                        setProjects(projects.map(x => x.id === p.id ? { ...x, actual_other_cost: val } : x));
+                                                    }}
+                                                />
+                                            </td>
+                                            <td className={`p-3 text-right font-bold ${prf >= 0 ? 'text-brand-gold' : 'text-red-400'}`}>
+                                                {hasActual ? `${prf.toFixed(2)}€` : <span className="text-brand-gold-muted text-xs italic">est. {(rev - totalCost).toFixed(0)}€</span>}
+                                            </td>
+                                            <td className="p-3 text-center">
+                                                <select
+                                                    className={`text-xs px-2 py-1 rounded-full outline-none cursor-pointer appearance-none ${
+                                                        p.payment_status === 'paid' ? 'bg-green-400/10 text-green-400' :
+                                                        p.payment_status === 'partial' ? 'bg-yellow-400/10 text-yellow-400' :
+                                                        'bg-gray-400/10 text-gray-400'
+                                                    }`}
+                                                    value={p.payment_status || 'pending'}
+                                                    onChange={async (e) => {
+                                                        const newStatus = e.target.value;
+                                                        const updateData: any = { payment_status: newStatus };
+                                                        if (newStatus === 'paid' && !p.payment_date) {
+                                                            updateData.payment_date = new Date().toISOString().split('T')[0];
+                                                        }
+                                                        await updateProjectPayment(p.id, updateData);
+                                                        setProjects(projects.map(x => x.id === p.id ? { ...x, ...updateData } : x));
+                                                    }}
+                                                >
+                                                    <option value="pending">⏳ Pendiente</option>
+                                                    <option value="partial">💳 Parcial</option>
+                                                    <option value="paid">✅ Cobrado</option>
+                                                </select>
+                                            </td>
+                                            <td className="p-3 text-center">
+                                                <input type="date"
+                                                    className="bg-transparent border-b border-border-subtle text-brand-gold-muted text-xs focus:outline-none focus:border-brand-gold w-28"
+                                                    defaultValue={p.payment_date || ''}
+                                                    onBlur={async (e) => {
+                                                        await updateProjectPayment(p.id, { payment_date: e.target.value || null });
+                                                        setProjects(projects.map(x => x.id === p.id ? { ...x, payment_date: e.target.value } : x));
+                                                    }}
+                                                />
+                                            </td>
+                                            <td className="p-3 text-center">
                                                 <span className={`text-xs px-3 py-1 rounded-full ${STATUS_COLORS[p.status]}`}>{p.status}</span>
                                             </td>
-                                            <td className="p-4 text-right text-brand-gold-muted text-xs">{new Date(p.created_at || p.date).toLocaleDateString()}</td>
                                         </tr>
                                         );
                                     })}

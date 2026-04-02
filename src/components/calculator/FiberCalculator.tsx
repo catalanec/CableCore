@@ -137,6 +137,17 @@ const fiberLabels: Record<string, Record<string, string>> = {
         whatsappPoints: 'puntos de fibra',
         whatsappType: 'Tipo',
         whatsappEstimate: 'Estimación',
+        // Tooltips
+        tipCable: 'Coste del cable de fibra óptica según tipo (monomodo/multimodo). Precio por metro lineal.',
+        tipRouting: 'Tendido físico del cable: pasar la fibra por falso techo, canaletas o canalizaciones. Precio según tipo de instalación.',
+        tipLabor: 'Trabajo de los técnicos: preparar rutas, instalar rosetas, conexionado y pruebas. Coste por punto: 35€ base × coeficiente de instalación.',
+        tipFusion: 'Empalme por arco (fusión): se unen las fibras con fusionadora profesional + pigtails SC/APC. Resultado: menor pérdida de señal que conectores mecánicos.',
+        tipCert: 'Certificación OTDR: medición profesional de cada punto con reflectómetro. Verifica la calidad del empalme y la atenuación de la fibra.',
+        tipRoseta: 'Roseta óptica de pared con 2 puertos SC/APC. Es el punto final donde se conecta el equipo del usuario.',
+        tipPatchCord: 'Latiguillo de fibra óptica SC/APC duplex (3m). Conecta la roseta al equipo activo (ONT, switch óptico).',
+        tipAcoplador: 'Acoplador hembra-hembra SC/APC: permite unir dos patch cords o conectar el patch cord del panel al del equipo.',
+        tipBandeja: 'Bandeja de empalme para organizar las fusiones dentro del rack. Capacidad 12 o 24 fibras por bandeja.',
+        tipRack: 'Armario para centralizar las conexiones de fibra: cajas murales (8F) para pequeñas instalaciones o racks de pared/suelo para edificios.',
     },
     en: {
         title: 'Fiber Optic Calculator',
@@ -194,6 +205,17 @@ const fiberLabels: Record<string, Record<string, string>> = {
         whatsappPoints: 'fiber points',
         whatsappType: 'Type',
         whatsappEstimate: 'Estimate',
+        // Tooltips
+        tipCable: 'Fiber optic cable cost by type (singlemode/multimode). Price per linear meter.',
+        tipRouting: 'Physical cable routing: pulling fiber through drop ceiling, trunking or ducts. Price varies by installation type.',
+        tipLabor: 'Technician labor: preparing routes, installing outlets, connections and testing. Cost per point: 35€ base × installation coefficient.',
+        tipFusion: 'Arc fusion splicing: fibers joined with professional splicer + SC/APC pigtails. Result: lower signal loss than mechanical connectors.',
+        tipCert: 'OTDR certification: professional measurement of each point with reflectometer. Verifies splice quality and fiber attenuation.',
+        tipRoseta: 'Wall-mount optical outlet with 2 SC/APC ports. The endpoint where user equipment connects.',
+        tipPatchCord: 'SC/APC duplex fiber optic patch cord (3m). Connects the outlet to active equipment (ONT, optical switch).',
+        tipAcoplador: 'SC/APC female-female adapter: joins two patch cords or connects panel patch cord to equipment.',
+        tipBandeja: 'Splice tray to organize fusions inside the rack. Capacity: 12 or 24 fibers per tray.',
+        tipRack: 'Cabinet to centralize fiber connections: wall boxes (8F) for small setups or wall/floor racks for buildings.',
     },
     ru: {
         title: 'Калькулятор оптоволокна',
@@ -251,6 +273,17 @@ const fiberLabels: Record<string, Record<string, string>> = {
         whatsappPoints: 'точек',
         whatsappType: 'Тип',
         whatsappEstimate: 'Оценка',
+        // Tooltips
+        tipCable: 'Стоимость оптического кабеля по типу (одномод/многомод). Цена за погонный метр.',
+        tipRouting: 'Прокладка кабеля: протяжка волокна через фальшпотолок, кабель-каналы или штробы. Цена зависит от типа установки.',
+        tipLabor: 'Работа техников: подготовка трасс, установка розеток, подключение и тестирование. 35€ за точку × коэффициент сложности.',
+        tipFusion: 'Сварка дугой: волокна соединяются сварочным аппаратом + пигтейлы SC/APC. Результат: минимальные потери сигнала.',
+        tipCert: 'Сертификация OTDR: профессиональное измерение каждой точки рефлектометром. Проверяет качество сварки и затухание.',
+        tipRoseta: 'Оптическая розетка на 2 порта SC/APC. Конечная точка подключения оборудования пользователя.',
+        tipPatchCord: 'Оптический патч-корд SC/APC duplex (3м). Соединяет розетку с активным оборудованием.',
+        tipAcoplador: 'Адаптер SC/APC мама-мама: для соединения двух патч-кордов или подключения панели к оборудованию.',
+        tipBandeja: 'Сплайс-кассета для организации сварок внутри шкафа. Вместимость: 12 или 24 волокна.',
+        tipRack: 'Шкаф для централизации оптических подключений: настенные коробки (8F) или шкафы для зданий.',
     },
 };
 
@@ -574,19 +607,19 @@ export default function FiberCalculator({ locale, onCalcUpdate }: FiberCalculato
 
                     <div className="space-y-2 text-sm mb-6">
                         {[
-                            { label: l.cableCost, value: calc.cableCost, show: true },
-                            { label: l.routingCost, value: calc.routingCost, show: true },
-                            { label: l.laborCost, value: calc.laborCost, show: true },
-                            { label: l.fusionCost, value: calc.fusionCost, show: fusionCount > 0 },
-                            { label: l.certificationCost, value: calc.certificationCost, show: doCertification },
-                            { label: l.rosetaCost, value: calc.rosetaCost, show: true },
-                            { label: l.patchCordCost, value: calc.patchCordCost, show: patchCordCount > 0 },
-                            { label: l.acopladorCost, value: calc.acopladorCost, show: acopladorCount > 0 },
-                            { label: l.bandejaCost, value: calc.bandejaCost, show: bandeja !== 'none' },
-                            { label: l.rackCost, value: calc.rackCost, show: rack !== 'none' },
+                            { label: l.cableCost, value: calc.cableCost, show: true, tip: l.tipCable },
+                            { label: l.routingCost, value: calc.routingCost, show: true, tip: l.tipRouting },
+                            { label: l.laborCost, value: calc.laborCost, show: true, tip: l.tipLabor },
+                            { label: l.fusionCost, value: calc.fusionCost, show: fusionCount > 0, tip: l.tipFusion },
+                            { label: l.certificationCost, value: calc.certificationCost, show: doCertification, tip: l.tipCert },
+                            { label: l.rosetaCost, value: calc.rosetaCost, show: true, tip: l.tipRoseta },
+                            { label: l.patchCordCost, value: calc.patchCordCost, show: patchCordCount > 0, tip: l.tipPatchCord },
+                            { label: l.acopladorCost, value: calc.acopladorCost, show: acopladorCount > 0, tip: l.tipAcoplador },
+                            { label: l.bandejaCost, value: calc.bandejaCost, show: bandeja !== 'none', tip: l.tipBandeja },
+                            { label: l.rackCost, value: calc.rackCost, show: rack !== 'none', tip: l.tipRack },
                         ].filter(i => i.show).map((item, idx) => (
                             <div key={idx} className="flex justify-between text-brand-gold-muted">
-                                <span>{item.label}</span>
+                                <span className="flex items-center gap-1">{item.label} <span className="text-xs opacity-50 cursor-help" title={item.tip}>ℹ️</span></span>
                                 <span>{item.value.toFixed(2)}€</span>
                             </div>
                         ))}
