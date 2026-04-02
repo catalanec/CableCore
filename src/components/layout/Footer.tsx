@@ -7,6 +7,7 @@ const services = [
     { href: '/servicios', label: 'home' },
     { href: '/servicios', label: 'office' },
     { href: '/servicios', label: 'retail' },
+    { href: '/servicios/instalacion-fibra-optica-barcelona', label: 'fiber' },
 ];
 
 const companyLinks = [
@@ -55,6 +56,7 @@ export default function Footer() {
                                         {s.label === 'cabling' ? t('cabling') :
                                          s.label === 'home' ? t('homeNet') :
                                          s.label === 'office' ? t('officeNet') :
+                                         s.label === 'fiber' ? t('fiberNet') :
                                          t('retailNet')}
                                     </Link>
                                 </li>

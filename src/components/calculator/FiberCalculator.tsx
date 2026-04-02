@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useMemo } from 'react';
+import QuoteForm from './QuoteForm';
 
 /* ═════════════════════════════════════
    FIBER CONFIG — цены рынка Испании 2025
@@ -131,6 +132,11 @@ const fiberLabels: Record<string, Record<string, string>> = {
         total: 'Total estimado',
         meters: 'metros',
         disclaimer: 'Precios orientativos. El presupuesto final puede variar según las condiciones del espacio.',
+        requestQuote: 'Solicitar presupuesto',
+        whatsappText: 'Hola, me gustaría un presupuesto de fibra óptica para',
+        whatsappPoints: 'puntos de fibra',
+        whatsappType: 'Tipo',
+        whatsappEstimate: 'Estimación',
     },
     en: {
         title: 'Fiber Optic Calculator',
@@ -183,6 +189,11 @@ const fiberLabels: Record<string, Record<string, string>> = {
         total: 'Estimated total',
         meters: 'meters',
         disclaimer: 'Prices are indicative. Final quote may vary depending on site conditions.',
+        requestQuote: 'Request a quote',
+        whatsappText: 'Hello, I would like a fiber optic quote for',
+        whatsappPoints: 'fiber points',
+        whatsappType: 'Type',
+        whatsappEstimate: 'Estimate',
     },
     ru: {
         title: 'Калькулятор оптоволокна',
@@ -235,6 +246,11 @@ const fiberLabels: Record<string, Record<string, string>> = {
         total: 'Итого (ориентировочно)',
         meters: 'метров',
         disclaimer: 'Цены ориентировочные. Окончательная смета может измениться.',
+        requestQuote: 'Запросить смету',
+        whatsappText: 'Здравствуйте, хочу запросить смету на оптоволокно для',
+        whatsappPoints: 'точек',
+        whatsappType: 'Тип',
+        whatsappEstimate: 'Оценка',
     },
 };
 
@@ -611,9 +627,63 @@ export default function FiberCalculator({ locale, onCalcUpdate }: FiberCalculato
                         </div>
                     </div>
 
+                    <button
+                        onClick={() => document.getElementById('fiber-quote-form')?.scrollIntoView({ behavior: 'smooth' })}
+                        className="btn-gold w-full justify-center text-base py-4 mb-4"
+                    >
+                        {l.requestQuote} →
+                    </button>
+
+                    <a
+                        href={`https://wa.me/34605974605?text=${encodeURIComponent(
+                            `${l.whatsappText} ${points} ${l.whatsappPoints} (${calc.totalCableLength}m ${FIBER_CABLE_TYPES.find(c => c.id === cableType)!.name}). ${l.whatsappType}: ${l[installType]}. ${l.whatsappEstimate}: ${calc.total.toFixed(2)}€`
+                        )}`}
+                        target="_blank"
+                        rel="noopener"
+                        className="btn-outline w-full justify-center text-sm py-3"
+                    >
+                        💬 WhatsApp
+                    </a>
+
                     <p className="text-xs text-brand-gold-muted text-center mt-4 leading-relaxed">
                         ℹ️ {l.disclaimer}
                     </p>
+                </div>
+            </div>
+
+            {/* QUOTE FORM — full width below */}
+            <div id="fiber-quote-form" className="lg:col-span-3">
+                <div className="card p-6 border-cyan-400/20">
+                    <QuoteForm
+                        locale={locale}
+                        calculationData={{
+                            cableType: `Fibra ${FIBER_CABLE_TYPES.find(c => c.id === cableType)?.name || cableType}`,
+                            cableMeters: calc.totalCableLength,
+                            points,
+                            installationType: `Fibra - ${installType}`,
+                            installationMeters: calc.totalCableLength,
+                            canaleta: 0,
+                            tubo_corrugado: 0,
+                            regata: 0,
+                            additionalWork: {
+                                fusion: fusionCount > 0,
+                                otdr: doCertification,
+                            },
+                            rack,
+                            urgency,
+                            cablesCost: calc.cableCost,
+                            pointsCost: calc.rosetaCost,
+                            installCost: calc.routingCost,
+                            laborCost: calc.laborCost,
+                            materialsCost: calc.fusionCost + calc.patchCordCost + calc.acopladorCost + calc.bandejaCost,
+                            workCost: calc.certificationCost,
+                            rackCost: calc.rackCost,
+                            subtotal: calc.subtotal,
+                            urgencyMultiplier: calc.urgencyOption.multiplier,
+                            iva: calc.iva,
+                            total: calc.total,
+                        }}
+                    />
                 </div>
             </div>
         </div>
