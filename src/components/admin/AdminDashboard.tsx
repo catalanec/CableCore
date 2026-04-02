@@ -209,29 +209,31 @@ export default function AdminDashboard({ initialQuotes, initialLeads, initialMat
                                 ))}
                             </div>
                         </div>
-                        <div className="flex items-end gap-4 h-48">
+                        <div className="overflow-x-auto">
+                        <div className={`flex items-end h-48 ${chartPeriod > 12 ? 'gap-1' : chartPeriod > 6 ? 'gap-2' : 'gap-4'}`} style={{ minWidth: chartPeriod > 12 ? `${chartPeriod * 50}px` : undefined }}>
                             {monthlyData.map((d, i) => (
-                                <div key={i} className="flex-1 flex flex-col items-center gap-1">
+                                <div key={i} className="flex-1 flex flex-col items-center gap-1" style={{ minWidth: chartPeriod > 12 ? '40px' : undefined }}>
                                     {d.revenue > 0 && (
-                                        <div className="text-[10px] text-brand-gold font-bold mb-1">
+                                        <div className="text-[10px] text-brand-gold font-bold mb-1 whitespace-nowrap">
                                             {d.revenue >= 1000 ? `${(d.revenue / 1000).toFixed(1)}k` : d.revenue.toFixed(0)}€
                                         </div>
                                     )}
                                     <div className="w-full flex gap-1 justify-center items-end" style={{ height: '140px' }}>
                                         <div
-                                            className="w-5 bg-gradient-to-t from-[#c9a84c] to-[#e8d48b] rounded-t-sm transition-all"
+                                            className={`${chartPeriod > 12 ? 'w-3' : 'w-5'} bg-gradient-to-t from-[#c9a84c] to-[#e8d48b] rounded-t-sm transition-all`}
                                             style={{ height: `${Math.max((d.revenue / maxRevenue) * 100, d.revenue > 0 ? 5 : 0)}%` }}
                                             title={`Ingresos: ${d.revenue.toFixed(2)}€`}
                                         />
                                         <div
-                                            className="w-5 bg-gradient-to-t from-[#444] to-[#666] rounded-t-sm transition-all"
+                                            className={`${chartPeriod > 12 ? 'w-3' : 'w-5'} bg-gradient-to-t from-[#444] to-[#666] rounded-t-sm transition-all`}
                                             style={{ height: `${Math.max((d.cost / maxRevenue) * 100, d.cost > 0 ? 5 : 0)}%` }}
                                             title={`Costes: ${d.cost.toFixed(2)}€`}
                                         />
                                     </div>
-                                    <span className="text-xs text-brand-gold-muted">{d.month}</span>
+                                    <span className={`text-brand-gold-muted whitespace-nowrap ${chartPeriod > 12 ? 'text-[9px]' : 'text-xs'}`}>{d.month}{chartPeriod > 12 ? `'${String(d.year).slice(-2)}` : ''}</span>
                                 </div>
                             ))}
+                        </div>
                         </div>
                         <div className="flex justify-center gap-6 mt-4">
                             <div className="flex items-center gap-2 text-xs text-brand-gold-muted">
