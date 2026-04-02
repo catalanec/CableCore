@@ -3,12 +3,11 @@ import Stripe from 'stripe';
 
 export async function POST(req: NextRequest) {
     try {
-        const stripeKey = process.env.STRIPE_SECRET_KEY;
+        const stripeKey = (process.env.STRIPE_SECRET_KEY || '').trim();
         if (!stripeKey) {
             return NextResponse.json({ error: 'Stripe not configured — STRIPE_SECRET_KEY missing' }, { status: 500 });
         }
 
-        // Stripe v21 — pass key directly, no apiVersion needed
         const stripe = new Stripe(stripeKey);
         const body = await req.json();
         const { amount, clientName, projectId, description } = body;
