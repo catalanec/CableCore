@@ -931,41 +931,85 @@ export default function AdminDashboard({ initialQuotes, initialLeads, initialMat
                                                 <span className={`text-xs px-3 py-1 rounded-full ${STATUS_COLORS[p.status]}`}>{p.status}</span>
                                             </td>
                                             <td className="p-3 text-center">
-                                                {p.payment_status !== 'paid' && rev > 0 ? (
-                                                    <button
-                                                        onClick={async () => {
-                                                            try {
-                                                                const res = await fetch('/api/stripe/checkout', {
-                                                                    method: 'POST',
-                                                                    headers: { 'Content-Type': 'application/json' },
-                                                                    body: JSON.stringify({
-                                                                        amount: rev,
-                                                                        clientName: p.client_name || p.client || '',
-                                                                        projectId: p.id,
-                                                                        description: `Proyecto ${(p.quote_id || '').slice(0, 8)}`,
-                                                                    }),
-                                                                });
-                                                                const data = await res.json();
-                                                                if (data.url) {
-                                                                    // Copy link to clipboard and show
-                                                                    await navigator.clipboard.writeText(data.url);
-                                                                    alert(`✅ Link de pago copiado al portapapeles!\n\n${data.url}`);
-                                                                } else {
-                                                                    alert('❌ Error: ' + (data.error || 'No URL'));
-                                                                }
-                                                            } catch (err: any) {
-                                                                alert('❌ Error: ' + err.message);
+                                                {(() => {
+                                                    const stage = p.payment_stage || 'none';
+                                                    const halfAmount = (rev / 2).toFixed(2);
+
+                                                    const handleSendInvoice = async (pType: 'advance' | 'final') => {
+                                                        let clientEmail = p.client_email || '';
+                                                        if (!clientEmail && !p.quote_id) {
+                                                            const email = prompt('Email del cliente:');
+                                                            if (!email) return;
+                                                            clientEmail = email;
+                                                        }
+
+                                                        try {
+                                                            const res = await fetch('/api/invoice/send', {
+                                                                method: 'POST',
+                                                                headers: { 'Content-Type': 'application/json' },
+                                                                body: JSON.stringify({ projectId: p.id, paymentType: pType, clientEmail: clientEmail || undefined }),
+                                                            });
+                                                            const data = await res.json();
+                                                            if (data.success) {
+                                                                const emailMsg = data.emailSent 
+                                                                    ? '📧 Email enviado al cliente' 
+                                                                    : '⚠️ Email no enviado (link copiado)';
+                                                                await navigator.clipboard.writeText(data.paymentUrl);
+                                                                alert(`✅ ${emailMsg}\n\n💳 Link de pago (${pType === 'advance' ? 'Anticipo' : 'Final'}): ${halfAmount}€\n\nLink copiado al portapapeles`);
+                                                                window.location.reload();
+                                                            } else {
+                                                                alert('❌ Error: ' + (data.error || 'Unknown'));
                                                             }
-                                                        }}
-                                                        className="text-xs px-3 py-1.5 bg-purple-500/20 text-purple-300 border border-purple-500/30 rounded-full hover:bg-purple-500/30 transition-colors font-bold"
-                                                    >
-                                                        💳 Cobrar
-                                                    </button>
-                                                ) : p.payment_status === 'paid' ? (
-                                                    <span className="text-xs text-green-400">✅ Pagado</span>
-                                                ) : (
-                                                    <span className="text-xs text-brand-gold-muted">—</span>
-                                                )}
+                                                        } catch (err: any) {
+                                                            alert('❌ Error: ' + err.message);
+                                                        }
+                                                    };
+
+                                                    if (stage === 'final_paid' || p.payment_status === 'paid') {
+                                                        return <span className="text-xs text-green-400 font-bold">✅ 100% Pagado</span>;
+                                                    }
+                                                    if (stage === 'final_sent') {
+                                                        return (
+                                                            <div className="flex flex-col items-center gap-1">
+                                                                <span className="text-[10px] text-green-400">✅ Anticipo</span>
+                                                                <span className="text-[10px] text-yellow-400">📧 Final enviado</span>
+                                                            </div>
+                                                        );
+                                                    }
+                                                    if (stage === 'advance_paid') {
+                                                        return (
+                                                            <div className="flex flex-col items-center gap-1">
+                                                                <span className="text-[10px] text-green-400">✅ Anticipo pagado</span>
+                                                                <button
+                                                                    onClick={() => handleSendInvoice('final')}
+                                                                    className="text-[10px] px-2 py-1 bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 rounded-full hover:bg-emerald-500/30 transition-colors font-bold"
+                                                                >
+                                                                    📧 Enviar Final ({halfAmount}€)
+                                                                </button>
+                                                            </div>
+                                                        );
+                                                    }
+                                                    if (stage === 'advance_sent') {
+                                                        return (
+                                                            <div className="flex flex-col items-center gap-1">
+                                                                <span className="text-[10px] text-yellow-400">📧 Anticipo enviado</span>
+                                                                <span className="text-[10px] text-gray-500">Esperando pago...</span>
+                                                            </div>
+                                                        );
+                                                    }
+                                                    // stage === 'none'
+                                                    if (rev > 0) {
+                                                        return (
+                                                            <button
+                                                                onClick={() => handleSendInvoice('advance')}
+                                                                className="text-xs px-3 py-1.5 bg-purple-500/20 text-purple-300 border border-purple-500/30 rounded-full hover:bg-purple-500/30 transition-colors font-bold"
+                                                            >
+                                                                📧 Anticipo ({halfAmount}€)
+                                                            </button>
+                                                        );
+                                                    }
+                                                    return <span className="text-xs text-brand-gold-muted">—</span>;
+                                                })()}
                                             </td>
                                         </tr>
                                         );

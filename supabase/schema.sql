@@ -117,6 +117,14 @@ CREATE TABLE IF NOT EXISTS projects (
   payment_date DATE,
   payment_status TEXT DEFAULT 'pending' CHECK (payment_status IN ('pending','partial','paid')),
 
+  -- Split payment tracking (50/50)
+  payment_stage TEXT DEFAULT 'none',
+  advance_stripe_session TEXT,
+  final_stripe_session TEXT,
+  advance_paid_at TIMESTAMPTZ,
+  final_paid_at TIMESTAMPTZ,
+  client_email TEXT,
+
   notes TEXT
 );
 

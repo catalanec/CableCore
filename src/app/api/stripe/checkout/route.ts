@@ -5,20 +5,21 @@ export async function POST(req: NextRequest) {
     try {
         const stripeKey = (process.env.STRIPE_SECRET_KEY || '').trim();
         if (!stripeKey) {
-            return NextResponse.json({ error: 'Stripe not configured — STRIPE_SECRET_KEY missing' }, { status: 500 });
+            return NextResponse.json({ error: 'Stripe not configured' }, { status: 500 });
         }
 
         const stripe = new Stripe(stripeKey);
         const body = await req.json();
-        const { amount, clientName, projectId, description } = body;
+        const { amount, clientName, projectId, description, paymentType } = body;
 
         if (!amount || amount <= 0) {
             return NextResponse.json({ error: 'Invalid amount' }, { status: 400 });
         }
 
         const origin = req.headers.get('origin') || req.nextUrl.origin;
+        const type = paymentType === 'final' ? 'final' : 'advance';
+        const label = type === 'advance' ? 'Anticipo (50%)' : 'Pago Final (50%)';
 
-        // Create a Stripe Checkout Session
         const session = await stripe.checkout.sessions.create({
             payment_method_types: ['card'],
             line_items: [
@@ -26,8 +27,8 @@ export async function POST(req: NextRequest) {
                     price_data: {
                         currency: 'eur',
                         product_data: {
-                            name: `CableCore — ${description || 'Servicio de instalación'}`,
-                            ...(clientName ? { description: `Cliente: ${clientName}` } : {}),
+                            name: `CableCore — ${label}`,
+                            ...(description ? { description } : {}),
                         },
                         unit_amount: Math.round(amount * 100),
                     },
@@ -35,12 +36,14 @@ export async function POST(req: NextRequest) {
                 },
             ],
             mode: 'payment',
-            success_url: `${origin}/es/admin?payment=success&project=${projectId || ''}`,
+            success_url: `${origin}/es/admin?payment=success&project=${projectId || ''}&type=${type}`,
             cancel_url: `${origin}/es/admin?payment=cancelled`,
             metadata: {
                 projectId: projectId || '',
                 clientName: clientName || '',
+                paymentType: type,
             },
+            customer_email: body.clientEmail || undefined,
         });
 
         return NextResponse.json({ url: session.url, sessionId: session.id });
