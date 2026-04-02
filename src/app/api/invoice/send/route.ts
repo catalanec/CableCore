@@ -125,16 +125,24 @@ export async function POST(req: NextRequest) {
         const emailSubject = generateInvoiceEmailSubject({ paymentType: type, quoteNumber });
 
         const fromEmail = process.env.RESEND_FROM_EMAIL || 'CableCore <onboarding@resend.dev>';
-        const { data: emailResult, error: emailError } = await resend.emails.send({
-            from: fromEmail,
-            to: [clientEmail],
-            subject: emailSubject,
-            html: emailHTML,
-        });
+        let emailSentOk = false;
+        let emailId: string | undefined;
+        try {
+            const { data: emailResult, error: emailError } = await resend.emails.send({
+                from: fromEmail,
+                to: [clientEmail],
+                subject: emailSubject,
+                html: emailHTML,
+            });
 
-        if (emailError) {
-            console.error('Resend email error:', emailError);
-            // Still update DB even if email fails — admin can copy the link
+            if (emailError) {
+                console.error('Resend email error:', JSON.stringify(emailError));
+            } else {
+                emailSentOk = true;
+                emailId = emailResult?.id;
+            }
+        } catch (emailCatch: unknown) {
+            console.error('Resend email exception:', emailCatch);
         }
 
         // 7. Update project in Supabase
@@ -169,8 +177,8 @@ export async function POST(req: NextRequest) {
             success: true,
             paymentUrl: session.url,
             sessionId: session.id,
-            emailSent: !emailError,
-            emailId: emailResult?.id,
+            emailSent: emailSentOk,
+            emailId,
         });
     } catch (error: unknown) {
         const message = error instanceof Error ? error.message : 'Failed to send invoice';
