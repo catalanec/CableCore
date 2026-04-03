@@ -94,13 +94,24 @@ export default function Header() {
                         ))}
                     </div>
 
-                    {/* CTA Button */}
+                    {/* CTA Button - desktop */}
                     <Link
                         href="/contacto"
                         className="hidden sm:inline-flex btn-gold text-sm px-5 py-2.5"
                     >
                         {t('quote')}
                     </Link>
+
+                    {/* Mobile Call Button */}
+                    <a
+                        href="tel:+34605974605"
+                        className="lg:hidden flex items-center justify-center w-9 h-9 rounded-full bg-brand-gold/10 border border-brand-gold/30 text-brand-gold hover:bg-brand-gold hover:text-black transition-all"
+                        aria-label="Llamar a CableCore"
+                    >
+                        <svg xmlns="http://www.w3.org/2000/svg" className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                            <path d="M6.62 10.79a15.05 15.05 0 0 0 6.59 6.59l2.2-2.2a1 1 0 0 1 1.01-.24 11.47 11.47 0 0 0 3.59.57 1 1 0 0 1 1 1V20a1 1 0 0 1-1 1A17 17 0 0 1 3 4a1 1 0 0 1 1-1h3.5a1 1 0 0 1 1 1c0 1.25.2 2.45.57 3.59a1 1 0 0 1-.25 1.01l-2.2 2.19z"/>
+                        </svg>
+                    </a>
 
                     {/* Mobile Menu Toggle */}
                     <button

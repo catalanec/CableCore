@@ -1,6 +1,8 @@
 import type { Metadata } from 'next';
 import { Inter, Outfit } from 'next/font/google';
 import { getLocalBusinessJsonLd, getWebSiteJsonLd } from '@/lib/seo-metadata';
+import WhatsAppButton from '@/components/layout/WhatsAppButton';
+import CookieBanner from '@/components/layout/CookieBanner';
 import './globals.css';
 
 const inter = Inter({
@@ -97,6 +99,8 @@ export default function RootLayout({
             </head>
             <body className="font-body bg-[#09090b] text-white antialiased">
                 {children}
+                <WhatsAppButton />
+                <CookieBanner />
             </body>
         </html>
     );
