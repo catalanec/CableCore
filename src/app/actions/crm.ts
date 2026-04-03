@@ -424,3 +424,283 @@ export async function seedMaterials() {
         return { success: false, error: error.message };
     }
 }
+
+// ═══════════════════════════════════
+// CRM 2.0 — ACTIVITIES
+// ═══════════════════════════════════
+
+export async function addActivity(data: {
+    type: string;
+    description: string;
+    entity_type: string;
+    entity_id: string;
+    metadata?: Record<string, unknown>;
+}) {
+    try {
+        const supabase = getSupabase();
+        const { error } = await supabase.from('activities').insert({
+            type: data.type,
+            description: data.description,
+            entity_type: data.entity_type,
+            entity_id: data.entity_id,
+            metadata: data.metadata || {},
+        });
+        if (error) throw error;
+        revalidate();
+        return { success: true };
+    } catch (error: any) {
+        console.error('Failed to add activity:', error);
+        return { success: false, error: error.message };
+    }
+}
+
+export async function getActivities(entityType: string, entityId: string) {
+    try {
+        const supabase = getSupabase();
+        const { data, error } = await supabase
+            .from('activities')
+            .select('*')
+            .eq('entity_type', entityType)
+            .eq('entity_id', entityId)
+            .order('created_at', { ascending: false });
+        if (error) throw error;
+        return { success: true, data: data || [] };
+    } catch (error: any) {
+        return { success: false, data: [], error: error.message };
+    }
+}
+
+// ═══════════════════════════════════
+// CRM 2.0 — TASKS
+// ═══════════════════════════════════
+
+export async function addTask(data: {
+    title: string;
+    description?: string;
+    priority?: string;
+    due_date?: string;
+    entity_type?: string;
+    entity_id?: string;
+}) {
+    try {
+        const supabase = getSupabase();
+        const { error } = await supabase.from('tasks').insert({
+            title: data.title,
+            description: data.description || null,
+            priority: data.priority || 'medium',
+            due_date: data.due_date || null,
+            entity_type: data.entity_type || null,
+            entity_id: data.entity_id || null,
+            status: 'pending',
+        });
+        if (error) throw error;
+        revalidate();
+        return { success: true };
+    } catch (error: any) {
+        console.error('Failed to add task:', error);
+        return { success: false, error: error.message };
+    }
+}
+
+export async function updateTaskStatus(id: string, status: string) {
+    try {
+        const supabase = getSupabase();
+        const { error } = await supabase
+            .from('tasks')
+            .update({ status, updated_at: new Date().toISOString() })
+            .eq('id', id);
+        if (error) throw error;
+        revalidate();
+        return { success: true };
+    } catch (error: any) {
+        return { success: false, error: error.message };
+    }
+}
+
+export async function updateTask(id: string, data: {
+    title?: string;
+    description?: string;
+    priority?: string;
+    due_date?: string | null;
+    status?: string;
+}) {
+    try {
+        const supabase = getSupabase();
+        const { error } = await supabase
+            .from('tasks')
+            .update({ ...data, updated_at: new Date().toISOString() })
+            .eq('id', id);
+        if (error) throw error;
+        revalidate();
+        return { success: true };
+    } catch (error: any) {
+        return { success: false, error: error.message };
+    }
+}
+
+export async function deleteTask(id: string) {
+    try {
+        const supabase = getSupabase();
+        const { error } = await supabase.from('tasks').delete().eq('id', id);
+        if (error) throw error;
+        revalidate();
+        return { success: true };
+    } catch (error: any) {
+        return { success: false, error: error.message };
+    }
+}
+
+export async function getTasks(entityType?: string, entityId?: string) {
+    try {
+        const supabase = getSupabase();
+        let query = supabase.from('tasks').select('*').order('due_date', { ascending: true });
+        if (entityType && entityId) {
+            query = query.eq('entity_type', entityType).eq('entity_id', entityId);
+        }
+        const { data, error } = await query;
+        if (error) throw error;
+        return { success: true, data: data || [] };
+    } catch (error: any) {
+        return { success: false, data: [], error: error.message };
+    }
+}
+
+export async function getAllTasks() {
+    try {
+        const supabase = getSupabase();
+        const { data, error } = await supabase
+            .from('tasks')
+            .select('*')
+            .neq('status', 'done')
+            .order('due_date', { ascending: true, nullsFirst: false });
+        if (error) throw error;
+        return { success: true, data: data || [] };
+    } catch (error: any) {
+        return { success: false, data: [], error: error.message };
+    }
+}
+
+// ═══════════════════════════════════
+// CRM 2.0 — PIPELINE & LEADS
+// ═══════════════════════════════════
+
+export async function updateLeadPipelineStage(id: string, stage: string) {
+    try {
+        const supabase = getSupabase();
+        const { error } = await supabase
+            .from('leads')
+            .update({ pipeline_stage: stage, status: stage })
+            .eq('id', id);
+        if (error) throw error;
+
+        // Log activity
+        await supabase.from('activities').insert({
+            type: 'status_change',
+            description: `Etapa cambiada a: ${stage}`,
+            entity_type: 'lead',
+            entity_id: id,
+        });
+
+        revalidate();
+        return { success: true };
+    } catch (error: any) {
+        return { success: false, error: error.message };
+    }
+}
+
+export async function updateLeadFollowup(id: string, date: string | null) {
+    try {
+        const supabase = getSupabase();
+        const { error } = await supabase
+            .from('leads')
+            .update({ next_followup: date })
+            .eq('id', id);
+        if (error) throw error;
+        revalidate();
+        return { success: true };
+    } catch (error: any) {
+        return { success: false, error: error.message };
+    }
+}
+
+export async function updateLeadValue(id: string, value: number) {
+    try {
+        const supabase = getSupabase();
+        const { error } = await supabase
+            .from('leads')
+            .update({ estimated_value: value })
+            .eq('id', id);
+        if (error) throw error;
+        revalidate();
+        return { success: true };
+    } catch (error: any) {
+        return { success: false, error: error.message };
+    }
+}
+
+// ═══════════════════════════════════
+// CRM 2.0 — PROJECT DETAIL
+// ═══════════════════════════════════
+
+export async function getProjectDetail(id: string) {
+    try {
+        const supabase = getSupabase();
+
+        const [projectRes, activitiesRes, tasksRes] = await Promise.all([
+            supabase.from('projects').select('*, quotes(*)').eq('id', id).single(),
+            supabase.from('activities').select('*').eq('entity_type', 'project').eq('entity_id', id).order('created_at', { ascending: false }),
+            supabase.from('tasks').select('*').eq('entity_type', 'project').eq('entity_id', id).order('due_date', { ascending: true }),
+        ]);
+
+        if (projectRes.error) throw projectRes.error;
+
+        return {
+            success: true,
+            project: projectRes.data,
+            activities: activitiesRes.data || [],
+            tasks: tasksRes.data || [],
+        };
+    } catch (error: any) {
+        return { success: false, project: null, activities: [], tasks: [], error: error.message };
+    }
+}
+
+export async function updateProjectStatus(id: string, status: string) {
+    try {
+        const supabase = getSupabase();
+        const { error } = await supabase.from('projects').update({ status }).eq('id', id);
+        if (error) throw error;
+
+        await supabase.from('activities').insert({
+            type: 'status_change',
+            description: `Estado del proyecto cambiado a: ${status}`,
+            entity_type: 'project',
+            entity_id: id,
+        });
+
+        revalidate();
+        return { success: true };
+    } catch (error: any) {
+        return { success: false, error: error.message };
+    }
+}
+
+export async function updateProjectInfo(id: string, data: {
+    client_name?: string;
+    client_phone?: string;
+    client_email?: string;
+    address?: string;
+    notes?: string;
+    start_date?: string;
+    end_date?: string;
+}) {
+    try {
+        const supabase = getSupabase();
+        const { error } = await supabase.from('projects').update(data).eq('id', id);
+        if (error) throw error;
+        revalidate();
+        return { success: true };
+    } catch (error: any) {
+        return { success: false, error: error.message };
+    }
+}

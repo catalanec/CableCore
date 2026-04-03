@@ -1,19 +1,22 @@
 'use client';
 
 import { useState, useMemo, useEffect } from 'react';
-
-import { updateLeadStatus, updateQuoteStatus, updateMaterialStock, deleteLead, deleteQuote, updateLeadNotes, updateQuoteNotes, addMaterial, deleteMaterial, updateMaterial, updateProjectCosts, updateProjectPayment, seedMaterials, sendLowStockAlerts, exportMaterialsCSV, exportProjectsCSV } from '@/app/actions/crm';
+import { useLocale } from 'next-intl';
+import { updateLeadStatus, updateQuoteStatus, updateMaterialStock, deleteLead, deleteQuote, updateLeadNotes, updateQuoteNotes, addMaterial, deleteMaterial, updateMaterial, updateProjectCosts, updateProjectPayment, seedMaterials, sendLowStockAlerts, exportMaterialsCSV, exportProjectsCSV, getAllTasks } from '@/app/actions/crm';
 import { downloadQuotePDF, type QuotePDFData } from '@/lib/quote-pdf';
+import Pipeline from './Pipeline';
+import TaskManager from './TaskManager';
 
 interface AdminDashboardProps {
     initialQuotes: any[];
     initialLeads: any[];
     initialMaterials: any[];
     initialProjects: any[];
+    initialTasks?: any[];
 }
 
 /* Tab types */
-type Tab = 'overview' | 'quotes' | 'leads' | 'materials' | 'projects';
+type Tab = 'overview' | 'quotes' | 'leads' | 'pipeline' | 'materials' | 'projects' | 'tasks';
 
 const STATUS_COLORS: Record<string, string> = {
     pending: 'bg-yellow-400/10 text-yellow-400',
@@ -31,7 +34,8 @@ const STATUS_COLORS: Record<string, string> = {
     in_progress: 'bg-amber-400/10 text-amber-400',
 };
 
-export default function AdminDashboard({ initialQuotes, initialLeads, initialMaterials, initialProjects }: AdminDashboardProps) {
+export default function AdminDashboard({ initialQuotes, initialLeads, initialMaterials, initialProjects, initialTasks = [] }: AdminDashboardProps) {
+    const locale = useLocale();
     const [activeTab, setActiveTab] = useState<Tab>('overview');
     const [searchTerm, setSearchTerm] = useState('');
     const [selectedQuote, setSelectedQuote] = useState<any>(null);
@@ -147,9 +151,11 @@ export default function AdminDashboard({ initialQuotes, initialLeads, initialMat
     const maxRevenue = Math.max(...monthlyData.map(d => d.revenue), 1000);
 
     const tabs: { id: Tab; label: string; icon: string }[] = [
-        { id: 'overview', label: 'Panel General', icon: '📊' },
+        { id: 'overview', label: 'Panel', icon: '📊' },
+        { id: 'pipeline', label: 'Pipeline', icon: '🎯' },
+        { id: 'tasks', label: 'Tareas', icon: '✅' },
+        { id: 'leads', label: 'Leads', icon: '👥' },
         { id: 'quotes', label: 'Presupuestos', icon: '📋' },
-        { id: 'leads', label: 'Leads / CRM', icon: '👥' },
         { id: 'materials', label: 'Materiales', icon: '📦' },
         { id: 'projects', label: 'Proyectos', icon: '🏗️' },
     ];
@@ -300,6 +306,30 @@ export default function AdminDashboard({ initialQuotes, initialLeads, initialMat
                             </div>
                         </div>
                     </div>
+                </div>
+            )}
+
+            {/* ═══════ PIPELINE ═══════ */}
+            {activeTab === 'pipeline' && (
+                <div className="space-y-4">
+                    <div className="flex items-center justify-between">
+                        <h3 className="font-heading font-semibold text-white">🎯 Pipeline de ventas</h3>
+                        <span className="text-xs text-brand-gold-muted">Arrastra las tarjetas entre columnas</span>
+                    </div>
+                    <Pipeline leads={leads} />
+                </div>
+            )}
+
+            {/* ═══════ TASKS ═══════ */}
+            {activeTab === 'tasks' && (
+                <div className="card p-6 border-brand-gold/10">
+                    <div className="flex items-center justify-between mb-6">
+                        <h3 className="font-heading font-semibold text-white">✅ Todas las tareas</h3>
+                        <div className="text-xs text-brand-gold-muted">
+                            {initialTasks.filter((t: any) => t.status !== 'done').length} pendientes
+                        </div>
+                    </div>
+                    <TaskManager tasks={initialTasks} />
                 </div>
             )}
 
@@ -1010,6 +1040,14 @@ export default function AdminDashboard({ initialQuotes, initialLeads, initialMat
                                                     }
                                                     return <span className="text-xs text-brand-gold-muted">—</span>;
                                                 })()}
+                                            </td>
+                                            <td className="p-3 text-center">
+                                                <a
+                                                    href={`/${locale}/admin/project/${p.id}`}
+                                                    className="text-brand-gold hover:text-white transition-colors text-[10px] uppercase tracking-wider font-bold"
+                                                >
+                                                    Ver →
+                                                </a>
                                             </td>
                                         </tr>
                                         );
