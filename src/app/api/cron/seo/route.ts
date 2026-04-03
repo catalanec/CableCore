@@ -1,5 +1,7 @@
 import { NextResponse } from 'next/server';
 
+const SITE = 'cablecore.es';
+
 const KEYWORDS = [
     'instalación cable de red Barcelona',
     'cableado estructurado Barcelona',
@@ -10,8 +12,6 @@ const KEYWORDS = [
     'empresa cableado estructurado barcelona',
 ];
 
-const SITE = 'cablecore.es';
-
 function positionEmoji(pos: number | null): string {
     if (pos === null) return '⚪';
     if (pos <= 3) return '🏆';
@@ -20,58 +20,51 @@ function positionEmoji(pos: number | null): string {
     return '🔴';
 }
 
-async function checkPositionsWithOpenAI(apiKey: string): Promise<{keyword: string, position: number | null, note: string}[]> {
-    // Use OpenAI to analyze each keyword's likely position using web browsing
-    const keywordList = KEYWORDS.map((kw, i) => `${i + 1}. "${kw}"`).join('\n');
+/**
+ * Real rank check via Google Custom Search API
+ * Searches pages 1-3 (30 results) to find our site
+ */
+async function checkRankWithGoogleCSE(
+    keyword: string,
+    apiKey: string,
+    cx: string
+): Promise<{ position: number | null; url: string | null }> {
+    const MAX_PAGES = 3; // check first 30 results (3 pages × 10)
 
-    const response = await fetch('https://api.openai.com/v1/chat/completions', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${apiKey}`,
-        },
-        body: JSON.stringify({
-            model: 'gpt-4o-mini',
-            messages: [{
-                role: 'system',
-                content: `You are an SEO analyst. You will receive a list of Spanish keywords and a website. Based on your knowledge of Spanish SEO, domain authority, competition levels, and typical ranking patterns for local service businesses in Barcelona, provide your best NUMERICAL estimate for each keyword's Google.es position. Be specific with numbers, not ranges.`,
-            }, {
-                role: 'user',
-                content: `Website: ${SITE}
-Domain: local cable/network installation company in Barcelona, Spain
-Domain age: ~1 year, moderate authority
+    for (let page = 0; page < MAX_PAGES; page++) {
+        const start = page * 10 + 1;
+        const url = `https://www.googleapis.com/customsearch/v1?key=${apiKey}&cx=${cx}&q=${encodeURIComponent(keyword)}&gl=es&hl=es&num=10&start=${start}`;
 
-Keywords to analyze:
-${keywordList}
+        try {
+            const res = await fetch(url, { signal: AbortSignal.timeout(8000) });
+            if (!res.ok) {
+                const err = await res.json().catch(() => ({}));
+                console.error('CSE error:', err?.error?.message);
+                return { position: null, url: null };
+            }
 
-For each keyword, provide your estimated Google.es position as a JSON array. Format:
-[{"keyword": "...", "position": NUMBER_OR_NULL, "note": "brief reason"}]
+            const data = await res.json();
+            const items: { link: string; title?: string }[] = data.items || [];
 
-Rules:
-- position: integer 1-100, or null if definitely not ranking
-- Be realistic for a 1-year-old local service website
-- Consider: Barcelona local intent, competition from instaladores, tecnoges, etc.
-- Return ONLY the JSON array, no other text.`,
-            }],
-            temperature: 0.3,
-        }),
-    });
+            for (let i = 0; i < items.length; i++) {
+                const link = items[i].link || '';
+                if (link.includes(SITE)) {
+                    return {
+                        position: start + i,
+                        url: link,
+                    };
+                }
+            }
 
-    if (!response.ok) {
-        throw new Error(`OpenAI error: ${response.status}`);
+            // If fewer than 10 results, no point checking next page
+            if (items.length < 10) break;
+        } catch (err) {
+            console.error(`CSE fetch error for "${keyword}":`, err);
+            return { position: null, url: null };
+        }
     }
 
-    const data = await response.json();
-    const content = data.choices?.[0]?.message?.content?.trim();
-
-    try {
-        // Extract JSON from response
-        const jsonMatch = content.match(/\[[\s\S]*\]/);
-        if (!jsonMatch) throw new Error('No JSON found');
-        return JSON.parse(jsonMatch[0]);
-    } catch {
-        throw new Error(`Failed to parse OpenAI response: ${content}`);
-    }
+    return { position: null, url: null }; // not in top 30
 }
 
 export async function GET(request: Request) {
@@ -86,8 +79,8 @@ export async function GET(request: Request) {
     try {
         const TELEGRAM_BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
         const TELEGRAM_CHAT_ID = process.env.TELEGRAM_CHAT_ID;
-        const OPENAI_API_KEY = process.env.OPENAI_API_KEY;
-        const SERP_API_KEY = process.env.SERP_API_KEY;
+        const GOOGLE_CSE_API_KEY = process.env.GOOGLE_CSE_API_KEY;
+        const GOOGLE_CSE_CX = process.env.GOOGLE_CSE_CX;
 
         if (!TELEGRAM_BOT_TOKEN || !TELEGRAM_CHAT_ID) {
             return NextResponse.json({ error: 'Missing Telegram API Keys' }, { status: 500 });
@@ -98,96 +91,58 @@ export async function GET(request: Request) {
             timeZone: 'Europe/Madrid',
         });
 
-        let results: { keyword: string; position: number | null; note?: string }[] = [];
+        let results: { keyword: string; position: number | null; url: string | null }[] = [];
         let dataSource = '';
 
-        // Priority 1: SerpAPI (real-time Google data)
-        if (SERP_API_KEY) {
-            dataSource = 'SerpAPI · datos reales Google.es';
+        if (GOOGLE_CSE_API_KEY && GOOGLE_CSE_CX) {
+            // ✅ Real Google positions via Custom Search API
+            dataSource = 'Google Custom Search · datos reales';
+
             results = await Promise.all(
                 KEYWORDS.map(async (keyword) => {
-                    try {
-                        const url = `https://serpapi.com/search.json?q=${encodeURIComponent(keyword)}&gl=es&hl=es&num=100&api_key=${SERP_API_KEY}`;
-                        const res = await fetch(url, { signal: AbortSignal.timeout(8000) });
-                        if (!res.ok) return { keyword, position: null, note: 'API error' };
-                        const data = await res.json();
-                        const organic = data.organic_results || [];
-                        const idx = organic.findIndex((r: { link?: string }) =>
-                            r.link?.includes(SITE)
-                        );
-                        return {
-                            keyword,
-                            position: idx >= 0 ? idx + 1 : null,
-                            note: idx >= 0 ? organic[idx].title?.substring(0, 40) : 'No encontrado',
-                        };
-                    } catch {
-                        return { keyword, position: null, note: 'Timeout' };
-                    }
+                    const { position, url } = await checkRankWithGoogleCSE(
+                        keyword, GOOGLE_CSE_API_KEY, GOOGLE_CSE_CX
+                    );
+                    return { keyword, position, url };
                 })
             );
+        } else {
+            // Fallback: OpenAI estimation
+            dataSource = 'Estimación (configura GOOGLE_CSE_API_KEY en Vercel)';
+            results = KEYWORDS.map(kw => ({ keyword: kw, position: null, url: null }));
         }
 
-        // Priority 2: OpenAI estimation
-        else if (OPENAI_API_KEY) {
-            dataSource = 'OpenAI GPT-4o · estimación SEO';
-            try {
-                results = await checkPositionsWithOpenAI(OPENAI_API_KEY);
-            } catch {
-                // Fallback to static
-                dataSource = 'Estimación estática';
-                results = KEYWORDS.map(keyword => ({ keyword, position: null, note: 'Error OpenAI' }));
-            }
-        }
-
-        // Priority 3: Static fallback
-        else {
-            dataSource = 'Estimación estática (sin API keys)';
-            results = [
-                { keyword: 'instalación cable de red Barcelona', position: 12 },
-                { keyword: 'cableado estructurado Barcelona', position: 18 },
-                { keyword: 'instalar red oficina Barcelona', position: 22 },
-                { keyword: 'precio punto de red Barcelona', position: 35 },
-                { keyword: 'instalador red barcelona', position: 15 },
-                { keyword: 'puntos de red barcelona precio', position: 28 },
-                { keyword: 'empresa cableado estructurado barcelona', position: null },
-            ];
-        }
-
-        // Build report rows
+        // Build rows
         const rows = results.map(r => {
             const emoji = positionEmoji(r.position);
-            const posText = r.position
+            const posText = r.position !== null
                 ? `pos. <b>${r.position}</b>`
-                : 'sin posición';
-            const noteText = r.note ? ` <i>(${r.note})</i>` : '';
-            return `${emoji} ${r.keyword}: ${posText}${noteText}`;
+                : 'no encontrado (pos. &gt;30)';
+            return `${emoji} ${r.keyword}: ${posText}`;
         }).join('\n');
 
-        // Summary stats
+        // Stats
         const ranked = results.filter(r => r.position !== null);
-        const top10 = results.filter(r => r.position !== null && r.position <= 10).length;
-        const top20 = results.filter(r => r.position !== null && r.position <= 20).length;
+        const top10 = ranked.filter(r => r.position! <= 10).length;
+        const top20 = ranked.filter(r => r.position! <= 20).length;
+        const best = ranked.sort((a, b) => (a.position ?? 999) - (b.position ?? 999))[0];
 
-        const bestKeyword = results
-            .filter(r => r.position !== null)
-            .sort((a, b) => (a.position ?? 999) - (b.position ?? 999))[0];
+        const reportText = [
+            `📊 <b>SEO diario CableCore</b> — ${today}`,
+            `<i>Fuente: ${dataSource}</i>`,
+            '',
+            rows,
+            '',
+            '━━━━━━━━━━━━━━',
+            `📈 <b>Resumen:</b>`,
+            `• TOP 10: <b>${top10}</b> · TOP 20: <b>${top20}</b> · Indexadas: <b>${ranked.length}/${results.length}</b>`,
+            best ? `• 🏆 Mejor: "<i>${best.keyword}</i>" — pos. ${best.position}` : '',
+            '',
+            '🏆 TOP 3 · 🟢 TOP 10 · 🟡 TOP 20 · 🔴 &gt;20 · ⚪ &gt;30',
+            `🔗 <a href="https://search.google.com/search-console/performance/search-analytics?resource_id=https://cablecore.es/">Google Search Console</a>`,
+        ].filter(l => l !== null).join('\n');
 
-        const reportText = `📊 <b>SEO diario CableCore</b> — ${today}
-<i>Fuente: ${dataSource}</i>
-
-${rows}
-
-━━━━━━━━━━━━━━━━
-📈 <b>Resumen:</b>
-• En TOP 10: <b>${top10}</b> keywords
-• En TOP 20: <b>${top20}</b> keywords
-• Posicionadas: <b>${ranked.length}/${results.length}</b>
-${bestKeyword ? `• 🏆 Mejor: "<i>${bestKeyword.keyword}</i>" — pos. ${bestKeyword.position}` : ''}
-
-🏆 TOP 3 | 🟢 TOP 10 | 🟡 TOP 20 | 🔴 &gt;20 | ⚪ Sin datos
-🔗 <a href="https://search.google.com/search-console/performance/search-analytics?resource_id=https://cablecore.es/">Google Search Console</a>`;
-
-        const tgResponse = await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
+        const tgRes = await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
@@ -198,15 +153,15 @@ ${bestKeyword ? `• 🏆 Mejor: "<i>${bestKeyword.keyword}</i>" — pos. ${best
             }),
         });
 
-        if (!tgResponse.ok) {
-            const err = await tgResponse.text();
+        if (!tgRes.ok) {
+            const err = await tgRes.text();
             throw new Error(`Telegram error: ${err}`);
         }
 
         return NextResponse.json({
             success: true,
             dataSource,
-            keywordsTracked: results.length,
+            results: results.map(r => ({ keyword: r.keyword, position: r.position })),
             top10,
             top20,
         });
