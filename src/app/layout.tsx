@@ -1,9 +1,12 @@
 import type { Metadata } from 'next';
 import { Inter, Outfit } from 'next/font/google';
+import Script from 'next/script';
 import { getLocalBusinessJsonLd, getWebSiteJsonLd } from '@/lib/seo-metadata';
 import WhatsAppButton from '@/components/layout/WhatsAppButton';
 import CookieBanner from '@/components/layout/CookieBanner';
 import './globals.css';
+
+const GA_ID = 'G-TJV2HYNQ9L';
 
 const inter = Inter({
     subsets: ['latin', 'cyrillic'],
@@ -98,6 +101,26 @@ export default function RootLayout({
                 />
             </head>
             <body className="font-body bg-[#09090b] text-white antialiased">
+                {/* Google Analytics 4 */}
+                <Script
+                    src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}
+                    strategy="afterInteractive"
+                />
+                <Script id="ga4-init" strategy="afterInteractive">
+                    {`
+                        window.dataLayer = window.dataLayer || [];
+                        function gtag(){dataLayer.push(arguments);}
+                        gtag('js', new Date());
+                        gtag('config', '${GA_ID}', {
+                            page_path: window.location.pathname,
+                            send_page_view: true
+                        });
+                        // Custom events helpers
+                        window.trackEvent = function(name, params) {
+                            gtag('event', name, params || {});
+                        };
+                    `}
+                </Script>
                 {children}
                 <WhatsAppButton />
                 <CookieBanner />

@@ -20,6 +20,14 @@ export default function WhatsAppButton() {
             rel="noopener noreferrer"
             aria-label="Contactar por WhatsApp"
             className="whatsapp-float"
+            onClick={() => {
+                if (typeof window !== 'undefined' && (window as any).gtag) {
+                    (window as any).gtag('event', 'whatsapp_click', {
+                        event_category: 'engagement',
+                        event_label: 'floating_button',
+                    });
+                }
+            }}
             style={{
                 opacity: visible ? 1 : 0,
                 transform: visible ? 'scale(1)' : 'scale(0.5)',

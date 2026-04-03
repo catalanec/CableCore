@@ -2,6 +2,7 @@
 
 import { useState, FormEvent } from 'react';
 import { downloadQuotePDF, generateQuoteNumber, type QuotePDFData } from '@/lib/quote-pdf';
+import { trackCalculatorQuoteRequest, trackLeadSubmit } from '@/lib/analytics';
 
 interface QuoteFormProps {
     locale: string;
@@ -192,6 +193,9 @@ export default function QuoteForm({ locale, calculationData }: QuoteFormProps) {
         };
 
         downloadQuotePDF(pdfData);
+
+        // GA4: track quote download as conversion
+        trackCalculatorQuoteRequest('ethernet', calculationData.total);
     };
 
     const handleSaveCRM = async () => {
@@ -211,6 +215,8 @@ export default function QuoteForm({ locale, calculationData }: QuoteFormProps) {
             });
             if (res.ok) {
                 setSaved(true);
+                // GA4: track CRM save as lead generation
+                trackLeadSubmit('calculator_crm');
             } else {
                 const data = await res.json();
                 alert('No se pudo guardar: ' + (data.error || 'Error desconocido'));
