@@ -1,14 +1,15 @@
-const BASE_URL = 'https://cablecore.es';
+import { MetadataRoute } from 'next';
 
-export default function robots() {
+export default function robots(): MetadataRoute.Robots {
     return {
         rules: [
             {
                 userAgent: '*',
                 allow: '/',
-                disallow: ['/api/', '/admin/'],
+                disallow: ['/api/', '/es/admin/', '/en/admin/', '/ru/admin/'],
             },
         ],
-        sitemap: `${BASE_URL}/sitemap.xml`,
+        sitemap: 'https://cablecore.es/sitemap.xml',
+        host: 'https://cablecore.es',
     };
 }

@@ -38,10 +38,13 @@ export default function HomePage() {
     ];
 
     const faqJsonLd = getFAQJsonLd([
-        { question: '¿Cuánto cuesta instalar cable de red en Barcelona?', answer: 'El precio depende del tipo de cable (Cat6, Cat6A, Cat7), número de puntos y tipo de instalación. Use nuestra calculadora para un presupuesto orientativo.' },
-        { question: '¿Qué tipo de cable de red necesito?', answer: 'Cat6 es ideal para hogares y oficinas pequeñas (1Gbps). Cat6A para oficinas medianas (10Gbps). Cat7 para naves industriales y data centers.' },
-        { question: '¿Cuánto tarda la instalación de red?', answer: 'Una instalación típica de 4-10 puntos se completa en 1-2 días laborables.' },
-        { question: '¿Ofrecen garantía?', answer: 'Sí, ofrecemos 5 años de garantía en todas nuestras instalaciones de red.' },
+        { question: '¿Cuánto cuesta instalar cable de red en Barcelona?', answer: 'El precio de instalación de cable de red en Barcelona comienza desde 95€ por punto para Cat6, 115€ para Cat6A y 140€ para Cat7. El precio incluye cable, roseta RJ45, crimpado y certificación. Usa nuestra calculadora online para un presupuesto exacto.' },
+        { question: '¿Qué tipo de cable de red necesito para una oficina?', answer: 'Para una oficina en Barcelona recomendamos cable Cat6 (1 Gbps, ideal para hasta 20 puestos) o Cat6A (10 Gbps, para entornos exigentes). Cat7 es la opción premium para naves industriales y data centers.' },
+        { question: '¿Cuánto tarda la instalación de cableado estructurado?', answer: 'Una instalación típica de 4-10 puntos de red se completa en 1-2 días laborables. Proyectos grandes (20+ puntos) pueden requerir 3-5 días. Hacemos visita técnica previa gratuita.' },
+        { question: '¿Ofrecéis presupuesto gratis para instalación de red?', answer: 'Sí, la visita técnica y el presupuesto son completamente gratuitos y sin compromiso. Puedes llamar al +34 605 974 605, escribir por WhatsApp o usar nuestra calculadora online.' },
+        { question: '¿En qué zonas de Barcelona instaláis cable de red?', answer: 'Trabajamos en toda el área metropolitana de Barcelona: ciudad de Barcelona, Badalona, Hospitalet de Llobregat, Sabadell, Terrassa, Mataró, Cornellà, Sant Cugat y alrededores. El desplazamiento es gratuito.' },
+        { question: '¿Cuánto cuesta instalar un rack de red?', answer: 'La instalación de un rack mural de 6U cuesta desde 180€, un rack de 12U desde 280€ y un rack de suelo de 24U desde 450€. El precio incluye rack, patch panel, latiguillos y organización del cableado.' },
+        { question: '¿Qué garantía ofrece CableCore en sus instalaciones?', answer: 'Ofrecemos 5 años de garantía en mano de obra en todas nuestras instalaciones de cableado estructurado. Todos nuestros puntos de red se certifican con equipos profesionales Fluke.' },
     ]);
 
     return (
@@ -297,6 +300,80 @@ export default function HomePage() {
                             <p className="text-sm text-brand-gold-muted leading-relaxed">
                                 {t('coverage.highlight.desc')}
                             </p>
+                        </div>
+                    </div>
+                </section>
+
+                <div className="gold-divider" />
+
+                {/* ═══════════════ PRECIOS TEASER ═══════════════ */}
+                <section id="precios" className="py-20 lg:py-28">
+                    <div className="container-custom">
+                        <div className="text-center max-w-2xl mx-auto mb-12">
+                            <span className="section-label mx-auto">Tarifas 2025</span>
+                            <h2 className="font-heading text-3xl sm:text-4xl lg:text-5xl font-bold mt-5 mb-4">
+                                Precio{' '}
+                                <span className="text-gradient-gold">instalación de red</span>
+                                {' '}Barcelona
+                            </h2>
+                            <p className="text-brand-gold-muted leading-relaxed">
+                                Precios transparentes. Sin sorpresas. IVA incluido.
+                            </p>
+                        </div>
+                        <div className="grid grid-cols-1 sm:grid-cols-3 gap-5 max-w-3xl mx-auto mb-8">
+                            {[
+                                { name: 'Cat6', price: 'desde 95€', detail: '/punto instalado', popular: false },
+                                { name: 'Cat6A', price: 'desde 115€', detail: '/punto instalado', popular: true },
+                                { name: 'Cat7', price: 'desde 140€', detail: '/punto instalado', popular: false },
+                            ].map((plan) => (
+                                <div key={plan.name} className={`card p-6 text-center relative ${plan.popular ? 'border-brand-gold/40' : ''}`}>
+                                    {plan.popular && (
+                                        <div className="absolute -top-3 left-1/2 -translate-x-1/2 bg-gradient-gold text-black text-xs font-bold px-3 py-1 rounded-full">
+                                            Más popular
+                                        </div>
+                                    )}
+                                    <div className="font-heading font-bold text-2xl text-brand-gold mb-1">{plan.name}</div>
+                                    <div className="font-heading text-3xl font-extrabold text-white mb-1">{plan.price}</div>
+                                    <div className="text-sm text-brand-gold-muted">{plan.detail}</div>
+                                </div>
+                            ))}
+                        </div>
+                        <div className="text-center">
+                            <a href="/es/precios" className="btn-outline px-6 py-3 text-sm">
+                                Ver tabla de precios completa →
+                            </a>
+                        </div>
+                    </div>
+                </section>
+
+                <div className="gold-divider" />
+
+                {/* ═══════════════ FAQ ═══════════════ */}
+                <section id="faq" className="py-20 lg:py-28">
+                    <div className="container-custom max-w-3xl mx-auto">
+                        <div className="text-center mb-12">
+                            <span className="section-label mx-auto">FAQ</span>
+                            <h2 className="font-heading text-3xl sm:text-4xl lg:text-5xl font-bold mt-5 mb-4">
+                                Preguntas{' '}
+                                <span className="text-gradient-gold">frecuentes</span>
+                            </h2>
+                        </div>
+                        <div className="space-y-3">
+                            {[
+                                { q: '¿Cuánto cuesta instalar cable de red en Barcelona?', a: 'Cat6 desde 95€/punto, Cat6A desde 115€/punto y Cat7 desde 140€/punto. El precio incluye cable, roseta RJ45 y certificación. Usa nuestra calculadora para un presupuesto exacto.' },
+                                { q: '¿Qué tipo de cable de red necesito para una oficina?', a: 'Recomendamos Cat6 para oficinas de hasta 20 puestos (1 Gbps) o Cat6A para entornos más exigentes (10 Gbps). Cat7 es la opción premium para naves industriales.' },
+                                { q: '¿Cuánto tarda la instalación de cableado estructurado?', a: 'Una instalación de 4-10 puntos se completa en 1-2 días. Proyectos de 20+ puntos requieren 3-5 días. Hacemos visita técnica previa gratuita.' },
+                                { q: '¿Ofrecéis presupuesto gratis para instalación de red?', a: 'Sí, la visita técnica y el presupuesto son completamente gratuitos y sin compromiso. Contacta por teléfono, WhatsApp o usa la calculadora.' },
+                                { q: '¿En qué zonas de Barcelona trabajáis?', a: 'Toda el área metropolitana: Barcelona, Badalona, Hospitalet, Sabadell, Terrassa, Mataró, Cornellà, Sant Cugat y más. Desplazamiento gratuito.' },
+                            ].map((item, i) => (
+                                <details key={i} className="card p-5 group" open={i === 0}>
+                                    <summary className="font-semibold text-white cursor-pointer list-none flex items-center justify-between gap-4 text-sm sm:text-base">
+                                        <span>{item.q}</span>
+                                        <span className="text-brand-gold text-xl shrink-0 group-open:rotate-45 transition-transform duration-200">+</span>
+                                    </summary>
+                                    <p className="mt-3 text-sm text-brand-gold-muted leading-relaxed">{item.a}</p>
+                                </details>
+                            ))}
                         </div>
                     </div>
                 </section>

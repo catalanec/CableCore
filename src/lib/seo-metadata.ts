@@ -32,26 +32,26 @@ interface PageSEO {
 const PAGE_SEO: Record<string, PageSEO> = {
     home: {
         title: {
-            es: 'CableCore — Instalación de Redes y Cableado Estructurado en Barcelona',
-            en: 'CableCore — Network Installation & Structured Cabling in Barcelona',
-            ru: 'CableCore — Установка сетей и структурированная кабельная система в Барселоне',
+            es: 'Instalación de Cable de Red Barcelona | CableCore — Cableado Cat6/Cat7',
+            en: 'Network Cable Installation Barcelona | CableCore — Cat6/Cat7 Cabling',
+            ru: 'Монтаж сетевого кабеля Барселона | CableCore — Cat6/Cat7',
         },
         description: {
-            es: 'Especialistas en instalación de cable de red, cableado estructurado Cat6/Cat6A/Cat7, puntos de red y racks en Barcelona y alrededores. Presupuesto gratis ☎ +34 605 974 605',
-            en: 'Specialists in network cable installation, Cat6/Cat6A/Cat7 structured cabling, network points and racks in Barcelona. Free quote ☎ +34 605 974 605',
-            ru: 'Специалисты по установке сетевого кабеля, структурированной кабельной системы Cat6/Cat6A/Cat7 в Барселоне. Бесплатная смета ☎ +34 605 974 605',
+            es: 'Instalación profesional de cableado estructurado Cat6, Cat6A y Cat7 en Barcelona. Puntos de red, racks y WiFi para oficinas y hogares. Presupuesto gratis en 24h ☎ +34 605 974 605.',
+            en: 'Professional Cat6, Cat6A and Cat7 structured cabling installation in Barcelona. Network points, racks and WiFi for offices and homes. Free quote in 24h ☎ +34 605 974 605.',
+            ru: 'Профессиональный монтаж кабеля Cat6, Cat6A и Cat7 в Барселоне. Розетки, шкафы, WiFi. Бесплатная смета за 24ч ☎ +34 605 974 605.',
         },
     },
     servicios: {
         title: {
-            es: 'Servicios de Cableado y Red — CableCore Barcelona',
-            en: 'Cabling & Network Services — CableCore Barcelona',
-            ru: 'Услуги по кабельным сетям — CableCore Барселона',
+            es: 'Servicios de Instalación de Red en Barcelona | Cableado Estructurado Cat6/Cat7',
+            en: 'Network Installation Services Barcelona | Cat6/Cat7 Structured Cabling',
+            ru: 'Услуги монтажа сети Барселона | Cat6/Cat7 кабельная система',
         },
         description: {
-            es: 'Instalación de cable Cat6, Cat6A, Cat7, puntos de red, racks, WiFi y cableado estructurado para hogares y empresas en Barcelona.',
-            en: 'Cat6, Cat6A, Cat7 cable installation, network points, racks, WiFi and structured cabling for homes and businesses in Barcelona.',
-            ru: 'Монтаж кабеля Cat6, Cat6A, Cat7, сетевых розеток, шкафов, WiFi и структурированной кабельной системы в Барселоне.',
+            es: 'Instalamos cableado estructurado Cat6, Cat6A y Cat7, puntos de red RJ45, racks y WiFi para oficinas y hogares en Barcelona y Badalona. Garantía 5 años ☎ +34 605 974 605.',
+            en: 'We install Cat6, Cat6A and Cat7 structured cabling, RJ45 network points, racks and WiFi for offices and homes in Barcelona. 5-year warranty ☎ +34 605 974 605.',
+            ru: 'Монтаж Cat6, Cat6A и Cat7, розетки RJ45, шкафы и WiFi в Барселоне. Гарантия 5 лет ☎ +34 605 974 605.',
         },
     },
     contacto: {
@@ -104,14 +104,26 @@ const PAGE_SEO: Record<string, PageSEO> = {
     },
     calculator: {
         title: {
-            es: 'Calculadora de Presupuesto — CableCore | Calcula tu Instalación de Red',
-            en: 'Budget Calculator — CableCore | Calculate Your Network Installation',
-            ru: 'Калькулятор сметы — CableCore | Рассчитайте установку сети',
+            es: 'Calculadora Precio Cableado Estructurado Barcelona — CableCore',
+            en: 'Structured Cabling Price Calculator Barcelona — CableCore',
+            ru: 'Калькулятор цены кабельной системы Барселона — CableCore',
         },
         description: {
-            es: 'Calcula el coste de tu instalación de red al instante. Cable Cat6, Cat6A, Cat7, puntos de red, racks y más. Precios reales de Barcelona.',
-            en: 'Calculate your network installation cost instantly. Cat6, Cat6A, Cat7 cable, network points, racks and more. Real Barcelona prices.',
-            ru: 'Рассчитайте стоимость установки сети мгновенно. Cat6, Cat6A, Cat7, сетевые розетки, шкафы. Реальные цены Барселоны.',
+            es: 'Calcula el precio de tu instalación de red en segundos. Cat6 desde 95€/punto, Cat7 desde 140€/punto. Presupuesto gratis sin compromiso ☎ +34 605 974 605.',
+            en: 'Calculate your network installation price in seconds. Cat6 from €95/point, Cat7 from €140/point. Free quote with no obligation ☎ +34 605 974 605.',
+            ru: 'Рассчитайте стоимость монтажа сети за секунды. Cat6 от 95€/точка, Cat7 от 140€/точка. Бесплатная смета ☎ +34 605 974 605.',
+        },
+    },
+    precios: {
+        title: {
+            es: 'Precio Instalación Cable de Red Barcelona 2025 | CableCore',
+            en: 'Network Cable Installation Prices Barcelona 2025 | CableCore',
+            ru: 'Цены монтаж сетевого кабеля Барселона 2025 | CableCore',
+        },
+        description: {
+            es: '¿Cuánto cuesta instalar cable de red en Barcelona? Cat6 desde 95€/punto, Cat7 desde 140€/punto. Precios transparentes con IVA incluido ☎ +34 605 974 605.',
+            en: 'How much does network cable installation cost in Barcelona? Cat6 from €95/point, Cat7 from €140/point. Transparent prices including VAT ☎ +34 605 974 605.',
+            ru: 'Сколько стоит монтаж сетевого кабеля в Барселоне? Cat6 от 95€/точка. Прозрачные цены с НДС ☎ +34 605 974 605.',
         },
     },
     blog: {
