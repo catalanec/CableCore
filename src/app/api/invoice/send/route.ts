@@ -119,7 +119,7 @@ export async function POST(req: NextRequest) {
             paymentAmount,
             paymentType: type,
             paymentUrl: session.url,
-            quoteViewUrl: `${origin}/es/calculator`,
+            // quoteViewUrl omitted intentionally — no standalone presupuesto page yet
         });
 
         const emailSubject = generateInvoiceEmailSubject({ paymentType: type, quoteNumber });
