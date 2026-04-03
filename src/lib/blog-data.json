@@ -1,5 +1,957 @@
 [
   {
+    "slug": "instalador-cableado-estructurado-barcelona",
+    "date": "2026-04-03",
+    "readTime": "7 min",
+    "es": {
+      "title": "Cómo elegir el mejor instalador de cableado estructurado en Barcelona",
+      "metaTitle": "Instalador de red Barcelona: Guía de selección",
+      "metaDescription": "Descubre cómo elegir el mejor instalador de cableado estructurado en Barcelona. Contacta al +34 605 974 605.",
+      "excerpt": "Aprende a seleccionar el instalador de red adecuado en Barcelona con nuestras recomendaciones sobre certificaciones y garantías.",
+      "category": "Guías",
+      "tags": [
+        "instalador red Barcelona",
+        "cableado estructurado",
+        "certificaciones Fluke"
+      ],
+      "content": [
+        {
+          "type": "h2",
+          "text": "Importancia del cableado estructurado"
+        },
+        {
+          "type": "p",
+          "text": "El cableado estructurado es fundamental para la infraestructura de red de cualquier empresa. Asegura una comunicación eficiente y un rendimiento óptimo."
+        },
+        {
+          "type": "h2",
+          "text": "Certificaciones Fluke: ¿Por qué son esenciales?"
+        },
+        {
+          "type": "p",
+          "text": "Las certificaciones Fluke garantizan que el instalador tiene la formación y las herramientas necesarias para realizar una instalación de calidad."
+        },
+        {
+          "type": "h2",
+          "text": "Preguntas clave para el instalador"
+        },
+        {
+          "type": "ul",
+          "text": [
+            "¿Qué certificaciones posee?",
+            "¿Ofrecen garantía en su trabajo?",
+            "¿Cuál es su experiencia en proyectos similares?"
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "Garantías y soporte post-instalación"
+        },
+        {
+          "type": "p",
+          "text": "Asegúrate de que el instalador ofrezca garantías sobre su trabajo y soporte técnico posterior a la instalación."
+        },
+        {
+          "type": "h2",
+          "text": "Evaluar presupuestos"
+        },
+        {
+          "type": "p",
+          "text": "Comparar presupuestos es crucial. Puedes usar la calculadora en cablecore.es/es/calculator para obtener un estimado rápido."
+        },
+        {
+          "type": "tip",
+          "text": "Tip: Usa nuestra calculadora para estimar costos en cablecore.es/es/calculator."
+        }
+      ]
+    },
+    "en": {
+      "title": "How to Choose the Best Structured Cabling Installer in Barcelona",
+      "metaTitle": "Network Installer Barcelona: Selection Guide",
+      "metaDescription": "Learn how to choose the best structured cabling installer in Barcelona. Contact +34 605 974 605.",
+      "excerpt": "Discover how to select the right network installer in Barcelona with our recommendations on certifications and warranties.",
+      "category": "Guides",
+      "tags": [
+        "network installer Barcelona",
+        "structured cabling",
+        "Fluke certifications"
+      ],
+      "content": [
+        {
+          "type": "h2",
+          "text": "The Importance of Structured Cabling"
+        },
+        {
+          "type": "p",
+          "text": "Structured cabling is essential for the network infrastructure of any business, ensuring efficient communication and optimal performance."
+        },
+        {
+          "type": "h2",
+          "text": "Fluke Certifications: Why They Matter"
+        },
+        {
+          "type": "p",
+          "text": "Fluke certifications guarantee that the installer has the necessary training and tools to perform a quality installation."
+        },
+        {
+          "type": "h2",
+          "text": "Key Questions for Your Installer"
+        },
+        {
+          "type": "ul",
+          "text": [
+            "What certifications do you have?",
+            "Do you offer a warranty on your work?",
+            "What is your experience with similar projects?"
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "Warranties and Post-Installation Support"
+        },
+        {
+          "type": "p",
+          "text": "Make sure the installer offers warranties on their work and technical support after installation."
+        },
+        {
+          "type": "h2",
+          "text": "Evaluating Quotes"
+        },
+        {
+          "type": "p",
+          "text": "Comparing quotes is crucial. You can use the calculator at cablecore.es/en/calculator for a quick estimate."
+        },
+        {
+          "type": "tip",
+          "text": "Tip: Use our calculator to estimate costs at cablecore.es/en/calculator."
+        }
+      ]
+    },
+    "ru": {
+      "title": "Как выбрать лучшего установщика структурированного кабелирования в Барселоне",
+      "metaTitle": "Установщик сети Барселона: Руководство по выбору",
+      "metaDescription": "Узнайте, как выбрать лучшего установщика структурированного кабелирования в Барселоне. Свяжитесь с +34 605 974 605.",
+      "excerpt": "Узнайте, как выбрать подходящего установщика сети в Барселоне, с нашими рекомендациями по сертификатам и гарантиям.",
+      "category": "Руководства",
+      "tags": [
+        "установщик сети Барселона",
+        "структурированное кабелирование",
+        "сертификаты Fluke"
+      ],
+      "content": [
+        {
+          "type": "h2",
+          "text": "Важность структурированного кабелирования"
+        },
+        {
+          "type": "p",
+          "text": "Структурированное кабелирование является основой сетевой инфраструктуры любого бизнеса, обеспечивая эффективную связь и оптимальную производительность."
+        },
+        {
+          "type": "h2",
+          "text": "Сертификаты Fluke: почему они важны"
+        },
+        {
+          "type": "p",
+          "text": "Сертификаты Fluke гарантируют, что установщик имеет необходимую подготовку и инструменты для качественной установки."
+        },
+        {
+          "type": "h2",
+          "text": "Ключевые вопросы для вашего установщика"
+        },
+        {
+          "type": "ul",
+          "text": [
+            "Какие сертификаты у вас есть?",
+            "Предлагаете ли вы гарантию на свою работу?",
+            "Каков ваш опыт в аналогичных проектах?"
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "Гарантии и поддержка после установки"
+        },
+        {
+          "type": "p",
+          "text": "Убедитесь, что установщик предлагает гарантии на свою работу и техническую поддержку после установки."
+        },
+        {
+          "type": "h2",
+          "text": "Оценка смет"
+        },
+        {
+          "type": "p",
+          "text": "Сравнение смет имеет решающее значение. Вы можете использовать калькулятор на cablecore.es/ru/calculator для быстрого расчета."
+        },
+        {
+          "type": "tip",
+          "text": "Совет: используйте наш калькулятор для оценки затрат на cablecore.es/ru/calculator."
+        }
+      ]
+    }
+  },
+  {
+    "slug": "instalar-red-oficina-barcelona",
+    "date": "2026-04-03",
+    "readTime": "7 min",
+    "es": {
+      "title": "Cómo instalar una red de oficina en Barcelona: Guía completa",
+      "metaTitle": "Instalar red oficina Barcelona | Guía paso a paso",
+      "metaDescription": "Aprende a instalar una red de oficina en Barcelona. Compara Cat6 y Cat6A, elige racks y switches. Contacta al +34 605 974 605.",
+      "excerpt": "Descubre cómo instalar una red de oficina en Barcelona, desde la planificación hasta la elección de cables y equipos.",
+      "category": "Guías",
+      "tags": [
+        "red de oficina",
+        "instalación de red",
+        "Barcelona",
+        "Cat6",
+        "Cat6A"
+      ],
+      "content": [
+        {
+          "type": "h2",
+          "text": "Paso 1: Planificación de la red"
+        },
+        {
+          "type": "p",
+          "text": "Antes de comenzar, es esencial planificar la red de oficina. Define el número de dispositivos, la disposición del espacio y las necesidades específicas de conectividad."
+        },
+        {
+          "type": "h2",
+          "text": "Paso 2: Cat6 vs Cat6A"
+        },
+        {
+          "type": "p",
+          "text": "Decidir entre Cat6 y Cat6A es crucial. Cat6 soporta hasta 1 Gbps a 100 metros, mientras que Cat6A ofrece hasta 10 Gbps a la misma distancia. Evalúa tus necesidades futuras."
+        },
+        {
+          "type": "h2",
+          "text": "Paso 3: Elección de racks y switches"
+        },
+        {
+          "type": "p",
+          "text": "Selecciona racks que se adapten a tu espacio y switches que ofrezcan la capacidad necesaria. Un switch gestionado puede ser más adecuado para redes complejas."
+        },
+        {
+          "type": "h2",
+          "text": "Paso 4: Instalación del cableado"
+        },
+        {
+          "type": "p",
+          "text": "Instala el cableado siguiendo las normativas locales. Asegúrate de que los cables estén bien organizados y etiquetados para facilitar el mantenimiento."
+        },
+        {
+          "type": "h2",
+          "text": "Paso 5: Configuración de la red"
+        },
+        {
+          "type": "p",
+          "text": "Configura el router y los switches. Asegúrate de establecer las VLANs y la seguridad de la red para proteger la información de tu oficina."
+        },
+        {
+          "type": "h2",
+          "text": "Precios reales en 2025"
+        },
+        {
+          "type": "p",
+          "text": "Los precios para instalar una red de oficina en Barcelona en 2025 varían. Un presupuesto aproximado podría estar entre 1500 y 3000 euros, dependiendo de los equipos elegidos."
+        },
+        {
+          "type": "tip",
+          "text": "Utiliza nuestra calculadora en cablecore.es/es/calculator para obtener un presupuesto personalizado."
+        }
+      ]
+    },
+    "en": {
+      "title": "How to Install an Office Network in Barcelona: Step-by-Step Guide",
+      "metaTitle": "Install Office Network Barcelona | Step-by-Step Guide",
+      "metaDescription": "Learn how to install an office network in Barcelona. Compare Cat6 and Cat6A, choose racks and switches. Call +34 605 974 605.",
+      "excerpt": "Discover how to install an office network in Barcelona, from planning to choosing cables and equipment.",
+      "category": "Guides",
+      "tags": [
+        "office network",
+        "network installation",
+        "Barcelona",
+        "Cat6",
+        "Cat6A"
+      ],
+      "content": [
+        {
+          "type": "h2",
+          "text": "Step 1: Network Planning"
+        },
+        {
+          "type": "p",
+          "text": "Before starting, it’s essential to plan the office network. Define the number of devices, the layout of the space, and specific connectivity needs."
+        },
+        {
+          "type": "h2",
+          "text": "Step 2: Cat6 vs Cat6A"
+        },
+        {
+          "type": "p",
+          "text": "Choosing between Cat6 and Cat6A is crucial. Cat6 supports up to 1 Gbps at 100 meters, while Cat6A offers up to 10 Gbps at the same distance. Assess your future needs."
+        },
+        {
+          "type": "h2",
+          "text": "Step 3: Choosing Racks and Switches"
+        },
+        {
+          "type": "p",
+          "text": "Select racks that fit your space and switches that provide the necessary capacity. A managed switch may be more suitable for complex networks."
+        },
+        {
+          "type": "h2",
+          "text": "Step 4: Installing Cabling"
+        },
+        {
+          "type": "p",
+          "text": "Install cabling following local regulations. Ensure that cables are well organized and labeled for easy maintenance."
+        },
+        {
+          "type": "h2",
+          "text": "Step 5: Network Configuration"
+        },
+        {
+          "type": "p",
+          "text": "Configure the router and switches. Ensure to set up VLANs and network security to protect your office information."
+        },
+        {
+          "type": "h2",
+          "text": "Real Prices in 2025"
+        },
+        {
+          "type": "p",
+          "text": "Prices for installing an office network in Barcelona in 2025 vary. A rough budget could be between 1500 and 3000 euros, depending on the chosen equipment."
+        },
+        {
+          "type": "tip",
+          "text": "Use our calculator at cablecore.es/en/calculator for a personalized quote."
+        }
+      ]
+    },
+    "ru": {
+      "title": "Как установить офисную сеть в Барселоне: пошаговое руководство",
+      "metaTitle": "Установить офисную сеть Барселона | Пошаговое руководство",
+      "metaDescription": "Узнайте, как установить офисную сеть в Барселоне. Сравните Cat6 и Cat6A, выберите стойки и коммутаторы. Звоните +34 605 974 605.",
+      "excerpt": "Узнайте, как установить офисную сеть в Барселоне, от планирования до выбора кабелей и оборудования.",
+      "category": "Руководства",
+      "tags": [
+        "офисная сеть",
+        "установка сети",
+        "Барселона",
+        "Cat6",
+        "Cat6A"
+      ],
+      "content": [
+        {
+          "type": "h2",
+          "text": "Шаг 1: Планирование сети"
+        },
+        {
+          "type": "p",
+          "text": "Перед началом важно спланировать офисную сеть. Определите количество устройств, расположение пространства и конкретные потребности в подключении."
+        },
+        {
+          "type": "h2",
+          "text": "Шаг 2: Cat6 против Cat6A"
+        },
+        {
+          "type": "p",
+          "text": "Выбор между Cat6 и Cat6A имеет решающее значение. Cat6 поддерживает до 1 Гбит/с на 100 метрах, в то время как Cat6A предлагает до 10 Гбит/с на том же расстоянии. Оцените свои будущие потребности."
+        },
+        {
+          "type": "h2",
+          "text": "Шаг 3: Выбор стоек и коммутаторов"
+        },
+        {
+          "type": "p",
+          "text": "Выберите стойки, которые соответствуют вашему пространству, и коммутаторы, которые обеспечивают необходимую мощность. Управляемый коммутатор может быть более подходящим для сложных сетей."
+        },
+        {
+          "type": "h2",
+          "text": "Шаг 4: Установка кабелей"
+        },
+        {
+          "type": "p",
+          "text": "Установите кабели в соответствии с местными нормами. Убедитесь, что кабели хорошо организованы и промаркированы для легкого обслуживания."
+        },
+        {
+          "type": "h2",
+          "text": "Шаг 5: Конфигурация сети"
+        },
+        {
+          "type": "p",
+          "text": "Настройте маршрутизатор и коммутаторы. Убедитесь, что вы настроили VLAN и безопасность сети для защиты информации вашего офиса."
+        },
+        {
+          "type": "h2",
+          "text": "Реальные цены в 2025 году"
+        },
+        {
+          "type": "p",
+          "text": "Цены на установку офисной сети в Барселоне в 2025 году варьируются. Приблизительный бюджет может составлять от 1500 до 3000 евро в зависимости от выбранного оборудования."
+        },
+        {
+          "type": "tip",
+          "text": "Используйте наш калькулятор на cablecore.es/ru/calculator для получения персонализированного предложения."
+        }
+      ]
+    }
+  },
+  {
+    "slug": "puntos-de-red-precio-guia",
+    "date": "2026-04-03",
+    "readTime": "7 min",
+    "es": {
+      "title": "Cuántos puntos de red necesito y cuánto cuesta instalarlos en Barcelona",
+      "metaTitle": "Puntos de Red en Barcelona: Precios y Guía Práctica 2025",
+      "metaDescription": "Descubre cuántos puntos de red necesitas y su precio en Barcelona. Contacta al +34 605 974 605 para más información.",
+      "excerpt": "Una guía práctica para determinar cuántos puntos de red necesitas para tu hogar u oficina en Barcelona, incluyendo precios y consejos útiles.",
+      "category": "Guías",
+      "tags": [],
+      "content": [
+        {
+          "type": "h2",
+          "text": "¿Qué son los puntos de red?"
+        },
+        {
+          "type": "p",
+          "text": "Los puntos de red son conexiones físicas que permiten acceder a Internet y a redes locales. Son esenciales tanto en hogares como en oficinas para garantizar una buena conectividad."
+        },
+        {
+          "type": "h2",
+          "text": "¿Cuántos puntos de red necesito?"
+        },
+        {
+          "type": "p",
+          "text": "La cantidad de puntos de red depende del tamaño de tu espacio y de tus necesidades. Para un hogar promedio, entre 4 y 6 puntos suelen ser suficientes, mientras que en oficinas, el número puede variar considerablemente."
+        },
+        {
+          "type": "h2",
+          "text": "Coste de instalación de puntos de red en Barcelona"
+        },
+        {
+          "type": "p",
+          "text": "El precio de instalar puntos de red en Barcelona puede variar entre 100 y 300 euros por punto, dependiendo de la complejidad de la instalación y del tipo de cable utilizado."
+        },
+        {
+          "type": "h2",
+          "text": "Factores que influyen en el precio"
+        },
+        {
+          "type": "ul",
+          "text": [
+            "Tipo de cable: CAT5e, CAT6, etc.",
+            "Longitud del cableado necesario.",
+            "Dificultad de acceso a las áreas de instalación.",
+            "Número de puntos a instalar."
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "Consejos para optimizar la instalación"
+        },
+        {
+          "type": "tip",
+          "text": "Utiliza nuestro calculador en cablecore.es/es/calculator para estimar el número de puntos de red que necesitas y obtener un presupuesto más preciso."
+        },
+        {
+          "type": "h2",
+          "text": "Conclusión"
+        },
+        {
+          "type": "p",
+          "text": "Determinar cuántos puntos de red necesitas y su costo es fundamental para asegurar una buena conectividad en tu hogar u oficina. No dudes en contactar con profesionales para obtener un presupuesto adaptado a tus necesidades."
+        }
+      ]
+    },
+    "en": {
+      "title": "How Many Network Points Do I Need and What Do They Cost to Install in Barcelona",
+      "metaTitle": "Network Points in Barcelona: Prices and Practical Guide 2025",
+      "metaDescription": "Find out how many network points you need and their price in Barcelona. Contact +34 605 974 605 for more information.",
+      "excerpt": "A practical guide to determine how many network points you need for your home or office in Barcelona, including prices and useful tips.",
+      "category": "Guides",
+      "tags": [],
+      "content": [
+        {
+          "type": "h2",
+          "text": "What are Network Points?"
+        },
+        {
+          "type": "p",
+          "text": "Network points are physical connections that allow access to the Internet and local networks. They are essential in both homes and offices to ensure good connectivity."
+        },
+        {
+          "type": "h2",
+          "text": "How Many Network Points Do I Need?"
+        },
+        {
+          "type": "p",
+          "text": "The number of network points you need depends on the size of your space and your requirements. For an average home, 4 to 6 points are usually sufficient, while in offices, the number can vary significantly."
+        },
+        {
+          "type": "h2",
+          "text": "Cost of Installing Network Points in Barcelona"
+        },
+        {
+          "type": "p",
+          "text": "The price of installing network points in Barcelona can range from 100 to 300 euros per point, depending on the complexity of the installation and the type of cable used."
+        },
+        {
+          "type": "h2",
+          "text": "Factors Influencing the Price"
+        },
+        {
+          "type": "ul",
+          "text": [
+            "Type of cable: CAT5e, CAT6, etc.",
+            "Length of wiring needed.",
+            "Difficulty of access to installation areas.",
+            "Number of points to be installed."
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "Tips for Optimizing Installation"
+        },
+        {
+          "type": "tip",
+          "text": "Use our calculator at cablecore.es/es/calculator to estimate the number of network points you need and get a more accurate quote."
+        },
+        {
+          "type": "h2",
+          "text": "Conclusion"
+        },
+        {
+          "type": "p",
+          "text": "Determining how many network points you need and their cost is crucial for ensuring good connectivity in your home or office. Don’t hesitate to contact professionals for a tailored quote."
+        }
+      ]
+    },
+    "ru": {
+      "title": "Сколько сетевых точек мне нужно и сколько стоит их установка в Барселоне",
+      "metaTitle": "Сетевые точки в Барселоне: цены и практическое руководство 2025",
+      "metaDescription": "Узнайте, сколько сетевых точек вам нужно и их цена в Барселоне. Контакт +34 605 974 605 для получения дополнительной информации.",
+      "excerpt": "Практическое руководство о том, сколько сетевых точек вам нужно для вашего дома или офиса в Барселоне, включая цены и полезные советы.",
+      "category": "Руководства",
+      "tags": [],
+      "content": [
+        {
+          "type": "h2",
+          "text": "Что такое сетевые точки?"
+        },
+        {
+          "type": "p",
+          "text": "Сетевые точки — это физические подключения, которые обеспечивают доступ к Интернету и локальным сетям. Они необходимы как в домах, так и в офисах для обеспечения хорошей связи."
+        },
+        {
+          "type": "h2",
+          "text": "Сколько сетевых точек мне нужно?"
+        },
+        {
+          "type": "p",
+          "text": "Количество необходимых сетевых точек зависит от размера вашего пространства и ваших требований. Для среднего дома обычно достаточно 4-6 точек, в то время как в офисах это число может значительно варьироваться."
+        },
+        {
+          "type": "h2",
+          "text": "Стоимость установки сетевых точек в Барселоне"
+        },
+        {
+          "type": "p",
+          "text": "Цена установки сетевых точек в Барселоне может варьироваться от 100 до 300 евро за точку, в зависимости от сложности установки и типа используемого кабеля."
+        },
+        {
+          "type": "h2",
+          "text": "Факторы, влияющие на цену"
+        },
+        {
+          "type": "ul",
+          "text": [
+            "Тип кабеля: CAT5e, CAT6 и др.",
+            "Длина необходимого кабеля.",
+            "Сложность доступа к местам установки.",
+            "Количество точек для установки."
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "Советы по оптимизации установки"
+        },
+        {
+          "type": "tip",
+          "text": "Используйте наш калькулятор на cablecore.es/es/calculator, чтобы оценить количество необходимых сетевых точек и получить более точную смету."
+        },
+        {
+          "type": "h2",
+          "text": "Заключение"
+        },
+        {
+          "type": "p",
+          "text": "Определение количества необходимых сетевых точек и их стоимости имеет решающее значение для обеспечения хорошей связи в вашем доме или офисе. Не стесняйтесь обращаться к профессионалам для получения индивидуального предложения."
+        }
+      ]
+    }
+  },
+  {
+    "slug": "cableado-estructurado-empresa-barcelona",
+    "date": "2026-04-03",
+    "readTime": "7 min",
+    "es": {
+      "title": "Cableado Estructurado para Empresas en Barcelona: Normativa y Planificación",
+      "metaTitle": "Empresa Cableado Estructurado Barcelona - Normativa TIA/EIA",
+      "metaDescription": "Descubre el cableado estructurado en Barcelona. Normativa TIA/EIA, diferencias Cat6 y Cat7. Contacta al +34 605 974 605.",
+      "excerpt": "El cableado estructurado es fundamental para la infraestructura de red de las empresas en Barcelona. Conoce las normativas y diferencias entre tipos.",
+      "category": "Guías",
+      "tags": [
+        "cableado estructurado",
+        "empresas",
+        "Barcelona",
+        "normativa",
+        "Cat6",
+        "Cat7"
+      ],
+      "content": [
+        {
+          "type": "h2",
+          "text": "¿Qué es el cableado estructurado?"
+        },
+        {
+          "type": "p",
+          "text": "El cableado estructurado es un sistema de cableado que permite la interconexión de diferentes dispositivos dentro de una empresa. Es esencial para garantizar una comunicación eficiente y rápida."
+        },
+        {
+          "type": "h2",
+          "text": "Normativa TIA/EIA"
+        },
+        {
+          "type": "p",
+          "text": "Las normativas TIA/EIA establecen los estándares para el cableado de telecomunicaciones. Cumplir con estas normativas es crucial para asegurar la calidad y fiabilidad de la red."
+        },
+        {
+          "type": "h2",
+          "text": "Diferencias entre Cat6 y Cat7"
+        },
+        {
+          "type": "p",
+          "text": "La principal diferencia entre Cat6 y Cat7 radica en la velocidad y el ancho de banda. Cat6 ofrece hasta 1 Gbps, mientras que Cat7 puede manejar hasta 10 Gbps, siendo ideal para empresas que requieren alta velocidad."
+        },
+        {
+          "type": "h2",
+          "text": "Planificación de cableado para PYMEs"
+        },
+        {
+          "type": "p",
+          "text": "La planificación del cableado estructurado debe tener en cuenta el crecimiento futuro de la empresa. Es recomendable realizar un análisis de las necesidades actuales y futuras para evitar gastos innecesarios."
+        },
+        {
+          "type": "h2",
+          "text": "Consejos para una correcta instalación"
+        },
+        {
+          "type": "ul",
+          "text": [
+            "Realiza un inventario de dispositivos que se conectarán a la red.",
+            "Selecciona el tipo de cableado adecuado según las necesidades.",
+            "Considera la ubicación de los puntos de acceso.",
+            "Asegúrate de cumplir con la normativa TIA/EIA."
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "¿Necesitas ayuda con tu instalación?"
+        },
+        {
+          "type": "p",
+          "text": "En CableCore, somos tu empresa de cableado estructurado en Barcelona. Contáctanos al +34 605 974 605 o utiliza nuestro calculador en cablecore.es/es/calculator para obtener un presupuesto."
+        }
+      ]
+    },
+    "en": {
+      "title": "Structured Cabling for Businesses in Barcelona: Standards and Planning",
+      "metaTitle": "Structured Cabling Company Barcelona - TIA/EIA Standards",
+      "metaDescription": "Explore structured cabling in Barcelona. TIA/EIA standards, differences between Cat6 and Cat7. Call +34 605 974 605.",
+      "excerpt": "Structured cabling is vital for the network infrastructure of businesses in Barcelona. Learn about the standards and differences between cable types.",
+      "category": "Guides",
+      "tags": [
+        "structured cabling",
+        "businesses",
+        "Barcelona",
+        "standards",
+        "Cat6",
+        "Cat7"
+      ],
+      "content": [
+        {
+          "type": "h2",
+          "text": "What is Structured Cabling?"
+        },
+        {
+          "type": "p",
+          "text": "Structured cabling is a cabling system that allows the interconnection of various devices within a business. It is essential for ensuring efficient and fast communication."
+        },
+        {
+          "type": "h2",
+          "text": "TIA/EIA Standards"
+        },
+        {
+          "type": "p",
+          "text": "The TIA/EIA standards establish the benchmarks for telecommunications cabling. Adhering to these standards is crucial to ensure the quality and reliability of the network."
+        },
+        {
+          "type": "h2",
+          "text": "Differences Between Cat6 and Cat7"
+        },
+        {
+          "type": "p",
+          "text": "The main difference between Cat6 and Cat7 lies in speed and bandwidth. Cat6 offers up to 1 Gbps, while Cat7 can handle up to 10 Gbps, making it ideal for businesses that require high speed."
+        },
+        {
+          "type": "h2",
+          "text": "Cabling Planning for SMEs"
+        },
+        {
+          "type": "p",
+          "text": "Planning structured cabling should take into account the future growth of the business. It is advisable to analyze current and future needs to avoid unnecessary expenses."
+        },
+        {
+          "type": "h2",
+          "text": "Tips for Proper Installation"
+        },
+        {
+          "type": "ul",
+          "text": [
+            "Take inventory of devices that will connect to the network.",
+            "Choose the appropriate cabling type based on needs.",
+            "Consider the location of access points.",
+            "Ensure compliance with TIA/EIA standards."
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "Need Help with Your Installation?"
+        },
+        {
+          "type": "p",
+          "text": "At CableCore, we are your structured cabling company in Barcelona. Contact us at +34 605 974 605 or use our calculator at cablecore.es/en/calculator for a quote."
+        }
+      ]
+    },
+    "ru": {
+      "title": "Структурированное кабелирование для компаний в Барселоне: стандарты и планирование",
+      "metaTitle": "Компания по структурированному кабелированию Барселона - стандарты TIA/EIA",
+      "metaDescription": "Изучите структурированное кабелирование в Барселоне. Стандарты TIA/EIA, различия между Cat6 и Cat7. Позвоните +34 605 974 605.",
+      "excerpt": "Структурированное кабелирование имеет жизненно важное значение для сетевой инфраструктуры компаний в Барселоне. Узнайте о стандартах и различиях между типами кабелей.",
+      "category": "Руководства",
+      "tags": [
+        "структурированное кабелирование",
+        "компании",
+        "Барселона",
+        "стандарты",
+        "Cat6",
+        "Cat7"
+      ],
+      "content": [
+        {
+          "type": "h2",
+          "text": "Что такое структурированное кабелирование?"
+        },
+        {
+          "type": "p",
+          "text": "Структурированное кабелирование - это система кабелирования, которая позволяет соединять различные устройства внутри компании. Это необходимо для обеспечения эффективной и быстрой связи."
+        },
+        {
+          "type": "h2",
+          "text": "Стандарты TIA/EIA"
+        },
+        {
+          "type": "p",
+          "text": "Стандарты TIA/EIA устанавливают критерии для кабелирования телекоммуникаций. Соблюдение этих стандартов имеет решающее значение для обеспечения качества и надежности сети."
+        },
+        {
+          "type": "h2",
+          "text": "Различия между Cat6 и Cat7"
+        },
+        {
+          "type": "p",
+          "text": "Основное различие между Cat6 и Cat7 заключается в скорости и пропускной способности. Cat6 предлагает до 1 Гбит/с, в то время как Cat7 может обрабатывать до 10 Гбит/с, что делает его идеальным для компаний, которые требуют высокой скорости."
+        },
+        {
+          "type": "h2",
+          "text": "Планирование кабелирования для МСП"
+        },
+        {
+          "type": "p",
+          "text": "Планирование структурированного кабелирования должно учитывать будущее развитие бизнеса. Рекомендуется проанализировать текущие и будущие потребности, чтобы избежать ненужных расходов."
+        },
+        {
+          "type": "h2",
+          "text": "Советы по правильной установке"
+        },
+        {
+          "type": "ul",
+          "text": [
+            "Составьте список устройств, которые будут подключены к сети.",
+            "Выберите подходящий тип кабелирования в зависимости от потребностей.",
+            "Учтите расположение точек доступа.",
+            "Убедитесь, что соблюдаются стандарты TIA/EIA."
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "Нужна помощь с установкой?"
+        },
+        {
+          "type": "p",
+          "text": "В компании CableCore мы - ваша компания по структурированному кабелированию в Барселоне. Свяжитесь с нами по телефону +34 605 974 605 или воспользуйтесь нашим калькулятором на cablecore.es/ru/calculator для получения сметы."
+        }
+      ]
+    }
+  },
+  {
+    "slug": "precio-instalacion-cable-red-barcelona",
+    "date": "2026-04-03",
+    "readTime": "7 min",
+    "es": {
+      "title": "Precio de Instalación de Cable de Red en Barcelona 2025",
+      "metaTitle": "Precio Instalación Cable de Red Barcelona 2025 | CableCore",
+      "metaDescription": "Descubre el precio por punto de red en Barcelona. Cat6 desde 95€, Cat7 desde 140€. Llama al +34 605 974 605 para más info.",
+      "excerpt": "Conoce las tarifas de instalación de cable de red en Barcelona para 2025. Compara precios y elige la mejor opción para tu negocio.",
+      "category": "Guías",
+      "tags": [],
+      "content": [
+        {
+          "type": "h2",
+          "text": "¿Cuál es el Precio de Instalación de Cable de Red en Barcelona?"
+        },
+        {
+          "type": "p",
+          "text": "En 2025, los precios de instalación de cable de red en Barcelona varían según el tipo de cable. Para una instalación eficiente y de calidad, considera las siguientes tarifas."
+        },
+        {
+          "type": "h2",
+          "text": "Comparativa de Tarifas por Tipo de Cable"
+        },
+        {
+          "type": "p",
+          "text": "A continuación, te presentamos una tabla comparativa de precios por punto de red según el tipo de instalación:"
+        },
+        {
+          "type": "ul",
+          "text": "<li>Cat6: desde 95€/punto</li><li>Cat7: desde 140€/punto</li>"
+        },
+        {
+          "type": "h2",
+          "text": "Factores que Afectan el Precio de Instalación"
+        },
+        {
+          "type": "p",
+          "text": "El costo de instalación puede variar dependiendo de varios factores, incluyendo la complejidad del trabajo, la ubicación y el tipo de cable utilizado."
+        },
+        {
+          "type": "h2",
+          "text": "Consejos para Elegir la Mejor Opción"
+        },
+        {
+          "type": "p",
+          "text": "Antes de decidirte, asegúrate de evaluar tus necesidades y el presupuesto disponible. Para facilitar tu decisión, puedes utilizar nuestra calculadora en <a href='https://cablecore.es/es/calculator'>cablecore.es/es/calculator</a>."
+        }
+      ]
+    },
+    "en": {
+      "title": "Network Cable Installation Prices in Barcelona 2025",
+      "metaTitle": "Network Cable Installation Prices Barcelona 2025 | CableCore",
+      "metaDescription": "Discover the price per network point in Barcelona. Cat6 from €95, Cat7 from €140. Call +34 605 974 605 for more info.",
+      "excerpt": "Find out the installation rates for network cables in Barcelona for 2025. Compare prices and choose the best option for your business.",
+      "category": "Guides",
+      "tags": [],
+      "content": [
+        {
+          "type": "h2",
+          "text": "What is the Price of Network Cable Installation in Barcelona?"
+        },
+        {
+          "type": "p",
+          "text": "In 2025, network cable installation prices in Barcelona vary depending on the type of cable. For efficient and quality installation, consider the following rates."
+        },
+        {
+          "type": "h2",
+          "text": "Price Comparison by Cable Type"
+        },
+        {
+          "type": "p",
+          "text": "Below is a comparative table of prices per network point based on the type of installation:"
+        },
+        {
+          "type": "ul",
+          "text": "<li>Cat6: from €95/point</li><li>Cat7: from €140/point</li>"
+        },
+        {
+          "type": "h2",
+          "text": "Factors Affecting Installation Price"
+        },
+        {
+          "type": "p",
+          "text": "The installation cost can vary depending on several factors, including the complexity of the job, location, and type of cable used."
+        },
+        {
+          "type": "h2",
+          "text": "Tips for Choosing the Best Option"
+        },
+        {
+          "type": "p",
+          "text": "Before making a decision, be sure to evaluate your needs and available budget. To help with your decision, you can use our calculator at <a href='https://cablecore.es/es/calculator'>cablecore.es/es/calculator</a>."
+        }
+      ]
+    },
+    "ru": {
+      "title": "Цены на установку сетевого кабеля в Барселоне в 2025 году",
+      "metaTitle": "Цены на установку сетевого кабеля Барселона 2025 | CableCore",
+      "metaDescription": "Узнайте цену за точку сети в Барселоне. Cat6 от 95€, Cat7 от 140€. Позвоните +34 605 974 605 для получения дополнительной информации.",
+      "excerpt": "Узнайте тарифы на установку сетевых кабелей в Барселоне на 2025 год. Сравните цены и выберите лучший вариант для вашего бизнеса.",
+      "category": "Руководства",
+      "tags": [],
+      "content": [
+        {
+          "type": "h2",
+          "text": "Какова цена установки сетевого кабеля в Барселоне?"
+        },
+        {
+          "type": "p",
+          "text": "В 2025 году цены на установку сетевых кабелей в Барселоне варьируются в зависимости от типа кабеля. Для качественной и эффективной установки рассмотрите следующие тарифы."
+        },
+        {
+          "type": "h2",
+          "text": "Сравнение цен по типу кабеля"
+        },
+        {
+          "type": "p",
+          "text": "Ниже представлена сравнительная таблица цен за точку сети в зависимости от типа установки:"
+        },
+        {
+          "type": "ul",
+          "text": "<li>Cat6: от 95€/точка</li><li>Cat7: от 140€/точка</li>"
+        },
+        {
+          "type": "h2",
+          "text": "Факторы, влияющие на цену установки"
+        },
+        {
+          "type": "p",
+          "text": "Стоимость установки может варьироваться в зависимости от нескольких факторов, включая сложность работы, местоположение и тип используемого кабеля."
+        },
+        {
+          "type": "h2",
+          "text": "Советы по выбору лучшего варианта"
+        },
+        {
+          "type": "p",
+          "text": "Перед принятием решения обязательно оцените свои потребности и доступный бюджет. Чтобы упростить ваш выбор, вы можете использовать наш калькулятор на <a href='https://cablecore.es/es/calculator'>cablecore.es/es/calculator</a>."
+        }
+      ]
+    }
+  },
+  {
     "slug": "certificacion-red-con-fluke-networks",
     "date": "2026-04-01",
     "readTime": "7 min",
@@ -3888,29 +4840,105 @@
       "metaDescription": "Todo lo que necesitas saber sobre la instalación de fibra óptica interior: tipos de cable, fusión, conectores SC/APC, racks y certificación OTDR.",
       "excerpt": "La fibra óptica es el futuro de las telecomunicaciones. En esta guía explicamos todo sobre la instalación de fibra interior: materiales, técnicas de fusión y certificación profesional.",
       "category": "Guías",
-      "tags": ["fibra óptica", "instalación", "fusión"],
+      "tags": [
+        "fibra óptica",
+        "instalación",
+        "fusión"
+      ],
       "content": [
-        { "type": "h2", "text": "¿Qué es la fibra óptica y por qué instalarla?" },
-        { "type": "p", "text": "La fibra óptica transmite datos mediante pulsos de luz a través de hilos de vidrio ultrafinos. A diferencia del cable de cobre (Ethernet), la fibra ofrece velocidades prácticamente ilimitadas, inmunidad a interferencias electromagnéticas y capacidad para cubrir distancias de hasta 100 km sin degradación de señal." },
-        { "type": "h2", "text": "Tipos de fibra óptica" },
-        { "type": "h3", "text": "Fibra monomodo (SM — Single Mode)" },
-        { "type": "p", "text": "La fibra monomodo tiene un núcleo de 9 µm y transmite un solo modo de luz. Es la más utilizada en instalaciones FTTH y enlaces de larga distancia. Soporta velocidades de 10 Gbps a más de 100 km. El cable más común para interiores es el monomodo de 2 fibras (duplex) con conector SC/APC." },
-        { "type": "h3", "text": "Fibra multimodo (MM — Multi Mode)" },
-        { "type": "p", "text": "La fibra multimodo (OM3/OM4) tiene un núcleo de 50 µm y transmite múltiples modos de luz. Es ideal para distancias cortas dentro de edificios (hasta 300-550m). Velocidades de 10-100 Gbps. Más económica que la monomodo para enlaces cortos." },
-        { "type": "h2", "text": "Componentes de una instalación de fibra" },
-        { "type": "list", "items": ["Cable de fibra óptica monomodo o multimodo", "Rosetas ópticas de 2 puertos SC/APC", "Pigtails SC/APC para fusión", "Acopladores SC/APC hembra-hembra (duplex)", "Bandeja de empalme 1U para rack", "Rack de fibra óptica o caja mural", "Patch cords SC/APC-SC/APC duplex", "Protectores de empalme (splice protectors)"] },
-        { "type": "h2", "text": "Proceso de instalación" },
-        { "type": "h3", "text": "1. Diseño y planificación" },
-        { "type": "p", "text": "Se determina el recorrido del cable, el número de puntos de fibra, el tipo de instalación (falso techo, canaleta, conductos existentes) y la ubicación del rack central." },
-        { "type": "h3", "text": "2. Tendido de cable" },
-        { "type": "p", "text": "El cable de fibra se tiende por el recorrido planificado. Es fundamental respetar el radio de curvatura mínimo (típicamente 30mm para cable interior) para evitar atenuación o rotura de las fibras." },
-        { "type": "h3", "text": "3. Fusión (empalme por arco)" },
-        { "type": "p", "text": "La fusión es el proceso de unir dos fibras mediante un arco eléctrico que funde el vidrio. Se utiliza una fusionadora profesional que alinea las fibras automáticamente y produce un empalme con atenuación típica inferior a 0.02 dB. Cada fibra se fusiona con un pigtail SC/APC que permite la conexión al panel." },
-        { "type": "h3", "text": "4. Terminación y rack" },
-        { "type": "p", "text": "Los pigtails fusionados se organizan en la bandeja de empalme dentro del rack. Los acopladores SC/APC hembra-hembra se instalan en el frontal del panel, permitiendo conectar patch cords para enlazar con equipos activos (ONT, switches, media converters)." },
-        { "type": "h3", "text": "5. Certificación OTDR" },
-        { "type": "p", "text": "Cada enlace de fibra se mide con un reflectómetro óptico (OTDR) que genera un mapa completo de la fibra: longitud, atenuación, empalmes, conectores y posibles defectos. El resultado se documenta en un informe de certificación." },
-        { "type": "tip", "text": "🔆 CableCore instala fibra óptica monomodo y multimodo con fusión profesional y certificación OTDR. Presupuesto gratis: ☎ 605 974 605" }
+        {
+          "type": "h2",
+          "text": "¿Qué es la fibra óptica y por qué instalarla?"
+        },
+        {
+          "type": "p",
+          "text": "La fibra óptica transmite datos mediante pulsos de luz a través de hilos de vidrio ultrafinos. A diferencia del cable de cobre (Ethernet), la fibra ofrece velocidades prácticamente ilimitadas, inmunidad a interferencias electromagnéticas y capacidad para cubrir distancias de hasta 100 km sin degradación de señal."
+        },
+        {
+          "type": "h2",
+          "text": "Tipos de fibra óptica"
+        },
+        {
+          "type": "h3",
+          "text": "Fibra monomodo (SM — Single Mode)"
+        },
+        {
+          "type": "p",
+          "text": "La fibra monomodo tiene un núcleo de 9 µm y transmite un solo modo de luz. Es la más utilizada en instalaciones FTTH y enlaces de larga distancia. Soporta velocidades de 10 Gbps a más de 100 km. El cable más común para interiores es el monomodo de 2 fibras (duplex) con conector SC/APC."
+        },
+        {
+          "type": "h3",
+          "text": "Fibra multimodo (MM — Multi Mode)"
+        },
+        {
+          "type": "p",
+          "text": "La fibra multimodo (OM3/OM4) tiene un núcleo de 50 µm y transmite múltiples modos de luz. Es ideal para distancias cortas dentro de edificios (hasta 300-550m). Velocidades de 10-100 Gbps. Más económica que la monomodo para enlaces cortos."
+        },
+        {
+          "type": "h2",
+          "text": "Componentes de una instalación de fibra"
+        },
+        {
+          "type": "list",
+          "items": [
+            "Cable de fibra óptica monomodo o multimodo",
+            "Rosetas ópticas de 2 puertos SC/APC",
+            "Pigtails SC/APC para fusión",
+            "Acopladores SC/APC hembra-hembra (duplex)",
+            "Bandeja de empalme 1U para rack",
+            "Rack de fibra óptica o caja mural",
+            "Patch cords SC/APC-SC/APC duplex",
+            "Protectores de empalme (splice protectors)"
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "Proceso de instalación"
+        },
+        {
+          "type": "h3",
+          "text": "1. Diseño y planificación"
+        },
+        {
+          "type": "p",
+          "text": "Se determina el recorrido del cable, el número de puntos de fibra, el tipo de instalación (falso techo, canaleta, conductos existentes) y la ubicación del rack central."
+        },
+        {
+          "type": "h3",
+          "text": "2. Tendido de cable"
+        },
+        {
+          "type": "p",
+          "text": "El cable de fibra se tiende por el recorrido planificado. Es fundamental respetar el radio de curvatura mínimo (típicamente 30mm para cable interior) para evitar atenuación o rotura de las fibras."
+        },
+        {
+          "type": "h3",
+          "text": "3. Fusión (empalme por arco)"
+        },
+        {
+          "type": "p",
+          "text": "La fusión es el proceso de unir dos fibras mediante un arco eléctrico que funde el vidrio. Se utiliza una fusionadora profesional que alinea las fibras automáticamente y produce un empalme con atenuación típica inferior a 0.02 dB. Cada fibra se fusiona con un pigtail SC/APC que permite la conexión al panel."
+        },
+        {
+          "type": "h3",
+          "text": "4. Terminación y rack"
+        },
+        {
+          "type": "p",
+          "text": "Los pigtails fusionados se organizan en la bandeja de empalme dentro del rack. Los acopladores SC/APC hembra-hembra se instalan en el frontal del panel, permitiendo conectar patch cords para enlazar con equipos activos (ONT, switches, media converters)."
+        },
+        {
+          "type": "h3",
+          "text": "5. Certificación OTDR"
+        },
+        {
+          "type": "p",
+          "text": "Cada enlace de fibra se mide con un reflectómetro óptico (OTDR) que genera un mapa completo de la fibra: longitud, atenuación, empalmes, conectores y posibles defectos. El resultado se documenta en un informe de certificación."
+        },
+        {
+          "type": "tip",
+          "text": "🔆 CableCore instala fibra óptica monomodo y multimodo con fusión profesional y certificación OTDR. Presupuesto gratis: ☎ 605 974 605"
+        }
       ]
     },
     "en": {
@@ -3919,20 +4947,69 @@
       "metaDescription": "Everything you need to know about indoor fiber optic installation: cable types, fusion splicing, SC/APC connectors, racks and OTDR certification.",
       "excerpt": "Fiber optics is the future of telecommunications. In this guide we explain everything about indoor fiber installation: materials, fusion techniques and professional certification.",
       "category": "Guides",
-      "tags": ["fiber optics", "installation", "fusion"],
+      "tags": [
+        "fiber optics",
+        "installation",
+        "fusion"
+      ],
       "content": [
-        { "type": "h2", "text": "What is fiber optics and why install it?" },
-        { "type": "p", "text": "Fiber optics transmits data using pulses of light through ultra-thin glass strands. Unlike copper cable (Ethernet), fiber offers virtually unlimited speeds, immunity to electromagnetic interference, and the ability to cover distances up to 100 km without signal degradation." },
-        { "type": "h2", "text": "Types of fiber optic cable" },
-        { "type": "h3", "text": "Single-mode fiber (SM)" },
-        { "type": "p", "text": "Single-mode fiber has a 9 µm core and transmits a single mode of light. It is the most common for FTTH and long-distance links. Supports 10 Gbps over 100+ km. The most common indoor cable is 2-fiber (duplex) single-mode with SC/APC connectors." },
-        { "type": "h3", "text": "Multi-mode fiber (MM — OM3/OM4)" },
-        { "type": "p", "text": "Multi-mode fiber (OM3/OM4) has a 50 µm core and transmits multiple modes of light. Ideal for short distances within buildings (up to 300-550m). 10-100 Gbps speeds. More economical than single-mode for short links." },
-        { "type": "h2", "text": "Components of a fiber installation" },
-        { "type": "list", "items": ["Single-mode or multi-mode fiber optic cable", "2-port SC/APC optical outlets", "SC/APC pigtails for fusion", "SC/APC female-female adapters (duplex)", "1U splice tray for rack", "Fiber optic rack or wall box", "SC/APC-SC/APC duplex patch cords", "Splice protectors"] },
-        { "type": "h2", "text": "Installation process" },
-        { "type": "p", "text": "The installation involves 5 key steps: design and planning, cable routing (respecting minimum bend radius), fusion splicing with professional equipment (typical loss < 0.02 dB), rack termination with splice trays and SC/APC adapters, and OTDR certification of every link." },
-        { "type": "tip", "text": "🔆 CableCore installs single-mode and multi-mode fiber with professional fusion splicing and OTDR certification. Free quote: ☎ 605 974 605" }
+        {
+          "type": "h2",
+          "text": "What is fiber optics and why install it?"
+        },
+        {
+          "type": "p",
+          "text": "Fiber optics transmits data using pulses of light through ultra-thin glass strands. Unlike copper cable (Ethernet), fiber offers virtually unlimited speeds, immunity to electromagnetic interference, and the ability to cover distances up to 100 km without signal degradation."
+        },
+        {
+          "type": "h2",
+          "text": "Types of fiber optic cable"
+        },
+        {
+          "type": "h3",
+          "text": "Single-mode fiber (SM)"
+        },
+        {
+          "type": "p",
+          "text": "Single-mode fiber has a 9 µm core and transmits a single mode of light. It is the most common for FTTH and long-distance links. Supports 10 Gbps over 100+ km. The most common indoor cable is 2-fiber (duplex) single-mode with SC/APC connectors."
+        },
+        {
+          "type": "h3",
+          "text": "Multi-mode fiber (MM — OM3/OM4)"
+        },
+        {
+          "type": "p",
+          "text": "Multi-mode fiber (OM3/OM4) has a 50 µm core and transmits multiple modes of light. Ideal for short distances within buildings (up to 300-550m). 10-100 Gbps speeds. More economical than single-mode for short links."
+        },
+        {
+          "type": "h2",
+          "text": "Components of a fiber installation"
+        },
+        {
+          "type": "list",
+          "items": [
+            "Single-mode or multi-mode fiber optic cable",
+            "2-port SC/APC optical outlets",
+            "SC/APC pigtails for fusion",
+            "SC/APC female-female adapters (duplex)",
+            "1U splice tray for rack",
+            "Fiber optic rack or wall box",
+            "SC/APC-SC/APC duplex patch cords",
+            "Splice protectors"
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "Installation process"
+        },
+        {
+          "type": "p",
+          "text": "The installation involves 5 key steps: design and planning, cable routing (respecting minimum bend radius), fusion splicing with professional equipment (typical loss < 0.02 dB), rack termination with splice trays and SC/APC adapters, and OTDR certification of every link."
+        },
+        {
+          "type": "tip",
+          "text": "🔆 CableCore installs single-mode and multi-mode fiber with professional fusion splicing and OTDR certification. Free quote: ☎ 605 974 605"
+        }
       ]
     },
     "ru": {
@@ -3941,15 +5018,40 @@
       "metaDescription": "Всё о монтаже оптоволокна внутри зданий: типы кабеля, сварка, коннекторы SC/APC, шкафы и сертификация OTDR.",
       "excerpt": "Оптоволокно — будущее телекоммуникаций. В этом руководстве объясняем всё о монтаже: материалы, техника сварки и профессиональная сертификация.",
       "category": "Руководства",
-      "tags": ["оптоволокно", "монтаж", "сварка"],
+      "tags": [
+        "оптоволокно",
+        "монтаж",
+        "сварка"
+      ],
       "content": [
-        { "type": "h2", "text": "Что такое оптоволокно и зачем его монтировать?" },
-        { "type": "p", "text": "Оптоволокно передаёт данные с помощью импульсов света по ультратонким стеклянным нитям. В отличие от медного кабеля, оптоволокно обеспечивает практически неограниченные скорости, иммунитет к электромагнитным помехам и способность покрывать расстояния до 100 км без деградации сигнала." },
-        { "type": "h2", "text": "Типы оптоволокна" },
-        { "type": "p", "text": "Одномодовое (SM) — ядро 9 мкм, для больших расстояний (FTTH, магистрали). Многомодовое (OM3/OM4) — ядро 50 мкм, для коротких дистанций внутри зданий (до 300-550 м), скорости 10-100 Гбит/с." },
-        { "type": "h2", "text": "Процесс монтажа" },
-        { "type": "p", "text": "Монтаж включает 5 этапов: проектирование, прокладка кабеля (с соблюдением минимального радиуса изгиба), дуговая сварка (типичное затухание < 0.02 дБ), терминация в шкафу со сплайс-кассетами и адаптерами SC/APC, сертификация OTDR каждого звена." },
-        { "type": "tip", "text": "🔆 CableCore монтирует одномодовое и многомодовое оптоволокно с профессиональной сваркой и сертификацией OTDR. Бесплатная смета: ☎ 605 974 605" }
+        {
+          "type": "h2",
+          "text": "Что такое оптоволокно и зачем его монтировать?"
+        },
+        {
+          "type": "p",
+          "text": "Оптоволокно передаёт данные с помощью импульсов света по ультратонким стеклянным нитям. В отличие от медного кабеля, оптоволокно обеспечивает практически неограниченные скорости, иммунитет к электромагнитным помехам и способность покрывать расстояния до 100 км без деградации сигнала."
+        },
+        {
+          "type": "h2",
+          "text": "Типы оптоволокна"
+        },
+        {
+          "type": "p",
+          "text": "Одномодовое (SM) — ядро 9 мкм, для больших расстояний (FTTH, магистрали). Многомодовое (OM3/OM4) — ядро 50 мкм, для коротких дистанций внутри зданий (до 300-550 м), скорости 10-100 Гбит/с."
+        },
+        {
+          "type": "h2",
+          "text": "Процесс монтажа"
+        },
+        {
+          "type": "p",
+          "text": "Монтаж включает 5 этапов: проектирование, прокладка кабеля (с соблюдением минимального радиуса изгиба), дуговая сварка (типичное затухание < 0.02 дБ), терминация в шкафу со сплайс-кассетами и адаптерами SC/APC, сертификация OTDR каждого звена."
+        },
+        {
+          "type": "tip",
+          "text": "🔆 CableCore монтирует одномодовое и многомодовое оптоволокно с профессиональной сваркой и сертификацией OTDR. Бесплатная смета: ☎ 605 974 605"
+        }
       ]
     }
   },
@@ -3963,23 +5065,93 @@
       "metaDescription": "Comparativa entre fusión por arco y conectores mecánicos para fibra óptica. Ventajas, desventajas y cuándo usar cada método.",
       "excerpt": "¿Fusión por arco o conector mecánico? Analizamos las ventajas y desventajas de cada método de terminación de fibra óptica para que elijas el más adecuado para tu instalación.",
       "category": "Guías",
-      "tags": ["fibra óptica", "fusión", "conectores"],
+      "tags": [
+        "fibra óptica",
+        "fusión",
+        "conectores"
+      ],
       "content": [
-        { "type": "h2", "text": "Fusión por arco (empalme)" },
-        { "type": "p", "text": "La fusión por arco es el método profesional estándar. Consiste en alinear dos fibras ópticas y fundirlas mediante un arco eléctrico de alta precisión. El resultado es una unión permanente con atenuación extremadamente baja (< 0.02 dB típica)." },
-        { "type": "h3", "text": "Ventajas de la fusión" },
-        { "type": "list", "items": ["Atenuación mínima (< 0.02 dB por empalme)", "Unión permanente y fiable", "Mayor resistencia mecánica", "Menor reflexión (mejor calidad de señal)", "Estándar de la industria para instalaciones profesionales"] },
-        { "type": "h3", "text": "Desventajas de la fusión" },
-        { "type": "list", "items": ["Requiere fusionadora profesional (equipo costoso)", "Necesita técnico especializado", "No es reparable en campo rápidamente"] },
-        { "type": "h2", "text": "Conectores mecánicos" },
-        { "type": "p", "text": "Los conectores mecánicos son dispositivos que alinean y sujetan dos fibras sin fusionarlas. Usan un gel de índice para reducir la reflexión en la unión. Son útiles para reparaciones temporales o instalaciones donde no se dispone de fusionadora." },
-        { "type": "h3", "text": "Ventajas de los conectores mecánicos" },
-        { "type": "list", "items": ["No requieren equipo costoso", "Instalación rápida en campo", "Reutilizables", "Útiles para reparaciones temporales"] },
-        { "type": "h3", "text": "Desventajas de los conectores mecánicos" },
-        { "type": "list", "items": ["Mayor atenuación (0.1-0.5 dB por conexión)", "Mayor reflexión", "Menor fiabilidad a largo plazo", "El gel de índice puede degradarse", "No recomendados para instalaciones permanentes"] },
-        { "type": "h2", "text": "¿Cuándo usar cada método?" },
-        { "type": "p", "text": "Para instalaciones permanentes (FTTH, backbone, racks) siempre recomendamos fusión por arco. Los conectores mecánicos son aceptables para reparaciones de emergencia en campo o instalaciones temporales donde no se dispone de fusionadora." },
-        { "type": "tip", "text": "🔥 En CableCore realizamos todas las instalaciones de fibra con fusión profesional por arco y certificación OTDR. ☎ 605 974 605" }
+        {
+          "type": "h2",
+          "text": "Fusión por arco (empalme)"
+        },
+        {
+          "type": "p",
+          "text": "La fusión por arco es el método profesional estándar. Consiste en alinear dos fibras ópticas y fundirlas mediante un arco eléctrico de alta precisión. El resultado es una unión permanente con atenuación extremadamente baja (< 0.02 dB típica)."
+        },
+        {
+          "type": "h3",
+          "text": "Ventajas de la fusión"
+        },
+        {
+          "type": "list",
+          "items": [
+            "Atenuación mínima (< 0.02 dB por empalme)",
+            "Unión permanente y fiable",
+            "Mayor resistencia mecánica",
+            "Menor reflexión (mejor calidad de señal)",
+            "Estándar de la industria para instalaciones profesionales"
+          ]
+        },
+        {
+          "type": "h3",
+          "text": "Desventajas de la fusión"
+        },
+        {
+          "type": "list",
+          "items": [
+            "Requiere fusionadora profesional (equipo costoso)",
+            "Necesita técnico especializado",
+            "No es reparable en campo rápidamente"
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "Conectores mecánicos"
+        },
+        {
+          "type": "p",
+          "text": "Los conectores mecánicos son dispositivos que alinean y sujetan dos fibras sin fusionarlas. Usan un gel de índice para reducir la reflexión en la unión. Son útiles para reparaciones temporales o instalaciones donde no se dispone de fusionadora."
+        },
+        {
+          "type": "h3",
+          "text": "Ventajas de los conectores mecánicos"
+        },
+        {
+          "type": "list",
+          "items": [
+            "No requieren equipo costoso",
+            "Instalación rápida en campo",
+            "Reutilizables",
+            "Útiles para reparaciones temporales"
+          ]
+        },
+        {
+          "type": "h3",
+          "text": "Desventajas de los conectores mecánicos"
+        },
+        {
+          "type": "list",
+          "items": [
+            "Mayor atenuación (0.1-0.5 dB por conexión)",
+            "Mayor reflexión",
+            "Menor fiabilidad a largo plazo",
+            "El gel de índice puede degradarse",
+            "No recomendados para instalaciones permanentes"
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "¿Cuándo usar cada método?"
+        },
+        {
+          "type": "p",
+          "text": "Para instalaciones permanentes (FTTH, backbone, racks) siempre recomendamos fusión por arco. Los conectores mecánicos son aceptables para reparaciones de emergencia en campo o instalaciones temporales donde no se dispone de fusionadora."
+        },
+        {
+          "type": "tip",
+          "text": "🔥 En CableCore realizamos todas las instalaciones de fibra con fusión profesional por arco y certificación OTDR. ☎ 605 974 605"
+        }
       ]
     },
     "en": {
@@ -3988,15 +5160,40 @@
       "metaDescription": "Comparison between arc fusion and mechanical connectors for fiber optics. Advantages, disadvantages and when to use each method.",
       "excerpt": "Arc fusion or mechanical connector? We analyze the pros and cons of each fiber optic termination method to help you choose the right one.",
       "category": "Guides",
-      "tags": ["fiber optics", "fusion", "connectors"],
+      "tags": [
+        "fiber optics",
+        "fusion",
+        "connectors"
+      ],
       "content": [
-        { "type": "h2", "text": "Arc fusion (splicing)" },
-        { "type": "p", "text": "Arc fusion is the professional standard. It aligns two fibers and fuses them with a precision electric arc. The result is a permanent joint with extremely low loss (< 0.02 dB typical)." },
-        { "type": "h2", "text": "Mechanical connectors" },
-        { "type": "p", "text": "Mechanical connectors align and hold fibers without fusing them. They use index-matching gel to reduce reflection. Useful for temporary repairs or where a fusion splicer is not available." },
-        { "type": "h2", "text": "When to use each method?" },
-        { "type": "p", "text": "For permanent installations (FTTH, backbone, racks) always use arc fusion. Mechanical connectors are acceptable for emergency field repairs or temporary installations." },
-        { "type": "tip", "text": "🔥 CableCore performs all fiber installations with professional arc fusion and OTDR certification. ☎ 605 974 605" }
+        {
+          "type": "h2",
+          "text": "Arc fusion (splicing)"
+        },
+        {
+          "type": "p",
+          "text": "Arc fusion is the professional standard. It aligns two fibers and fuses them with a precision electric arc. The result is a permanent joint with extremely low loss (< 0.02 dB typical)."
+        },
+        {
+          "type": "h2",
+          "text": "Mechanical connectors"
+        },
+        {
+          "type": "p",
+          "text": "Mechanical connectors align and hold fibers without fusing them. They use index-matching gel to reduce reflection. Useful for temporary repairs or where a fusion splicer is not available."
+        },
+        {
+          "type": "h2",
+          "text": "When to use each method?"
+        },
+        {
+          "type": "p",
+          "text": "For permanent installations (FTTH, backbone, racks) always use arc fusion. Mechanical connectors are acceptable for emergency field repairs or temporary installations."
+        },
+        {
+          "type": "tip",
+          "text": "🔥 CableCore performs all fiber installations with professional arc fusion and OTDR certification. ☎ 605 974 605"
+        }
       ]
     },
     "ru": {
@@ -4005,15 +5202,40 @@
       "metaDescription": "Сравнение дуговой сварки и механических коннекторов для оптоволокна. Преимущества, недостатки и когда использовать каждый метод.",
       "excerpt": "Дуговая сварка или механический коннектор? Анализируем плюсы и минусы каждого метода соединения оптоволокна.",
       "category": "Руководства",
-      "tags": ["оптоволокно", "сварка", "коннекторы"],
+      "tags": [
+        "оптоволокно",
+        "сварка",
+        "коннекторы"
+      ],
       "content": [
-        { "type": "h2", "text": "Дуговая сварка (сплайсинг)" },
-        { "type": "p", "text": "Дуговая сварка — профессиональный стандарт. Две волокна выравниваются и сплавляются электрической дугой. Результат — постоянное соединение с потерями < 0.02 дБ." },
-        { "type": "h2", "text": "Механические коннекторы" },
-        { "type": "p", "text": "Механические коннекторы выравнивают и фиксируют волокна без сварки. Полезны для временных ремонтов, но имеют большие потери (0.1-0.5 дБ) и меньшую надёжность." },
-        { "type": "h2", "text": "Рекомендации" },
-        { "type": "p", "text": "Для постоянных установок (FTTH, магистрали, шкафы) — всегда дуговая сварка. Механические коннекторы допустимы только для аварийного ремонта в поле." },
-        { "type": "tip", "text": "🔥 CableCore выполняет все монтажи оптоволокна с профессиональной дуговой сваркой и сертификацией OTDR. ☎ 605 974 605" }
+        {
+          "type": "h2",
+          "text": "Дуговая сварка (сплайсинг)"
+        },
+        {
+          "type": "p",
+          "text": "Дуговая сварка — профессиональный стандарт. Две волокна выравниваются и сплавляются электрической дугой. Результат — постоянное соединение с потерями < 0.02 дБ."
+        },
+        {
+          "type": "h2",
+          "text": "Механические коннекторы"
+        },
+        {
+          "type": "p",
+          "text": "Механические коннекторы выравнивают и фиксируют волокна без сварки. Полезны для временных ремонтов, но имеют большие потери (0.1-0.5 дБ) и меньшую надёжность."
+        },
+        {
+          "type": "h2",
+          "text": "Рекомендации"
+        },
+        {
+          "type": "p",
+          "text": "Для постоянных установок (FTTH, магистрали, шкафы) — всегда дуговая сварка. Механические коннекторы допустимы только для аварийного ремонта в поле."
+        },
+        {
+          "type": "tip",
+          "text": "🔥 CableCore выполняет все монтажи оптоволокна с профессиональной дуговой сваркой и сертификацией OTDR. ☎ 605 974 605"
+        }
       ]
     }
   }

@@ -4,6 +4,7 @@ import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import { Link } from '@/i18n/routing';
 import { generatePageMetadata, getFAQJsonLd } from '@/lib/seo-metadata';
+import Breadcrumbs from '@/components/seo/Breadcrumbs';
 
 export function generateMetadata({ params }: { params: { locale: string } }): Metadata {
     return generatePageMetadata('precios', params.locale, '/precios');
@@ -70,6 +71,12 @@ const FAQS_ES = [
 export default function PreciosPage() {
     const locale = useLocale();
     const faqJsonLd = getFAQJsonLd(FAQS_ES);
+    const bcLabels: Record<string, { home: string; prices: string }> = {
+        es: { home: 'Inicio', prices: 'Precios' },
+        en: { home: 'Home', prices: 'Prices' },
+        ru: { home: 'Главная', prices: 'Цены' },
+    };
+    const bc = bcLabels[locale] || bcLabels.es;
 
     return (
         <>
@@ -79,6 +86,10 @@ export default function PreciosPage() {
             />
             <Header />
             <main className="min-h-screen relative z-10 pt-20">
+                <Breadcrumbs items={[
+                    { label: bc.home, href: '/' },
+                    { label: bc.prices },
+                ]} />
 
                 {/* HERO */}
                 <section className="py-16 lg:py-24 relative overflow-hidden">

@@ -1,9 +1,10 @@
 import { Metadata } from 'next';
-import { useTranslations } from 'next-intl';
+import { useTranslations, useLocale } from 'next-intl';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import { Link } from '@/i18n/routing';
 import { generatePageMetadata } from '@/lib/seo-metadata';
+import Breadcrumbs from '@/components/seo/Breadcrumbs';
 
 export function generateMetadata({ params }: { params: { locale: string } }): Metadata {
     return generatePageMetadata('servicios', params.locale, '/servicios');
@@ -55,11 +56,22 @@ const allServices = [
 
 export default function ServiciosPage() {
     const t = useTranslations();
+    const locale = useLocale();
+    const breadcrumbLabels: Record<string, { home: string; services: string }> = {
+        es: { home: 'Inicio', services: 'Servicios' },
+        en: { home: 'Home', services: 'Services' },
+        ru: { home: 'Главная', services: 'Услуги' },
+    };
+    const bc = breadcrumbLabels[locale] || breadcrumbLabels.es;
 
     return (
         <>
             <Header />
             <main className="min-h-screen relative z-10 pt-20">
+                <Breadcrumbs items={[
+                    { label: bc.home, href: '/' },
+                    { label: bc.services },
+                ]} />
 
                 {/* ═══════════════ HERO ═══════════════ */}
                 <section className="py-20 lg:py-28 relative overflow-hidden">

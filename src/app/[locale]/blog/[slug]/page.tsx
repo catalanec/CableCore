@@ -4,6 +4,7 @@ import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import { Link } from '@/i18n/routing';
 import { getBlogArticles, BLOG_ARTICLES } from '@/lib/blog-data';
+import Breadcrumbs from '@/components/seo/Breadcrumbs';
 import type { Metadata } from 'next';
 
 export function generateStaticParams() {
@@ -60,6 +61,13 @@ export default function BlogArticlePage({ params }: { params: { slug: string } }
         <>
             <Header />
             <main className="min-h-screen relative z-10 pt-20">
+
+                {/* Breadcrumbs */}
+                <Breadcrumbs items={[
+                    { label: locale === 'ru' ? 'Главная' : locale === 'en' ? 'Home' : 'Inicio', href: '/' },
+                    { label: 'Blog', href: '/blog' },
+                    { label: article.title.length > 40 ? article.title.slice(0, 40) + '...' : article.title },
+                ]} />
 
                 {/* JSON-LD */}
                 <script
@@ -160,7 +168,13 @@ export default function BlogArticlePage({ params }: { params: { slug: string } }
                         <h2 className="font-heading text-2xl font-bold text-white mb-6">
                             {p('relatedArticles')}
                         </h2>
-                        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                        <div className="grid grid-cols-1 sm:grid-cols-4 gap-4">
+                            <Link href="/precios" className="card p-5 text-center hover:border-brand-gold/30 transition-all">
+                                <div className="text-2xl mb-2">💰</div>
+                                <p className="text-sm text-brand-gold-muted">
+                                    {locale === 'ru' ? 'Цены' : locale === 'en' ? 'Prices' : 'Precios'}
+                                </p>
+                            </Link>
                             <Link href="/servicios" className="card p-5 text-center hover:border-brand-gold/30 transition-all">
                                 <div className="text-2xl mb-2">🔌</div>
                                 <p className="text-sm text-brand-gold-muted">{t('nav.services')}</p>
