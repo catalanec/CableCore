@@ -29,7 +29,7 @@ const CONFIG = {
         trays: 7,          // лотки / бандежи
     },
     trenchPricePerMeter: 45,
-    materials: { keystone: 6, socket: 10, trunking: 4, pvc: 2, corrugated: 1, patchPanel: 60 },
+    materials: { keystone: 6, socket: 10, trunking: 4, pvc: 2, corrugated: 1, patchPanel12: 40, patchPanel24: 65, patchPanel48: 100 },
     equipment: { router: 50, switch: 40, accessPoint: 70, configuration: 150 },
     upsell: { testing: 50, labeling: 20, cableManagement: 50, extendedWarranty: 30 },
 } as const;
@@ -90,7 +90,12 @@ const ADDITIONAL_MATERIALS = [
     { id: 'trunking' as const, price: CONFIG.materials.trunking, unit: 'm', icon: '📏' },
     { id: 'pvc' as const, price: CONFIG.materials.pvc, unit: 'm', icon: '🔧' },
     { id: 'corrugated' as const, price: CONFIG.materials.corrugated, unit: 'm', icon: '⚒️' },
-    { id: 'patchPanel' as const, price: CONFIG.materials.patchPanel, unit: 'ud', icon: '🔗' },
+];
+
+const PATCH_PANEL_OPTIONS = [
+    { id: 'pp12' as const, ports: 12, price: CONFIG.materials.patchPanel12, icon: '🔗' },
+    { id: 'pp24' as const, ports: 24, price: CONFIG.materials.patchPanel24, icon: '🔗' },
+    { id: 'pp48' as const, ports: 48, price: CONFIG.materials.patchPanel48, icon: '🔗' },
 ];
 
 /* ═════════════════════════════════════
@@ -101,9 +106,9 @@ const calcLabels: Record<string, Record<string, string>> = {
     es: {
         cableType: 'Tipo de cable',
         points: 'Puntos de red',
-        pointsHint: '1 punto = 1 toma de internet / roseta de red',
+        pointsHint: '1 punto = 1 roseta de red. Incluye por punto: cable hasta la roseta + 2 conectores Keystone (6€ c/u) + 1 roseta embellecedora (10€) + mano de obra según tipo (30–90€/pto)',
         avgLength: 'Longitud media por punto',
-        avgLengthHint: 'Metros de cable promedio por cada punto de red',
+        avgLengthHint: 'Distancia media de cable desde el armario/switch central hasta cada roseta. Determina el coste total de cable y el tendido',
         installType: 'Tipo de instalación',
         trench: 'Regata',
         canaleta: 'Canaleta (cable canal)',
@@ -144,7 +149,7 @@ const calcLabels: Record<string, Record<string, string>> = {
         tipRouting: 'Tendido físico del cable por la ruta: pasar cables por el techo, canaletas o paredes. El precio varía según el tipo de instalación.',
         tipTrench: 'Apertura de regata (canal en la pared) para empotrar el cable. Incluye corte, colocación del tubo y sellado posterior.',
         tipCanaleta: 'Canal de plástico que se fija a la pared o techo para proteger y ocultar los cables. Precio por metro lineal.',
-        tipMaterials: 'Materiales por punto: 2 conectores Keystone (6€ c/u) + 1 roseta de red (10€). Se aplica automáticamente por cada punto.',
+        tipMaterials: 'Materials per point: 2 Keystone connectors (6€ ea) + 1 network outlet (10€). Applied automatically per point.',
         tipRack: 'Armario de red para centralizar las conexiones. Contiene patch panels, switches y organizadores de cables.',
         tipEquipment: 'Equipos activos de red: routers, switches gestionables, puntos de acceso WiFi y configuración profesional.',
         tipUpsell: 'Servicios adicionales: certificación con equipo profesional, etiquetado de cada cable, gestión y organización dentro del rack.',
@@ -183,13 +188,21 @@ const calcLabels: Record<string, Record<string, string>> = {
         urgente: 'Urgente (×1.2)',
         weekend: 'Fin de semana (×1.5)',
         meters: 'metros',
+        installCoeffExplanation: 'ℹ️ El coeficiente refleja la dificultad del entorno. «Émpotrado nuevo» (×1.0) incluye regata aparte (45€/m). «Émpotrado existente» (×1.2) es más lento porque hay que pasar el cable por canalizaciones ya existentes sin romper la pared.',
+        installDisabled: 'Selecciona al menos 1 punto de red o longitud de cable para activar el tipo de instalación.',
+        patchPanelSection: 'Patch Panel (instalación + crimpado de puertos)',
+        patchPanelHint: 'Precio de montaje en rack e instalación de puertos. Varía según el número de puertos. Los patch panels de 12p son para instalaciones pequeñas, 24p para oficinas, 48p para grandes instalaciones.',
+        ports: 'puertos',
+        editEquipment: '✏️ Personalizar equipos',
+        editRack: '✏️ Personalizar armarios',
+        editDone: '✅ Guardar cambios',
     },
     en: {
         cableType: 'Cable type',
         points: 'Network points',
-        pointsHint: '1 point = 1 network socket / wall outlet',
+        pointsHint: '1 point = 1 network outlet. Includes per point: cable to the outlet + 2 Keystone connectors (€6 each) + 1 wall outlet (€10) + labor by install type (30–90€/pt)',
         avgLength: 'Average length per point',
-        avgLengthHint: 'Average cable meters per network point',
+        avgLengthHint: 'Average cable distance from the rack/switch to each outlet. Determines total cable and routing cost',
         installType: 'Installation type',
         trench: 'Wall trenching',
         canaleta: 'Cable trunking',
@@ -263,13 +276,21 @@ const calcLabels: Record<string, Record<string, string>> = {
         urgente: 'Urgent (×1.2)',
         weekend: 'Weekend (×1.5)',
         meters: 'meters',
+        installCoeffExplanation: 'ℹ️ The coefficient reflects work complexity. «New conduit» (×1.0) has wall trenching priced separately (€45/m). «Existing conduit» (×1.2) is slower because cables must be fed through existing channels without breaking walls.',
+        installDisabled: 'Select at least 1 network point or cable length to activate installation type.',
+        patchPanelSection: 'Patch Panel (installation + port crimping)',
+        patchPanelHint: 'Rack mounting and port installation price. Varies by total port count. 12p for small setups, 24p for offices, 48p for large installations.',
+        ports: 'ports',
+        editEquipment: '✏️ Customize equipment',
+        editRack: '✏️ Customize cabinets',
+        editDone: '✅ Save changes',
     },
     ru: {
         cableType: 'Тип кабеля',
         points: 'Сетевые точки',
-        pointsHint: '1 точка = 1 интернет-розетка',
+        pointsHint: '1 точка = 1 сетевая розетка. Включает: кабель до розетки + 2 коннектора Keystone (6€ шт) + 1 розетка (10€) + монтаж по типу (30–90€/тчк)',
         avgLength: 'Средняя длина на точку',
-        avgLengthHint: 'Среднее количество метров кабеля на каждую точку',
+        avgLengthHint: 'Среднее расстояние кабеля от шкафа/коммутатора до каждой точки. Определяет стоимость кабеля и прокладки',
         installType: 'Тип монтажа',
         trench: 'Штроба',
         canaleta: 'Кабель-канал',
@@ -343,6 +364,14 @@ const calcLabels: Record<string, Record<string, string>> = {
         urgente: 'Срочно (×1.2)',
         weekend: 'Выходные (×1.5)',
         meters: 'метров',
+        installCoeffExplanation: 'ℹ️ Коэффициент отражает сложность монтажа. «Новая штроба» (×1.0) — штробление считается отдельно (45€/м). «Существующая штроба» (×1.2) — медленнее, потому что кабель протягивают через готовые каналы без разрушения стен.',
+        installDisabled: 'Выберите хотя бы 1 сетевую точку или длину кабеля для активации.',
+        patchPanelSection: 'Патч-панель (установка + обжим портов)',
+        patchPanelHint: 'Цена монтажа в стойку и установки портов. Зависит от количества портов: 12p — малые объекты, 24p — офис, 48p — крупные инсталляции.',
+        ports: 'портов',
+        editEquipment: '✏️ Настроить оборудование',
+        editRack: '✏️ Настроить шкафы',
+        editDone: '✅ Сохранить',
     },
 };
 
@@ -367,11 +396,32 @@ export default function Calculator({ locale }: { locale: string }) {
     const [canetaMode, setCanetaMode] = useState<'full' | 'manual'>('full');
     const [canetaLengthInput, setCanetaLengthInput] = useState(0);
     const [additionalMaterials, setAdditionalMaterials] = useState<Record<string, number>>({
-        trunking: 0, pvc: 0, corrugated: 0, patchPanel: 0,
+        trunking: 0, pvc: 0, corrugated: 0,
     });
+    const [patchPanelCounts, setPatchPanelCounts] = useState<Record<string, number>>({ pp12: 0, pp24: 0, pp48: 0 });
     const [equipment, setEquipment] = useState<Record<string, number>>({
         router: 0, switch: 0, accessPoint: 0, configuration: 0,
     });
+    const [equipmentCustom, setEquipmentCustom] = useState<Record<string, { name: string; price: number }>>(
+        {
+            router: { name: '', price: CONFIG.equipment.router },
+            switch: { name: '', price: CONFIG.equipment.switch },
+            accessPoint: { name: '', price: CONFIG.equipment.accessPoint },
+            configuration: { name: '', price: CONFIG.equipment.configuration },
+        }
+    );
+    const [equipmentEditing, setEquipmentEditing] = useState(false);
+    const [rackCustom, setRackCustom] = useState<Record<string, { name: string; price: number }>>(
+        {
+            rack_6u: { name: '', price: 90 },
+            rack_9u: { name: '', price: 130 },
+            rack_12u: { name: '', price: 180 },
+            rack_18u: { name: '', price: 250 },
+            rack_22u: { name: '', price: 380 },
+            rack_42u: { name: '', price: 650 },
+        }
+    );
+    const [rackEditing, setRackEditing] = useState(false);
     const [upsellOptions, setUpsellOptions] = useState<Record<string, boolean>>({
         testing: true, labeling: true, cableManagement: false, extendedWarranty: false,
     });
@@ -436,22 +486,27 @@ export default function Calculator({ locale }: { locale: string }) {
         const trunkingQty = additionalMaterials.trunking || 0;
         const pvcQty = additionalMaterials.pvc || 0;
         const corrugatedQty = additionalMaterials.corrugated || 0;
-        const patchPanelQty = additionalMaterials.patchPanel || 0;
         additionalMaterialsCost += trunkingQty * CONFIG.materials.trunking;
         additionalMaterialsCost += pvcQty * CONFIG.materials.pvc;
         additionalMaterialsCost += corrugatedQty * CONFIG.materials.corrugated;
-        additionalMaterialsCost += patchPanelQty * CONFIG.materials.patchPanel;
+        // Patch panels por cantidad de puertos
+        additionalMaterialsCost += (patchPanelCounts.pp12 || 0) * CONFIG.materials.patchPanel12;
+        additionalMaterialsCost += (patchPanelCounts.pp24 || 0) * CONFIG.materials.patchPanel24;
+        additionalMaterialsCost += (patchPanelCounts.pp48 || 0) * CONFIG.materials.patchPanel48;
 
-        // 7. Оборудование (количество × цена)
+        // 7. Оборудование — с учётом кастомных цен
         let equipmentCost = 0;
         for (const key in equipment) {
             const qty = equipment[key] || 0;
-            if (qty > 0) equipmentCost += CONFIG.equipment[key as keyof typeof CONFIG.equipment] * qty || 0;
+            if (qty > 0) {
+                const unitPrice = equipmentCustom[key]?.price ?? CONFIG.equipment[key as keyof typeof CONFIG.equipment] ?? 0;
+                equipmentCost += unitPrice * qty;
+            }
         }
 
-        // 7b. Rack
+        // 7b. Rack — с учётом кастомных цен
         const rackOption = RACK_OPTIONS.find(r => r.id === rack) || RACK_OPTIONS[0];
-        const rackCost = rackOption.price;
+        const rackCost = rack === 'none' ? 0 : (rackCustom[rack]?.price ?? rackOption.price);
 
         // 8. Upsell
         let upsellCost = 0;
@@ -483,7 +538,9 @@ export default function Calculator({ locale }: { locale: string }) {
             equipmentCost, rackCost, upsellCost, subtotal, discountPercent, discount,
             urgencyOption, afterUrgency, iva, total,
         };
-    }, [cableType, points, avgLength, installType, trenchMode, trenchLengthInput, canetaMode, canetaLengthInput, additionalMaterials, equipment, rack, upsellOptions, urgency]);
+    }, [cableType, points, avgLength, installType, trenchMode, trenchLengthInput, canetaMode, canetaLengthInput, additionalMaterials, patchPanelCounts, equipment, equipmentCustom, rack, rackCustom, upsellOptions, urgency]);
+
+    const installationDisabled = points === 0 && avgLength === 0;
 
     return (
         <div className="space-y-6">
@@ -557,11 +614,11 @@ export default function Calculator({ locale }: { locale: string }) {
                     <p className="text-xs text-brand-gold-muted mb-4">{l.pointsHint}</p>
                     <div className="flex items-center gap-4">
                         <button
-                            onClick={() => setPoints(Math.max(1, points - 1))}
+                            onClick={() => setPoints(Math.max(0, points - 1))}
                             className="w-12 h-12 rounded-lg bg-surface-card border border-border-subtle text-white hover:border-brand-gold/50 transition-colors text-xl font-bold"
                         >−</button>
                         <div className="flex-1">
-                            <input type="range" min={1} max={100} value={points}
+                            <input type="range" min={0} max={100} value={points}
                                 onChange={(e) => setPoints(Number(e.target.value))}
                                 className="w-full accent-[#c9a84c] h-2 rounded-full appearance-none bg-surface-card cursor-pointer" />
                         </div>
@@ -586,11 +643,11 @@ export default function Calculator({ locale }: { locale: string }) {
                     <p className="text-xs text-brand-gold-muted mb-4">{l.avgLengthHint}</p>
                     <div className="flex items-center gap-4">
                         <button
-                            onClick={() => setAvgLength(Math.max(1, avgLength - 1))}
+                            onClick={() => setAvgLength(Math.max(0, avgLength - 1))}
                             className="w-12 h-12 rounded-lg bg-surface-card border border-border-subtle text-white hover:border-brand-gold/50 transition-colors text-xl font-bold"
                         >−</button>
                         <div className="flex-1">
-                            <input type="range" min={1} max={100} value={avgLength}
+                            <input type="range" min={0} max={100} value={avgLength}
                                 onChange={(e) => setAvgLength(Number(e.target.value))}
                                 className="w-full accent-[#c9a84c] h-2 rounded-full appearance-none bg-surface-card cursor-pointer" />
                         </div>
@@ -613,7 +670,10 @@ export default function Calculator({ locale }: { locale: string }) {
                     <h3 className="font-heading font-semibold text-white mb-4 flex items-center gap-2">
                         🔧 {l.installType}
                     </h3>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    {installationDisabled && (
+                        <p className="text-xs text-yellow-400/80 mb-3">⚠️ {l.installDisabled}</p>
+                    )}
+                    <div className={`grid grid-cols-1 sm:grid-cols-2 gap-3 ${installationDisabled ? 'opacity-40 pointer-events-none select-none' : ''}`}>
                         {INSTALLATION_TYPES.map((install) => (
                             <button
                                 key={install.id}
@@ -630,12 +690,17 @@ export default function Calculator({ locale }: { locale: string }) {
                                     </div>
                                     <div className="text-sm text-brand-gold-muted">
                                         ×{CONFIG.installationMultiplier[install.id]}
+                                        {install.id === 'new_wall' && <span className="ml-1 text-yellow-400/70">+ regata</span>}
                                     </div>
                                 </div>
                             </button>
                         ))}
                     </div>
+                    {!installationDisabled && (
+                        <p className="text-xs text-brand-gold-muted mt-3 leading-relaxed">{l.installCoeffExplanation}</p>
+                    )}
                 </div>
+
 
                 {/* TRENCH — only for new_wall */}
                 {installType === 'new_wall' && (
@@ -737,7 +802,7 @@ export default function Calculator({ locale }: { locale: string }) {
                     </div>
                 )}
 
-                {/* Additional Materials — quantity inputs */}
+                {/* Additional Materials */}
                 <div className="card p-6">
                     <h3 className="font-heading font-semibold text-white mb-4 flex items-center gap-2">
                         📦 {l.materials}
@@ -746,12 +811,7 @@ export default function Calculator({ locale }: { locale: string }) {
                         {ADDITIONAL_MATERIALS.map((mat) => {
                             const qty = additionalMaterials[mat.id] || 0;
                             return (
-                            <div
-                                key={mat.id}
-                                className={`p-4 rounded-lg border transition-all duration-200 ${qty > 0
-                                    ? 'bg-[rgba(201,168,76,0.1)] border-brand-gold'
-                                    : 'bg-surface-card border-border-subtle hover:border-brand-gold/30'}`}
-                            >
+                            <div key={mat.id} className={`p-4 rounded-lg border transition-all duration-200 ${qty > 0 ? 'bg-[rgba(201,168,76,0.1)] border-brand-gold' : 'bg-surface-card border-border-subtle hover:border-brand-gold/30'}`}>
                                 <div className="flex items-center gap-3">
                                     <span className="text-xl">{mat.icon}</span>
                                     <div className="flex-1">
@@ -759,15 +819,9 @@ export default function Calculator({ locale }: { locale: string }) {
                                         <div className="text-xs text-brand-gold-muted">{mat.price}€/{mat.unit}</div>
                                     </div>
                                     <div className="flex items-center gap-2">
-                                        <button
-                                            onClick={() => setAdditionalMaterials(prev => ({ ...prev, [mat.id]: Math.max(0, (prev[mat.id] || 0) - (mat.unit === 'm' ? 5 : 1)) }))}
-                                            className="w-8 h-8 rounded bg-brand-dark text-white border border-border-subtle text-sm hover:border-brand-gold/30 transition-colors"
-                                        >−</button>
-                                        <span className="w-10 text-center font-heading font-bold text-brand-gold text-sm">{qty}{mat.unit === 'm' ? 'm' : ''}</span>
-                                        <button
-                                            onClick={() => setAdditionalMaterials(prev => ({ ...prev, [mat.id]: (prev[mat.id] || 0) + (mat.unit === 'm' ? 5 : 1) }))}
-                                            className="w-8 h-8 rounded bg-brand-dark text-white border border-border-subtle text-sm hover:border-brand-gold/30 transition-colors"
-                                        >+</button>
+                                        <button onClick={() => setAdditionalMaterials(prev => ({ ...prev, [mat.id]: Math.max(0, (prev[mat.id] || 0) - 5) }))} className="w-8 h-8 rounded bg-brand-dark text-white border border-border-subtle text-sm hover:border-brand-gold/30 transition-colors">−</button>
+                                        <span className="w-10 text-center font-heading font-bold text-brand-gold text-sm">{qty}m</span>
+                                        <button onClick={() => setAdditionalMaterials(prev => ({ ...prev, [mat.id]: (prev[mat.id] || 0) + 5 }))} className="w-8 h-8 rounded bg-brand-dark text-white border border-border-subtle text-sm hover:border-brand-gold/30 transition-colors">+</button>
                                     </div>
                                 </div>
                             </div>
@@ -776,50 +830,86 @@ export default function Calculator({ locale }: { locale: string }) {
                     </div>
                 </div>
 
+                {/* Patch Panel by port count */}
+                <div className="card p-6">
+                    <h3 className="font-heading font-semibold text-white mb-1 flex items-center gap-2">
+                        🔗 {l.patchPanelSection}
+                    </h3>
+                    <p className="text-xs text-brand-gold-muted mb-4">{l.patchPanelHint}</p>
+                    <div className="grid grid-cols-3 gap-3">
+                        {PATCH_PANEL_OPTIONS.map((pp) => {
+                            const qty = patchPanelCounts[pp.id] || 0;
+                            return (
+                                <div key={pp.id} className={`p-4 rounded-lg border transition-all ${qty > 0 ? 'border-brand-gold bg-[rgba(201,168,76,0.1)]' : 'border-border-subtle bg-surface-card'}`}>
+                                    <div className="text-center mb-3">
+                                        <div className={`font-heading font-bold text-lg ${qty > 0 ? 'text-brand-gold' : 'text-white'}`}>{pp.ports}p</div>
+                                        <div className="text-xs text-brand-gold-muted">{l.ports}</div>
+                                        <div className="text-xs text-brand-gold-muted mt-0.5">{pp.price}€/ud</div>
+                                    </div>
+                                    <div className="flex items-center justify-between gap-1">
+                                        <button onClick={() => setPatchPanelCounts(prev => ({ ...prev, [pp.id]: Math.max(0, (prev[pp.id] || 0) - 1) }))} className="w-8 h-8 rounded bg-brand-dark text-white border border-border-subtle text-sm hover:border-brand-gold/30">−</button>
+                                        <span className="font-heading font-bold text-brand-gold">{qty}</span>
+                                        <button onClick={() => setPatchPanelCounts(prev => ({ ...prev, [pp.id]: (prev[pp.id] || 0) + 1 }))} className="w-8 h-8 rounded bg-brand-dark text-white border border-border-subtle text-sm hover:border-brand-gold/30">+</button>
+                                    </div>
+                                </div>
+                            );
+                        })}
+                    </div>
+                </div>
+
                 {/* Equipment */}
                 <div className="card p-6">
-                    <h3 className="font-heading font-semibold text-white mb-4 flex items-center gap-2">
-                        🖥️ {l.equipment}
-                    </h3>
+                    <div className="flex items-center justify-between mb-4">
+                        <h3 className="font-heading font-semibold text-white flex items-center gap-2">🖥️ {l.equipment}</h3>
+                        <button onClick={() => setEquipmentEditing(e => !e)} className={`text-xs px-3 py-1.5 rounded-lg border transition-colors ${equipmentEditing ? 'border-brand-gold bg-[rgba(201,168,76,0.1)] text-brand-gold' : 'border-border-subtle text-brand-gold-muted hover:border-brand-gold/30'}`}>
+                            {equipmentEditing ? l.editDone : l.editEquipment}
+                        </button>
+                    </div>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                         {EQUIPMENT_LIST.map((eq) => {
                             const qty = equipment[eq.id] || 0;
                             const hasQtyInput = eq.id === 'switch' || eq.id === 'accessPoint';
+                            const custom = equipmentCustom[eq.id];
+                            const displayName = custom?.name || l[eq.id];
+                            const displayPrice = custom?.price ?? eq.price;
                             return (
-                            <div
-                                key={eq.id}
-                                className={`p-4 rounded-lg border transition-all duration-200 ${qty > 0
-                                    ? 'bg-[rgba(201,168,76,0.1)] border-brand-gold'
-                                    : 'bg-surface-card border-border-subtle hover:border-brand-gold/30'}`}
-                            >
+                            <div key={eq.id} className={`p-4 rounded-lg border transition-all duration-200 ${qty > 0 ? 'bg-[rgba(201,168,76,0.1)] border-brand-gold' : 'bg-surface-card border-border-subtle hover:border-brand-gold/30'}`}>
                                 <div className="flex items-center gap-3">
-                                    <span className="text-xl">{eq.icon}</span>
-                                    <div className="flex-1">
-                                        <div className={`text-sm font-medium ${qty > 0 ? 'text-brand-gold' : 'text-white'}`}>{l[eq.id]}</div>
-                                        <div className="text-xs text-brand-gold-muted">{eq.price}€{hasQtyInput ? '/ud' : ''}</div>
+                                    <span className="text-xl flex-shrink-0">{eq.icon}</span>
+                                    <div className="flex-1 min-w-0">
+                                        {equipmentEditing ? (
+                                            <div className="space-y-1.5">
+                                                <input type="text" value={custom?.name || ''} placeholder={l[eq.id]}
+                                                    onChange={(e) => setEquipmentCustom(prev => ({ ...prev, [eq.id]: { ...prev[eq.id], name: e.target.value } }))}
+                                                    className="w-full text-xs bg-brand-dark border border-border-subtle rounded px-2 py-1 text-white placeholder-brand-gold-muted/50 focus:outline-none focus:border-brand-gold/50" />
+                                                <div className="flex items-center gap-1">
+                                                    <input type="number" value={displayPrice} min={0}
+                                                        onChange={(e) => setEquipmentCustom(prev => ({ ...prev, [eq.id]: { ...prev[eq.id], price: Number(e.target.value) } }))}
+                                                        className="w-20 text-xs bg-brand-dark border border-border-subtle rounded px-2 py-1 text-brand-gold focus:outline-none focus:border-brand-gold/50" />
+                                                    <span className="text-xs text-brand-gold-muted">€</span>
+                                                </div>
+                                            </div>
+                                        ) : (
+                                            <>
+                                                <div className={`text-sm font-medium truncate ${qty > 0 ? 'text-brand-gold' : 'text-white'}`}>{displayName}</div>
+                                                <div className="text-xs text-brand-gold-muted">{displayPrice}€{hasQtyInput ? '/ud' : ''}</div>
+                                            </>
+                                        )}
                                     </div>
-                                    {hasQtyInput ? (
+                                    {!equipmentEditing && (hasQtyInput ? (
                                         <div className="flex items-center gap-2">
-                                            <button
-                                                onClick={() => setEquipment(prev => ({ ...prev, [eq.id]: Math.max(0, (prev[eq.id] || 0) - 1) }))}
-                                                className="w-8 h-8 rounded bg-brand-dark text-white border border-border-subtle text-sm hover:border-brand-gold/30 transition-colors"
-                                            >−</button>
+                                            <button onClick={() => setEquipment(prev => ({ ...prev, [eq.id]: Math.max(0, (prev[eq.id] || 0) - 1) }))} className="w-8 h-8 rounded bg-brand-dark text-white border border-border-subtle text-sm hover:border-brand-gold/30">−</button>
                                             <span className="w-8 text-center font-heading font-bold text-brand-gold">{qty}</span>
-                                            <button
-                                                onClick={() => setEquipment(prev => ({ ...prev, [eq.id]: (prev[eq.id] || 0) + 1 }))}
-                                                className="w-8 h-8 rounded bg-brand-dark text-white border border-border-subtle text-sm hover:border-brand-gold/30 transition-colors"
-                                            >+</button>
+                                            <button onClick={() => setEquipment(prev => ({ ...prev, [eq.id]: (prev[eq.id] || 0) + 1 }))} className="w-8 h-8 rounded bg-brand-dark text-white border border-border-subtle text-sm hover:border-brand-gold/30">+</button>
                                         </div>
                                     ) : (
                                         <label className="cursor-pointer">
-                                            <input type="checkbox" checked={qty > 0}
-                                                onChange={(e) => setEquipment(prev => ({ ...prev, [eq.id]: e.target.checked ? 1 : 0 }))}
-                                                className="sr-only" />
+                                            <input type="checkbox" checked={qty > 0} onChange={(e) => setEquipment(prev => ({ ...prev, [eq.id]: e.target.checked ? 1 : 0 }))} className="sr-only" />
                                             <div className={`w-5 h-5 rounded border flex items-center justify-center transition-colors ${qty > 0 ? 'bg-brand-gold border-brand-gold text-black' : 'border-border-subtle'}`}>
                                                 {qty > 0 && <span className="text-xs font-bold">✓</span>}
                                             </div>
                                         </label>
-                                    )}
+                                    ))}
                                 </div>
                             </div>
                             );
@@ -829,27 +919,45 @@ export default function Calculator({ locale }: { locale: string }) {
 
                 {/* Network Rack */}
                 <div className="card p-6">
-                    <h3 className="font-heading font-semibold text-white mb-4 flex items-center gap-2">
-                        🗄️ {l.rack}
-                    </h3>
+                    <div className="flex items-center justify-between mb-4">
+                        <h3 className="font-heading font-semibold text-white flex items-center gap-2">🗄️ {l.rack}</h3>
+                        <button onClick={() => setRackEditing(e => !e)} className={`text-xs px-3 py-1.5 rounded-lg border transition-colors ${rackEditing ? 'border-brand-gold bg-[rgba(201,168,76,0.1)] text-brand-gold' : 'border-border-subtle text-brand-gold-muted hover:border-brand-gold/30'}`}>
+                            {rackEditing ? l.editDone : l.editRack}
+                        </button>
+                    </div>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                        {RACK_OPTIONS.map((r) => (
-                            <button
-                                key={r.id}
-                                onClick={() => setRack(r.id)}
-                                className={`p-4 rounded-lg border text-left transition-all duration-200 ${rack === r.id
-                                    ? 'bg-[rgba(201,168,76,0.1)] border-brand-gold'
-                                    : 'bg-surface-card border-border-subtle hover:border-brand-gold/30'
-                                    }`}
-                            >
-                                <div className={`font-semibold ${rack === r.id ? 'text-brand-gold' : 'text-white'}`}>
-                                    {'icon' in r ? `${r.icon} ` : ''}{l[r.id]}
+                        {RACK_OPTIONS.map((r) => {
+                            const custom = rackCustom[r.id];
+                            const displayName = r.id === 'none' ? l[r.id] : (custom?.name || l[r.id]);
+                            const displayPrice = r.id === 'none' ? 0 : (custom?.price ?? r.price);
+                            if (rackEditing && r.id === 'none') return null;
+                            return (
+                                <div key={r.id}>
+                                    {rackEditing && r.id !== 'none' ? (
+                                        <div className="p-4 rounded-lg border border-brand-gold/30 bg-surface-card space-y-2">
+                                            <div className="text-xs text-brand-gold-muted">{'icon' in r ? `${r.icon} ` : ''}{l[r.id]}</div>
+                                            <input type="text" value={custom?.name || ''} placeholder={l[r.id]}
+                                                onChange={(e) => setRackCustom(prev => ({ ...prev, [r.id]: { ...prev[r.id], name: e.target.value } }))}
+                                                className="w-full text-xs bg-brand-dark border border-border-subtle rounded px-2 py-1 text-white placeholder-brand-gold-muted/50 focus:outline-none focus:border-brand-gold/50" />
+                                            <div className="flex items-center gap-1">
+                                                <input type="number" value={displayPrice} min={0}
+                                                    onChange={(e) => setRackCustom(prev => ({ ...prev, [r.id]: { ...prev[r.id], price: Number(e.target.value) } }))}
+                                                    className="w-24 text-xs bg-brand-dark border border-border-subtle rounded px-2 py-1 text-brand-gold focus:outline-none focus:border-brand-gold/50" />
+                                                <span className="text-xs text-brand-gold-muted">€</span>
+                                            </div>
+                                        </div>
+                                    ) : (
+                                        <button onClick={() => setRack(r.id)} className={`w-full p-4 rounded-lg border text-left transition-all duration-200 ${rack === r.id ? 'bg-[rgba(201,168,76,0.1)] border-brand-gold' : 'bg-surface-card border-border-subtle hover:border-brand-gold/30'}`}>
+                                            <div className={`font-semibold ${rack === r.id ? 'text-brand-gold' : 'text-white'}`}>{'icon' in r ? `${r.icon} ` : ''}{displayName}</div>
+                                            <div className="text-sm text-brand-gold-muted mt-1">{displayPrice > 0 ? `${displayPrice}€` : '—'}</div>
+                                        </button>
+                                    )}
                                 </div>
-                                <div className="text-sm text-brand-gold-muted mt-1">{r.price > 0 ? `${r.price}€` : '—'}</div>
-                            </button>
-                        ))}
+                            );
+                        })}
                     </div>
                 </div>
+
 
                 {/* Upsell Services */}
                 <div className="card p-6">
