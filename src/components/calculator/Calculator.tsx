@@ -197,6 +197,7 @@ const calcLabels: Record<string, Record<string, string>> = {
         ports: 'puertos',
         editEquipment: '✏️ Personalizar equipos',
         editRack: '✏️ Personalizar armarios',
+        editMaterials: '✏️ Personalizar materiales',
         editDone: '✅ Guardar cambios',
     },
     en: {
@@ -286,6 +287,7 @@ const calcLabels: Record<string, Record<string, string>> = {
         ports: 'ports',
         editEquipment: '✏️ Customize equipment',
         editRack: '✏️ Customize cabinets',
+        editMaterials: '✏️ Customize materials',
         editDone: '✅ Save changes',
     },
     ru: {
@@ -375,6 +377,7 @@ const calcLabels: Record<string, Record<string, string>> = {
         ports: 'портов',
         editEquipment: '✏️ Настроить оборудование',
         editRack: '✏️ Настроить шкафы',
+        editMaterials: '✏️ Настроить материалы',
         editDone: '✅ Сохранить',
     },
 };
@@ -415,6 +418,13 @@ export default function Calculator({ locale }: { locale: string }) {
         }
     );
     const [equipmentEditing, setEquipmentEditing] = useState(false);
+    const [materialsEditing, setMaterialsEditing] = useState(false);
+    const [materialsCustom, setMaterialsCustom] = useState<Record<string, { name: string; price: number }>>({
+        trunking:  { name: '', price: 4 },
+        pvc:       { name: '', price: 2 },
+        corrugated:{ name: '', price: 1 },
+        laborHour: { name: '', price: 60 },
+    });
     const [rackCustom, setRackCustom] = useState<Record<string, { name: string; price: number }>>(
         {
             rack_6u: { name: '', price: 90 },
@@ -809,27 +819,51 @@ export default function Calculator({ locale }: { locale: string }) {
 
                 {/* Additional Materials */}
                 <div className="card p-6">
-                    <h3 className="font-heading font-semibold text-white mb-4 flex items-center gap-2">
-                        📦 {l.materials}
-                    </h3>
+                    <div className="flex items-center justify-between mb-4">
+                        <h3 className="font-heading font-semibold text-white flex items-center gap-2">📦 {l.materials}</h3>
+                        <button onClick={() => setMaterialsEditing(e => !e)} className={`text-xs px-3 py-1.5 rounded-lg border transition-colors ${materialsEditing ? 'border-brand-gold bg-[rgba(201,168,76,0.1)] text-brand-gold' : 'border-border-subtle text-brand-gold-muted hover:border-brand-gold/30'}`}>
+                            {materialsEditing ? (l as Record<string,string>).editDone : (l as Record<string,string>).editMaterials}
+                        </button>
+                    </div>
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                         {ADDITIONAL_MATERIALS.map((mat) => {
                             const qty = additionalMaterials[mat.id] || 0;
                             const step = mat.unit === 'h' ? 1 : 5;
                             const unitLabel = mat.unit === 'h' ? 'h' : 'm';
+                            const custom = materialsCustom[mat.id];
+                            const displayName = custom?.name || (l as Record<string,string>)[mat.id];
+                            const displayPrice = custom?.price ?? mat.price;
                             return (
                             <div key={mat.id} className={`p-4 rounded-lg border transition-all duration-200 ${qty > 0 ? 'bg-[rgba(201,168,76,0.1)] border-brand-gold' : 'bg-surface-card border-border-subtle hover:border-brand-gold/30'}`}>
                                 <div className="flex items-center gap-3">
-                                    <span className="text-xl">{mat.icon}</span>
-                                    <div className="flex-1">
-                                        <div className={`text-sm font-medium ${qty > 0 ? 'text-brand-gold' : 'text-white'}`}>{(l as Record<string, string>)[mat.id]}</div>
-                                        <div className="text-xs text-brand-gold-muted">{mat.price}€/{mat.unit}</div>
+                                    <span className="text-xl flex-shrink-0">{mat.icon}</span>
+                                    <div className="flex-1 min-w-0">
+                                        {materialsEditing ? (
+                                            <div className="space-y-1.5">
+                                                <input type="text" value={custom?.name || ''} placeholder={(l as Record<string,string>)[mat.id]}
+                                                    onChange={(e) => setMaterialsCustom(prev => ({ ...prev, [mat.id]: { ...prev[mat.id], name: e.target.value } }))}
+                                                    className="w-full text-xs bg-brand-dark border border-border-subtle rounded px-2 py-1 text-white placeholder-brand-gold-muted/50 focus:outline-none focus:border-brand-gold/50" />
+                                                <div className="flex items-center gap-1">
+                                                    <input type="number" value={displayPrice} min={0}
+                                                        onChange={(e) => setMaterialsCustom(prev => ({ ...prev, [mat.id]: { ...prev[mat.id], price: Number(e.target.value) } }))}
+                                                        className="w-20 text-xs bg-brand-dark border border-border-subtle rounded px-2 py-1 text-brand-gold focus:outline-none focus:border-brand-gold/50" />
+                                                    <span className="text-xs text-brand-gold-muted">€/{mat.unit}</span>
+                                                </div>
+                                            </div>
+                                        ) : (
+                                            <>
+                                                <div className={`text-sm font-medium truncate ${qty > 0 ? 'text-brand-gold' : 'text-white'}`}>{displayName}</div>
+                                                <div className="text-xs text-brand-gold-muted">{displayPrice}€/{mat.unit}</div>
+                                            </>
+                                        )}
                                     </div>
-                                    <div className="flex items-center gap-2">
-                                        <button onClick={() => setAdditionalMaterials(prev => ({ ...prev, [mat.id]: Math.max(0, (prev[mat.id] || 0) - step) }))} className="w-8 h-8 rounded bg-brand-dark text-white border border-border-subtle text-sm hover:border-brand-gold/30 transition-colors">−</button>
-                                        <span className="w-12 text-center font-heading font-bold text-brand-gold text-sm">{qty}{unitLabel}</span>
-                                        <button onClick={() => setAdditionalMaterials(prev => ({ ...prev, [mat.id]: (prev[mat.id] || 0) + step }))} className="w-8 h-8 rounded bg-brand-dark text-white border border-border-subtle text-sm hover:border-brand-gold/30 transition-colors">+</button>
-                                    </div>
+                                    {!materialsEditing && (
+                                        <div className="flex items-center gap-2">
+                                            <button onClick={() => setAdditionalMaterials(prev => ({ ...prev, [mat.id]: Math.max(0, (prev[mat.id] || 0) - step) }))} className="w-8 h-8 rounded bg-brand-dark text-white border border-border-subtle text-sm hover:border-brand-gold/30 transition-colors">−</button>
+                                            <span className="w-12 text-center font-heading font-bold text-brand-gold text-sm">{qty}{unitLabel}</span>
+                                            <button onClick={() => setAdditionalMaterials(prev => ({ ...prev, [mat.id]: (prev[mat.id] || 0) + step }))} className="w-8 h-8 rounded bg-brand-dark text-white border border-border-subtle text-sm hover:border-brand-gold/30 transition-colors">+</button>
+                                        </div>
+                                    )}
                                 </div>
                             </div>
                             );
@@ -1191,6 +1225,18 @@ export default function Calculator({ locale }: { locale: string }) {
                                 patchPanel12: patchPanelCounts.pp12 || 0,
                                 patchPanel24: patchPanelCounts.pp24 || 0,
                                 patchPanel48: patchPanelCounts.pp48 || 0,
+                                materialsCustomNames: {
+                                    trunking:   materialsCustom.trunking?.name  || '',
+                                    pvc:        materialsCustom.pvc?.name       || '',
+                                    corrugated: materialsCustom.corrugated?.name|| '',
+                                    laborHour:  materialsCustom.laborHour?.name || '',
+                                },
+                                materialsCustomPrices: {
+                                    trunking:   materialsCustom.trunking?.price   ?? 4,
+                                    pvc:        materialsCustom.pvc?.price        ?? 2,
+                                    corrugated: materialsCustom.corrugated?.price ?? 1,
+                                    laborHour:  materialsCustom.laborHour?.price  ?? 60,
+                                },
                                 additionalWork: Object.fromEntries(Object.entries(equipment).map(([k, v]) => [k, v > 0])),
                                 rack,
                                 urgency,
