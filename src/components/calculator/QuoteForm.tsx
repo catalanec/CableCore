@@ -23,6 +23,9 @@ interface QuoteFormProps {
         patchPanel48: number;
         materialsCustomNames: Record<string, string>;
         materialsCustomPrices: Record<string, number>;
+        rackCustomName: string;
+        rackCustomPrice: number;
+        equipmentCustom: Record<string, { name: string; price: number }>;
         additionalWork: Record<string, boolean>;
         rack: string;
         urgency: string;
@@ -193,25 +196,27 @@ export default function QuoteForm({ locale, calculationData }: QuoteFormProps) {
 
         Object.entries(d.additionalWork).forEach(([key, val]) => {
             if (val) {
-                const prices: Record<string, number> = { switch: 60, router: 60, network_config: 120, patch_panel: 80 };
+                const custom = d.equipmentCustom?.[key];
+                const name = custom?.name || workLabels[key] || key;
+                const price = custom?.price ?? ({ switch: 40, router: 50, accessPoint: 70, configuration: 150, network_config: 120, patch_panel: 80 }[key] || 0);
                 items.push({
-                    description: workLabels[key] || key,
+                    description: name,
                     quantity: '1',
-                    unitPrice: `${prices[key]?.toFixed(2) || '0.00'}€`,
-                    total: `${prices[key]?.toFixed(2) || '0.00'}€`,
+                    unitPrice: `${price.toFixed(2)}€`,
+                    total: `${price.toFixed(2)}€`,
                 });
             }
         });
 
         if (d.rack !== 'none') {
-            const rackPrices: Record<string, number> = { 
-                rack_6u: 90, rack_9u: 130, rack_12u: 180, 
-                rack_18u: 250, rack_22u: 380, rack_42u: 650 
-            };
+            const fallbackName = rackLabels[d.rack] || d.rack;
+            const fallbackPrice = ({ rack_6u: 90, rack_9u: 130, rack_12u: 180, rack_18u: 250, rack_22u: 380, rack_42u: 650 }[d.rack] || d.rackCost);
+            const rackName = d.rackCustomName || fallbackName;
+            const rackPrice = d.rackCustomPrice > 0 ? d.rackCustomPrice : fallbackPrice;
             items.push({
-                description: rackLabels[d.rack] || d.rack,
+                description: rackName,
                 quantity: '1',
-                unitPrice: `${rackPrices[d.rack]?.toFixed(2) || d.rackCost.toFixed(2)}€`,
+                unitPrice: `${rackPrice.toFixed(2)}€`,
                 total: `${d.rackCost.toFixed(2)}€`,
             });
         }
