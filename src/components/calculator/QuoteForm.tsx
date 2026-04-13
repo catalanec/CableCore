@@ -14,7 +14,13 @@ interface QuoteFormProps {
         installationMeters: number;
         canaleta: number;
         tubo_corrugado: number;
+        tubo_pvc: number;
+        canaleta_extra: number;
+        mano_de_obra_horas: number;
         regata: number;
+        patchPanel12: number;
+        patchPanel24: number;
+        patchPanel48: number;
         additionalWork: Record<string, boolean>;
         rack: string;
         urgency: string;
@@ -146,13 +152,31 @@ export default function QuoteForm({ locale, calculationData }: QuoteFormProps) {
         }
 
         if (d.canaleta > 0) {
-            items.push({ description: 'Canaleta', quantity: `${d.canaleta}m`, unitPrice: '8.00€', total: `${(d.canaleta * 8).toFixed(2)}€` });
+            items.push({ description: 'Canaleta (cable canal)', quantity: `${d.canaleta}m`, unitPrice: '4.00€', total: `${(d.canaleta * 4).toFixed(2)}€` });
+        }
+        if ((d.canaleta_extra || 0) > 0) {
+            items.push({ description: 'Canaleta adicional (manual)', quantity: `${d.canaleta_extra}m`, unitPrice: '4.00€', total: `${(d.canaleta_extra * 4).toFixed(2)}€` });
         }
         if (d.tubo_corrugado > 0) {
-            items.push({ description: 'Tubo corrugado', quantity: `${d.tubo_corrugado}m`, unitPrice: '4.00€', total: `${(d.tubo_corrugado * 4).toFixed(2)}€` });
+            items.push({ description: 'Tubo corrugado', quantity: `${d.tubo_corrugado}m`, unitPrice: '1.00€', total: `${(d.tubo_corrugado * 1).toFixed(2)}€` });
+        }
+        if ((d.tubo_pvc || 0) > 0) {
+            items.push({ description: 'Tubo PVC', quantity: `${d.tubo_pvc}m`, unitPrice: '2.00€', total: `${(d.tubo_pvc * 2).toFixed(2)}€` });
         }
         if (d.regata > 0) {
-            items.push({ description: 'Regata (corte muro)', quantity: `${d.regata}m`, unitPrice: '20.00€', total: `${(d.regata * 20).toFixed(2)}€` });
+            items.push({ description: 'Regata (corte muro)', quantity: `${d.regata}m`, unitPrice: '45.00€', total: `${(d.regata * 45).toFixed(2)}€` });
+        }
+        if ((d.mano_de_obra_horas || 0) > 0) {
+            items.push({ description: 'Mano de obra adicional', quantity: `${d.mano_de_obra_horas}h`, unitPrice: '60.00€', total: `${(d.mano_de_obra_horas * 60).toFixed(2)}€` });
+        }
+        if ((d.patchPanel12 || 0) > 0) {
+            items.push({ description: 'Patch Panel 12 puertos — instalación + crimpado', quantity: `${d.patchPanel12} ud`, unitPrice: '40.00€', total: `${(d.patchPanel12 * 40).toFixed(2)}€` });
+        }
+        if ((d.patchPanel24 || 0) > 0) {
+            items.push({ description: 'Patch Panel 24 puertos — instalación + crimpado', quantity: `${d.patchPanel24} ud`, unitPrice: '65.00€', total: `${(d.patchPanel24 * 65).toFixed(2)}€` });
+        }
+        if ((d.patchPanel48 || 0) > 0) {
+            items.push({ description: 'Patch Panel 48 puertos — instalación + crimpado', quantity: `${d.patchPanel48} ud`, unitPrice: '100.00€', total: `${(d.patchPanel48 * 100).toFixed(2)}€` });
         }
 
         Object.entries(d.additionalWork).forEach(([key, val]) => {
