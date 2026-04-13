@@ -29,7 +29,7 @@ const CONFIG = {
         trays: 7,          // лотки / бандежи
     },
     trenchPricePerMeter: 45,
-    materials: { keystone: 6, socket: 10, trunking: 4, pvc: 2, corrugated: 1, patchPanel12: 40, patchPanel24: 65, patchPanel48: 100 },
+    materials: { keystone: 6, socket: 10, trunking: 4, pvc: 2, corrugated: 1, patchPanel12: 40, patchPanel24: 65, patchPanel48: 100, laborHour: 60 },
     equipment: { router: 50, switch: 40, accessPoint: 70, configuration: 150 },
     upsell: { testing: 50, labeling: 20, cableManagement: 50, extendedWarranty: 30 },
 } as const;
@@ -90,6 +90,7 @@ const ADDITIONAL_MATERIALS = [
     { id: 'trunking' as const, price: CONFIG.materials.trunking, unit: 'm', icon: '📏' },
     { id: 'pvc' as const, price: CONFIG.materials.pvc, unit: 'm', icon: '🔧' },
     { id: 'corrugated' as const, price: CONFIG.materials.corrugated, unit: 'm', icon: '⚒️' },
+    { id: 'laborHour' as const, price: CONFIG.materials.laborHour, unit: 'h', icon: '👷' },
 ];
 
 const PATCH_PANEL_OPTIONS = [
@@ -182,6 +183,7 @@ const calcLabels: Record<string, Record<string, string>> = {
         trunking: 'Canaleta',
         pvc: 'Tubo PVC',
         corrugated: 'Tubo corrugado',
+        laborHour: 'Mano de obra',
         patchPanel: 'Patch panel',
         // Urgency
         normal: 'Normal',
@@ -271,6 +273,7 @@ const calcLabels: Record<string, Record<string, string>> = {
         trunking: 'Cable trunking',
         pvc: 'PVC conduit',
         corrugated: 'Corrugated tube',
+        laborHour: 'Labor (hourly)',
         patchPanel: 'Patch panel',
         normal: 'Normal',
         urgente: 'Urgent (×1.2)',
@@ -359,6 +362,7 @@ const calcLabels: Record<string, Record<string, string>> = {
         trunking: 'Кабель-канал',
         pvc: 'Труба ПВХ',
         corrugated: 'Гофра',
+        laborHour: 'Мано де обра (ч/р)',
         patchPanel: 'Патч-панель',
         normal: 'Обычная',
         urgente: 'Срочно (×1.2)',
@@ -396,7 +400,7 @@ export default function Calculator({ locale }: { locale: string }) {
     const [canetaMode, setCanetaMode] = useState<'full' | 'manual'>('full');
     const [canetaLengthInput, setCanetaLengthInput] = useState(0);
     const [additionalMaterials, setAdditionalMaterials] = useState<Record<string, number>>({
-        trunking: 0, pvc: 0, corrugated: 0,
+        trunking: 0, pvc: 0, corrugated: 0, laborHour: 0,
     });
     const [patchPanelCounts, setPatchPanelCounts] = useState<Record<string, number>>({ pp12: 0, pp24: 0, pp48: 0 });
     const [equipment, setEquipment] = useState<Record<string, number>>({
@@ -489,6 +493,7 @@ export default function Calculator({ locale }: { locale: string }) {
         additionalMaterialsCost += trunkingQty * CONFIG.materials.trunking;
         additionalMaterialsCost += pvcQty * CONFIG.materials.pvc;
         additionalMaterialsCost += corrugatedQty * CONFIG.materials.corrugated;
+        additionalMaterialsCost += (additionalMaterials.laborHour || 0) * CONFIG.materials.laborHour;
         // Patch panels por cantidad de puertos
         additionalMaterialsCost += (patchPanelCounts.pp12 || 0) * CONFIG.materials.patchPanel12;
         additionalMaterialsCost += (patchPanelCounts.pp24 || 0) * CONFIG.materials.patchPanel24;
@@ -810,18 +815,20 @@ export default function Calculator({ locale }: { locale: string }) {
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                         {ADDITIONAL_MATERIALS.map((mat) => {
                             const qty = additionalMaterials[mat.id] || 0;
+                            const step = mat.unit === 'h' ? 1 : 5;
+                            const unitLabel = mat.unit === 'h' ? 'h' : 'm';
                             return (
                             <div key={mat.id} className={`p-4 rounded-lg border transition-all duration-200 ${qty > 0 ? 'bg-[rgba(201,168,76,0.1)] border-brand-gold' : 'bg-surface-card border-border-subtle hover:border-brand-gold/30'}`}>
                                 <div className="flex items-center gap-3">
                                     <span className="text-xl">{mat.icon}</span>
                                     <div className="flex-1">
-                                        <div className={`text-sm font-medium ${qty > 0 ? 'text-brand-gold' : 'text-white'}`}>{l[mat.id]}</div>
+                                        <div className={`text-sm font-medium ${qty > 0 ? 'text-brand-gold' : 'text-white'}`}>{(l as Record<string, string>)[mat.id]}</div>
                                         <div className="text-xs text-brand-gold-muted">{mat.price}€/{mat.unit}</div>
                                     </div>
                                     <div className="flex items-center gap-2">
-                                        <button onClick={() => setAdditionalMaterials(prev => ({ ...prev, [mat.id]: Math.max(0, (prev[mat.id] || 0) - 5) }))} className="w-8 h-8 rounded bg-brand-dark text-white border border-border-subtle text-sm hover:border-brand-gold/30 transition-colors">−</button>
-                                        <span className="w-10 text-center font-heading font-bold text-brand-gold text-sm">{qty}m</span>
-                                        <button onClick={() => setAdditionalMaterials(prev => ({ ...prev, [mat.id]: (prev[mat.id] || 0) + 5 }))} className="w-8 h-8 rounded bg-brand-dark text-white border border-border-subtle text-sm hover:border-brand-gold/30 transition-colors">+</button>
+                                        <button onClick={() => setAdditionalMaterials(prev => ({ ...prev, [mat.id]: Math.max(0, (prev[mat.id] || 0) - step) }))} className="w-8 h-8 rounded bg-brand-dark text-white border border-border-subtle text-sm hover:border-brand-gold/30 transition-colors">−</button>
+                                        <span className="w-12 text-center font-heading font-bold text-brand-gold text-sm">{qty}{unitLabel}</span>
+                                        <button onClick={() => setAdditionalMaterials(prev => ({ ...prev, [mat.id]: (prev[mat.id] || 0) + step }))} className="w-8 h-8 rounded bg-brand-dark text-white border border-border-subtle text-sm hover:border-brand-gold/30 transition-colors">+</button>
                                     </div>
                                 </div>
                             </div>
