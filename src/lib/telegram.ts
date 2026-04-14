@@ -83,14 +83,14 @@ export async function notifyNewQuote(data: {
         `📞 <b>Teléfono:</b> ${data.clientPhone}`,
         `📧 <b>Email:</b> ${data.clientEmail}`,
         '',
-        `🔌 <b>Cable:</b> ${data.cableType.toUpperCase()}`,
-        `📍 <b>Puntos de red:</b> ${data.networkPoints}`,
-        `🏗️ <b>Instalación:</b> ${data.installationType}`,
+        data.cableType ? `🔌 <b>Cable:</b> ${data.cableType.toUpperCase()}` : '',
+        data.networkPoints > 0 ? `📍 <b>Puntos de red:</b> ${data.networkPoints}` : '',
+        data.installationType && data.installationType !== 'external' ? `🏗️ <b>Instalación:</b> ${data.installationType}` : '',
         `💶 <b>TOTAL: ${data.total.toFixed(2)}€</b>`,
         '',
         `⚡ <b>¡Llama al cliente ahora!</b>`,
         `📲 <a href="https://wa.me/34${data.clientPhone.replace(/\D/g, '').replace(/^34/, '')}">Responder por WhatsApp</a>`,
-    ].join('\n');
+    ].filter(Boolean).join('\n');
 
     return sendTelegramMessage(text);
 }
