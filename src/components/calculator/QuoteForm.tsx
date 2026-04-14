@@ -124,19 +124,23 @@ export default function QuoteForm({ locale, calculationData }: QuoteFormProps) {
         const d = calculationData;
         const items: QuotePDFData['items'] = [];
 
-        items.push({
-            description: `Cableado ${d.cableType.toUpperCase()} — suministro de cable`,
-            quantity: `${d.cableMeters}m`,
-            unitPrice: `${(d.cablesCost / Math.max(1, d.cableMeters)).toFixed(2)}€`,
-            total: `${d.cablesCost.toFixed(2)}€`,
-        });
+        if (d.cablesCost > 0 || d.cableMeters > 0) {
+            items.push({
+                description: `Cableado ${d.cableType.toUpperCase()} — suministro de cable`,
+                quantity: `${d.cableMeters}m`,
+                unitPrice: `${(d.cablesCost / Math.max(1, d.cableMeters)).toFixed(2)}€`,
+                total: `${d.cablesCost.toFixed(2)}€`,
+            });
+        }
 
-        items.push({
-            description: `Puntos de red — roseta RJ45, keystone, caja, testeo`,
-            quantity: `${d.points} uds`,
-            unitPrice: `${(d.pointsCost / Math.max(1, d.points)).toFixed(2)}€`,
-            total: `${d.pointsCost.toFixed(2)}€`,
-        });
+        if (d.pointsCost > 0 || d.points > 0) {
+            items.push({
+                description: `Puntos de red — roseta RJ45, keystone, caja, testeo`,
+                quantity: `${d.points} uds`,
+                unitPrice: `${(d.pointsCost / Math.max(1, d.points)).toFixed(2)}€`,
+                total: `${d.pointsCost.toFixed(2)}€`,
+            });
+        }
 
         if (d.installCost > 0) {
             items.push({
