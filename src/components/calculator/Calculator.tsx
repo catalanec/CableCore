@@ -199,6 +199,12 @@ const calcLabels: Record<string, Record<string, string>> = {
         editRack: '✏️ Personalizar armarios',
         editMaterials: '✏️ Personalizar materiales',
         editDone: '✅ Guardar cambios',
+        customItems: 'Partidas personalizadas',
+        customItemsHint: 'Añade cualquier material o servicio extra con su precio. Aparecerá como línea separada en el presupuesto.',
+        customItemName: 'Descripción',
+        customItemQty: 'Cant.',
+        customItemPrice: 'Precio/ud.',
+        addCustomItem: '➕ Añadir partida',
     },
     en: {
         cableType: 'Cable type',
@@ -289,6 +295,12 @@ const calcLabels: Record<string, Record<string, string>> = {
         editRack: '✏️ Customize cabinets',
         editMaterials: '✏️ Customize materials',
         editDone: '✅ Save changes',
+        customItems: 'Custom line items',
+        customItemsHint: 'Add any extra material or service with its price. It will appear as a separate line in the quote.',
+        customItemName: 'Description',
+        customItemQty: 'Qty.',
+        customItemPrice: 'Price/unit',
+        addCustomItem: '➕ Add item',
     },
     ru: {
         cableType: 'Тип кабеля',
@@ -379,6 +391,12 @@ const calcLabels: Record<string, Record<string, string>> = {
         editRack: '✏️ Настроить шкафы',
         editMaterials: '✏️ Настроить материалы',
         editDone: '✅ Сохранить',
+        customItems: 'Доп. позиции',
+        customItemsHint: 'Добавьте любой материал или услугу с нужной ценой. Появится отдельной строкой в смете.',
+        customItemName: 'Описание',
+        customItemQty: 'Кол-во',
+        customItemPrice: 'Цена/шт',
+        addCustomItem: '➕ Добавить',
     },
 };
 
@@ -441,6 +459,13 @@ export default function Calculator({ locale }: { locale: string }) {
     });
     const [rack, setRack] = useState('none');
     const [urgency, setUrgency] = useState('normal');
+    const [customItems, setCustomItems] = useState<Array<{ id: string; name: string; qty: number; price: number }>>([]);
+
+
+    const addCustomItem = () => setCustomItems(prev => [...prev, { id: crypto.randomUUID(), name: '', qty: 1, price: 0 }]);
+    const removeCustomItem = (id: string) => setCustomItems(prev => prev.filter(i => i.id !== id));
+    const updateCustomItem = (id: string, field: 'name' | 'qty' | 'price', value: string | number) =>
+        setCustomItems(prev => prev.map(i => i.id === id ? { ...i, [field]: value } : i));
 
     // ── MAIN CALCULATION (exact user spec) ──
     const calc = useMemo(() => {
@@ -529,8 +554,11 @@ export default function Calculator({ locale }: { locale: string }) {
             if (upsellOptions[key]) upsellCost += CONFIG.upsell[key as keyof typeof CONFIG.upsell] || 0;
         }
 
+        // 8b. Custom items
+        const customItemsCost = customItems.reduce((sum, item) => sum + (item.qty || 0) * (item.price || 0), 0);
+
         // 9. СУММА до скидки и срочности
-        const subtotal = cableCost + routingCost + laborCost + trenchCost + canetaCost + materialsCost + additionalMaterialsCost + equipmentCost + rackCost + upsellCost;
+        const subtotal = cableCost + routingCost + laborCost + trenchCost + canetaCost + materialsCost + additionalMaterialsCost + equipmentCost + rackCost + upsellCost + customItemsCost;
 
         // 10. Скидка
         let discountPercent = 0;
@@ -550,10 +578,10 @@ export default function Calculator({ locale }: { locale: string }) {
             totalCableLength, cableCost, routingCost, routingPrice, laborCost,
             trenchLength, trenchCost, canetaLength, canetaCost,
             materialsCost, materialsPerPoint, additionalMaterialsCost,
-            equipmentCost, rackCost, upsellCost, subtotal, discountPercent, discount,
+            equipmentCost, rackCost, upsellCost, customItemsCost, subtotal, discountPercent, discount,
             urgencyOption, afterUrgency, iva, total,
         };
-    }, [cableType, points, avgLength, installType, trenchMode, trenchLengthInput, canetaMode, canetaLengthInput, additionalMaterials, patchPanelCounts, equipment, equipmentCustom, rack, rackCustom, upsellOptions, urgency]);
+    }, [cableType, points, avgLength, installType, trenchMode, trenchLengthInput, canetaMode, canetaLengthInput, additionalMaterials, patchPanelCounts, equipment, equipmentCustom, rack, rackCustom, upsellOptions, urgency, customItems]);
 
     const installationDisabled = points === 0 && avgLength === 0;
 
@@ -898,6 +926,74 @@ export default function Calculator({ locale }: { locale: string }) {
                     </div>
                 </div>
 
+                {/* Custom Line Items */}
+                <div className="card p-6">
+                    <div className="flex items-center justify-between mb-2">
+                        <h3 className="font-heading font-semibold text-white flex items-center gap-2">📝 {(l as Record<string,string>).customItems}</h3>
+                        <button onClick={addCustomItem} className="text-xs px-3 py-1.5 rounded-lg border border-brand-gold/40 text-brand-gold hover:bg-[rgba(201,168,76,0.1)] transition-colors">
+                            {(l as Record<string,string>).addCustomItem}
+                        </button>
+                    </div>
+                    <p className="text-xs text-brand-gold-muted mb-4">{(l as Record<string,string>).customItemsHint}</p>
+
+                    {customItems.length === 0 ? (
+                        <div className="text-center py-6 text-brand-gold-muted text-xs border border-dashed border-border-subtle rounded-lg">
+                            {(l as Record<string,string>).addCustomItem}
+                        </div>
+                    ) : (
+                        <div className="space-y-2">
+                            {/* Header row */}
+                            <div className="grid grid-cols-[1fr_64px_80px_32px] gap-2 text-xs text-brand-gold-muted px-1">
+                                <span>{(l as Record<string,string>).customItemName}</span>
+                                <span className="text-center">{(l as Record<string,string>).customItemQty}</span>
+                                <span className="text-right">{(l as Record<string,string>).customItemPrice}</span>
+                                <span />
+                            </div>
+                            {customItems.map((item) => {
+                                const lineTotal = (item.qty || 0) * (item.price || 0);
+                                return (
+                                <div key={item.id} className="grid grid-cols-[1fr_64px_80px_32px] gap-2 items-center bg-surface-card border border-border-subtle rounded-lg px-3 py-2">
+                                    <input
+                                        type="text"
+                                        value={item.name}
+                                        placeholder={(l as Record<string,string>).customItemName}
+                                        onChange={(e) => updateCustomItem(item.id, 'name', e.target.value)}
+                                        className="bg-transparent text-sm text-white placeholder-gray-600 focus:outline-none w-full"
+                                    />
+                                    <input
+                                        type="number"
+                                        value={item.qty}
+                                        min={1}
+                                        onChange={(e) => updateCustomItem(item.id, 'qty', Number(e.target.value))}
+                                        className="w-full text-center text-sm bg-brand-dark border border-border-subtle rounded px-1 py-0.5 text-brand-gold focus:outline-none focus:border-brand-gold/50"
+                                    />
+                                    <div className="flex items-center gap-1">
+                                        <input
+                                            type="number"
+                                            value={item.price}
+                                            min={0}
+                                            step={0.01}
+                                            onChange={(e) => updateCustomItem(item.id, 'price', Number(e.target.value))}
+                                            className="w-full text-right text-sm bg-brand-dark border border-border-subtle rounded px-1 py-0.5 text-brand-gold focus:outline-none focus:border-brand-gold/50"
+                                        />
+                                        <span className="text-xs text-brand-gold-muted flex-shrink-0">€</span>
+                                    </div>
+                                    <button onClick={() => removeCustomItem(item.id)} className="w-7 h-7 flex items-center justify-center rounded text-red-400 hover:bg-red-400/10 transition-colors text-sm">✕</button>
+                                </div>
+                                );
+                            })}
+                            {/* Total row */}
+                            {customItems.length > 0 && (
+                                <div className="flex justify-end pt-1">
+                                    <span className="text-xs text-brand-gold font-semibold">
+                                        Total: {customItems.reduce((s, i) => s + (i.qty||0)*(i.price||0), 0).toFixed(2)}€
+                                    </span>
+                                </div>
+                            )}
+                        </div>
+                    )}
+                </div>
+
                 {/* Equipment */}
                 <div className="card p-6">
                     <div className="flex items-center justify-between mb-4">
@@ -1240,6 +1336,7 @@ export default function Calculator({ locale }: { locale: string }) {
                                 rackCustomName: rackCustom[rack]?.name || '',
                                 rackCustomPrice: rackCustom[rack]?.price ?? 0,
                                 equipmentCustom,
+                                customItems,
                                 additionalWork: Object.fromEntries(Object.entries(equipment).map(([k, v]) => [k, v > 0])),
                                 rack,
                                 urgency,

@@ -26,6 +26,7 @@ interface QuoteFormProps {
         rackCustomName: string;
         rackCustomPrice: number;
         equipmentCustom: Record<string, { name: string; price: number }>;
+        customItems: Array<{ id: string; name: string; qty: number; price: number }>;
         additionalWork: Record<string, boolean>;
         rack: string;
         urgency: string;
@@ -197,6 +198,18 @@ export default function QuoteForm({ locale, calculationData }: QuoteFormProps) {
         if ((d.patchPanel48 || 0) > 0) {
             items.push({ description: 'Patch Panel 48 puertos — instalación + crimpado', quantity: `${d.patchPanel48} ud`, unitPrice: '100.00€', total: `${(d.patchPanel48 * 100).toFixed(2)}€` });
         }
+
+        // Custom line items
+        (d.customItems || []).forEach((item) => {
+            if (item.name && (item.qty > 0) && (item.price > 0)) {
+                items.push({
+                    description: item.name,
+                    quantity: `${item.qty} ud`,
+                    unitPrice: `${item.price.toFixed(2)}€`,
+                    total: `${(item.qty * item.price).toFixed(2)}€`,
+                });
+            }
+        });
 
         Object.entries(d.additionalWork).forEach(([key, val]) => {
             if (val) {
