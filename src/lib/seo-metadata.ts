@@ -294,11 +294,6 @@ export function getLocalBusinessJsonLd() {
             reviewCount: '47',
             bestRating: '5',
             worstRating: '1',
-            itemReviewed: {
-                '@type': 'ElectricalContractor',
-                name: 'CableCore',
-                '@id': `${BASE_URL}/#organization`,
-            },
         },
         review: [
             {
@@ -307,11 +302,6 @@ export function getLocalBusinessJsonLd() {
                 datePublished: '2025-03-15',
                 reviewRating: { '@type': 'Rating', ratingValue: '5', bestRating: '5' },
                 reviewBody: 'Excelente servicio. Instalaron 12 puntos de red en nuestra oficina en un día. Cableado perfectamente organizado y certificado.',
-                itemReviewed: {
-                    '@type': 'ElectricalContractor',
-                    name: 'CableCore',
-                    '@id': `${BASE_URL}/#organization`,
-                },
             },
             {
                 '@type': 'Review',
@@ -319,11 +309,6 @@ export function getLocalBusinessJsonLd() {
                 datePublished: '2025-02-20',
                 reviewRating: { '@type': 'Rating', ratingValue: '5', bestRating: '5' },
                 reviewBody: 'Muy profesionales. Instalaron Cat6A en toda nuestra nave industrial. Trabajo limpio, puntual y a buen precio.',
-                itemReviewed: {
-                    '@type': 'ElectricalContractor',
-                    name: 'CableCore',
-                    '@id': `${BASE_URL}/#organization`,
-                },
             },
             {
                 '@type': 'Review',
@@ -331,11 +316,6 @@ export function getLocalBusinessJsonLd() {
                 datePublished: '2025-01-10',
                 reviewRating: { '@type': 'Rating', ratingValue: '5', bestRating: '5' },
                 reviewBody: 'Rapidez y calidad. Necesitaba instalar red en mi piso nuevo. Lo hicieron en unas horas, todo perfecto y con garantía.',
-                itemReviewed: {
-                    '@type': 'ElectricalContractor',
-                    name: 'CableCore',
-                    '@id': `${BASE_URL}/#organization`,
-                },
             },
             {
                 '@type': 'Review',
@@ -343,11 +323,6 @@ export function getLocalBusinessJsonLd() {
                 datePublished: '2024-12-05',
                 reviewRating: { '@type': 'Rating', ratingValue: '5', bestRating: '5' },
                 reviewBody: 'Contraté CableCore para cableado estructurado en nuestras oficinas. Resultado impecable, sin cables a la vista y red estable.',
-                itemReviewed: {
-                    '@type': 'ElectricalContractor',
-                    name: 'CableCore',
-                    '@id': `${BASE_URL}/#organization`,
-                },
             },
             {
                 '@type': 'Review',
@@ -355,13 +330,9 @@ export function getLocalBusinessJsonLd() {
                 datePublished: '2024-11-18',
                 reviewRating: { '@type': 'Rating', ratingValue: '5', bestRating: '5' },
                 reviewBody: 'Increíble trabajo. Instalaron rack 12U, patch panel y 8 puntos de red. Muy atentos y profesionales en todo momento.',
-                itemReviewed: {
-                    '@type': 'ElectricalContractor',
-                    name: 'CableCore',
-                    '@id': `${BASE_URL}/#organization`,
-                },
             },
         ],
+
     };
 }
 
