@@ -148,6 +148,12 @@ const fiberLabels: Record<string, Record<string, string>> = {
         tipAcoplador: 'Acoplador hembra-hembra SC/APC: permite unir dos patch cords o conectar el patch cord del panel al del equipo.',
         tipBandeja: 'Bandeja de empalme para organizar las fusiones dentro del rack. Capacidad 12 o 24 fibras por bandeja.',
         tipRack: 'Armario para centralizar las conexiones de fibra: cajas murales (8F) para pequeñas instalaciones o racks de pared/suelo para edificios.',
+        customItems: 'Partidas personalizadas',
+        customItemsHint: 'Añade cualquier servicio extra o mano de obra sin material.',
+        customItemName: 'Descripción',
+        customItemQty: 'Cant.',
+        customItemPrice: 'Precio/ud.',
+        addCustomItem: '➕ Añadir partida',
     },
     en: {
         title: 'Fiber Optic Calculator',
@@ -216,6 +222,12 @@ const fiberLabels: Record<string, Record<string, string>> = {
         tipAcoplador: 'SC/APC female-female adapter: joins two patch cords or connects panel patch cord to equipment.',
         tipBandeja: 'Splice tray to organize fusions inside the rack. Capacity: 12 or 24 fibers per tray.',
         tipRack: 'Cabinet to centralize fiber connections: wall boxes (8F) for small setups or wall/floor racks for buildings.',
+        customItems: 'Custom line items',
+        customItemsHint: 'Add any extra service or labor without materials.',
+        customItemName: 'Description',
+        customItemQty: 'Qty.',
+        customItemPrice: 'Price/unit',
+        addCustomItem: '➕ Add item',
     },
     ru: {
         title: 'Калькулятор оптоволокна',
@@ -284,6 +296,12 @@ const fiberLabels: Record<string, Record<string, string>> = {
         tipAcoplador: 'Адаптер SC/APC мама-мама: для соединения двух патч-кордов или подключения панели к оборудованию.',
         tipBandeja: 'Сплайс-кассета для организации сварок внутри шкафа. Вместимость: 12 или 24 волокна.',
         tipRack: 'Шкаф для централизации оптических подключений: настенные коробки (8F) или шкафы для зданий.',
+        customItems: 'Доп. позиции',
+        customItemsHint: 'Добавьте работу или материалы вручную',
+        customItemName: 'Описание',
+        customItemQty: 'Кол-во',
+        customItemPrice: 'Цена/шт',
+        addCustomItem: '➕ Добавить',
     },
 };
 
@@ -312,6 +330,7 @@ export interface FiberCalcResult {
     acopladorCost: number;
     bandejaCost: number;
     rackCost: number;
+    customItemsCost: number;
     subtotal: number;
     discount: number;
     discountPercent: number;
@@ -341,6 +360,12 @@ export default function FiberCalculator({ locale, onCalcUpdate }: FiberCalculato
     const [rack, setRack] = useState('caja_mural_8f');
     const [urgency, setUrgency] = useState('normal');
 
+    const [customItems, setCustomItems] = useState<Array<{ id: string; name: string; qty: number; price: number }>>([]);
+    const addCustomItem = () => setCustomItems(prev => [...prev, { id: crypto.randomUUID(), name: '', qty: 1, price: 0 }]);
+    const removeCustomItem = (id: string) => setCustomItems(prev => prev.filter(i => i.id !== id));
+    const updateCustomItem = (id: string, field: 'name' | 'qty' | 'price', value: string | number) =>
+        setCustomItems(prev => prev.map(i => i.id === id ? { ...i, [field]: value } : i));
+
     const calc = useMemo(() => {
         const totalCableLength = points * avgLength;
         const cablePrice = FIBER_CONFIG.cablePrices[cableType];
@@ -364,7 +389,9 @@ export default function FiberCalculator({ locale, onCalcUpdate }: FiberCalculato
         const rackOption = FIBER_RACK_OPTIONS.find(r => r.id === rack) || FIBER_RACK_OPTIONS[0];
         const rackCost = rackOption.price;
 
-        const subtotal = cableCost + routingCost + laborCost + fusionCost + certificationCost + rosetaCost + patchCordCost + acopladorCost + bandejaCost + rackCost;
+        const customItemsCost = customItems.reduce((sum, item) => sum + (item.qty || 0) * (item.price || 0), 0);
+
+        const subtotal = cableCost + routingCost + laborCost + fusionCost + certificationCost + rosetaCost + patchCordCost + acopladorCost + bandejaCost + rackCost + customItemsCost;
 
         let discountPercent = 0;
         if (points >= 10) discountPercent = 10;
@@ -381,14 +408,14 @@ export default function FiberCalculator({ locale, onCalcUpdate }: FiberCalculato
             cableType, cableMeters: totalCableLength, points, installationType: installType,
             fusionCount, patchCordCount, acopladorCount, bandeja, rack, urgency,
             cableCost, routingCost, laborCost, fusionCost, certificationCost,
-            rosetaCost, patchCordCost, acopladorCost, bandejaCost, rackCost,
+            rosetaCost, patchCordCost, acopladorCost, bandejaCost, rackCost, customItemsCost,
             subtotal, discount, discountPercent, urgencyMultiplier: urgencyOption.multiplier,
             iva, total,
         };
 
         onCalcUpdate?.(result);
         return { ...result, totalCableLength, urgencyOption };
-    }, [cableType, points, avgLength, installType, fusionCount, doCertification, patchCordCount, acopladorCount, bandeja, rack, urgency, onCalcUpdate]);
+    }, [cableType, points, avgLength, installType, fusionCount, doCertification, patchCordCount, acopladorCount, bandeja, rack, urgency, customItems, onCalcUpdate]);
 
     const btnClass = (active: boolean) => `p-4 rounded-lg border text-center transition-all duration-200 ${active
         ? 'bg-[rgba(0,180,255,0.1)] border-cyan-400 text-cyan-300'
@@ -426,10 +453,10 @@ export default function FiberCalculator({ locale, onCalcUpdate }: FiberCalculato
                     </h3>
                     <p className="text-xs text-brand-gold-muted mb-4">{l.pointsHint}</p>
                     <div className="flex items-center gap-4">
-                        <button onClick={() => { setPoints(Math.max(1, points - 1)); setFusionCount(Math.max(1, points - 1) * 2); }}
+                        <button onClick={() => { setPoints(Math.max(0, points - 1)); setFusionCount(Math.max(0, points - 1) * 2); }}
                             className="w-12 h-12 rounded-lg bg-surface-card border border-border-subtle text-white hover:border-cyan-400/50 transition-colors text-xl font-bold">−</button>
                         <div className="flex-1">
-                            <input type="range" min={1} max={100} value={points}
+                            <input type="range" min={0} max={100} value={points}
                                 onChange={(e) => { const v = Number(e.target.value); setPoints(v); setFusionCount(v * 2); }}
                                 className="w-full accent-cyan-400 h-2 rounded-full appearance-none bg-surface-card cursor-pointer" />
                         </div>
@@ -451,10 +478,10 @@ export default function FiberCalculator({ locale, onCalcUpdate }: FiberCalculato
                     </h3>
                     <p className="text-xs text-brand-gold-muted mb-4">{l.avgLengthHint}</p>
                     <div className="flex items-center gap-4">
-                        <button onClick={() => setAvgLength(Math.max(1, avgLength - 5))}
+                        <button onClick={() => setAvgLength(Math.max(0, avgLength - 5))}
                             className="w-12 h-12 rounded-lg bg-surface-card border border-border-subtle text-white hover:border-cyan-400/50 transition-colors text-xl font-bold">−</button>
                         <div className="flex-1">
-                            <input type="range" min={1} max={200} value={avgLength}
+                            <input type="range" min={0} max={200} value={avgLength}
                                 onChange={(e) => setAvgLength(Number(e.target.value))}
                                 className="w-full accent-cyan-400 h-2 rounded-full appearance-none bg-surface-card cursor-pointer" />
                         </div>
@@ -596,6 +623,61 @@ export default function FiberCalculator({ locale, onCalcUpdate }: FiberCalculato
                         ))}
                     </div>
                 </div>
+
+                {/* Custom Items */}
+                <div className="card p-6 border-cyan-400/10">
+                    <h3 className="font-heading font-semibold text-white mb-2 flex items-center gap-2">
+                        ✍️ {l.customItems}
+                    </h3>
+                    <p className="text-xs text-brand-gold-muted mb-4">{l.customItemsHint}</p>
+                    
+                    <div className="space-y-3">
+                        {customItems.map((item) => (
+                            <div key={item.id} className="flex flex-col sm:flex-row gap-3 items-start sm:items-center bg-background/50 p-3 rounded-lg border border-border-subtle">
+                                <input
+                                    type="text"
+                                    value={item.name}
+                                    onChange={(e) => updateCustomItem(item.id, 'name', e.target.value)}
+                                    placeholder={l.customItemName}
+                                    className="flex-1 bg-surface-card border-none outline-none text-sm text-white px-3 py-2 rounded"
+                                />
+                                <div className="flex items-center gap-2 w-full sm:w-auto">
+                                    <input
+                                        type="number"
+                                        min="0"
+                                        value={item.qty || ''}
+                                        onChange={(e) => updateCustomItem(item.id, 'qty', Number(e.target.value))}
+                                        placeholder={l.customItemQty}
+                                        className="w-20 bg-surface-card border-none outline-none text-sm text-white px-3 py-2 rounded text-center"
+                                    />
+                                    <span className="text-brand-gold-muted text-xs">×</span>
+                                    <input
+                                        type="number"
+                                        min="0"
+                                        step="0.01"
+                                        value={item.price || ''}
+                                        onChange={(e) => updateCustomItem(item.id, 'price', Number(e.target.value))}
+                                        placeholder={l.customItemPrice}
+                                        className="w-24 bg-surface-card border-none outline-none text-sm text-white px-3 py-2 rounded text-center"
+                                    />
+                                    <span className="text-brand-gold-muted text-xs">€</span>
+                                    <button
+                                        onClick={() => removeCustomItem(item.id)}
+                                        className="w-8 h-8 flex items-center justify-center text-red-400 hover:bg-red-400/20 rounded ml-1 transition-colors"
+                                    >
+                                        ×
+                                    </button>
+                                </div>
+                            </div>
+                        ))}
+                        <button
+                            onClick={addCustomItem}
+                            className="text-sm text-cyan-300 hover:text-cyan-200 transition-colors uppercase font-bold tracking-wider pt-2 flex items-center gap-2"
+                        >
+                            {l.addCustomItem}
+                        </button>
+                    </div>
+                </div>
             </div>
 
             {/* RIGHT — Price Breakdown */}
@@ -617,6 +699,7 @@ export default function FiberCalculator({ locale, onCalcUpdate }: FiberCalculato
                             { label: l.acopladorCost, value: calc.acopladorCost, show: acopladorCount > 0, tip: l.tipAcoplador },
                             { label: l.bandejaCost, value: calc.bandejaCost, show: bandeja !== 'none', tip: l.tipBandeja },
                             { label: l.rackCost, value: calc.rackCost, show: rack !== 'none', tip: l.tipRack },
+                            { label: l.customItems, value: calc.customItemsCost, show: calc.customItemsCost > 0, tip: l.customItemsHint },
                         ].filter(i => i.show).map((item, idx) => (
                             <div key={idx} className="flex justify-between text-brand-gold-muted">
                                 <span className="flex items-center gap-1">{item.label} <span className="text-xs opacity-50 cursor-help" title={item.tip}>ℹ️</span></span>
@@ -697,7 +780,18 @@ export default function FiberCalculator({ locale, onCalcUpdate }: FiberCalculato
                             installationMeters: calc.totalCableLength,
                             canaleta: 0,
                             tubo_corrugado: 0,
+                            tubo_pvc: 0,
+                            canaleta_extra: 0,
+                            mano_de_obra_horas: 0,
                             regata: 0,
+                            patchPanel12: 0,
+                            patchPanel24: 0,
+                            patchPanel48: 0,
+                            materialsCustomNames: {},
+                            materialsCustomPrices: {},
+                            rackCustomName: '',
+                            rackCustomPrice: 0,
+                            equipmentCustom: {},
                             additionalWork: {
                                 fusion: fusionCount > 0,
                                 otdr: doCertification,
@@ -711,6 +805,7 @@ export default function FiberCalculator({ locale, onCalcUpdate }: FiberCalculato
                             materialsCost: calc.fusionCost + calc.patchCordCost + calc.acopladorCost + calc.bandejaCost,
                             workCost: calc.certificationCost,
                             rackCost: calc.rackCost,
+                            customItems,
                             subtotal: calc.subtotal,
                             urgencyMultiplier: calc.urgencyOption.multiplier,
                             iva: calc.iva,
