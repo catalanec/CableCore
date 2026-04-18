@@ -75,17 +75,18 @@ export async function POST(request: NextRequest) {
         }
 
         // Send email notifications (admin + client)
-        await sendQuoteNotification({
-            clientName: data.client_name,
-            clientPhone: data.client_phone,
-            clientEmail: data.client_email,
-            cableType: data.cableType,
-            cableMeters: data.cableMeters,
-            networkPoints: data.points,
-            installationType: data.installationType,
-            total: data.total,
-            quoteNumber,
-        });
+        // [REMOVED FOR INTERNAL USE]
+        // await sendQuoteNotification({
+        //     clientName: data.client_name,
+        //     clientPhone: data.client_phone,
+        //     clientEmail: data.client_email,
+        //     cableType: data.cableType,
+        //     cableMeters: data.cableMeters,
+        //     networkPoints: data.points,
+        //     installationType: data.installationType,
+        //     total: data.total,
+        //     quoteNumber,
+        // });
 
         // Send Telegram notification (instant)
         await notifyNewQuote({

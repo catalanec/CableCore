@@ -120,7 +120,6 @@ export default function QuoteForm({ locale, calculationData }: QuoteFormProps) {
 
     const handleDownloadPDF = (e: FormEvent) => {
         e.preventDefault();
-        if (!name || !phone || !email) return;
 
         const d = calculationData;
         const items: QuotePDFData['items'] = [];
@@ -296,18 +295,18 @@ export default function QuoteForm({ locale, calculationData }: QuoteFormProps) {
             <form onSubmit={handleDownloadPDF} className="space-y-4">
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
-                        <label className="block text-xs text-brand-gold-muted mb-1.5">{l.name} *</label>
-                        <input type="text" required value={name} onChange={(e) => setName(e.target.value)} className={inputClass} placeholder={l.name} />
+                        <label className="block text-xs text-brand-gold-muted mb-1.5">{l.name}</label>
+                        <input type="text" value={name} onChange={(e) => setName(e.target.value)} className={inputClass} placeholder={l.name} />
                     </div>
                     <div>
-                        <label className="block text-xs text-brand-gold-muted mb-1.5">{l.phone} *</label>
-                        <input type="tel" required value={phone} onChange={(e) => setPhone(e.target.value)} className={inputClass} placeholder="+34 600 000 000" />
+                        <label className="block text-xs text-brand-gold-muted mb-1.5">{l.phone}</label>
+                        <input type="tel" value={phone} onChange={(e) => setPhone(e.target.value)} className={inputClass} placeholder="+34 600 000 000" />
                     </div>
                 </div>
 
                 <div>
-                    <label className="block text-xs text-brand-gold-muted mb-1.5">{l.email} *</label>
-                    <input type="email" required value={email} onChange={(e) => setEmail(e.target.value)} className={inputClass} placeholder="email@example.com" />
+                    <label className="block text-xs text-brand-gold-muted mb-1.5">{l.email}</label>
+                    <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} className={inputClass} placeholder="email@example.com" />
                 </div>
 
                 <div>
@@ -327,8 +326,7 @@ export default function QuoteForm({ locale, calculationData }: QuoteFormProps) {
                     <button
                         type="button"
                         onClick={handleSaveCRM}
-                        disabled={!name || !phone || !email}
-                        className="btn-outline w-full justify-center py-3 text-sm disabled:opacity-40"
+                        className="btn-outline w-full justify-center py-3 text-sm"
                     >
                         {saved ? l.saved : l.save}
                     </button>
