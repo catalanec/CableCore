@@ -49,6 +49,7 @@ export function generateQuoteHTML(data: QuotePDFData): string {
 <html>
 <head>
   <meta charset="utf-8">
+  <title>Presupuesto_CableCore_${data.client.name ? data.client.name.replace(/\s+/g, '_') : data.quoteNumber}</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body { font-family: 'Helvetica Neue', Arial, sans-serif; background: #fff; color: #222; padding: 15mm; }
