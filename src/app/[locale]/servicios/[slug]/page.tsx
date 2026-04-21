@@ -18,7 +18,7 @@ const HREFLANG_MAP: Record<string, string> = {
 };
 
 export function generateMetadata({ params }: { params: { slug: string; locale: string } }): Metadata {
-    const page = getPageBySlug(params.slug);
+    const page = getPageBySlug(params.slug, params.locale);
     if (!page) return {};
 
     const alternates: Record<string, string> = {};
@@ -45,8 +45,8 @@ export function generateMetadata({ params }: { params: { slug: string; locale: s
     };
 }
 
-export default function ServicePage({ params }: { params: { slug: string } }) {
-    const page = getPageBySlug(params.slug);
+export default function ServicePage({ params }: { params: { slug: string; locale: string } }) {
+    const page = getPageBySlug(params.slug, params.locale);
     if (!page) notFound();
     return <SEOLandingPage data={page} />;
 }
