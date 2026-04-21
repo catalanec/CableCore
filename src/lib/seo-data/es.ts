@@ -3,11 +3,6 @@
    Keyword-targeted pages for Barcelona
    ═══════════════════════════════════════════ */
 
-    faq: { q: string; a: string }[];
-    metaDescription: string;
-    cta: string;
-}
-
 import { SEOPageConfig } from "./types";
 
 export const SEO_PAGES_ES: SEOPageConfig[] = [
