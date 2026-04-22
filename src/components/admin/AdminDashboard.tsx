@@ -1343,9 +1343,6 @@ export default function AdminDashboard({ initialQuotes, initialLeads, initialMat
                         </div>
                     </div>
                 </div>
-                        </div>
-                    </div>
-                </div>
             )}
 
             {/* Factura Modal */}
