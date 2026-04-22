@@ -4,6 +4,7 @@ import { useState, useMemo, useEffect } from 'react';
 import { useLocale } from 'next-intl';
 import { updateLeadStatus, updateQuoteStatus, updateMaterialStock, deleteLead, deleteQuote, updateLeadNotes, updateQuoteNotes, addMaterial, deleteMaterial, updateMaterial, updateProjectCosts, updateProjectPayment, seedMaterials, sendLowStockAlerts, exportMaterialsCSV, exportProjectsCSV, getAllTasks } from '@/app/actions/crm';
 import { downloadQuotePDF, type QuotePDFData } from '@/lib/quote-pdf';
+import { downloadInvoicePDF, type InvoicePDFData } from '@/lib/invoice-pdf';
 import Pipeline from './Pipeline';
 import TaskManager from './TaskManager';
 
@@ -42,6 +43,9 @@ export default function AdminDashboard({ initialQuotes, initialLeads, initialMat
     const [selectedLead, setSelectedLead] = useState<any>(null);
     const [showAddMaterial, setShowAddMaterial] = useState(false);
     const [editMaterial, setEditMaterial] = useState<any>(null);
+    const [showInvoiceModal, setShowInvoiceModal] = useState(false);
+    const [isFacturando, setIsFacturando] = useState(false);
+    const [invoiceData, setInvoiceData] = useState({ razonSocial: '', cif: '', address: '', email: '', phone: '' });
     const [categoryFilter, setCategoryFilter] = useState('all');
     const [chartPeriod, setChartPeriod] = useState(6);
     const [newMat, setNewMat] = useState({ name: '', category: 'cable', unit: 'm', cost_price: 0, sell_price: 0, stock: 0, min_stock: 5 });
@@ -1153,6 +1157,19 @@ export default function AdminDashboard({ initialQuotes, initialLeads, initialMat
                             }} className="px-4 py-2.5 bg-brand-gold text-black font-bold rounded-lg hover:bg-white transition-colors flex items-center gap-2">
                                 📄 Descargar Oferta PDF
                             </button>
+
+                            <button onClick={() => {
+                                setInvoiceData({
+                                    razonSocial: selectedQuote.client_name || '',
+                                    cif: '',
+                                    address: selectedQuote.client_address || '',
+                                    email: selectedQuote.client_email || '',
+                                    phone: selectedQuote.client_phone || ''
+                                });
+                                setShowInvoiceModal(true);
+                            }} className="px-4 py-2.5 bg-emerald-600 text-white font-bold rounded-lg hover:bg-emerald-500 transition-colors flex items-center gap-2">
+                                🧾 Convertir a Factura
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -1322,6 +1339,94 @@ export default function AdminDashboard({ initialQuotes, initialLeads, initialMat
                                 className="px-6 py-2 bg-brand-gold text-black rounded-lg font-bold hover:bg-brand-gold/90 transition-colors"
                             >
                                 💾 Guardar Cambios
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                        </div>
+                    </div>
+                </div>
+            )}
+
+            {/* Factura Modal */}
+            {showInvoiceModal && selectedQuote && (
+                <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
+                    <div className="bg-surface-card border border-brand-gold/30 rounded-xl w-full max-w-lg shadow-2xl p-6">
+                        <h3 className="text-xl font-heading font-bold text-white border-b border-border-subtle pb-4 mb-6">Datos de Facturación</h3>
+                        
+                        <div className="space-y-4">
+                            <div>
+                                <label className="text-xs text-brand-gold-muted uppercase block mb-1">Razón Social</label>
+                                <input type="text" value={invoiceData.razonSocial} onChange={e => setInvoiceData({...invoiceData, razonSocial: e.target.value})} className="w-full bg-brand-dark rounded-lg p-3 text-white border border-border-subtle" />
+                            </div>
+                            <div>
+                                <label className="text-xs text-brand-gold-muted uppercase block mb-1">CIF / NIF</label>
+                                <input type="text" value={invoiceData.cif} onChange={e => setInvoiceData({...invoiceData, cif: e.target.value})} className="w-full bg-brand-dark rounded-lg p-3 text-white border border-border-subtle" />
+                            </div>
+                            <div>
+                                <label className="text-xs text-brand-gold-muted uppercase block mb-1">Dirección Fiscal</label>
+                                <input type="text" value={invoiceData.address} onChange={e => setInvoiceData({...invoiceData, address: e.target.value})} className="w-full bg-brand-dark rounded-lg p-3 text-white border border-border-subtle" />
+                            </div>
+                            <div className="grid grid-cols-2 gap-4">
+                                <div>
+                                    <label className="text-xs text-brand-gold-muted uppercase block mb-1">Email</label>
+                                    <input type="text" value={invoiceData.email} onChange={e => setInvoiceData({...invoiceData, email: e.target.value})} className="w-full bg-brand-dark rounded-lg p-3 text-white border border-border-subtle" />
+                                </div>
+                                <div>
+                                    <label className="text-xs text-brand-gold-muted uppercase block mb-1">Teléfono</label>
+                                    <input type="text" value={invoiceData.phone} onChange={e => setInvoiceData({...invoiceData, phone: e.target.value})} className="w-full bg-brand-dark rounded-lg p-3 text-white border border-border-subtle" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="flex justify-end gap-3 mt-8">
+                            <button onClick={() => setShowInvoiceModal(false)} className="px-4 py-2 border border-border-subtle rounded-lg text-brand-gold-muted">Cancelar</button>
+                            <button disabled={isFacturando} onClick={async () => {
+                                if(!invoiceData.cif || !invoiceData.razonSocial) return alert('CIF y Razón Social son obligatorios');
+                                setIsFacturando(true);
+                                try {
+                                    const instName = selectedQuote.installation_type;
+                                    const items = [
+                                        { description: 'Cableado ' + selectedQuote.cable_type, quantity: selectedQuote.cable_meters + 'm', unitPrice: '-', total: Number(selectedQuote.cable_cost).toFixed(2) + '€' },
+                                        { description: 'Puntos de Red', quantity: selectedQuote.network_points.toString(), unitPrice: '-', total: Number(selectedQuote.points_cost).toFixed(2) + '€' },
+                                        { description: 'Tendido de cable (' + instName + ')', quantity: selectedQuote.cable_meters + 'm', unitPrice: '-', total: Number(selectedQuote.installation_cost).toFixed(2) + '€' },
+                                        { description: 'Mano de obra (operarios y técnicos)', quantity: 'Global', unitPrice: '-', total: Number(selectedQuote.work_cost).toFixed(2) + '€' }
+                                    ];
+                            
+                                    const res = await fetch('/api/invoice/create', {
+                                        method: 'POST',
+                                        headers: { 'Content-Type': 'application/json' },
+                                        body: JSON.stringify({
+                                            quote_id: selectedQuote.id,
+                                            razon_social: invoiceData.razonSocial,
+                                            cif: invoiceData.cif,
+                                            address: invoiceData.address,
+                                            email: invoiceData.email,
+                                            phone: invoiceData.phone,
+                                            total_data: { subtotal: selectedQuote.subtotal, iva: selectedQuote.iva, total: selectedQuote.total, items }
+                                        })
+                                    });
+                                    const r = await res.json();
+                                    
+                                    if(r.success) {
+                                        const pdfData: InvoicePDFData = {
+                                            invoiceNumber: r.invoice_number,
+                                            date: new Date().toLocaleDateString(),
+                                            client: { razonSocial: invoiceData.razonSocial, cif: invoiceData.cif, address: invoiceData.address, email: invoiceData.email, phone: invoiceData.phone },
+                                            items,
+                                            subtotal: Number(selectedQuote.subtotal).toFixed(2) + '€',
+                                            iva: Number(selectedQuote.iva).toFixed(2) + '€',
+                                            total: Number(selectedQuote.total).toFixed(2) + '€',
+                                            notes: "Pago realizable mediante transferencia bancaria.\nGracias por su confianza."
+                                        };
+                                        await downloadInvoicePDF(pdfData);
+                                        setShowInvoiceModal(false);
+                                        setSelectedQuote(null);
+                                    } else { alert('Error: ' + r.error); }
+                                } catch(e) { alert('Server error'); }
+                                setIsFacturando(false);
+                            }} className="px-6 py-2 bg-emerald-600 font-bold text-white rounded-lg">
+                                {isFacturando ? 'Generando...' : 'Generar PDF'}
                             </button>
                         </div>
                     </div>
