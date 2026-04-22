@@ -54,6 +54,8 @@ export async function POST(request: NextRequest) {
                 total: data.total,
                 notes: data.notes || null,
                 status: 'pending',
+                // Save all line items as JSON so CRM and invoice can use them
+                quote_items: data.quoteItems || null,
             });
 
             if (error) {

@@ -256,7 +256,28 @@ export default function QuoteForm({ locale, calculationData }: QuoteFormProps) {
     };
 
     const handleSaveCRM = async () => {
-        // Save to Supabase (when configured)
+        // Build the same items array as the PDF — including all custom lines
+        const d = calculationData;
+        const quoteItems: Array<{ description: string; quantity: string; unitPrice: string; total: string }> = [];
+
+        if (d.cablesCost > 0 || d.cableMeters > 0) quoteItems.push({ description: `Cableado ${d.cableType.toUpperCase()} — suministro de cable`, quantity: `${d.cableMeters}m`, unitPrice: `${(d.cablesCost / Math.max(1, d.cableMeters)).toFixed(2)}€`, total: `${d.cablesCost.toFixed(2)}€` });
+        if (d.pointsCost > 0 || d.points > 0) quoteItems.push({ description: 'Puntos de red — roseta RJ45, keystone, caja, testeo', quantity: `${d.points} uds`, unitPrice: `${(d.pointsCost / Math.max(1, d.points)).toFixed(2)}€`, total: `${d.pointsCost.toFixed(2)}€` });
+        if (d.installCost > 0) quoteItems.push({ description: `Tendido de cable — ${installLabels[d.installationType] || d.installationType}`, quantity: `${d.cableMeters}m`, unitPrice: `${(d.installCost / Math.max(1, d.cableMeters)).toFixed(2)}€`, total: `${d.installCost.toFixed(2)}€` });
+        if (d.laborCost > 0) quoteItems.push({ description: 'Mano de obra — operarios, montaje, terminación, verificación', quantity: `${d.points} ptos`, unitPrice: `${(d.laborCost / Math.max(1, d.points)).toFixed(2)}€`, total: `${d.laborCost.toFixed(2)}€` });
+        if (d.canaleta > 0) { const p = d.materialsCustomPrices?.trunking ?? 4; quoteItems.push({ description: d.materialsCustomNames?.trunking || 'Canaleta (cable canal)', quantity: `${d.canaleta}m`, unitPrice: `${p.toFixed(2)}€`, total: `${(d.canaleta * p).toFixed(2)}€` }); }
+        if ((d.canaleta_extra || 0) > 0) { const p = d.materialsCustomPrices?.trunking ?? 4; quoteItems.push({ description: d.materialsCustomNames?.trunking || 'Canaleta adicional', quantity: `${d.canaleta_extra}m`, unitPrice: `${p.toFixed(2)}€`, total: `${(d.canaleta_extra * p).toFixed(2)}€` }); }
+        if (d.tubo_corrugado > 0) { const p = d.materialsCustomPrices?.corrugated ?? 1; quoteItems.push({ description: d.materialsCustomNames?.corrugated || 'Tubo corrugado', quantity: `${d.tubo_corrugado}m`, unitPrice: `${p.toFixed(2)}€`, total: `${(d.tubo_corrugado * p).toFixed(2)}€` }); }
+        if ((d.tubo_pvc || 0) > 0) { const p = d.materialsCustomPrices?.pvc ?? 2; quoteItems.push({ description: d.materialsCustomNames?.pvc || 'Tubo PVC', quantity: `${d.tubo_pvc}m`, unitPrice: `${p.toFixed(2)}€`, total: `${(d.tubo_pvc * p).toFixed(2)}€` }); }
+        if (d.regata > 0) quoteItems.push({ description: 'Regata (corte muro)', quantity: `${d.regata}m`, unitPrice: '45.00€', total: `${(d.regata * 45).toFixed(2)}€` });
+        if ((d.mano_de_obra_horas || 0) > 0) { const p = d.materialsCustomPrices?.laborHour ?? 60; quoteItems.push({ description: d.materialsCustomNames?.laborHour || 'Mano de obra adicional', quantity: `${d.mano_de_obra_horas}h`, unitPrice: `${p.toFixed(2)}€`, total: `${(d.mano_de_obra_horas * p).toFixed(2)}€` }); }
+        if ((d.patchPanel12 || 0) > 0) quoteItems.push({ description: 'Patch Panel 12p', quantity: `${d.patchPanel12} ud`, unitPrice: '40.00€', total: `${(d.patchPanel12 * 40).toFixed(2)}€` });
+        if ((d.patchPanel24 || 0) > 0) quoteItems.push({ description: 'Patch Panel 24p', quantity: `${d.patchPanel24} ud`, unitPrice: '65.00€', total: `${(d.patchPanel24 * 65).toFixed(2)}€` });
+        if ((d.patchPanel48 || 0) > 0) quoteItems.push({ description: 'Patch Panel 48p', quantity: `${d.patchPanel48} ud`, unitPrice: '100.00€', total: `${(d.patchPanel48 * 100).toFixed(2)}€` });
+        (d.customItems || []).forEach(item => { if (item.name && item.qty > 0 && item.price > 0) quoteItems.push({ description: item.name, quantity: `${item.qty} ud`, unitPrice: `${item.price.toFixed(2)}€`, total: `${(item.qty * item.price).toFixed(2)}€` }); });
+        Object.entries(d.additionalWork).forEach(([key, val]) => { if (val) { const custom = d.equipmentCustom?.[key]; const nm = custom?.name || workLabels[key] || key; const pr = custom?.price ?? ({ switch: 40, router: 50, accessPoint: 70, configuration: 150, network_config: 120, patch_panel: 80 }[key] || 0); quoteItems.push({ description: nm, quantity: '1', unitPrice: `${pr.toFixed(2)}€`, total: `${pr.toFixed(2)}€` }); } });
+        if (d.rack !== 'none') { const fb = rackLabels[d.rack] || d.rack; const fp = ({ rack_6u: 90, rack_9u: 130, rack_12u: 180, rack_18u: 250, rack_22u: 380, rack_42u: 650 }[d.rack] || d.rackCost); const rn = d.rackCustomName || fb; const rp = d.rackCustomPrice > 0 ? d.rackCustomPrice : fp; quoteItems.push({ description: rn, quantity: '1', unitPrice: `${rp.toFixed(2)}€`, total: `${d.rackCost.toFixed(2)}€` }); }
+
+        // Save to Supabase
         try {
             const res = await fetch('/api/quotes', {
                 method: 'POST',
@@ -268,6 +289,7 @@ export default function QuoteForm({ locale, calculationData }: QuoteFormProps) {
                     client_address: address,
                     ...calculationData,
                     notes,
+                    quoteItems,
                 }),
             });
             if (res.ok) {

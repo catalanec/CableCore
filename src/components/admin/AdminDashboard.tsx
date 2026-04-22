@@ -1173,7 +1173,15 @@ export default function AdminDashboard({ initialQuotes, initialLeads, initialMat
                                 // Pre-populate items from quote data
                                 const hasCosts = Number(selectedQuote.cable_cost) > 0 || Number(selectedQuote.points_cost) > 0 || Number(selectedQuote.work_cost) > 0;
                                 const instName = selectedQuote.installation_type || 'ceiling';
-                                if (hasCosts) {
+                                // Priority: 1) quote_items from DB (full calculator items), 2) cost fields, 3) empty
+                                if (selectedQuote.quote_items && Array.isArray(selectedQuote.quote_items) && selectedQuote.quote_items.length > 0) {
+                                    // Use saved items from calculator — convert string prices back to numbers
+                                    setInvoiceItems(selectedQuote.quote_items.map((it: any) => ({
+                                        description: it.description || '',
+                                        quantity: String(it.quantity || '1').replace(/[^\d.]/g, ''),
+                                        unitPrice: String(it.unitPrice || '0').replace(/[€\s]/g, ''),
+                                    })));
+                                } else if (hasCosts) {
                                     setInvoiceItems([
                                         { description: 'Cableado ' + (selectedQuote.cable_type || ''), quantity: String(selectedQuote.cable_meters || 1), unitPrice: Number(selectedQuote.cable_cost).toFixed(2) },
                                         { description: 'Puntos de Red', quantity: String(selectedQuote.network_points || 1), unitPrice: Number(selectedQuote.points_cost / Math.max(selectedQuote.network_points, 1)).toFixed(2) },
@@ -1181,7 +1189,7 @@ export default function AdminDashboard({ initialQuotes, initialLeads, initialMat
                                         { description: 'Mano de obra (operarios y técnicos)', quantity: '1', unitPrice: Number(selectedQuote.work_cost).toFixed(2) }
                                     ].filter(it => parseFloat(it.unitPrice) > 0));
                                 } else {
-                                    // Manual quote — start with one empty line for user to fill
+                                    // Manual quote with no data — start with one empty line for user to fill
                                     setInvoiceItems([{ description: '', quantity: '1', unitPrice: '' }]);
                                 }
                                 setShowInvoiceModal(true);
