@@ -75,28 +75,27 @@ export function generateInvoiceHTML(data: InvoicePDFData): string {
     </div>
 
     <!-- Emisor & Cliente -->
-    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin-bottom: 25px;">
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-bottom: 25px; padding-bottom: 20px; border-bottom: 1px solid #e0dcd4;">
       
-      <!-- Datos Emisor (CableCore) -->
-      <div style="font-size: 12px; color: #555; border-right: 1px solid #e0dcd4; padding-right: 20px;">
-        <h3 style="color: #8B6914; font-size: 10px; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 10px; font-weight: 700;">Datos del Vendedor</h3>
-        <p style="margin-bottom: 4px;"><span style="color: #222; font-weight: 600;">Anton Shapoval (CableCore)</span></p>
-        <p style="margin-bottom: 4px;">NIF: Y6111818B</p>
-        <p style="margin-bottom: 4px;">Carrer Vitor Balaguer 33, BA</p>
+      <!-- Datos Prestador de Servicios (CableCore) -->
+      <div style="font-size: 12px; color: #555;">
+        <h3 style="color: #8B6914; font-size: 10px; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 10px; font-weight: 700;">Prestador de Servicios</h3>
+        <p style="margin-bottom: 4px;"><span style="color: #222; font-weight: 700;">CableCore</span></p>
+        <p style="margin-bottom: 4px;">Anton Shapoval</p>
+        <p style="margin-bottom: 4px;">NIF: Y3806392K</p>
+        <p style="margin-bottom: 4px;">Carrer Victor Balaguer 33, àtic/3</p>
         <p style="margin-bottom: 4px;">08914 Badalona (Barcelona)</p>
         <p style="margin-bottom: 4px;">Email: info@cablecore.es</p>
       </div>
 
       <!-- Datos Cliente -->
-      <div style="background: #f8f6f1; border: 2px solid #e0dcd4; border-radius: 6px; padding: 18px;">
+      <div style="font-size: 12px; color: #555;">
         <h3 style="color: #8B6914; font-size: 10px; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 10px; font-weight: 700;">Facturar a:</h3>
-        <div style="display: grid; grid-template-columns: 1fr; gap: 6px; font-size: 12px;">
-          <div><span style="color: #888; font-weight: 600;">Razón Social:</span> <span style="color: #222; font-weight: 600;">${data.client.razonSocial}</span></div>
-          <div><span style="color: #888; font-weight: 600;">CIF/NIF:</span> <span style="color: #222; font-weight: 500;">${data.client.cif}</span></div>
-          <div><span style="color: #888; font-weight: 600;">Dirección:</span> <span style="color: #222; font-weight: 500;">${data.client.address}</span></div>
-          ${data.client.email ? `<div><span style="color: #888; font-weight: 600;">Email:</span> <span style="color: #222; font-weight: 500;">${data.client.email}</span></div>` : ''}
-          ${data.client.phone ? `<div><span style="color: #888; font-weight: 600;">Teléfono:</span> <span style="color: #222; font-weight: 500;">${data.client.phone}</span></div>` : ''}
-        </div>
+        <p style="margin-bottom: 4px;"><span style="color: #222; font-weight: 700;">${data.client.razonSocial}</span></p>
+        <p style="margin-bottom: 4px;">CIF/NIF: ${data.client.cif}</p>
+        <p style="margin-bottom: 4px;">${data.client.address}</p>
+        ${data.client.email ? `<p style="margin-bottom: 4px;">${data.client.email}</p>` : ''}
+        ${data.client.phone ? `<p style="margin-bottom: 4px;">${data.client.phone}</p>` : ''}
       </div>
 
     </div>

@@ -1382,12 +1382,16 @@ export default function AdminDashboard({ initialQuotes, initialLeads, initialMat
                                 if(!invoiceData.cif || !invoiceData.razonSocial) return alert('CIF y Razón Social son obligatorios');
                                 setIsFacturando(true);
                                 try {
-                                    const instName = selectedQuote.installation_type;
-                                    const items = [
-                                        { description: 'Cableado ' + selectedQuote.cable_type, quantity: selectedQuote.cable_meters + 'm', unitPrice: '-', total: Number(selectedQuote.cable_cost).toFixed(2) + '€' },
-                                        { description: 'Puntos de Red', quantity: selectedQuote.network_points.toString(), unitPrice: '-', total: Number(selectedQuote.points_cost).toFixed(2) + '€' },
-                                        { description: 'Tendido de cable (' + instName + ')', quantity: selectedQuote.cable_meters + 'm', unitPrice: '-', total: Number(selectedQuote.installation_cost).toFixed(2) + '€' },
+                                    // If all costs are 0 it's a manual quote — use notes as single item description
+                                    const hasCosts = Number(selectedQuote.cable_cost) > 0 || Number(selectedQuote.points_cost) > 0 || Number(selectedQuote.work_cost) > 0;
+                                    const instName = selectedQuote.installation_type || 'ceiling';
+                                    const items = hasCosts ? [
+                                        { description: 'Cableado ' + (selectedQuote.cable_type || ''), quantity: (selectedQuote.cable_meters || 0) + 'm', unitPrice: '-', total: Number(selectedQuote.cable_cost).toFixed(2) + '€' },
+                                        { description: 'Puntos de Red', quantity: String(selectedQuote.network_points || 0), unitPrice: '-', total: Number(selectedQuote.points_cost).toFixed(2) + '€' },
+                                        { description: 'Tendido de cable (' + instName + ')', quantity: (selectedQuote.cable_meters || 0) + 'm', unitPrice: '-', total: Number(selectedQuote.installation_cost).toFixed(2) + '€' },
                                         { description: 'Mano de obra (operarios y técnicos)', quantity: 'Global', unitPrice: '-', total: Number(selectedQuote.work_cost).toFixed(2) + '€' }
+                                    ] : [
+                                        { description: selectedQuote.notes || 'Servicios técnicos según acuerdo', quantity: '1', unitPrice: Number(Number(selectedQuote.total) / 1.21).toFixed(2) + '€', total: Number(Number(selectedQuote.total) / 1.21).toFixed(2) + '€' }
                                     ];
                             
                                     const res = await fetch('/api/invoice/create', {
@@ -1407,8 +1411,8 @@ export default function AdminDashboard({ initialQuotes, initialLeads, initialMat
                                     
                                     if(r.success) {
                                         const pdfData: InvoicePDFData = {
-                                            invoiceNumber: r.invoice_number,
-                                            date: new Date().toLocaleDateString(),
+                                            invoiceNumber: r.invoice_number ?? 21,
+                                            date: new Date().toLocaleDateString('es-ES'),
                                             client: { razonSocial: invoiceData.razonSocial, cif: invoiceData.cif, address: invoiceData.address, email: invoiceData.email, phone: invoiceData.phone },
                                             items,
                                             subtotal: Number(selectedQuote.subtotal).toFixed(2) + '€',
