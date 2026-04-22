@@ -34,10 +34,10 @@ export function formatInvoiceNumber(num: string | number): string {
 export function generateInvoiceHTML(data: InvoicePDFData): string {
     const itemRows = data.items.map((item, i) => `
     <tr style="background: ${i % 2 === 0 ? '#fff' : '#f8f6f1'};">
-      <td style="padding: 10px 14px; border-bottom: 1px solid #e0dcd4; color: #333; font-size: 12px;">${item.description}</td>
-      <td style="padding: 10px 14px; border-bottom: 1px solid #e0dcd4; color: #333; text-align: center; font-size: 12px;">${item.quantity}</td>
-      <td style="padding: 10px 14px; border-bottom: 1px solid #e0dcd4; color: #333; text-align: right; font-size: 12px;">${item.unitPrice}</td>
-      <td style="padding: 10px 14px; border-bottom: 1px solid #e0dcd4; color: #8B6914; text-align: right; font-weight: 700; font-size: 12px;">${item.total}</td>
+      <td style="padding: 10px 14px; border-bottom: 1px solid #e0dcd4; color: #333; font-size: 10px;">${item.description}</td>
+      <td style="padding: 10px 14px; border-bottom: 1px solid #e0dcd4; color: #333; text-align: center; font-size: 10px;">${item.quantity}</td>
+      <td style="padding: 10px 14px; border-bottom: 1px solid #e0dcd4; color: #333; text-align: right; font-size: 10px;">${item.unitPrice}</td>
+      <td style="padding: 10px 14px; border-bottom: 1px solid #e0dcd4; color: #8B6914; text-align: right; font-weight: 700; font-size: 10px;">${item.total}</td>
     </tr>
   `).join('');
 
@@ -51,7 +51,7 @@ export function generateInvoiceHTML(data: InvoicePDFData): string {
   <title>Factura_CableCore_${formattedInvoiceNum}</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { font-family: 'Helvetica Neue', Arial, sans-serif; background: #fff; color: #222; padding: 15mm; }
+    body { font-family: 'Helvetica Neue', Arial, sans-serif; background: #fff; color: #222; padding: 15mm; font-size: 10px; }
     @page { margin: 0; }
     @media print {
       body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
@@ -85,6 +85,7 @@ export function generateInvoiceHTML(data: InvoicePDFData): string {
         <p style="margin-bottom: 4px;">NIF: Y3806392K</p>
         <p style="margin-bottom: 4px;">Carrer Victor Balaguer 33, àtic/3</p>
         <p style="margin-bottom: 4px;">08914 Badalona (Barcelona)</p>
+        <p style="margin-bottom: 4px;">Teléfono: +34 605 974 605</p>
         <p style="margin-bottom: 4px;">Email: info@cablecore.es</p>
       </div>
 
@@ -94,8 +95,8 @@ export function generateInvoiceHTML(data: InvoicePDFData): string {
         <p style="margin-bottom: 4px;"><span style="color: #222; font-weight: 700;">${data.client.razonSocial}</span></p>
         <p style="margin-bottom: 4px;">CIF/NIF: ${data.client.cif}</p>
         <p style="margin-bottom: 4px;">${data.client.address}</p>
-        ${data.client.email ? `<p style="margin-bottom: 4px;">${data.client.email}</p>` : ''}
-        ${data.client.phone ? `<p style="margin-bottom: 4px;">${data.client.phone}</p>` : ''}
+        ${data.client.email ? `<p style="margin-bottom: 4px;">Email: ${data.client.email}</p>` : ''}
+        ${data.client.phone ? `<p style="margin-bottom: 4px;">Teléfono: ${data.client.phone}</p>` : ''}
       </div>
 
     </div>
@@ -137,8 +138,9 @@ export function generateInvoiceHTML(data: InvoicePDFData): string {
 
     ${data.notes ? `
     <div style="margin-top: 25px; background: #f8f6f1; border: 1px solid #e0dcd4; border-radius: 6px; padding: 14px;">
-      <h4 style="color: #8B6914; font-size: 10px; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 6px; font-weight: 700;">Método de Pago e Información Adicional</h4>
-      <p style="color: #555; font-size: 11px; line-height: 1.5; white-space: pre-wrap;">${data.notes}</p>
+      <h4 style="color: #8B6914; font-size: 10px; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 6px; font-weight: 700;">Método de Pago</h4>
+      <p style="color: #555; font-size: 10px; line-height: 1.6; white-space: pre-wrap;">${data.notes}</p>
+      <p style="color: #333; font-size: 10px; margin-top: 8px;">Cuenta bancaria (IBAN): <strong>ES91 2103 7379 4000 3001 0959</strong></p>
     </div>
     ` : ''}
 
