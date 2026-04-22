@@ -74,31 +74,33 @@ export function generateInvoiceHTML(data: InvoicePDFData): string {
       </div>
     </div>
 
-    <!-- Emisor & Cliente -->
-    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-bottom: 25px; padding-bottom: 20px; border-bottom: 1px solid #e0dcd4;">
-      
-      <!-- Datos Prestador de Servicios (CableCore) -->
-      <div style="font-size: 12px; color: #555;">
-        <h3 style="color: #8B6914; font-size: 10px; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 10px; font-weight: 700;">Prestador de Servicios</h3>
-        <p style="margin-bottom: 4px;"><span style="color: #222; font-weight: 700;">CableCore</span></p>
-        <p style="margin-bottom: 4px;">Anton Shapoval</p>
-        <p style="margin-bottom: 4px;">NIF: Y3806392K</p>
-        <p style="margin-bottom: 4px;">Carrer Victor Balaguer 33, àtic/3</p>
-        <p style="margin-bottom: 4px;">08914 Badalona (Barcelona)</p>
-        <p style="margin-bottom: 4px;">Teléfono: +34 605 974 605</p>
-        <p style="margin-bottom: 4px;">Email: info@cablecore.es</p>
-      </div>
+    <!-- Emisor & Cliente — single bordered box -->
+    <div style="border: 1.5px solid #C9A84C; border-radius: 8px; margin-bottom: 25px; overflow: hidden;">
+      <div style="display: grid; grid-template-columns: 1fr 1fr; background: #fdfaf4;">
 
-      <!-- Datos Cliente -->
-      <div style="font-size: 12px; color: #555;">
-        <h3 style="color: #8B6914; font-size: 10px; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 10px; font-weight: 700;">Facturar a:</h3>
-        <p style="margin-bottom: 4px;"><span style="color: #222; font-weight: 700;">${data.client.razonSocial}</span></p>
-        <p style="margin-bottom: 4px;">CIF/NIF: ${data.client.cif}</p>
-        <p style="margin-bottom: 4px;">${data.client.address}</p>
-        ${data.client.phone ? `<p style="margin-bottom: 4px;">Teléfono: ${data.client.phone}</p>` : ''}
-        ${data.client.email ? `<p style="margin-bottom: 4px;">Email: ${data.client.email}</p>` : ''}
-      </div>
+        <!-- Datos Prestador de Servicios (CableCore) -->
+        <div style="padding: 16px 20px; border-right: 1px solid #e0dcd4; font-size: 10px; color: #555; line-height: 1.9;">
+          <h3 style="color: #8B6914; font-size: 9px; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 8px; font-weight: 700;">Prestador de Servicios</h3>
+          <div><span style="color: #222; font-weight: 700;">CableCore</span></div>
+          <div>Anton Shapoval</div>
+          <div>NIF: Y3806392K</div>
+          <div>Carrer Victor Balaguer 33, àtic/3</div>
+          <div>08914 Badalona (Barcelona)</div>
+          <div>Teléfono: +34 605 974 605</div>
+          <div>Email: info@cablecore.es</div>
+        </div>
 
+        <!-- Datos Cliente -->
+        <div style="padding: 16px 20px; font-size: 10px; color: #555; line-height: 1.9;">
+          <h3 style="color: #8B6914; font-size: 9px; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 8px; font-weight: 700;">Facturar a:</h3>
+          <div><span style="color: #222; font-weight: 700;">${data.client.razonSocial}</span></div>
+          <div>CIF/NIF: ${data.client.cif}</div>
+          <div>${data.client.address || '—'}</div>
+          <div>${data.client.phone ? 'Teléfono: ' + data.client.phone : '&nbsp;'}</div>
+          <div>${data.client.email ? 'Email: ' + data.client.email : '&nbsp;'}</div>
+        </div>
+
+      </div>
     </div>
 
     <!-- Items table -->
@@ -118,19 +120,19 @@ export function generateInvoiceHTML(data: InvoicePDFData): string {
 
     <!-- Totals -->
     <div style="display: flex; justify-content: flex-end;">
-      <div style="width: 300px;">
-        <div style="display: flex; justify-content: space-between; padding: 8px 12px; font-size: 12px; color: #555; border-bottom: 1px solid #e0dcd4;">
+      <div style="width: 260px;">
+        <div style="display: flex; justify-content: space-between; padding: 6px 10px; font-size: 10px; color: #555; border-bottom: 1px solid #e0dcd4;">
           <span>Base Imponible</span> <span style="font-weight: 600; color: #333;">${data.subtotal}</span>
         </div>
         ${data.urgencyMultiplier ? `
-        <div style="display: flex; justify-content: space-between; padding: 8px 12px; font-size: 12px; color: #B8860B; background: #FFF8E1; border-bottom: 1px solid #e0dcd4;">
+        <div style="display: flex; justify-content: space-between; padding: 6px 10px; font-size: 10px; color: #B8860B; background: #FFF8E1; border-bottom: 1px solid #e0dcd4;">
           <span style="font-weight: 600;">Multiplicador urgencia</span> <span style="font-weight: 700;">${data.urgencyMultiplier}</span>
         </div>
         ` : ''}
-        <div style="display: flex; justify-content: space-between; padding: 8px 12px; font-size: 12px; color: #555; border-bottom: 1px solid #e0dcd4;">
+        <div style="display: flex; justify-content: space-between; padding: 6px 10px; font-size: 10px; color: #555; border-bottom: 1px solid #e0dcd4;">
           <span>IVA (21%)</span> <span style="font-weight: 600; color: #333;">${data.iva}</span>
         </div>
-        <div style="display: flex; justify-content: space-between; padding: 12px; font-size: 21px; font-weight: 800; color: #8B6914; background: #f8f6f1; border: 2px solid #C9A84C; border-radius: 4px; margin-top: 6px;">
+        <div style="display: flex; justify-content: space-between; padding: 8px 10px; font-size: 14px; font-weight: 800; color: #8B6914; background: #f8f6f1; border: 1.5px solid #C9A84C; border-radius: 4px; margin-top: 5px;">
           <span>TOTAL</span> <span>${data.total}</span>
         </div>
       </div>
