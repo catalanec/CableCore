@@ -95,8 +95,8 @@ export function generateInvoiceHTML(data: InvoicePDFData): string {
         <p style="margin-bottom: 4px;"><span style="color: #222; font-weight: 700;">${data.client.razonSocial}</span></p>
         <p style="margin-bottom: 4px;">CIF/NIF: ${data.client.cif}</p>
         <p style="margin-bottom: 4px;">${data.client.address}</p>
-        ${data.client.email ? `<p style="margin-bottom: 4px;">Email: ${data.client.email}</p>` : ''}
         ${data.client.phone ? `<p style="margin-bottom: 4px;">Teléfono: ${data.client.phone}</p>` : ''}
+        ${data.client.email ? `<p style="margin-bottom: 4px;">Email: ${data.client.email}</p>` : ''}
       </div>
 
     </div>

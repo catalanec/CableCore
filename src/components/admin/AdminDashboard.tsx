@@ -1376,9 +1376,9 @@ export default function AdminDashboard({ initialQuotes, initialLeads, initialMat
                 <div className="card border-brand-gold/10 overflow-hidden">
                     <div className="p-6 border-b border-border-subtle flex items-center justify-between">
                         <h3 className="font-heading font-semibold text-white">🧾 Facturas emitidas</h3>
-                        <div className="flex items-center gap-3 text-xs text-brand-gold-muted">
-                            <span>Total: {invoices.length}</span>
-                            <span>Facturado: {invoices.reduce((s, inv) => s + Number(inv.total_data?.total || 0), 0).toFixed(2)}€</span>
+                        <div className="flex items-center gap-4 text-xs text-brand-gold-muted">
+                            <span>Total: <span className="text-white font-bold">{invoices.length}</span></span>
+                            <span>Facturado: <span className="text-brand-gold font-bold">{invoices.reduce((s, inv) => s + Number(inv.total_data?.total || 0), 0).toFixed(2)}€</span></span>
                         </div>
                     </div>
 
@@ -1393,59 +1393,83 @@ export default function AdminDashboard({ initialQuotes, initialLeads, initialMat
                             <table className="w-full text-sm">
                                 <thead>
                                     <tr className="border-b border-border-subtle text-brand-gold-muted text-xs uppercase tracking-wider">
-                                        <th className="text-left p-4">Nº Factura</th>
-                                        <th className="text-left p-4">Cliente</th>
-                                        <th className="text-left p-4">CIF/NIF</th>
+                                        <th className="text-left p-4 w-28">Nº Factura</th>
+                                        <th className="text-left p-4">Empresa / Nombre</th>
                                         <th className="text-left p-4">Dirección</th>
+                                        <th className="text-left p-4">Contacto</th>
                                         <th className="text-right p-4">Total</th>
                                         <th className="text-right p-4">Fecha</th>
-                                        <th className="text-center p-4">PDF</th>
+                                        <th className="text-center p-4">Acciones</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     {invoices.map(inv => (
                                         <tr key={inv.id} className="border-b border-border-subtle/50 hover:bg-[rgba(201,168,76,0.03)] transition-colors">
-                                            <td className="p-4 text-brand-gold font-mono font-bold">
+                                            <td className="p-4 text-brand-gold font-mono font-bold text-sm">
                                                 #{String(inv.invoice_number).padStart(5,'0')}
                                             </td>
                                             <td className="p-4">
                                                 <div className="font-medium text-white">{inv.razon_social}</div>
-                                                {inv.email && <div className="text-xs text-brand-gold-muted">{inv.email}</div>}
+                                                <div className="text-xs text-brand-gold-muted font-mono mt-0.5">{inv.cif}</div>
                                             </td>
-                                            <td className="p-4 text-brand-gold-muted text-xs font-mono">{inv.cif}</td>
-                                            <td className="p-4 text-brand-gold-muted text-xs">{inv.address || '—'}</td>
-                                            <td className="p-4 text-right font-bold text-brand-gold">
+                                            <td className="p-4 text-brand-gold-muted text-xs align-top">{inv.address || '—'}</td>
+                                            <td className="p-4 text-brand-gold-muted text-xs align-top">
+                                                {inv.phone && <div>{inv.phone}</div>}
+                                                {inv.email && <div className="mt-0.5">{inv.email}</div>}
+                                            </td>
+                                            <td className="p-4 text-right font-bold text-brand-gold align-top">
                                                 {Number(inv.total_data?.total || 0).toFixed(2)}€
                                             </td>
-                                            <td className="p-4 text-right text-brand-gold-muted text-xs">
+                                            <td className="p-4 text-right text-brand-gold-muted text-xs align-top">
                                                 {new Date(inv.created_at).toLocaleDateString('es-ES')}
                                             </td>
-                                            <td className="p-4 text-center">
-                                                <button
-                                                    onClick={() => {
-                                                        const td = inv.total_data || {};
-                                                        const pdfData: InvoicePDFData = {
-                                                            invoiceNumber: inv.invoice_number,
-                                                            date: new Date(inv.created_at).toLocaleDateString('es-ES'),
-                                                            client: {
-                                                                razonSocial: inv.razon_social,
-                                                                cif: inv.cif,
-                                                                address: inv.address || '',
-                                                                email: inv.email || '',
-                                                                phone: inv.phone || '',
-                                                            },
-                                                            items: td.items || [{ description: 'Servicios técnicos', quantity: '1', unitPrice: td.subtotal + '€', total: td.subtotal + '€' }],
-                                                            subtotal: td.subtotal + '€',
-                                                            iva: td.iva + '€',
-                                                            total: td.total + '€',
-                                                            notes: 'Pago realizable mediante transferencia bancaria.\nGracias por su confianza.',
-                                                        };
-                                                        downloadInvoicePDF(pdfData);
-                                                    }}
-                                                    className="text-xs px-3 py-1.5 bg-brand-gold/10 text-brand-gold rounded-lg hover:bg-brand-gold/20 transition-colors font-medium"
-                                                >
-                                                    📄 Reimprimir
-                                                </button>
+                                            <td className="p-4 align-top">
+                                                <div className="flex items-center justify-center gap-2">
+                                                    <button
+                                                        title="Reimprimir PDF"
+                                                        onClick={() => {
+                                                            const td = inv.total_data || {};
+                                                            const pdfData: InvoicePDFData = {
+                                                                invoiceNumber: inv.invoice_number,
+                                                                date: new Date(inv.created_at).toLocaleDateString('es-ES'),
+                                                                client: {
+                                                                    razonSocial: inv.razon_social,
+                                                                    cif: inv.cif,
+                                                                    address: inv.address || '',
+                                                                    email: inv.email || '',
+                                                                    phone: inv.phone || '',
+                                                                },
+                                                                items: td.items || [{ description: 'Servicios técnicos', quantity: '1', unitPrice: td.subtotal + '€', total: td.subtotal + '€' }],
+                                                                subtotal: td.subtotal + '€',
+                                                                iva: td.iva + '€',
+                                                                total: td.total + '€',
+                                                                notes: 'Pago realizable mediante transferencia bancaria.\nGracias por su confianza.',
+                                                            };
+                                                            downloadInvoicePDF(pdfData);
+                                                        }}
+                                                        className="text-xs px-2.5 py-1.5 bg-brand-gold/10 text-brand-gold rounded-lg hover:bg-brand-gold/20 transition-colors font-medium"
+                                                    >
+                                                        📄 PDF
+                                                    </button>
+                                                    <button
+                                                        title="Eliminar factura"
+                                                        onClick={async () => {
+                                                            if (!confirm(`¿Eliminar factura #${String(inv.invoice_number).padStart(5,'0')} de ${inv.razon_social}?\nEsta acción no se puede deshacer.`)) return;
+                                                            try {
+                                                                const res = await fetch(`/api/invoice/delete?id=${inv.id}`, { method: 'DELETE' });
+                                                                const r = await res.json();
+                                                                if (r.success) {
+                                                                    setInvoices(prev => prev.filter(i => i.id !== inv.id));
+                                                                } else {
+                                                                    alert('Error al eliminar: ' + r.error);
+                                                                }
+                                                            } catch { alert('Error de servidor'); }
+                                                        }}
+                                                        className="text-xs px-2.5 py-1.5 bg-red-500/10 text-red-400 rounded-lg hover:bg-red-500/20 transition-colors font-medium"
+                                                    >
+                                                        🗑️
+                                                    </button>
+                                                </div>
                                             </td>
                                         </tr>
                                     ))}
