@@ -46,6 +46,7 @@ export default function AdminDashboard({ initialQuotes, initialLeads, initialMat
     const [showInvoiceModal, setShowInvoiceModal] = useState(false);
     const [isFacturando, setIsFacturando] = useState(false);
     const [invoiceData, setInvoiceData] = useState({ razonSocial: '', cif: '', address: '', email: '', phone: '' });
+    const [invoiceItems, setInvoiceItems] = useState<Array<{description: string; quantity: string; unitPrice: string}>>([]);
     const [categoryFilter, setCategoryFilter] = useState('all');
     const [chartPeriod, setChartPeriod] = useState(6);
     const [newMat, setNewMat] = useState({ name: '', category: 'cable', unit: 'm', cost_price: 0, sell_price: 0, stock: 0, min_stock: 5 });
@@ -1166,6 +1167,20 @@ export default function AdminDashboard({ initialQuotes, initialLeads, initialMat
                                     email: selectedQuote.client_email || '',
                                     phone: selectedQuote.client_phone || ''
                                 });
+                                // Pre-populate items from quote data
+                                const hasCosts = Number(selectedQuote.cable_cost) > 0 || Number(selectedQuote.points_cost) > 0 || Number(selectedQuote.work_cost) > 0;
+                                const instName = selectedQuote.installation_type || 'ceiling';
+                                if (hasCosts) {
+                                    setInvoiceItems([
+                                        { description: 'Cableado ' + (selectedQuote.cable_type || ''), quantity: String(selectedQuote.cable_meters || 1), unitPrice: Number(selectedQuote.cable_cost).toFixed(2) },
+                                        { description: 'Puntos de Red', quantity: String(selectedQuote.network_points || 1), unitPrice: Number(selectedQuote.points_cost / Math.max(selectedQuote.network_points, 1)).toFixed(2) },
+                                        { description: 'Tendido de cable (' + instName + ')', quantity: String(selectedQuote.cable_meters || 1), unitPrice: Number(selectedQuote.installation_cost / Math.max(selectedQuote.cable_meters, 1)).toFixed(2) },
+                                        { description: 'Mano de obra (operarios y técnicos)', quantity: '1', unitPrice: Number(selectedQuote.work_cost).toFixed(2) }
+                                    ].filter(it => parseFloat(it.unitPrice) > 0));
+                                } else {
+                                    // Manual quote — start with one empty line for user to fill
+                                    setInvoiceItems([{ description: '', quantity: '1', unitPrice: '' }]);
+                                }
                                 setShowInvoiceModal(true);
                             }} className="px-4 py-2.5 bg-emerald-600 text-white font-bold rounded-lg hover:bg-emerald-500 transition-colors flex items-center gap-2">
                                 🧾 Convertir a Factura
@@ -1346,54 +1361,139 @@ export default function AdminDashboard({ initialQuotes, initialLeads, initialMat
             )}
 
             {/* Factura Modal */}
-            {showInvoiceModal && selectedQuote && (
-                <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
-                    <div className="bg-surface-card border border-brand-gold/30 rounded-xl w-full max-w-lg shadow-2xl p-6">
-                        <h3 className="text-xl font-heading font-bold text-white border-b border-border-subtle pb-4 mb-6">Datos de Facturación</h3>
-                        
-                        <div className="space-y-4">
+            {showInvoiceModal && selectedQuote && (() => {
+                const ivaPct = 0.21;
+                const computedSubtotal = invoiceItems.reduce((sum, it) => {
+                    const qty = parseFloat(it.quantity) || 0;
+                    const price = parseFloat(it.unitPrice) || 0;
+                    return sum + qty * price;
+                }, 0);
+                const computedIva = computedSubtotal * ivaPct;
+                const computedTotal = computedSubtotal + computedIva;
+
+                return (
+                <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm overflow-y-auto">
+                    <div className="bg-surface-card border border-brand-gold/30 rounded-xl w-full max-w-3xl shadow-2xl p-6 my-4">
+                        <h3 className="text-xl font-heading font-bold text-white border-b border-border-subtle pb-4 mb-6">🧾 Crear Factura</h3>
+
+                        {/* Client info */}
+                        <div className="grid grid-cols-2 gap-4 mb-6">
                             <div>
-                                <label className="text-xs text-brand-gold-muted uppercase block mb-1">Razón Social</label>
-                                <input type="text" value={invoiceData.razonSocial} onChange={e => setInvoiceData({...invoiceData, razonSocial: e.target.value})} className="w-full bg-brand-dark rounded-lg p-3 text-white border border-border-subtle" />
+                                <label className="text-xs text-brand-gold-muted uppercase block mb-1">Razón Social *</label>
+                                <input type="text" value={invoiceData.razonSocial} onChange={e => setInvoiceData({...invoiceData, razonSocial: e.target.value})} className="w-full bg-brand-dark rounded-lg p-2.5 text-white border border-border-subtle text-sm" />
                             </div>
                             <div>
-                                <label className="text-xs text-brand-gold-muted uppercase block mb-1">CIF / NIF</label>
-                                <input type="text" value={invoiceData.cif} onChange={e => setInvoiceData({...invoiceData, cif: e.target.value})} className="w-full bg-brand-dark rounded-lg p-3 text-white border border-border-subtle" />
+                                <label className="text-xs text-brand-gold-muted uppercase block mb-1">CIF / NIF *</label>
+                                <input type="text" value={invoiceData.cif} onChange={e => setInvoiceData({...invoiceData, cif: e.target.value})} className="w-full bg-brand-dark rounded-lg p-2.5 text-white border border-border-subtle text-sm" />
                             </div>
-                            <div>
+                            <div className="col-span-2">
                                 <label className="text-xs text-brand-gold-muted uppercase block mb-1">Dirección Fiscal</label>
-                                <input type="text" value={invoiceData.address} onChange={e => setInvoiceData({...invoiceData, address: e.target.value})} className="w-full bg-brand-dark rounded-lg p-3 text-white border border-border-subtle" />
+                                <input type="text" value={invoiceData.address} onChange={e => setInvoiceData({...invoiceData, address: e.target.value})} className="w-full bg-brand-dark rounded-lg p-2.5 text-white border border-border-subtle text-sm" />
                             </div>
-                            <div className="grid grid-cols-2 gap-4">
-                                <div>
-                                    <label className="text-xs text-brand-gold-muted uppercase block mb-1">Email</label>
-                                    <input type="text" value={invoiceData.email} onChange={e => setInvoiceData({...invoiceData, email: e.target.value})} className="w-full bg-brand-dark rounded-lg p-3 text-white border border-border-subtle" />
+                            <div>
+                                <label className="text-xs text-brand-gold-muted uppercase block mb-1">Email</label>
+                                <input type="text" value={invoiceData.email} onChange={e => setInvoiceData({...invoiceData, email: e.target.value})} className="w-full bg-brand-dark rounded-lg p-2.5 text-white border border-border-subtle text-sm" />
+                            </div>
+                            <div>
+                                <label className="text-xs text-brand-gold-muted uppercase block mb-1">Teléfono</label>
+                                <input type="text" value={invoiceData.phone} onChange={e => setInvoiceData({...invoiceData, phone: e.target.value})} className="w-full bg-brand-dark rounded-lg p-2.5 text-white border border-border-subtle text-sm" />
+                            </div>
+                        </div>
+
+                        {/* Line items editor */}
+                        <div className="mb-4">
+                            <div className="flex justify-between items-center mb-3">
+                                <h4 className="text-xs text-brand-gold-muted uppercase tracking-wider font-bold">Líneas de Factura</h4>
+                                <button onClick={() => setInvoiceItems([...invoiceItems, { description: '', quantity: '1', unitPrice: '' }])} className="text-xs px-3 py-1.5 bg-brand-gold/20 text-brand-gold rounded-lg hover:bg-brand-gold/30 transition-colors font-medium">
+                                    + Añadir línea
+                                </button>
+                            </div>
+
+                            {/* Header */}
+                            <div className="grid grid-cols-12 gap-2 mb-2 text-[10px] text-brand-gold-muted uppercase tracking-wider px-1">
+                                <div className="col-span-6">Descripción</div>
+                                <div className="col-span-2 text-center">Cantidad</div>
+                                <div className="col-span-2 text-right">Precio/ud. (€)</div>
+                                <div className="col-span-1 text-right">Total</div>
+                                <div className="col-span-1"></div>
+                            </div>
+
+                            {/* Rows */}
+                            <div className="space-y-2">
+                                {invoiceItems.map((item, idx) => {
+                                    const rowTotal = (parseFloat(item.quantity) || 0) * (parseFloat(item.unitPrice) || 0);
+                                    return (
+                                        <div key={idx} className="grid grid-cols-12 gap-2 items-center">
+                                            <input
+                                                className="col-span-6 bg-brand-dark border border-border-subtle rounded p-2 text-sm text-white focus:border-brand-gold outline-none"
+                                                placeholder="Descripción del servicio"
+                                                value={item.description}
+                                                onChange={e => { const n=[...invoiceItems]; n[idx]={...n[idx], description: e.target.value}; setInvoiceItems(n); }}
+                                            />
+                                            <input
+                                                className="col-span-2 bg-brand-dark border border-border-subtle rounded p-2 text-sm text-white text-center focus:border-brand-gold outline-none"
+                                                placeholder="1"
+                                                type="number"
+                                                min="0"
+                                                step="1"
+                                                value={item.quantity}
+                                                onChange={e => { const n=[...invoiceItems]; n[idx]={...n[idx], quantity: e.target.value}; setInvoiceItems(n); }}
+                                            />
+                                            <input
+                                                className="col-span-2 bg-brand-dark border border-border-subtle rounded p-2 text-sm text-white text-right focus:border-brand-gold outline-none"
+                                                placeholder="0.00"
+                                                type="number"
+                                                min="0"
+                                                step="0.01"
+                                                value={item.unitPrice}
+                                                onChange={e => { const n=[...invoiceItems]; n[idx]={...n[idx], unitPrice: e.target.value}; setInvoiceItems(n); }}
+                                            />
+                                            <div className="col-span-1 text-right text-sm font-bold text-brand-gold">{rowTotal.toFixed(2)}€</div>
+                                            <button onClick={() => setInvoiceItems(invoiceItems.filter((_,i) => i !== idx))} className="col-span-1 text-red-400 hover:text-red-300 text-center text-lg leading-none">✕</button>
+                                        </div>
+                                    );
+                                })}
+
+                                {invoiceItems.length === 0 && (
+                                    <div className="text-center py-6 text-brand-gold-muted text-sm border border-dashed border-border-subtle rounded-lg">
+                                        Pulsa &quot;+ Añadir línea&quot; para agregar una partida
+                                    </div>
+                                )}
+                            </div>
+                        </div>
+
+                        {/* Totals preview */}
+                        <div className="flex justify-end mb-6">
+                            <div className="w-64 text-sm space-y-1">
+                                <div className="flex justify-between text-brand-gold-muted">
+                                    <span>Base Imponible</span>
+                                    <span className="text-white font-medium">{computedSubtotal.toFixed(2)}€</span>
                                 </div>
-                                <div>
-                                    <label className="text-xs text-brand-gold-muted uppercase block mb-1">Teléfono</label>
-                                    <input type="text" value={invoiceData.phone} onChange={e => setInvoiceData({...invoiceData, phone: e.target.value})} className="w-full bg-brand-dark rounded-lg p-3 text-white border border-border-subtle" />
+                                <div className="flex justify-between text-brand-gold-muted">
+                                    <span>IVA (21%)</span>
+                                    <span className="text-white font-medium">{computedIva.toFixed(2)}€</span>
+                                </div>
+                                <div className="flex justify-between text-brand-gold font-bold text-base border-t border-border-subtle pt-2">
+                                    <span>TOTAL</span>
+                                    <span>{computedTotal.toFixed(2)}€</span>
                                 </div>
                             </div>
                         </div>
 
-                        <div className="flex justify-end gap-3 mt-8">
-                            <button onClick={() => setShowInvoiceModal(false)} className="px-4 py-2 border border-border-subtle rounded-lg text-brand-gold-muted">Cancelar</button>
-                            <button disabled={isFacturando} onClick={async () => {
+                        <div className="flex justify-end gap-3">
+                            <button onClick={() => setShowInvoiceModal(false)} className="px-4 py-2 border border-border-subtle rounded-lg text-brand-gold-muted hover:text-white transition-colors">Cancelar</button>
+                            <button disabled={isFacturando || invoiceItems.length === 0} onClick={async () => {
                                 if(!invoiceData.cif || !invoiceData.razonSocial) return alert('CIF y Razón Social son obligatorios');
+                                if(invoiceItems.length === 0) return alert('Añade al menos una línea');
                                 setIsFacturando(true);
                                 try {
-                                    // If all costs are 0 it's a manual quote — use notes as single item description
-                                    const hasCosts = Number(selectedQuote.cable_cost) > 0 || Number(selectedQuote.points_cost) > 0 || Number(selectedQuote.work_cost) > 0;
-                                    const instName = selectedQuote.installation_type || 'ceiling';
-                                    const items = hasCosts ? [
-                                        { description: 'Cableado ' + (selectedQuote.cable_type || ''), quantity: (selectedQuote.cable_meters || 0) + 'm', unitPrice: '-', total: Number(selectedQuote.cable_cost).toFixed(2) + '€' },
-                                        { description: 'Puntos de Red', quantity: String(selectedQuote.network_points || 0), unitPrice: '-', total: Number(selectedQuote.points_cost).toFixed(2) + '€' },
-                                        { description: 'Tendido de cable (' + instName + ')', quantity: (selectedQuote.cable_meters || 0) + 'm', unitPrice: '-', total: Number(selectedQuote.installation_cost).toFixed(2) + '€' },
-                                        { description: 'Mano de obra (operarios y técnicos)', quantity: 'Global', unitPrice: '-', total: Number(selectedQuote.work_cost).toFixed(2) + '€' }
-                                    ] : [
-                                        { description: selectedQuote.notes || 'Servicios técnicos según acuerdo', quantity: '1', unitPrice: Number(Number(selectedQuote.total) / 1.21).toFixed(2) + '€', total: Number(Number(selectedQuote.total) / 1.21).toFixed(2) + '€' }
-                                    ];
-                            
+                                    const finalItems = invoiceItems.map(it => ({
+                                        description: it.description,
+                                        quantity: it.quantity,
+                                        unitPrice: parseFloat(it.unitPrice).toFixed(2) + '€',
+                                        total: ((parseFloat(it.quantity)||0) * (parseFloat(it.unitPrice)||0)).toFixed(2) + '€'
+                                    }));
+
                                     const res = await fetch('/api/invoice/create', {
                                         method: 'POST',
                                         headers: { 'Content-Type': 'application/json' },
@@ -1404,35 +1504,35 @@ export default function AdminDashboard({ initialQuotes, initialLeads, initialMat
                                             address: invoiceData.address,
                                             email: invoiceData.email,
                                             phone: invoiceData.phone,
-                                            total_data: { subtotal: selectedQuote.subtotal, iva: selectedQuote.iva, total: selectedQuote.total, items }
+                                            total_data: { subtotal: computedSubtotal.toFixed(2), iva: computedIva.toFixed(2), total: computedTotal.toFixed(2), items: finalItems }
                                         })
                                     });
                                     const r = await res.json();
-                                    
+
                                     if(r.success) {
                                         const pdfData: InvoicePDFData = {
                                             invoiceNumber: r.invoice_number ?? 21,
                                             date: new Date().toLocaleDateString('es-ES'),
                                             client: { razonSocial: invoiceData.razonSocial, cif: invoiceData.cif, address: invoiceData.address, email: invoiceData.email, phone: invoiceData.phone },
-                                            items,
-                                            subtotal: Number(selectedQuote.subtotal).toFixed(2) + '€',
-                                            iva: Number(selectedQuote.iva).toFixed(2) + '€',
-                                            total: Number(selectedQuote.total).toFixed(2) + '€',
-                                            notes: "Pago realizable mediante transferencia bancaria.\nGracias por su confianza."
+                                            items: finalItems,
+                                            subtotal: computedSubtotal.toFixed(2) + '€',
+                                            iva: computedIva.toFixed(2) + '€',
+                                            total: computedTotal.toFixed(2) + '€',
+                                            notes: 'Pago realizable mediante transferencia bancaria.\nGracias por su confianza.'
                                         };
                                         await downloadInvoicePDF(pdfData);
                                         setShowInvoiceModal(false);
-                                        setSelectedQuote(null);
                                     } else { alert('Error: ' + r.error); }
                                 } catch(e) { alert('Server error'); }
                                 setIsFacturando(false);
-                            }} className="px-6 py-2 bg-emerald-600 font-bold text-white rounded-lg">
-                                {isFacturando ? 'Generando...' : 'Generar PDF'}
+                            }} className={`px-6 py-2.5 bg-emerald-600 font-bold text-white rounded-lg transition-opacity ${(isFacturando || invoiceItems.length === 0) ? 'opacity-40 cursor-not-allowed' : 'hover:bg-emerald-500'}`}>
+                                {isFacturando ? 'Generando...' : '📄 Generar Factura PDF'}
                             </button>
                         </div>
                     </div>
                 </div>
-            )}
+                );
+            })()}
         </div>
     );
 }
