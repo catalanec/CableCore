@@ -14,10 +14,11 @@ interface AdminDashboardProps {
     initialMaterials: any[];
     initialProjects: any[];
     initialTasks?: any[];
+    initialInvoices?: any[];
 }
 
 /* Tab types */
-type Tab = 'overview' | 'quotes' | 'leads' | 'pipeline' | 'materials' | 'projects' | 'tasks';
+type Tab = 'overview' | 'quotes' | 'leads' | 'pipeline' | 'materials' | 'projects' | 'tasks' | 'facturas';
 
 const STATUS_COLORS: Record<string, string> = {
     pending: 'bg-yellow-400/10 text-yellow-400',
@@ -35,7 +36,7 @@ const STATUS_COLORS: Record<string, string> = {
     in_progress: 'bg-amber-400/10 text-amber-400',
 };
 
-export default function AdminDashboard({ initialQuotes, initialLeads, initialMaterials, initialProjects, initialTasks = [] }: AdminDashboardProps) {
+export default function AdminDashboard({ initialQuotes, initialLeads, initialMaterials, initialProjects, initialTasks = [], initialInvoices = [] }: AdminDashboardProps) {
     const locale = useLocale();
     const [activeTab, setActiveTab] = useState<Tab>('overview');
     const [searchTerm, setSearchTerm] = useState('');
@@ -47,6 +48,7 @@ export default function AdminDashboard({ initialQuotes, initialLeads, initialMat
     const [isFacturando, setIsFacturando] = useState(false);
     const [invoiceData, setInvoiceData] = useState({ razonSocial: '', cif: '', address: '', email: '', phone: '' });
     const [invoiceItems, setInvoiceItems] = useState<Array<{description: string; quantity: string; unitPrice: string}>>([]);
+    const [invoices, setInvoices] = useState<any[]>(initialInvoices);
     const [categoryFilter, setCategoryFilter] = useState('all');
     const [chartPeriod, setChartPeriod] = useState(6);
     const [newMat, setNewMat] = useState({ name: '', category: 'cable', unit: 'm', cost_price: 0, sell_price: 0, stock: 0, min_stock: 5 });
@@ -163,6 +165,7 @@ export default function AdminDashboard({ initialQuotes, initialLeads, initialMat
         { id: 'quotes', label: 'Presupuestos', icon: '📋' },
         { id: 'materials', label: 'Materiales', icon: '📦' },
         { id: 'projects', label: 'Proyectos', icon: '🏗️' },
+        { id: 'facturas', label: 'Facturas', icon: '🧾' },
     ];
 
     return (
@@ -1360,6 +1363,91 @@ export default function AdminDashboard({ initialQuotes, initialLeads, initialMat
                 </div>
             )}
 
+            {/* ═══════ FACTURAS ═══════ */}
+            {activeTab === 'facturas' && (
+                <div className="card border-brand-gold/10 overflow-hidden">
+                    <div className="p-6 border-b border-border-subtle flex items-center justify-between">
+                        <h3 className="font-heading font-semibold text-white">🧾 Facturas emitidas</h3>
+                        <div className="flex items-center gap-3 text-xs text-brand-gold-muted">
+                            <span>Total: {invoices.length}</span>
+                            <span>Facturado: {invoices.reduce((s, inv) => s + Number(inv.total_data?.total || 0), 0).toFixed(2)}€</span>
+                        </div>
+                    </div>
+
+                    {invoices.length === 0 ? (
+                        <div className="p-12 text-center text-brand-gold-muted">
+                            <div className="text-4xl mb-4">🧾</div>
+                            <p>Aún no has emitido ninguna factura.</p>
+                            <p className="text-xs mt-2">Ve a Presupuestos → VER → Convertir a Factura</p>
+                        </div>
+                    ) : (
+                        <div className="overflow-x-auto">
+                            <table className="w-full text-sm">
+                                <thead>
+                                    <tr className="border-b border-border-subtle text-brand-gold-muted text-xs uppercase tracking-wider">
+                                        <th className="text-left p-4">Nº Factura</th>
+                                        <th className="text-left p-4">Cliente</th>
+                                        <th className="text-left p-4">CIF/NIF</th>
+                                        <th className="text-left p-4">Dirección</th>
+                                        <th className="text-right p-4">Total</th>
+                                        <th className="text-right p-4">Fecha</th>
+                                        <th className="text-center p-4">PDF</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {invoices.map(inv => (
+                                        <tr key={inv.id} className="border-b border-border-subtle/50 hover:bg-[rgba(201,168,76,0.03)] transition-colors">
+                                            <td className="p-4 text-brand-gold font-mono font-bold">
+                                                #{String(inv.invoice_number).padStart(5,'0')}
+                                            </td>
+                                            <td className="p-4">
+                                                <div className="font-medium text-white">{inv.razon_social}</div>
+                                                {inv.email && <div className="text-xs text-brand-gold-muted">{inv.email}</div>}
+                                            </td>
+                                            <td className="p-4 text-brand-gold-muted text-xs font-mono">{inv.cif}</td>
+                                            <td className="p-4 text-brand-gold-muted text-xs">{inv.address || '—'}</td>
+                                            <td className="p-4 text-right font-bold text-brand-gold">
+                                                {Number(inv.total_data?.total || 0).toFixed(2)}€
+                                            </td>
+                                            <td className="p-4 text-right text-brand-gold-muted text-xs">
+                                                {new Date(inv.created_at).toLocaleDateString('es-ES')}
+                                            </td>
+                                            <td className="p-4 text-center">
+                                                <button
+                                                    onClick={() => {
+                                                        const td = inv.total_data || {};
+                                                        const pdfData: InvoicePDFData = {
+                                                            invoiceNumber: inv.invoice_number,
+                                                            date: new Date(inv.created_at).toLocaleDateString('es-ES'),
+                                                            client: {
+                                                                razonSocial: inv.razon_social,
+                                                                cif: inv.cif,
+                                                                address: inv.address || '',
+                                                                email: inv.email || '',
+                                                                phone: inv.phone || '',
+                                                            },
+                                                            items: td.items || [{ description: 'Servicios técnicos', quantity: '1', unitPrice: td.subtotal + '€', total: td.subtotal + '€' }],
+                                                            subtotal: td.subtotal + '€',
+                                                            iva: td.iva + '€',
+                                                            total: td.total + '€',
+                                                            notes: 'Pago realizable mediante transferencia bancaria.\nGracias por su confianza.',
+                                                        };
+                                                        downloadInvoicePDF(pdfData);
+                                                    }}
+                                                    className="text-xs px-3 py-1.5 bg-brand-gold/10 text-brand-gold rounded-lg hover:bg-brand-gold/20 transition-colors font-medium"
+                                                >
+                                                    📄 Reimprimir
+                                                </button>
+                                            </td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                            </table>
+                        </div>
+                    )}
+                </div>
+            )}
+
             {/* Factura Modal */}
             {showInvoiceModal && selectedQuote && (() => {
                 const ivaPct = 0.21;
@@ -1521,6 +1609,18 @@ export default function AdminDashboard({ initialQuotes, initialLeads, initialMat
                                             notes: 'Pago realizable mediante transferencia bancaria.\nGracias por su confianza.'
                                         };
                                         await downloadInvoicePDF(pdfData);
+                                        // Update local invoices list so Facturas tab shows it immediately
+                                        setInvoices(prev => [{
+                                            id: r.invoice_id || Date.now(),
+                                            invoice_number: r.invoice_number ?? 21,
+                                            razon_social: invoiceData.razonSocial,
+                                            cif: invoiceData.cif,
+                                            address: invoiceData.address,
+                                            email: invoiceData.email,
+                                            phone: invoiceData.phone,
+                                            total_data: { subtotal: computedSubtotal.toFixed(2), iva: computedIva.toFixed(2), total: computedTotal.toFixed(2), items: finalItems },
+                                            created_at: new Date().toISOString(),
+                                        }, ...prev]);
                                         setShowInvoiceModal(false);
                                     } else { alert('Error: ' + r.error); }
                                 } catch(e) { alert('Server error'); }

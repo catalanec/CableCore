@@ -27,7 +27,7 @@ export async function POST(request: NextRequest) {
             email: data.email || null,
             phone: data.phone || null,
             total_data: data.total_data || {}
-        }).select('invoice_number').single();
+        }).select('id, invoice_number').single();
 
         if (error) {
             console.error('Supabase error inserting invoice:', error);
@@ -39,7 +39,7 @@ export async function POST(request: NextRequest) {
             await supabase.from('quotes').update({ is_invoiced: true, status: 'approved' }).eq('id', data.quote_id);
         }
 
-        return NextResponse.json({ success: true, invoice_number: invoiceData.invoice_number });
+        return NextResponse.json({ success: true, invoice_number: invoiceData.invoice_number, invoice_id: invoiceData.id });
     } catch (error) {
         console.error('API error:', error);
         return NextResponse.json({ error: 'Server error' }, { status: 500 });

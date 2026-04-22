@@ -38,6 +38,7 @@ export default async function AdminPage({ params: { locale } }: { params: { loca
     let materials: any[] = [];
     let projects: any[] = [];
     let tasks: any[] = [];
+    let invoices: any[] = [];
 
     const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
     const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
@@ -45,12 +46,13 @@ export default async function AdminPage({ params: { locale } }: { params: { loca
     if (supabaseUrl && supabaseKey) {
         const supabase = createClient(supabaseUrl, supabaseKey);
         
-        const [qRes, lRes, mRes, pRes, tRes] = await Promise.all([
+        const [qRes, lRes, mRes, pRes, tRes, invRes] = await Promise.all([
             supabase.from('quotes').select('*').order('created_at', { ascending: false }),
             supabase.from('leads').select('*').order('created_at', { ascending: false }),
             supabase.from('materials').select('*').order('name', { ascending: true }),
             supabase.from('projects').select('*').order('created_at', { ascending: false }),
             supabase.from('tasks').select('*').order('due_date', { ascending: true }),
+            supabase.from('invoices').select('*').order('invoice_number', { ascending: false }),
         ]);
 
         quotes = qRes.data || [];
@@ -58,6 +60,7 @@ export default async function AdminPage({ params: { locale } }: { params: { loca
         materials = mRes.data || [];
         projects = pRes.data || [];
         tasks = tRes.data || [];
+        invoices = invRes.data || [];
     }
 
     return (
@@ -80,6 +83,7 @@ export default async function AdminPage({ params: { locale } }: { params: { loca
                             initialMaterials={materials} 
                             initialProjects={projects}
                             initialTasks={tasks}
+                            initialInvoices={invoices}
                         />
                     </div>
                 </section>
