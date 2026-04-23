@@ -1195,6 +1195,7 @@ export default function AdminDashboard({ initialQuotes, initialLeads, initialMat
                                     setInvoiceItems([{ description: '', quantity: '1', unitPrice: '' }]);
                                 }
                                 setShowInvoiceModal(true);
+                                setSelectedQuote(null); // Close quote modal to avoid z-index overlap
                             }} className="px-4 py-2.5 bg-emerald-600 text-white font-bold rounded-lg hover:bg-emerald-500 transition-colors flex items-center gap-2">
                                 🧾 Convertir a Factura
                             </button>
@@ -1602,8 +1603,8 @@ export default function AdminDashboard({ initialQuotes, initialLeads, initialMat
                             </div>
                         </div>
 
-                        <div className="flex justify-end gap-3">
-                            <button onClick={() => setShowInvoiceModal(false)} className="px-4 py-2 border border-border-subtle rounded-lg text-brand-gold-muted hover:text-white transition-colors">Cancelar</button>
+                        <div className="flex flex-wrap justify-end gap-3 pt-2">
+                            <button onClick={() => setShowInvoiceModal(false)} className="px-5 py-2.5 border border-border-subtle rounded-lg text-brand-gold-muted hover:text-white transition-colors whitespace-nowrap">Cancelar</button>
                             <button disabled={isFacturando || invoiceItems.length === 0} onClick={async () => {
                                 if(!invoiceData.cif || !invoiceData.razonSocial) return alert('CIF y Razón Social son obligatorios');
                                 if(invoiceItems.length === 0) return alert('Añade al menos una línea');
@@ -1659,7 +1660,7 @@ export default function AdminDashboard({ initialQuotes, initialLeads, initialMat
                                     } else { alert('Error: ' + r.error); }
                                 } catch(e) { alert('Server error'); }
                                 setIsFacturando(false);
-                            }} className={`px-6 py-2.5 bg-emerald-600 font-bold text-white rounded-lg transition-opacity ${(isFacturando || invoiceItems.length === 0) ? 'opacity-40 cursor-not-allowed' : 'hover:bg-emerald-500'}`}>
+                            }} className={`px-6 py-2.5 bg-emerald-600 font-bold text-white rounded-lg transition-opacity whitespace-nowrap ${(isFacturando || invoiceItems.length === 0) ? 'opacity-40 cursor-not-allowed' : 'hover:bg-emerald-500'}`}>
                                 {isFacturando ? 'Generando...' : '📄 Generar Factura PDF'}
                             </button>
                         </div>
