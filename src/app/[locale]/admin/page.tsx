@@ -66,7 +66,7 @@ export default async function AdminPage({ params: { locale } }: { params: { loca
     return (
         <>
             <Header />
-            <main className="min-h-screen relative z-10 pt-20">
+            <main className="min-h-screen pt-20">
                 <section className="py-12 lg:py-16">
                     <div className="container-custom">
                         <div className="text-center max-w-2xl mx-auto mb-10">

@@ -24,7 +24,7 @@ export default function Footer() {
     const tn = useTranslations('nav');
 
     return (
-        <footer className="bg-brand-dark border-t border-border-subtle relative z-10">
+        <footer className="bg-brand-dark border-t border-border-subtle">
             <div className="container-custom py-16">
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
                     {/* Brand */}
