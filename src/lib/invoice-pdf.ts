@@ -170,21 +170,25 @@ export function generateInvoiceHTML(data: InvoicePDFData): string {
 </html>`;
 }
 
-export async function downloadInvoicePDF(data: InvoicePDFData): Promise<void> {
+export function downloadInvoicePDF(data: InvoicePDFData): void {
     const html = generateInvoiceHTML(data);
 
-    // Open printable window
+    // Open printable window — must be called synchronously from user event
     const printWindow = window.open('', '_blank');
     if (!printWindow) {
         alert('Por favor, permite los popups para descargar la factura.');
         return;
     }
 
+    printWindow.document.open();
     printWindow.document.write(html);
     printWindow.document.close();
 
-    // Auto-trigger print dialog (Save as PDF)
-    setTimeout(() => {
-        printWindow.print();
-    }, 500);
+    // Auto-trigger print dialog after content loads
+    printWindow.addEventListener('load', () => {
+        setTimeout(() => {
+            printWindow.focus();
+            printWindow.print();
+        }, 300);
+    });
 }

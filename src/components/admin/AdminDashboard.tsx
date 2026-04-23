@@ -1640,7 +1640,7 @@ export default function AdminDashboard({ initialQuotes, initialLeads, initialMat
                                             total: computedTotal.toFixed(2) + '€',
                                             notes: 'Pago realizable mediante transferencia bancaria.\nGracias por su confianza.'
                                         };
-                                        await downloadInvoicePDF(pdfData);
+                                        downloadInvoicePDF(pdfData);
                                         // Update local invoices list so Facturas tab shows it immediately
                                         setInvoices(prev => [{
                                             id: r.invoice_id || Date.now(),
