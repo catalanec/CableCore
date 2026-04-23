@@ -1071,12 +1071,13 @@ export default function AdminDashboard({ initialQuotes, initialLeads, initialMat
             {/* Quote Modal Overlay */}
             {selectedQuote && (
                 <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
-                    <div className="bg-surface-card border border-brand-gold/30 rounded-xl w-full max-w-3xl max-h-[90vh] overflow-y-auto shadow-2xl">
+                    <div className="bg-surface-card border border-brand-gold/30 rounded-xl w-full max-w-3xl flex flex-col shadow-2xl" style={{maxHeight: '90vh'}}>
                         <div className="flex justify-between items-center p-6 border-b border-border-subtle sticky top-0 bg-surface-card z-10">
                             <h3 className="text-xl font-heading font-bold text-white">Detalles del Presupuesto <span className="text-brand-gold text-sm font-mono ml-2">#{selectedQuote.id.slice(0, 8)}</span></h3>
                             <button onClick={() => setSelectedQuote(null)} className="text-gray-400 hover:text-white transition-colors">✕</button>
                         </div>
-                        <div className="p-6 grid grid-cols-1 md:grid-cols-2 gap-6 text-sm">
+                        {/* Scrollable content */}
+                        <div className="p-6 grid grid-cols-1 md:grid-cols-2 gap-6 text-sm overflow-y-auto flex-1">
                             <div className="space-y-4">
                                 <div>
                                     <h4 className="text-brand-gold-muted text-xs uppercase mb-2">Cliente</h4>
@@ -1126,7 +1127,8 @@ export default function AdminDashboard({ initialQuotes, initialLeads, initialMat
                                 </div>
                             </div>
                         </div>
-                        <div className="p-6 border-t border-border-subtle bg-black/20 flex justify-end gap-4">
+                        {/* Sticky action bar — always visible */}
+                        <div className="p-4 border-t border-border-subtle bg-black/20 flex flex-wrap justify-end gap-3 flex-shrink-0">
                             <button onClick={() => {
                                 const installTitles: Record<string, string> = {
                                     external: 'Superficial',
