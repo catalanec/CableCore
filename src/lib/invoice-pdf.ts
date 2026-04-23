@@ -43,6 +43,19 @@ export function generateInvoiceHTML(data: InvoicePDFData): string {
 
     const formattedInvoiceNum = formatInvoiceNumber(data.invoiceNumber);
 
+    // Calculate due date: invoice date + 60 days
+    const parseDateES = (dateStr: string): Date => {
+        const parts = dateStr.split('/');
+        if (parts.length === 3) {
+            return new Date(Number(parts[2]), Number(parts[1]) - 1, Number(parts[0]));
+        }
+        return new Date(dateStr);
+    };
+    const invoiceDate = parseDateES(data.date);
+    const dueDate = new Date(invoiceDate);
+    dueDate.setDate(dueDate.getDate() + 60);
+    const dueDateStr = dueDate.toLocaleDateString('es-ES');
+
     return `
 <!DOCTYPE html>
 <html>
@@ -71,6 +84,7 @@ export function generateInvoiceHTML(data: InvoicePDFData): string {
         <div style="color: #8B6914; font-size: 17px; font-weight: 700; margin-bottom: 4px;">FACTURA</div>
         <div>Nº ${formattedInvoiceNum}</div>
         <div>Fecha: ${data.date}</div>
+        <div style="color: #c0392b; font-weight: 600;">Vencimiento: ${dueDateStr}</div>
       </div>
     </div>
 
