@@ -1,5 +1,214 @@
 [
   {
+    "slug": "rack-de-servidores-domestico-guia-de-inicio",
+    "date": "2026-04-24",
+    "readTime": "7 min",
+    "es": {
+      "title": "Rack de Servidores Doméstico: Guía de Inicio",
+      "metaTitle": "Guía Completa para Rack de Servidores Doméstico",
+      "metaDescription": "Descubre cómo configurar un rack de servidores en casa, optimizando el espacio y la eficiencia. Aprende sobre los componentes esenciales y su instalación.",
+      "excerpt": "Aprende a montar un rack de servidores en casa con nuestra guía completa que abarca desde la selección de equipos hasta la instalación y mantenimiento.",
+      "category": "Guías",
+      "tags": [
+        "redes",
+        "servidores",
+        "tecnología"
+      ],
+      "content": [
+        {
+          "type": "h2",
+          "text": "¿Qué es un Rack de Servidores?"
+        },
+        {
+          "type": "p",
+          "text": "Un rack de servidores es una estructura diseñada para alojar y organizar equipos de red y servidores. Proporciona un espacio eficiente y seguro para el hardware, permitiendo una mejor gestión del cableado y la ventilación."
+        },
+        {
+          "type": "h2",
+          "text": "Beneficios de Usar un Rack en Casa"
+        },
+        {
+          "type": "p",
+          "text": "Instalar un rack de servidores en casa tiene múltiples ventajas, tales como: "
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Optimización del espacio",
+            "Mejor gestión del calor",
+            "Facilidad de acceso a los equipos",
+            "Organización del cableado"
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "Componentes Esenciales para tu Rack"
+        },
+        {
+          "type": "p",
+          "text": "Algunos de los componentes que deberías considerar al montar tu rack incluyen: switches, servidores, unidades de almacenamiento y sistemas de refrigeración."
+        },
+        {
+          "type": "h2",
+          "text": "Guía de Instalación Paso a Paso"
+        },
+        {
+          "type": "p",
+          "text": "Para instalar un rack de servidores, sigue estos pasos: "
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Selecciona el lugar adecuado",
+            "Mide el espacio disponible",
+            "Compra un rack adecuado",
+            "Instala los equipos y conexiones"
+          ]
+        },
+        {
+          "type": "tip",
+          "text": "💡 Asegúrate de mantener una buena ventilación y acceso a fuentes de energía."
+        }
+      ]
+    },
+    "en": {
+      "title": "Home Server Rack: Getting Started Guide",
+      "metaTitle": "Complete Guide to Home Server Racks",
+      "metaDescription": "Learn how to set up a home server rack, optimizing space and efficiency. Discover essential components and installation tips.",
+      "excerpt": "Get started with building a home server rack with our comprehensive guide covering everything from equipment selection to installation and maintenance.",
+      "category": "Guides",
+      "tags": [
+        "networking",
+        "servers",
+        "technology"
+      ],
+      "content": [
+        {
+          "type": "h2",
+          "text": "What is a Server Rack?"
+        },
+        {
+          "type": "p",
+          "text": "A server rack is a structure designed to house and organize network equipment and servers. It provides an efficient and secure space for hardware, allowing for better cable management and ventilation."
+        },
+        {
+          "type": "h2",
+          "text": "Benefits of Using a Rack at Home"
+        },
+        {
+          "type": "p",
+          "text": "Installing a server rack at home has multiple advantages, such as: "
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Space optimization",
+            "Better heat management",
+            "Ease of access to equipment",
+            "Cable organization"
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "Essential Components for Your Rack"
+        },
+        {
+          "type": "p",
+          "text": "Some components to consider when building your rack include: switches, servers, storage units, and cooling systems."
+        },
+        {
+          "type": "h2",
+          "text": "Step-by-Step Installation Guide"
+        },
+        {
+          "type": "p",
+          "text": "To install a server rack, follow these steps: "
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Select the right location",
+            "Measure available space",
+            "Purchase an appropriate rack",
+            "Install equipment and connections"
+          ]
+        },
+        {
+          "type": "tip",
+          "text": "💡 Ensure proper ventilation and access to power sources."
+        }
+      ]
+    },
+    "ru": {
+      "title": "Домашний серверный шкаф: руководство для начинающих",
+      "metaTitle": "Полное руководство по домашним серверным шкафам",
+      "metaDescription": "Узнайте, как настроить домашний серверный шкаф, оптимизируя пространство и эффективность. Откройте для себя основные компоненты и советы по установке.",
+      "excerpt": "Начните с создания домашнего серверного шкафа с нашим комплексным руководством, охватывающим все, от выбора оборудования до установки и обслуживания.",
+      "category": "Руководства",
+      "tags": [
+        "сети",
+        "серверы",
+        "технологии"
+      ],
+      "content": [
+        {
+          "type": "h2",
+          "text": "Что такое серверный шкаф?"
+        },
+        {
+          "type": "p",
+          "text": "Серверный шкаф — это конструкция, предназначенная для размещения и организации сетевого оборудования и серверов. Он обеспечивает эффективное и безопасное пространство для аппаратного обеспечения, позволяя лучше управлять кабелями и вентиляцией."
+        },
+        {
+          "type": "h2",
+          "text": "Преимущества использования шкафа дома"
+        },
+        {
+          "type": "p",
+          "text": "Установка серверного шкафа дома имеет множество преимуществ, таких как: "
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Оптимизация пространства",
+            "Лучшее управление теплом",
+            "Легкий доступ к оборудованию",
+            "Организация кабелей"
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "Основные компоненты для вашего шкафа"
+        },
+        {
+          "type": "p",
+          "text": "Некоторые компоненты, которые следует учитывать при сборке вашего шкафа, включают: коммутаторы, серверы, устройства хранения и системы охлаждения."
+        },
+        {
+          "type": "h2",
+          "text": "Пошаговое руководство по установке"
+        },
+        {
+          "type": "p",
+          "text": "Чтобы установить серверный шкаф, выполните следующие шаги: "
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Выберите подходящее место",
+            "Измерьте доступное пространство",
+            "Приобретите подходящий шкаф",
+            "Установите оборудование и подключения"
+          ]
+        },
+        {
+          "type": "tip",
+          "text": "💡 Обеспечьте хорошую вентиляцию и доступ к источникам питания."
+        }
+      ]
+    }
+  },
+  {
     "slug": "diferencia-entre-utp-ftp-y-stp-en-entornos-ruidosos",
     "date": "2026-04-17",
     "readTime": "7 min",
