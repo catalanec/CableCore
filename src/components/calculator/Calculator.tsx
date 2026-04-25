@@ -461,6 +461,18 @@ export default function Calculator({ locale }: { locale: string }) {
     const [urgency, setUrgency] = useState('normal');
     const [customItems, setCustomItems] = useState<Array<{ id: string; name: string; qty: number; price: number }>>([]);
 
+    // ── Per-point materials (keystone, roseta) — editable ──
+    const [pointMaterials, setPointMaterials] = useState<Record<string, { enabled: boolean; qty: number; price: number; name: string; icon: string }>>({ 
+        keystone: { enabled: true, qty: 2, price: 6, name: 'Keystone', icon: '🔌' },
+        socket:   { enabled: true, qty: 1, price: 10, name: 'Roseta', icon: '🔲' },
+    });
+    const [pointMaterialsEditing, setPointMaterialsEditing] = useState(false);
+    const [pointCustomMats, setPointCustomMats] = useState<Array<{ id: string; name: string; qty: number; price: number; enabled: boolean }>>([]);
+    const addPointCustomMat = () => setPointCustomMats(prev => [...prev, { id: crypto.randomUUID(), name: '', qty: 1, price: 0, enabled: true }]);
+    const removePointCustomMat = (id: string) => setPointCustomMats(prev => prev.filter(m => m.id !== id));
+    const updatePointCustomMat = (id: string, field: string, value: string | number | boolean) =>
+        setPointCustomMats(prev => prev.map(m => m.id === id ? { ...m, [field]: value } : m));
+
 
     const addCustomItem = () => setCustomItems(prev => [...prev, { id: crypto.randomUUID(), name: '', qty: 1, price: 0 }]);
     const removeCustomItem = (id: string) => setCustomItems(prev => prev.filter(i => i.id !== id));
@@ -516,8 +528,10 @@ export default function Calculator({ locale }: { locale: string }) {
         }
         const canetaCost = canetaLength * CONFIG.materials.trunking;
 
-        // 5. Материалы на точку (автоматически)
-        const materialsPerPoint = (2 * CONFIG.materials.keystone) + CONFIG.materials.socket;
+        // 5. Материалы на точку (настраиваемые)
+        const materialsPerPoint =
+            Object.values(pointMaterials).reduce((s, m) => s + (m.enabled ? m.qty * m.price : 0), 0) +
+            pointCustomMats.filter(m => m.enabled).reduce((s, m) => s + m.qty * m.price, 0);
         const materialsCost = materialsPerPoint * points;
 
         // 6. Доп материалы (ручной ввод количества)
@@ -581,7 +595,7 @@ export default function Calculator({ locale }: { locale: string }) {
             equipmentCost, rackCost, upsellCost, customItemsCost, subtotal, discountPercent, discount,
             urgencyOption, afterUrgency, iva, total,
         };
-    }, [cableType, points, avgLength, installType, trenchMode, trenchLengthInput, canetaMode, canetaLengthInput, additionalMaterials, patchPanelCounts, equipment, equipmentCustom, rack, rackCustom, upsellOptions, urgency, customItems]);
+    }, [cableType, points, avgLength, installType, trenchMode, trenchLengthInput, canetaMode, canetaLengthInput, additionalMaterials, patchPanelCounts, equipment, equipmentCustom, rack, rackCustom, upsellOptions, urgency, customItems, pointMaterials, pointCustomMats]);
 
     const installationDisabled = points === 0 && avgLength === 0;
 
@@ -844,6 +858,148 @@ export default function Calculator({ locale }: { locale: string }) {
                         )}
                     </div>
                 )}
+
+                {/* ══ PER-POINT MATERIALS EDITOR ══ */}
+                <div className="card p-6">
+                    <div className="flex items-center justify-between mb-3">
+                        <h3 className="font-heading font-semibold text-white flex items-center gap-2">
+                            🔌 {locale === 'ru' ? 'Материалы на точку' : locale === 'en' ? 'Materials per point' : 'Materiales por punto'}
+                        </h3>
+                        <button
+                            onClick={() => setPointMaterialsEditing(e => !e)}
+                            className={`text-xs px-3 py-1.5 rounded-lg border transition-colors ${
+                                pointMaterialsEditing
+                                    ? 'border-brand-gold bg-[rgba(201,168,76,0.1)] text-brand-gold'
+                                    : 'border-border-subtle text-brand-gold-muted hover:border-brand-gold/30'
+                            }`}
+                        >
+                            {pointMaterialsEditing
+                                ? (locale === 'ru' ? '✅ Готово' : locale === 'en' ? '✅ Done' : '✅ Listo')
+                                : (locale === 'ru' ? '✏️ Редактировать' : locale === 'en' ? '✏️ Edit' : '✏️ Personalizar')}
+                        </button>
+                    </div>
+                    <p className="text-xs text-brand-gold-muted mb-4">
+                        {locale === 'ru'
+                            ? 'Компоненты включаемые автоматически в каждую точку сети. Отключайте если клиент оставляет старые розетки.'
+                            : locale === 'en'
+                            ? 'Components automatically included in each network point. Disable if the client keeps existing outlets.'
+                            : 'Componentes incluidos automáticamente en cada punto de red. Desactívalos si el cliente reutiliza las rosetas existentes.'}
+                    </p>
+
+                    <div className="space-y-2">
+                        {/* Default items: keystone + socket */}
+                        {Object.entries(pointMaterials).map(([key, mat]) => (
+                            <div key={key} className={`flex items-center gap-3 p-3 rounded-lg border transition-all ${
+                                mat.enabled ? 'border-brand-gold/40 bg-[rgba(201,168,76,0.06)]' : 'border-border-subtle bg-surface-card opacity-60'
+                            }`}>
+                                {/* Toggle */}
+                                <button
+                                    onClick={() => setPointMaterials(prev => ({ ...prev, [key]: { ...prev[key], enabled: !prev[key].enabled } }))}
+                                    className={`w-5 h-5 rounded flex-shrink-0 border-2 flex items-center justify-center transition-colors ${
+                                        mat.enabled ? 'bg-brand-gold border-brand-gold text-black' : 'border-border-subtle'
+                                    }`}
+                                >
+                                    {mat.enabled && <span className="text-xs font-bold leading-none">✓</span>}
+                                </button>
+                                <span className="text-lg flex-shrink-0">{mat.icon}</span>
+                                {pointMaterialsEditing ? (
+                                    <>
+                                        <input
+                                            type="text" value={mat.name}
+                                            onChange={e => setPointMaterials(prev => ({ ...prev, [key]: { ...prev[key], name: e.target.value } }))}
+                                            className="flex-1 text-sm bg-brand-dark border border-border-subtle rounded px-2 py-1 text-white focus:outline-none focus:border-brand-gold/50"
+                                        />
+                                        <div className="flex items-center gap-1 flex-shrink-0">
+                                            <span className="text-xs text-brand-gold-muted">×</span>
+                                            <input type="number" value={mat.qty} min={1}
+                                                onChange={e => setPointMaterials(prev => ({ ...prev, [key]: { ...prev[key], qty: Number(e.target.value) } }))}
+                                                className="w-12 text-center text-sm bg-brand-dark border border-border-subtle rounded px-1 py-1 text-brand-gold focus:outline-none focus:border-brand-gold/50"
+                                            />
+                                            <input type="number" value={mat.price} min={0} step={0.5}
+                                                onChange={e => setPointMaterials(prev => ({ ...prev, [key]: { ...prev[key], price: Number(e.target.value) } }))}
+                                                className="w-16 text-right text-sm bg-brand-dark border border-border-subtle rounded px-1 py-1 text-brand-gold focus:outline-none focus:border-brand-gold/50"
+                                            />
+                                            <span className="text-xs text-brand-gold-muted">€</span>
+                                        </div>
+                                    </>
+                                ) : (
+                                    <>
+                                        <div className="flex-1">
+                                            <div className={`text-sm font-medium ${mat.enabled ? 'text-white' : 'text-brand-gold-muted line-through'}`}>{mat.name}</div>
+                                            <div className="text-xs text-brand-gold-muted">{mat.qty} ud × {mat.price}€</div>
+                                        </div>
+                                        <div className={`text-sm font-bold tabular-nums ${ mat.enabled ? 'text-brand-gold' : 'text-brand-gold-muted'}`}>
+                                            {(mat.qty * mat.price).toFixed(2)}€/pto
+                                        </div>
+                                    </>
+                                )}
+                            </div>
+                        ))}
+
+                        {/* Custom per-point items */}
+                        {pointCustomMats.map(mat => (
+                            <div key={mat.id} className={`flex items-center gap-2 p-3 rounded-lg border transition-all ${
+                                mat.enabled ? 'border-brand-gold/40 bg-[rgba(201,168,76,0.06)]' : 'border-border-subtle bg-surface-card opacity-60'
+                            }`}>
+                                <button
+                                    onClick={() => updatePointCustomMat(mat.id, 'enabled', !mat.enabled)}
+                                    className={`w-5 h-5 rounded flex-shrink-0 border-2 flex items-center justify-center transition-colors ${
+                                        mat.enabled ? 'bg-brand-gold border-brand-gold text-black' : 'border-border-subtle'
+                                    }`}
+                                >
+                                    {mat.enabled && <span className="text-xs font-bold leading-none">✓</span>}
+                                </button>
+                                <input type="text" value={mat.name}
+                                    placeholder={locale === 'ru' ? 'Описание' : locale === 'en' ? 'Description' : 'Descripción'}
+                                    onChange={e => updatePointCustomMat(mat.id, 'name', e.target.value)}
+                                    className="flex-1 text-sm bg-brand-dark border border-border-subtle rounded px-2 py-1 text-white focus:outline-none focus:border-brand-gold/50"
+                                />
+                                <div className="flex items-center gap-1 flex-shrink-0">
+                                    <span className="text-xs text-brand-gold-muted">×</span>
+                                    <input type="number" value={mat.qty} min={1}
+                                        onChange={e => updatePointCustomMat(mat.id, 'qty', Number(e.target.value))}
+                                        className="w-12 text-center text-sm bg-brand-dark border border-border-subtle rounded px-1 py-1 text-brand-gold focus:outline-none focus:border-brand-gold/50"
+                                    />
+                                    <input type="number" value={mat.price} min={0} step={0.5}
+                                        onChange={e => updatePointCustomMat(mat.id, 'price', Number(e.target.value))}
+                                        className="w-16 text-right text-sm bg-brand-dark border border-border-subtle rounded px-1 py-1 text-brand-gold focus:outline-none focus:border-brand-gold/50"
+                                    />
+                                    <span className="text-xs text-brand-gold-muted">€</span>
+                                </div>
+                                <button onClick={() => removePointCustomMat(mat.id)} className="text-red-400 hover:text-red-300 text-sm flex-shrink-0">✕</button>
+                            </div>
+                        ))}
+
+                        {/* Add custom item button */}
+                        <button
+                            onClick={addPointCustomMat}
+                            className="w-full mt-1 py-2 rounded-lg border border-dashed border-brand-gold/30 text-brand-gold-muted text-xs hover:border-brand-gold/60 hover:text-brand-gold transition-colors"
+                        >
+                            {locale === 'ru' ? '➕ Добавить материал на точку' : locale === 'en' ? '➕ Add per-point material' : '➕ Añadir material por punto'}
+                        </button>
+
+                        {/* Summary */}
+                        {points > 0 && (
+                            <div className="flex justify-between items-center pt-2 border-t border-border-subtle text-xs">
+                                <span className="text-brand-gold-muted">
+                                    {locale === 'ru' ? `${points} pts × ` : `${points} pts × `}
+                                    {(
+                                        Object.values(pointMaterials).reduce((s, m) => s + (m.enabled ? m.qty * m.price : 0), 0) +
+                                        pointCustomMats.filter(m => m.enabled).reduce((s, m) => s + m.qty * m.price, 0)
+                                    ).toFixed(2)}€/pto
+                                </span>
+                                <span className="text-brand-gold font-bold">
+                                    = {(
+                                        points * (
+                                            Object.values(pointMaterials).reduce((s, m) => s + (m.enabled ? m.qty * m.price : 0), 0) +
+                                            pointCustomMats.filter(m => m.enabled).reduce((s, m) => s + m.qty * m.price, 0)
+                                        )
+                                    ).toFixed(2)}€
+                                </span>
+                            </div>
+                        )}
+                    </div>
+                </div>
 
                 {/* Additional Materials */}
                 <div className="card p-6">
