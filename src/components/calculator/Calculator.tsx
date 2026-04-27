@@ -21,12 +21,12 @@ const CONFIG = {
     },
     /* Стоимость прокладки кабеля за метр (физическая протяжка) */
     routingPricePerMeter: {
-        external: 3,       // наружная прокладка по кабель-каналу
-        ceiling: 5,        // через подвесной потолок
-        existing_wall: 8,  // через существующие каналы в стене
-        new_wall: 10,      // прокладка в новой штробе
-        industrial: 12,    // промышленные помещения (высота, сложность)
-        trays: 7,          // лотки / бандежи
+        external: 2,       // наружная прокладка по кабель-каналу
+        ceiling: 4,        // через подвесной потолок
+        existing_wall: 5,  // через существующие каналы в стене
+        new_wall: 8,       // прокладка в новой штробе
+        industrial: 9,     // промышленные помещения (высота, сложность)
+        trays: 5,          // лотки / бандежи
     },
     trenchPricePerMeter: 45,
     materials: { keystone: 6, socket: 10, trunking: 4, pvc: 2, corrugated: 1, patchPanel12: 40, patchPanel24: 65, patchPanel48: 100, laborHour: 60 },
