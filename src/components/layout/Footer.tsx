@@ -1,4 +1,4 @@
-import { useTranslations } from 'next-intl';
+import { useTranslations, useLocale } from 'next-intl';
 import { Link } from '@/i18n/routing';
 import Image from 'next/image';
 
@@ -31,6 +31,7 @@ const serviceAreas = [
 export default function Footer() {
     const t = useTranslations('footer');
     const tn = useTranslations('nav');
+    const locale = useLocale();
 
     return (
         <footer className="bg-brand-dark border-t border-border-subtle">
@@ -89,7 +90,9 @@ export default function Footer() {
 
                     {/* Areas de Servicio (Zonas) */}
                     <div>
-                        <h4 className="font-heading font-semibold text-white mb-4">Zonas</h4>
+                        <h4 className="font-heading font-semibold text-white mb-4">
+                            {locale === 'es' ? 'Zonas' : locale === 'en' ? 'Coverage Areas' : 'Обслуживание'}
+                        </h4>
                         <ul className="space-y-2.5">
                             {serviceAreas.map((area) => (
                                 <li key={area.label}>

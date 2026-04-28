@@ -147,10 +147,14 @@ export default function ServiciosPage() {
                     <div className="container-custom">
                         <div className="text-center mb-12">
                             <h2 className="font-heading text-2xl sm:text-3xl font-bold mb-4">
-                                Catálogo de Servicios y Zonas
+                                {locale === 'es' ? 'Catálogo de Servicios y Zonas' : locale === 'en' ? 'Services & Coverage Catalog' : 'Каталог Услуг и Зон Покрытия'}
                             </h2>
                             <p className="text-brand-gold-muted max-w-2xl mx-auto">
-                                Explora todas nuestras áreas de cobertura y servicios específicos de instalación de red y fibra óptica en la provincia de Barcelona.
+                                {locale === 'es' 
+                                    ? 'Explora todas nuestras áreas de cobertura y servicios específicos de instalación de red y fibra óptica en la provincia de Barcelona.'
+                                    : locale === 'en'
+                                    ? 'Explore all our coverage areas and specific network and fiber optic installation services in the province of Barcelona.'
+                                    : 'Изучите все наши зоны обслуживания и специализированные услуги по установке сетей и оптоволокна в провинции Барселона.'}
                             </p>
                         </div>
                         
