@@ -5,6 +5,7 @@ import Footer from '@/components/layout/Footer';
 import { Link } from '@/i18n/routing';
 import { generatePageMetadata } from '@/lib/seo-metadata';
 import Breadcrumbs from '@/components/seo/Breadcrumbs';
+import { getAllPages } from '@/lib/seo-data';
 
 export function generateMetadata({ params }: { params: { locale: string } }): Metadata {
     return generatePageMetadata('servicios', params.locale, '/servicios');
@@ -63,6 +64,8 @@ export default function ServiciosPage() {
         ru: { home: 'Главная', services: 'Услуги' },
     };
     const bc = breadcrumbLabels[locale] || breadcrumbLabels.es;
+
+    const seoPages = getAllPages(locale);
 
     return (
         <>
@@ -133,6 +136,36 @@ export default function ServiciosPage() {
                                     </div>
                                 );
                             })}
+                        </div>
+                    </div>
+                </section>
+
+                <div className="gold-divider" />
+
+                {/* ═══════════════ SEO SITEMAP / HUB ═══════════════ */}
+                <section className="py-20 bg-black/[0.2]">
+                    <div className="container-custom">
+                        <div className="text-center mb-12">
+                            <h2 className="font-heading text-2xl sm:text-3xl font-bold mb-4">
+                                Catálogo de Servicios y Zonas
+                            </h2>
+                            <p className="text-brand-gold-muted max-w-2xl mx-auto">
+                                Explora todas nuestras áreas de cobertura y servicios específicos de instalación de red y fibra óptica en la provincia de Barcelona.
+                            </p>
+                        </div>
+                        
+                        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                            {seoPages.map((page) => (
+                                <Link
+                                    key={page.slug}
+                                    href={`/servicios/${page.slug}`}
+                                    className="bg-surface-card border border-border-subtle p-4 rounded-lg hover:border-brand-gold/30 hover:bg-white/[0.03] transition-all group"
+                                >
+                                    <h3 className="text-sm font-semibold text-white group-hover:text-brand-gold transition-colors line-clamp-2">
+                                        {page.title.split(' | ')[0]}
+                                    </h3>
+                                </Link>
+                            ))}
                         </div>
                     </div>
                 </section>

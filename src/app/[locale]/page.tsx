@@ -1,5 +1,6 @@
 import { Metadata } from 'next';
 import { useTranslations } from 'next-intl';
+import { Link } from '@/i18n/routing';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import Image from 'next/image';
@@ -32,9 +33,16 @@ export default function HomePage() {
     }>;
 
     const cities = [
-        'Barcelona', 'Hospitalet de Llobregat', 'Badalona', 'Sabadell',
-        'Terrassa', 'Mataró', 'Granollers', 'Cornellà de Llobregat',
-        'Sant Cugat del Vallès', 'El Prat de Llobregat',
+        { name: 'Barcelona', href: '/servicios/instalacion-red-barcelona' },
+        { name: 'L\\'Hospitalet', href: '/servicios/instalacion-red-hospitalet' },
+        { name: 'Badalona', href: '/servicios/instalacion-red-badalona' },
+        { name: 'Sabadell', href: '/servicios/instalacion-red-sabadell' },
+        { name: 'Terrassa', href: '/servicios/instalacion-red-terrassa' },
+        { name: 'Mataró', href: '/servicios/instalacion-red-mataro' },
+        { name: 'Granollers', href: '/servicios/instalacion-red-granollers' },
+        { name: 'Cornellà', href: '/servicios/instalacion-red-cornella' },
+        { name: 'Sant Cugat', href: '/servicios/instalacion-red-sant-cugat' },
+        { name: 'Sant Boi', href: '/servicios/instalacion-red-sant-boi' },
     ];
 
     const faqJsonLd = getFAQJsonLd([
@@ -286,9 +294,15 @@ export default function HomePage() {
 
                         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-3 mb-10">
                             {cities.map((city) => (
-                                <div key={city} className="card p-4 text-center">
-                                    <span className="text-sm text-brand-gold-muted">📍 {city}</span>
-                                </div>
+                                <Link 
+                                    key={city.name} 
+                                    href={city.href}
+                                    className="card p-4 text-center hover:bg-white/[0.04] transition-all group"
+                                >
+                                    <span className="text-sm text-brand-gold-muted group-hover:text-brand-gold transition-colors">
+                                        📍 {city.name}
+                                    </span>
+                                </Link>
                             ))}
                         </div>
 

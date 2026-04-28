@@ -1,8 +1,10 @@
 'use client';
 
 import { useLocale } from 'next-intl';
+import { Link } from '@/i18n/routing';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
+import { getAllPages } from '@/lib/seo-data';
 
 interface SEOPageData {
     slug: string;
@@ -219,6 +221,28 @@ export default function SEOLandingPage({ data }: { data: SEOPageData }) {
                             <a href={`/${locale}/calculator`} className="btn-outline justify-center px-8 py-4 text-base">
                                 🧮 {cl.quote}
                             </a>
+                        </div>
+                    </div>
+                </section>
+
+                {/* Zonas / Internal Linking Cloud */}
+                <section className="py-12 bg-black/[0.2] border-t border-border-subtle">
+                    <div className="container-custom max-w-5xl mx-auto text-center">
+                        <h3 className="text-sm font-semibold text-brand-gold-muted mb-4 uppercase tracking-widest">
+                            {locale === 'es' ? 'Descubre más servicios y zonas' : locale === 'en' ? 'Discover more services and areas' : 'Другие услуги и зоны'}
+                        </h3>
+                        <div className="flex flex-wrap justify-center gap-3">
+                            {getAllPages(locale).map((page) => (
+                                data.slug !== page.slug && (
+                                    <Link
+                                        key={page.slug}
+                                        href={`/servicios/${page.slug}`}
+                                        className="text-xs text-gray-400 hover:text-brand-gold bg-white/[0.03] hover:bg-white/[0.08] px-3 py-1.5 rounded-full transition-colors border border-white/[0.05]"
+                                    >
+                                        {page.title.split(' | ')[0]}
+                                    </Link>
+                                )
+                            ))}
                         </div>
                     </div>
                 </section>

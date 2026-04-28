@@ -19,6 +19,15 @@ const companyLinks = [
     { href: '/calculator', key: 'calculator' },
 ];
 
+const serviceAreas = [
+    { href: '/servicios/instalacion-red-barcelona', label: 'Barcelona' },
+    { href: '/servicios/instalacion-red-badalona', label: 'Badalona' },
+    { href: '/servicios/instalacion-red-hospitalet', label: "L'Hospitalet" },
+    { href: '/servicios/instalacion-red-sabadell', label: 'Sabadell' },
+    { href: '/servicios/instalacion-red-terrassa', label: 'Terrassa' },
+    { href: '/servicios/instalacion-red-mataro', label: 'Mataró' },
+];
+
 export default function Footer() {
     const t = useTranslations('footer');
     const tn = useTranslations('nav');
@@ -26,7 +35,7 @@ export default function Footer() {
     return (
         <footer className="bg-brand-dark border-t border-border-subtle">
             <div className="container-custom py-16">
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8 lg:gap-10">
                     {/* Brand */}
                     <div className="lg:col-span-1">
                         <Link href="/" className="flex items-center mb-4">
@@ -72,6 +81,20 @@ export default function Footer() {
                                 <li key={item.key}>
                                     <Link href={item.href} className="text-sm text-brand-gold-muted hover:text-brand-gold transition-colors">
                                         {tn(item.key)}
+                                    </Link>
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+
+                    {/* Areas de Servicio (Zonas) */}
+                    <div>
+                        <h4 className="font-heading font-semibold text-white mb-4">Zonas</h4>
+                        <ul className="space-y-2.5">
+                            {serviceAreas.map((area) => (
+                                <li key={area.label}>
+                                    <Link href={area.href} className="text-sm text-brand-gold-muted hover:text-brand-gold transition-colors">
+                                        {area.label}
                                     </Link>
                                 </li>
                             ))}
