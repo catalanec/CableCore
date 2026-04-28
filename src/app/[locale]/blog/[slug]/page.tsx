@@ -16,15 +16,18 @@ export function generateMetadata({ params }: { params: { slug: string; locale: s
     const article = articles.find((a) => a.slug === params.slug);
     if (!article) return {};
 
+    const BASE_URL = 'https://cablecore.es';
+
     return {
         title: article.metaTitle,
         description: article.metaDescription,
         alternates: {
+            canonical: `${BASE_URL}/${params.locale}/blog/${article.slug}`,
             languages: {
-                'es': `/es/blog/${article.slug}`,
-                'en': `/en/blog/${article.slug}`,
-                'ru': `/ru/blog/${article.slug}`,
-                'x-default': `/es/blog/${article.slug}`,
+                'es-ES': `${BASE_URL}/es/blog/${article.slug}`,
+                'en-US': `${BASE_URL}/en/blog/${article.slug}`,
+                'ru-RU': `${BASE_URL}/ru/blog/${article.slug}`,
+                'x-default': `${BASE_URL}/es/blog/${article.slug}`,
             },
         },
     };
