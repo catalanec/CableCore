@@ -34,7 +34,7 @@ export default function HomePage() {
 
     const cities = [
         { name: 'Barcelona', href: '/servicios/instalacion-red-barcelona' },
-        { name: 'L\\'Hospitalet', href: '/servicios/instalacion-red-hospitalet' },
+        { name: "L'Hospitalet", href: '/servicios/instalacion-red-hospitalet' },
         { name: 'Badalona', href: '/servicios/instalacion-red-badalona' },
         { name: 'Sabadell', href: '/servicios/instalacion-red-sabadell' },
         { name: 'Terrassa', href: '/servicios/instalacion-red-terrassa' },
