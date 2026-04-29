@@ -197,7 +197,8 @@ export function generatePageMetadata(pageKey: string, locale: string, path: stri
 export function getLocalBusinessJsonLd() {
     return {
         '@context': 'https://schema.org',
-        '@type': 'ElectricalContractor',
+        '@type': 'LocalBusiness',
+        additionalType: 'https://schema.org/ElectricalContractor',
         '@id': `${BASE_URL}/#organization`,
         name: SITE_NAME,
         alternateName: 'CableCore Barcelona',
