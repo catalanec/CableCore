@@ -19,7 +19,7 @@ export const SEO_PAGES_ES: SEOPageConfig[] = [
             { icon: '🏠', title: 'Hogares y oficinas', text: 'Soluciones de cableado adaptadas a espacios residenciales y empresariales.' },
             { icon: '📋', title: 'Presupuesto gratis', text: 'Visita técnica y presupuesto detallado sin compromiso.' },
             { icon: '⚡', title: 'Instalación rápida', text: 'Instalamos tu red en el menor tiempo posible con mínimas molestias.' },
-            { icon: '✅', title: 'Certificación', text: 'Todas las instalaciones se certifican y testean para garantizar el rendimiento.' },
+            { icon: '✅', title: 'Comprobación', text: 'Todas las instalaciones se testean para garantizar el rendimiento.' },
             { icon: '🛡️', title: 'Garantía', text: 'Garantía en mano de obra y materiales para tu tranquilidad.' },
         ],
         faq: [
@@ -33,8 +33,8 @@ export const SEO_PAGES_ES: SEOPageConfig[] = [
         title: 'Cableado Estructurado Barcelona | CableCore',
         h1: 'Cableado estructurado profesional en Barcelona',
         h2s: ['Ventajas del cableado estructurado', 'Nuestro proceso', 'Preguntas frecuentes'],
-        intro: 'Diseño e instalación de cableado estructurado para empresas en Barcelona. Red organizada, escalable y certificada para oficinas, comercios y naves industriales.',
-        metaDescription: 'Cableado estructurado en Barcelona. Diseño, instalación y certificación de redes para empresas. Presupuesto gratis. ☎ +34 605 974 605',
+        intro: 'Diseño e instalación de cableado estructurado para empresas en Barcelona. Red organizada, escalable y testeada para oficinas, comercios y naves industriales.',
+        metaDescription: 'Cableado estructurado en Barcelona. Diseño, instalación y comprobación de redes para empresas. Presupuesto gratis. ☎ +34 605 974 605',
         cta: '¿Necesitas cableado estructurado en Barcelona?',
         features: [
             { icon: '🏗️', title: 'Diseño a medida', text: 'Diseñamos la infraestructura de red adaptada a tu espacio y necesidades.' },
@@ -42,7 +42,7 @@ export const SEO_PAGES_ES: SEOPageConfig[] = [
             { icon: '📈', title: 'Escalabilidad', text: 'Red preparada para crecer con tu negocio sin necesidad de rehacer la instalación.' },
             { icon: '🔧', title: 'Mantenimiento', text: 'Fácil identificación y gestión de puntos gracias a un etiquetado profesional.' },
             { icon: '🏭', title: 'Todos los sectores', text: 'Oficinas, comercios, hoteles, clínicas, naves industriales y más.' },
-            { icon: '📊', title: 'Certificación Fluke', text: 'Testeo y certificación de cada punto con equipos profesionales.' },
+            { icon: '📊', title: 'Testeo Profesional', text: 'Testeo de cada punto con equipos profesionales.' },
         ],
         faq: [
             { q: '¿Qué es el cableado estructurado?', a: 'Es un sistema de cableado organizado y estandarizado que permite gestionar voz, datos y vídeo de forma eficiente en un edificio.' },
@@ -63,7 +63,7 @@ export const SEO_PAGES_ES: SEOPageConfig[] = [
             { icon: '💰', title: 'Mejor relación calidad-precio', text: 'Cable Cat6 al mejor precio con instalación profesional incluida.' },
             { icon: '🏠', title: 'Ideal para hogar', text: 'Perfecto para domicilios que quieren conexión estable y rápida.' },
             { icon: '📡', title: 'Compatible WiFi 6', text: 'Base perfecta para routers WiFi 6 y puntos de acceso.' },
-            { icon: '🔌', title: 'RJ45 certificado', text: 'Todos los puntos certificados y testeados por nuestros técnicos.' },
+            { icon: '🔌', title: 'RJ45 testeo', text: 'Todos los puntos verificados y testeados por nuestros técnicos.' },
             { icon: '🛠️', title: 'Instalación limpia', text: 'Canaleta, falso techo o empotrado según tu preferencia.' },
         ],
         faq: [
@@ -77,7 +77,7 @@ export const SEO_PAGES_ES: SEOPageConfig[] = [
         h1: 'Instalación de cable Cat6A en Barcelona',
         h2s: ['Ventajas del Cat6A', 'Proceso de instalación', 'Preguntas frecuentes'],
         intro: 'Instalación profesional de cableado Cat6A en Barcelona. Velocidad de 10 Gbps, apantallado, ideal para empresas que exigen alto rendimiento de red.',
-        metaDescription: 'Instalación Cat6A en Barcelona. Cable 10Gbps apantallado para empresas. Instalador profesional certificado. ☎ +34 605 974 605',
+        metaDescription: 'Instalación Cat6A en Barcelona. Cable 10Gbps apantallado para empresas. Instalador profesional. ☎ +34 605 974 605',
         cta: '¿Necesitas Cat6A para tu empresa?',
         features: [
             { icon: '🚀', title: 'Hasta 10 Gbps', text: '10 veces más rápido que Cat6 estándar para grandes transferencias de datos.' },
@@ -85,7 +85,7 @@ export const SEO_PAGES_ES: SEOPageConfig[] = [
             { icon: '🏢', title: 'Ideal para empresas', text: 'La elección preferida para oficinas medianas y grandes.' },
             { icon: '📊', title: 'Futuro-proof', text: 'Preparado para tecnologías como WiFi 6E, PoE++ y 10GbE.' },
             { icon: '🏥', title: 'Sectores exigentes', text: 'Perfecto para clínicas, estudios de diseño y empresas tech.' },
-            { icon: '✅', title: 'Certificación', text: 'Certificamos cada punto hasta 500 MHz con equipos profesionales.' },
+            { icon: '✅', title: 'Testeo', text: 'Comprobamos cada punto hasta 500 MHz con equipos profesionales.' },
         ],
         faq: [
             { q: '¿Merece la pena Cat6A frente a Cat6?', a: 'Si tu empresa maneja grandes volúmenes de datos o planeas crecer en los próximos 5-10 años, Cat6A es una inversión inteligente.' },
@@ -118,7 +118,7 @@ export const SEO_PAGES_ES: SEOPageConfig[] = [
         title: 'Instalador RJ45 Barcelona | CableCore',
         h1: 'Instalador de conectores RJ45 en Barcelona',
         h2s: ['Servicio profesional RJ45', 'Proceso', 'FAQ'],
-        intro: 'Instalación y certificación de conectores RJ45 en Barcelona. Crimpado profesional, colocación de rosetas y testeo de cada punto de red.',
+        intro: 'Instalación y comprobación de conectores RJ45 en Barcelona. Crimpado profesional, colocación de rosetas y testeo de cada punto de red.',
         metaDescription: 'Instalador RJ45 en Barcelona. Crimpado profesional, rosetas y testeo. Servicio rápido y garantizado. ☎ +34 605 974 605',
         cta: '¿Necesitas un instalador RJ45?',
         features: [
@@ -127,10 +127,10 @@ export const SEO_PAGES_ES: SEOPageConfig[] = [
             { icon: '📐', title: 'Cat5e a Cat7', text: 'Trabajamos con todas las categorías de cable Ethernet.' },
             { icon: '🏠', title: 'Domicilio y empresa', text: 'Servicio a domicilio para hogares, oficinas y naves.' },
             { icon: '⚡', title: 'Servicio rápido', text: 'Instalación de puntos RJ45 en el día en Barcelona.' },
-            { icon: '✅', title: 'Garantía', text: 'Garantía en cada punto instalado y certificado.' },
+            { icon: '✅', title: 'Garantía', text: 'Garantía en cada punto instalado y comprobado.' },
         ],
         faq: [
-            { q: '¿Cuánto cuesta instalar un punto RJ45?', a: 'Un punto RJ45 instalado y certificado cuesta desde 15€ (solo conector) hasta 45-85€ (punto completo con cable y roseta).' },
+            { q: '¿Cuánto cuesta instalar un punto RJ45?', a: 'Un punto RJ45 instalado y comprobado cuesta desde 15€ (solo conector) hasta 45-85€ (punto completo con cable y roseta).' },
         ],
     },
     {
@@ -210,7 +210,7 @@ export const SEO_PAGES_ES: SEOPageConfig[] = [
             { icon: '📐', title: 'Cat6/Cat6A/Cat7', text: 'Patch panels de 12, 24 y 48 puertos para cualquier categoría.' },
             { icon: '🏷️', title: 'Etiquetado', text: 'Sistema de etiquetado profesional para fácil identificación.' },
             { icon: '🗄️', title: 'Integración rack', text: 'Compatible con racks estándar 19" de pared y suelo.' },
-            { icon: '✅', title: 'Certificación', text: 'Cada puerto terminado y certificado con tester profesional.' },
+            { icon: '✅', title: 'Comprobación', text: 'Cada puerto terminado y comprobado con tester profesional.' },
         ],
         faq: [
             { q: '¿Qué es un patch panel?', a: 'Es un panel que centraliza todas las conexiones de red. Los cables del edificio llegan al panel y se conectan con latiguillos cortos al switch.' },
@@ -235,7 +235,7 @@ export const SEO_PAGES_ES: SEOPageConfig[] = [
             { icon: '🏠', title: 'Hogares', text: 'Red Ethernet para teletrabajo, gaming y streaming 4K. Desde 180€ por 2 puntos instalados.' },
             { icon: '🏭', title: 'Naves industriales', text: 'Cableado industrial con protección IP para fábricas, almacenes y centros logísticos.' },
             { icon: '📍', title: 'Toda Barcelona', text: 'Cubrimos Barcelona ciudad, Badalona, Hospitalet, Sabadell, Terrassa y todo el área metropolitana.' },
-            { icon: '✅', title: 'Garantía 5 años', text: 'Todas las instalaciones con certificación Fluke y garantía de 5 años en materiales y mano de obra.' },
+            { icon: '✅', title: 'Garantía 5 años', text: 'Todas las instalaciones con comprobación profesional y garantía de 5 años en materiales y mano de obra.' },
         ],
         faq: [
             { q: '¿Cuánto cuesta instalar red en Barcelona?', a: 'Desde 95€ por punto Cat6 instalado. Una oficina de 10 puestos desde 1.500€. Pide presupuesto gratis sin compromiso.' },
@@ -258,7 +258,7 @@ export const SEO_PAGES_ES: SEOPageConfig[] = [
             { icon: '🏢', title: 'Oficinas y comercios', text: "Cableado estructurado para las zonas empresariales de L'Hospitalet: Gran Via, Fira y Zona Franca." },
             { icon: '🏠', title: 'Pisos y viviendas', text: 'Red Ethernet en tu domicilio para teletrabajo, gaming y streaming sin interrupciones.' },
             { icon: '⚡', title: 'Cat6 / Cat6A / Cat7', text: 'Instalamos cualquier categoría de cable según tus necesidades y presupuesto.' },
-            { icon: '✅', title: 'Certificación completa', text: 'Cada punto de red testado y certificado con equipo profesional.' },
+            { icon: '✅', title: 'Comprobación completa', text: 'Cada punto de red testado con equipo profesional.' },
             { icon: '📋', title: 'Presupuesto gratis', text: 'Visita técnica y presupuesto detallado sin compromiso en 24h.' },
         ],
         faq: [
@@ -301,7 +301,7 @@ export const SEO_PAGES_ES: SEOPageConfig[] = [
             { icon: '🏢', title: 'Oficinas centro', text: 'Cableado estructurado para oficinas en el centro de Sabadell y zona Eix Macià.' },
             { icon: '🏠', title: 'Hogares', text: 'Red Ethernet para teletrabajo y entretenimiento en viviendas de Sabadell.' },
             { icon: '📋', title: 'Presupuesto gratis', text: 'Visita técnica en Sabadell y presupuesto detallado sin compromiso.' },
-            { icon: '✅', title: 'Certificación', text: 'Todos los puntos de red certificados con equipo Fluke profesional.' },
+            { icon: '✅', title: 'Comprobación', text: 'Todos los puntos de red testados con equipo profesional.' },
         ],
         faq: [
             { q: '¿Hacéis instalaciones en Sabadell?', a: 'Sí, cubrimos Sabadell y todo el Vallès Occidental. Servicio profesional con los mismos precios que en Barcelona.' },
@@ -313,7 +313,7 @@ export const SEO_PAGES_ES: SEOPageConfig[] = [
         title: 'Instalación Red Terrassa | CableCore',
         h1: 'Instalación de red en Terrassa',
         h2s: ['Servicios en Terrassa', 'Proceso', 'Preguntas frecuentes'],
-        intro: 'Instalación profesional de cable de red en Terrassa. Cableado estructurado para empresas, oficinas y hogares. Cat6, Cat6A y Cat7 con certificación incluida.',
+        intro: 'Instalación profesional de cable de red en Terrassa. Cableado estructurado para empresas, oficinas y hogares. Cat6, Cat6A y Cat7 con comprobación incluida.',
         metaDescription: 'Instalación de red en Terrassa. Cableado estructurado Cat6/Cat6A/Cat7 profesional. Presupuesto gratis. ☎ +34 605 974 605',
         cta: '¿Necesitas red en Terrassa?',
         features: [
@@ -355,7 +355,7 @@ export const SEO_PAGES_ES: SEOPageConfig[] = [
         title: 'Instalación Red Cornellà de Llobregat | CableCore',
         h1: 'Instalación de red en Cornellà de Llobregat',
         h2s: ['Servicios en Cornellà', 'Proceso', 'Preguntas frecuentes'],
-        intro: 'Instalación de red en Cornellà de Llobregat. Cableado Ethernet profesional para empresas del Baix Llobregat. Cat6, Cat6A y Cat7 con certificación.',
+        intro: 'Instalación de red en Cornellà de Llobregat. Cableado Ethernet profesional para empresas del Baix Llobregat. Cat6, Cat6A y Cat7 con testeo incluido.',
         metaDescription: 'Instalación de red en Cornellà de Llobregat. Cableado Ethernet profesional Cat6/Cat6A/Cat7. ☎ +34 605 974 605',
         cta: '¿Necesitas red en Cornellà?',
         features: [
@@ -375,7 +375,7 @@ export const SEO_PAGES_ES: SEOPageConfig[] = [
         title: 'Instalación Red Sant Boi de Llobregat | CableCore',
         h1: 'Instalación de red en Sant Boi de Llobregat',
         h2s: ['Servicios en Sant Boi', 'Proceso', 'Preguntas frecuentes'],
-        intro: 'Instalación de redes en Sant Boi de Llobregat. Cableado estructurado Ethernet para hogares y negocios en el Baix Llobregat. Técnicos certificados.',
+        intro: 'Instalación de redes en Sant Boi de Llobregat. Cableado estructurado Ethernet para hogares y negocios en el Baix Llobregat. Técnicos expertos.',
         metaDescription: 'Instalación de red en Sant Boi de Llobregat. Cableado Ethernet Cat6/Cat6A/Cat7 profesional. ☎ +34 605 974 605',
         cta: '¿Necesitas red en Sant Boi?',
         features: [
@@ -384,7 +384,7 @@ export const SEO_PAGES_ES: SEOPageConfig[] = [
             { icon: '🏠', title: 'Residencial', text: 'Puntos de red en pisos y casas para teletrabajo y entretenimiento.' },
             { icon: '📡', title: 'WiFi profesional', text: 'Eliminamos zonas sin cobertura con puntos de acceso cableados.' },
             { icon: '📋', title: 'Presupuesto gratis', text: 'Evaluación técnica y presupuesto sin compromiso.' },
-            { icon: '✅', title: 'Garantía', text: 'Instalaciones garantizadas con certificación de cada punto.' },
+            { icon: '✅', title: 'Garantía', text: 'Instalaciones garantizadas con comprobación de cada punto.' },
         ],
         faq: [
             { q: '¿Instaláis en Sant Boi de Llobregat?', a: 'Sí, cubrimos Sant Boi y toda la zona del Baix Llobregat sur.' },
@@ -425,7 +425,7 @@ export const SEO_PAGES_ES: SEOPageConfig[] = [
             { icon: '🏢', title: 'Oficinas', text: 'Red estructurada para despachos y oficinas en el centro de Mataró.' },
             { icon: '🏠', title: 'Domicilios', text: 'Instalación Ethernet en viviendas para mejorar tu conexión a Internet.' },
             { icon: '⚡', title: 'Rápido', text: 'Presupuesto en 24h. Instalaciones en 1-3 días según complejidad.' },
-            { icon: '📊', title: 'Certificación Fluke', text: 'Medición y certificación profesional de todos los puntos de red.' },
+            { icon: '📊', title: 'Testeo profesional', text: 'Medición y comprobación profesional de todos los puntos de red.' },
         ],
         faq: [
             { q: '¿Llegáis hasta Mataró?', a: 'Sí, cubrimos toda la comarca del Maresme desde Badalona hasta Mataró y más allá.' },
@@ -462,19 +462,19 @@ export const SEO_PAGES_ES: SEOPageConfig[] = [
         title: 'Instalación de Fibra Óptica Barcelona | CableCore',
         h1: 'Instalación de fibra óptica en Barcelona',
         h2s: ['¿Por qué instalar fibra óptica?', 'Tipos de instalación', 'Preguntas frecuentes'],
-        intro: 'Servicio profesional de instalación de fibra óptica en Barcelona. Fusión por arco, cableado monomodo y multimodo, rosetas SC/APC y certificación OTDR. Para empresas, edificios residenciales y comunidades de vecinos.',
-        metaDescription: 'Instalación de fibra óptica en Barcelona. Fusión, cableado monomodo/multimodo, certificación OTDR. Presupuesto gratis. ☎ +34 605 974 605',
+        intro: 'Servicio profesional de instalación de fibra óptica en Barcelona. Fusión por arco, cableado monomodo y multimodo, rosetas SC/APC y testeo OTDR. Para empresas, edificios residenciales y comunidades de vecinos.',
+        metaDescription: 'Instalación de fibra óptica en Barcelona. Fusión, cableado monomodo/multimodo, testeo OTDR. Presupuesto gratis. ☎ +34 605 974 605',
         cta: '¿Necesitas instalar fibra óptica en Barcelona?',
         features: [
             { icon: '🔆', title: 'Fibra monomodo y multimodo', text: 'Instalamos fibra monomodo (SM) de 2, 4 y 12 hilos, y multimodo OM3/OM4 para distancias cortas.' },
             { icon: '🔥', title: 'Fusión por arco', text: 'Empalme de fibras con fusionadora profesional para mínima atenuación y máxima fiabilidad.' },
             { icon: '🔌', title: 'Conectores SC/APC', text: 'Terminación con conectores SC/APC, pigtails y acopladores hembra-hembra para conexiones limpias.' },
             { icon: '🗄️', title: 'Racks y bandejas', text: 'Instalación de racks de fibra, bandejas de empalme y cajas murales para organización profesional.' },
-            { icon: '📊', title: 'Certificación OTDR', text: 'Medición y certificación de cada fibra con reflectómetro óptico (OTDR).' },
+            { icon: '📊', title: 'Testeo OTDR', text: 'Medición de cada fibra con reflectómetro óptico (OTDR).' },
             { icon: '🏢', title: 'Edificios y comunidades', text: 'Cableado vertical FTTH para edificios: desde el rack comunitario hasta cada vivienda con rosetas de 2 puertos.' },
         ],
         faq: [
-            { q: '¿Cuánto cuesta instalar fibra óptica en Barcelona?', a: 'El precio depende del número de puntos y metros. Un punto de fibra instalado con fusión y certificación cuesta desde 55€. Pide presupuesto gratis.' },
+            { q: '¿Cuánto cuesta instalar fibra óptica en Barcelona?', a: 'El precio depende del número de puntos y metros. Un punto de fibra instalado con fusión y testeo cuesta desde 55€. Pide presupuesto gratis.' },
             { q: '¿Qué diferencia hay entre monomodo y multimodo?', a: 'El monomodo (SM) es para distancias largas (hasta 100 km) y es el más usado en FTTH. El multimodo (OM3/OM4) es para distancias cortas (dentro de edificios) con velocidades de 10-100 Gbps.' },
             { q: '¿Hacéis fusión de fibra óptica?', a: 'Sí, realizamos empalmes por fusión con fusionadora de arco profesional. Cada empalme se mide con OTDR para garantizar la calidad.' },
             { q: '¿Instaláis fibra en edificios de viviendas?', a: 'Sí, hacemos instalaciones FTTH verticales: desde el rack del sótano hasta cada piso con cable monomodo y rosetas SC/APC de 2 puertos.' },
@@ -485,7 +485,7 @@ export const SEO_PAGES_ES: SEOPageConfig[] = [
         title: 'Fibra Óptica para Empresas Barcelona | CableCore',
         h1: 'Instalación de fibra óptica para empresas en Barcelona',
         h2s: ['Soluciones de fibra empresarial', 'Tecnología y equipamiento', 'Preguntas frecuentes'],
-        intro: 'Fibra óptica para empresas en Barcelona. Interconexión de sedes, backbone de red, enlaces de alta velocidad y redes de campus con fibra monomodo y multimodo. Certificación profesional.',
+        intro: 'Fibra óptica para empresas en Barcelona. Interconexión de sedes, backbone de red, enlaces de alta velocidad y redes de campus con fibra monomodo y multimodo. Comprobación profesional.',
         metaDescription: 'Fibra óptica para empresas en Barcelona. Backbone de red, interconexión de sedes, enlaces 10/40/100 Gbps. Presupuesto gratis. ☎ +34 605 974 605',
         cta: '¿Tu empresa necesita fibra óptica?',
         features: [
@@ -494,7 +494,7 @@ export const SEO_PAGES_ES: SEOPageConfig[] = [
             { icon: '📡', title: 'Backbone de red', text: 'Fibra óptica como columna vertebral de la red empresarial para máximo rendimiento.' },
             { icon: '🔒', title: 'Seguridad', text: 'La fibra óptica es inmune a interferencias electromagnéticas y difícil de interceptar.' },
             { icon: '📐', title: 'Diseño a medida', text: 'Diseñamos la topología de fibra ideal para tu infraestructura empresarial.' },
-            { icon: '✅', title: 'Certificación completa', text: 'Cada enlace certificado con OTDR e informe técnico detallado.' },
+            { icon: '✅', title: 'Comprobación completa', text: 'Cada enlace testeado con OTDR e informe técnico detallado.' },
         ],
         faq: [
             { q: '¿Merece la pena fibra óptica para mi empresa?', a: 'Si manejas grandes volúmenes de datos, tienes varias sedes o necesitas enlaces superiores a 1 Gbps, la fibra óptica es la opción más rentable a largo plazo.' },
@@ -527,8 +527,8 @@ export const SEO_PAGES_ES: SEOPageConfig[] = [
         title: 'Fusión de Fibra Óptica Barcelona | Empalme Profesional | CableCore',
         h1: 'Servicio de fusión de fibra óptica en Barcelona',
         h2s: ['Proceso de fusión', 'Equipamiento profesional', 'Preguntas frecuentes'],
-        intro: 'Servicio profesional de fusión (empalme) de fibra óptica en Barcelona. Fusionadora de arco de última generación, pigtails SC/APC, bandejas de empalme y certificación OTDR de cada fusión.',
-        metaDescription: 'Fusión de fibra óptica en Barcelona. Empalme por arco profesional, certificación OTDR. Atenuación < 0.05 dB. ☎ +34 605 974 605',
+        intro: 'Servicio profesional de fusión (empalme) de fibra óptica en Barcelona. Fusionadora de arco de última generación, pigtails SC/APC, bandejas de empalme y testeo OTDR de cada fusión.',
+        metaDescription: 'Fusión de fibra óptica en Barcelona. Empalme por arco profesional, testeo OTDR. Atenuación < 0.05 dB. ☎ +34 605 974 605',
         cta: '¿Necesitas fusionar fibra óptica?',
         features: [
             { icon: '🔥', title: 'Fusión por arco', text: 'Empalme con fusionadora de arco eléctrico de última generación. Atenuación típica < 0.02 dB.' },
@@ -540,7 +540,7 @@ export const SEO_PAGES_ES: SEOPageConfig[] = [
         ],
         faq: [
             { q: '¿Cuánto cuesta una fusión de fibra óptica?', a: 'El precio por fusión (empalme) es de 15€ por fibra, incluyendo protector de empalme y pigtail SC/APC.' },
-            { q: '¿Cuánto tarda una fusión?', a: 'Una fusión individual tarda menos de 2 minutos. Un proyecto de 12-24 fusiones se completa en 2-3 horas incluyendo certificación.' },
+            { q: '¿Cuánto tarda una fusión?', a: 'Una fusión individual tarda menos de 2 minutos. Un proyecto de 12-24 fusiones se completa en 2-3 horas incluyendo testeo.' },
             { q: '¿Qué atenuación tiene una fusión?', a: 'Con nuestro equipo profesional, las fusiones tienen una atenuación típica inferior a 0.02 dB, muy por debajo del máximo aceptable de 0.1 dB.' },
         ],
     },
@@ -556,7 +556,7 @@ export const SEO_PAGES_ES: SEOPageConfig[] = [
             { icon: '🏢', title: 'Cableado vertical', text: 'Fibra monomodo desde el sótano o cuarto de telecomunicaciones hasta cada planta del edificio.' },
             { icon: '🔌', title: 'Roseta en cada vivienda', text: 'Punto de fibra con roseta SC/APC de 2 puertos en el interior de cada vivienda.' },
             { icon: '🗄️', title: 'Rack comunitario', text: 'Rack de fibra centralizado con bandejas de empalme y acopladores para conectar con los operadores.' },
-            { icon: '🔥', title: 'Fusión profesional', text: 'Todos los empalmes realizados con fusionadora de arco y certificados con OTDR.' },
+            { icon: '🔥', title: 'Fusión profesional', text: 'Todos los empalmes realizados con fusionadora de arco y verificados con OTDR.' },
             { icon: '📐', title: 'Proyecto ICT', text: 'Cumplimos con la normativa ICT2 para infraestructuras de telecomunicaciones en edificios.' },
             { icon: '🤝', title: 'Comunidades de vecinos', text: 'Trabajamos con administradores de fincas y comunidades para presupuestos colectivos.' },
         ],

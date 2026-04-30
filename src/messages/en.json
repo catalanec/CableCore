@@ -46,7 +46,7 @@
       "title": "Office",
       "desc": "Professional infrastructure for maximum productivity and security.",
       "features": [
-        "Certified structured cabling",
+        "Tested structured cabling",
         "Racks & patch panels",
         "VoIP & IP telephony",
         "Segmented networks (VLAN)"
@@ -69,16 +69,16 @@
         "Indoor fiber optics",
         "Server rooms",
         "Redundancy & failover",
-        "Fluke certification"
+        "Professional network testing"
       ]
     },
     "fiber": {
       "title": "Fiber Optics",
-      "desc": "Single-mode and multi-mode fiber optic installation. Fusion splicing, OTDR certification and FTTH.",
+      "desc": "Single-mode and multi-mode fiber optic installation. Fusion splicing, OTDR testing and FTTH.",
       "features": [
         "Professional arc fusion",
         "SC/APC connectors",
-        "OTDR certification",
+        "OTDR testing",
         "FTTH for buildings"
       ]
     }
@@ -89,8 +89,8 @@
     "titleHighlight": "details",
     "subtitle": "We don't just install cables — we design infrastructures that last and grow with you.",
     "certified": {
-      "title": "Certified Technicians",
-      "desc": "Our team holds professional certifications in networking and structured cabling."
+      "title": "Specialized Technicians",
+      "desc": "Our team has extensive professional experience in networking and structured cabling."
     },
     "warranty": {
       "title": "5-Year Warranty",
@@ -109,7 +109,7 @@
     "label": "How We Work",
     "title": "Your installation in",
     "titleHighlight": "4 steps",
-    "subtitle": "A clear, transparent and efficient process — from consultation to certification.",
+    "subtitle": "A clear, transparent and efficient process — from consultation to verification.",
     "steps": [
       {
         "title": "Free Consultation",
@@ -124,8 +124,8 @@
         "desc": "We execute the installation with top-quality materials and perfect finishes."
       },
       {
-        "title": "Certification & Handover",
-        "desc": "We certify every network point, deliver documentation and train you on usage."
+        "title": "Testing & Handover",
+        "desc": "We test every network point, deliver documentation and train you on usage."
       }
     ]
   },
@@ -135,7 +135,7 @@
     "titleHighlight": "clients say",
     "items": [
       {
-        "text": "They installed the complete network in our office in two days. Flawless work, everything certified and running perfectly.",
+        "text": "They installed the complete network in our office in two days. Flawless work, everything tested and running perfectly.",
         "name": "Marta García",
         "role": "Operations Director, Estudio Creativo BCN",
         "initials": "MG"
@@ -218,7 +218,7 @@
     "items": {
       "cabling": {
         "title": "Structured cabling",
-        "desc": "Certified Cat6, Cat6A and Cat7 cable installation. Each point includes RJ45 keystone, wall plate and Ethernet cable."
+        "desc": "Professional Cat6, Cat6A and Cat7 cable installation. Each point includes RJ45 keystone, wall plate and Ethernet cable."
       },
       "home": {
         "title": "Home networks",
@@ -226,7 +226,7 @@
       },
       "office": {
         "title": "Office networks",
-        "desc": "Professional infrastructure for maximum productivity. Certified cabling, racks and VoIP."
+        "desc": "Professional infrastructure for maximum productivity. Tested cabling, racks and VoIP."
       },
       "retail": {
         "title": "Retail & commerce",
@@ -234,11 +234,11 @@
       },
       "business": {
         "title": "Businesses (SME)",
-        "desc": "Scalable high-performance networks. Fiber optics, server rooms and Fluke certification."
+        "desc": "Scalable high-performance networks. Fiber optics, server rooms and professional testing."
       },
       "rj45": {
         "title": "RJ45 network outlets",
-        "desc": "Professional network outlet installation. Each point certified with professional equipment."
+        "desc": "Professional network outlet installation. Each point tested with professional equipment."
       },
       "rack": {
         "title": "Racks & patch panels",
@@ -258,7 +258,7 @@
     "label": "How we work",
     "title": "Your installation step by",
     "titleHighlight": "step",
-    "subtitle": "A clear, professional and transparent process — from the first consultation to final handover with certification.",
+    "subtitle": "A clear, professional and transparent process — from the first consultation to final handover with verification.",
     "steps": [
       {
         "title": "Free consultation",
@@ -277,8 +277,8 @@
         "desc": "Our team executes the installation with top-quality materials and impeccable finishes."
       },
       {
-        "title": "Certification & testing",
-        "desc": "We certify every network point with Fluke equipment. We verify speed, continuity and standards compliance."
+        "title": "Testing & verification",
+        "desc": "We test every network point with professional equipment. We verify speed and continuity."
       },
       {
         "title": "Handover & support",
@@ -290,8 +290,8 @@
       "desc": "Materials and workmanship covered for five full years."
     },
     "guarantee2": {
-      "title": "Certification included",
-      "desc": "Every network point certified with deliverable Fluke report."
+      "title": "Testing included",
+      "desc": "Every network point tested to guarantee performance."
     },
     "guarantee3": {
       "title": "Response in 24h",
@@ -309,7 +309,7 @@
     "stats": {
       "installations": "Installations",
       "years": "Years of experience",
-      "certified": "Certified",
+      "certified": "Tested",
       "warranty": "Years warranty"
     },
     "items": [
@@ -382,7 +382,7 @@
       {
         "icon": "🏅",
         "title": "Excellence",
-        "desc": "Every installation meets the highest standards of quality and professional certification."
+        "desc": "Every installation meets the highest standards of quality and professional testing."
       },
       {
         "icon": "🤝",
@@ -407,7 +407,7 @@
       {
         "icon": "🔧",
         "title": "Technology",
-        "desc": "Top-quality materials and professional Fluke certification equipment."
+        "desc": "Top-quality materials and professional testing equipment."
       }
     ],
     "ctaTitle": "Want to work",
@@ -494,8 +494,8 @@
           "desc": "Our team performs a clean and professional installation."
         },
         {
-          "title": "Testing and certification",
-          "desc": "We test every network point with professional certification equipment."
+          "title": "Testing and verification",
+          "desc": "We test every network point with professional testing equipment."
         },
         {
           "title": "After-sales support",
@@ -504,7 +504,7 @@
       ],
       "guarantees": "Our guarantees",
       "guarantee1": "5-year warranty on all installations",
-      "guarantee2": "Certification of every network point",
+      "guarantee2": "Testing of every network point",
       "guarantee3": "Premium quality materials",
       "ctaTitle": "Ready to get started?",
       "ctaSubtitle": "Request your free quote today.",

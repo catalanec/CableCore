@@ -40,7 +40,7 @@ export const metadata: Metadata = {
         'red para oficina Barcelona',
         'red para hogar Barcelona',
         'LAN y WLAN corporativo',
-        'certificación Fluke Networks',
+        'verificación de redes',
         'precio punto de red Barcelona',
         'empresas de cableado estructurado',
     ],

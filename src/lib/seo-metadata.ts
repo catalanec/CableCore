@@ -73,9 +73,9 @@ const PAGE_SEO: Record<string, PageSEO> = {
             ru: 'О нас — CableCore | Монтажники сетей в Барселоне',
         },
         description: {
-            es: 'Más de 10 años de experiencia en instalación de redes en Barcelona. Técnicos certificados, garantía de 5 años.',
-            en: 'Over 10 years of network installation experience in Barcelona. Certified technicians, 5-year warranty.',
-            ru: 'Более 10 лет опыта установки сетей в Барселоне. Сертифицированные техники, гарантия 5 лет.',
+            es: 'Más de 10 años de experiencia en instalación de redes en Barcelona. Técnicos expertos, garantía de 5 años.',
+            en: 'Over 10 years of network installation experience in Barcelona. Expert technicians, 5-year warranty.',
+            ru: 'Более 10 лет опыта установки сетей в Барселоне. Опытные техники, гарантия 5 лет.',
         },
     },
     proceso: {
@@ -85,9 +85,9 @@ const PAGE_SEO: Record<string, PageSEO> = {
             ru: 'Наш процесс — CableCore | Как мы работаем',
         },
         description: {
-            es: 'Conoce nuestro proceso de instalación de red: consulta gratuita, diseño, instalación profesional y certificación.',
-            en: 'Learn about our network installation process: free consultation, design, professional installation and certification.',
-            ru: 'Узнайте наш процесс установки сетей: бесплатная консультация, проектирование, профессиональный монтаж и сертификация.',
+            es: 'Conoce nuestro proceso de instalación de red: consulta gratuita, diseño, instalación profesional y testeo.',
+            en: 'Learn about our network installation process: free consultation, design, professional installation and testing.',
+            ru: 'Узнайте наш процесс установки сетей: бесплатная консультация, проектирование, профессиональный монтаж и тестирование.',
         },
     },
     proyectos: {
@@ -302,7 +302,7 @@ export function getLocalBusinessJsonLd() {
                 author: { '@type': 'Person', name: 'Carlos M.' },
                 datePublished: '2025-03-15',
                 reviewRating: { '@type': 'Rating', ratingValue: '5', bestRating: '5' },
-                reviewBody: 'Excelente servicio. Instalaron 12 puntos de red en nuestra oficina en un día. Cableado perfectamente organizado y certificado.',
+                reviewBody: 'Excelente servicio. Instalaron 12 puntos de red en nuestra oficina en un día. Cableado perfectamente organizado y comprobado.',
             },
             {
                 '@type': 'Review',

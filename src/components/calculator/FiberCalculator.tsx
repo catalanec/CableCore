@@ -353,7 +353,7 @@ export default function FiberCalculator({ locale, onCalcUpdate }: FiberCalculato
     const [avgLength, setAvgLength] = useState(20);
     const [installType, setInstallType] = useState<keyof typeof FIBER_CONFIG.installationMultiplier>('ceiling');
     const [fusionCount, setFusionCount] = useState(8); // default: points × 2 fibras
-    const [doCertification, setDoCertification] = useState(true);
+    const [doCertification, setDoCertification] = useState(false);
     const [patchCordCount, setPatchCordCount] = useState(4);
     const [acopladorCount, setAcopladorCount] = useState(4);
     const [bandeja, setBandeja] = useState<'none' | 'bandeja12' | 'bandeja24'>('bandeja12');
@@ -530,6 +530,7 @@ export default function FiberCalculator({ locale, onCalcUpdate }: FiberCalculato
                         <span className="text-xs text-brand-gold-muted">× {FIBER_CONFIG.fusionPerSplice}€ = {(fusionCount * FIBER_CONFIG.fusionPerSplice).toFixed(2)}€</span>
                     </div>
 
+                    {/* Temporarily disabled until equipment is acquired
                     <label className="flex items-center gap-3 cursor-pointer">
                         <input type="checkbox" checked={doCertification} onChange={(e) => setDoCertification(e.target.checked)}
                             className="w-5 h-5 rounded accent-cyan-400" />
@@ -538,6 +539,7 @@ export default function FiberCalculator({ locale, onCalcUpdate }: FiberCalculato
                             <div className="text-xs text-brand-gold-muted">{l.certificationHint} — {FIBER_CONFIG.certificationPerPoint}€/pto</div>
                         </div>
                     </label>
+                    */}
                 </div>
 
                 {/* Patch cords & Acopladores */}

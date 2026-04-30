@@ -18,7 +18,7 @@
     "badge": "Barcelona y alrededores",
     "title": "Instalación profesional de",
     "titleHighlight": "cableado de red en Barcelona",
-    "subtitle": "Especialistas en redes corporativas LAN / WLAN (Wi-Fi), cableado estructurado Cat6, Cat6A y Cat7 para hogares, oficinas y negocios. Soluciones a medida con certificación Fluke.",
+    "subtitle": "Especialistas en redes corporativas LAN / WLAN (Wi-Fi), cableado estructurado Cat6, Cat6A y Cat7 para hogares, oficinas y negocios. Soluciones a medida con comprobación profesional.",
     "cta": "Solicitar Presupuesto",
     "ctaWhatsapp": "Contactar por WhatsApp",
     "stats": {
@@ -46,7 +46,7 @@
       "title": "Oficina",
       "desc": "Infraestructura profesional para máxima productividad y seguridad.",
       "features": [
-        "Cableado estructurado certificado",
+        "Cableado estructurado comprobado",
         "Racks y patch panels",
         "VoIP y telefonía IP",
         "Redes segmentadas (VLAN) y WLAN corporativo"
@@ -69,16 +69,16 @@
         "Fibra óptica interior",
         "Salas de servidores",
         "Redundancia y failover",
-        "Certificación oficial Fluke Networks"
+        "Comprobación profesional de red"
       ]
     },
     "fiber": {
       "title": "Fibra Óptica",
-      "desc": "Instalación de fibra óptica monomodo y multimodo. Fusión, certificación OTDR y FTTH.",
+      "desc": "Instalación de fibra óptica monomodo y multimodo. Fusión, testeo OTDR y FTTH.",
       "features": [
         "Fusión por arco profesional",
         "Conectores SC/APC",
-        "Certificación OTDR",
+        "Testeo OTDR",
         "FTTH para edificios"
       ]
     }
@@ -89,8 +89,8 @@
     "titleHighlight": "detalles",
     "subtitle": "No solo instalamos cables — diseñamos infraestructuras que duran y crecen contigo.",
     "certified": {
-      "title": "Técnicos certificados",
-      "desc": "Nuestro equipo cuenta con certificaciones profesionales en redes y cableado estructurado."
+      "title": "Técnicos especializados",
+      "desc": "Nuestro equipo cuenta con experiencia profesional en redes y cableado estructurado."
     },
     "warranty": {
       "title": "Garantía de 5 años",
@@ -109,7 +109,7 @@
     "label": "Cómo trabajamos",
     "title": "Tu instalación en",
     "titleHighlight": "4 pasos",
-    "subtitle": "Un proceso claro, transparente y eficiente — desde la consulta hasta la certificación.",
+    "subtitle": "Un proceso claro, transparente y eficiente — desde la consulta hasta la verificación.",
     "steps": [
       {
         "title": "Consulta gratuita",
@@ -124,8 +124,8 @@
         "desc": "Ejecutamos la instalación con materiales de primera calidad y acabados perfectos."
       },
       {
-        "title": "Certificación y entrega",
-        "desc": "Certificamos cada punto de red, entregamos documentación y te formamos en el uso."
+        "title": "Comprobación y entrega",
+        "desc": "Comprobamos cada punto de red, entregamos documentación y te formamos en el uso."
       }
     ]
   },
@@ -135,7 +135,7 @@
     "titleHighlight": "clientes",
     "items": [
       {
-        "text": "Instalaron la red completa de nuestra oficina en dos días. Trabajo impecable, todo certificado y funcionando perfecto.",
+        "text": "Instalaron la red completa de nuestra oficina en dos días. Trabajo impecable, todo comprobado y funcionando perfecto.",
         "name": "Marta García",
         "role": "Directora de Operaciones, Estudio Creativo BCN",
         "initials": "MG"
@@ -218,7 +218,7 @@
     "items": {
       "cabling": {
         "title": "Cableado estructurado",
-        "desc": "Instalación certificada de cable Cat6, Cat6A y Cat7. Cada punto incluye keystone RJ45, placa de pared y cable Ethernet."
+        "desc": "Instalación profesional de cable Cat6, Cat6A y Cat7. Cada punto incluye keystone RJ45, placa de pared y cable Ethernet."
       },
       "home": {
         "title": "Redes para hogar",
@@ -226,7 +226,7 @@
       },
       "office": {
         "title": "Redes de oficina",
-        "desc": "Infraestructura profesional para máxima productividad. Cableado certificado, racks y VoIP."
+        "desc": "Infraestructura profesional para máxima productividad. Cableado testado, racks y VoIP."
       },
       "retail": {
         "title": "Retail y comercio",
@@ -234,11 +234,11 @@
       },
       "business": {
         "title": "Empresas (PYME)",
-        "desc": "Redes escalables y de alto rendimiento. Fibra óptica, salas de servidores y certificación Fluke."
+        "desc": "Redes escalables y de alto rendimiento. Fibra óptica, salas de servidores y testeo profesional."
       },
       "rj45": {
         "title": "Puntos de red RJ45",
-        "desc": "Instalación profesional de tomas de red. Certificación de cada punto con equipo profesional."
+        "desc": "Instalación profesional de tomas de red. Comprobación de cada punto con equipo profesional."
       },
       "rack": {
         "title": "Racks y patch panels",
@@ -258,7 +258,7 @@
     "label": "Cómo trabajamos",
     "title": "Tu instalación paso a",
     "titleHighlight": "paso",
-    "subtitle": "Un proceso claro, profesional y transparente — desde la primera consulta hasta la entrega final con certificación.",
+    "subtitle": "Un proceso claro, profesional y transparente — desde la primera consulta hasta la entrega final comprobada.",
     "steps": [
       {
         "title": "Consulta gratuita",
@@ -277,8 +277,8 @@
         "desc": "Nuestro equipo ejecuta la instalación con materiales de primera calidad y acabados impecables."
       },
       {
-        "title": "Certificación y pruebas",
-        "desc": "Certificamos cada punto de red con analizadores de cableado Fluke Networks. Verificamos velocidad, continuidad y cumplimiento de normativas ISO/TIA."
+        "title": "Comprobación y pruebas",
+        "desc": "Comprobamos cada punto de red con analizadores de cableado. Verificamos velocidad y continuidad."
       },
       {
         "title": "Entrega y soporte",
@@ -290,8 +290,8 @@
       "desc": "Materiales y mano de obra cubiertos durante cinco años completos."
     },
     "guarantee2": {
-      "title": "Certificación incluida",
-      "desc": "Cada punto de red certificado con informe Fluke entregable."
+      "title": "Comprobación incluida",
+      "desc": "Cada punto de red comprobado para garantizar su funcionamiento."
     },
     "guarantee3": {
       "title": "Respuesta en 24h",
@@ -309,7 +309,7 @@
     "stats": {
       "installations": "Instalaciones",
       "years": "Años de experiencia",
-      "certified": "Certificadas",
+      "certified": "Comprobadas",
       "warranty": "Años de garantía"
     },
     "items": [
@@ -382,7 +382,7 @@
       {
         "icon": "🏅",
         "title": "Excelencia",
-        "desc": "Cada instalación cumple los más altos estándares de calidad y certificación profesional."
+        "desc": "Cada instalación cumple los más altos estándares de calidad y comprobación profesional."
       },
       {
         "icon": "🤝",
@@ -407,7 +407,7 @@
       {
         "icon": "🔧",
         "title": "Tecnología",
-        "desc": "Materiales de primera calidad y equipos de certificación Fluke profesionales."
+        "desc": "Materiales de primera calidad y equipos de comprobación profesionales."
       }
     ],
     "ctaTitle": "¿Quieres trabajar",
@@ -494,8 +494,8 @@
           "desc": "Nuestro equipo realiza la instalación de forma limpia y profesional."
         },
         {
-          "title": "Testeo y certificación",
-          "desc": "Comprobamos cada punto de red con equipos profesionales de certificación."
+          "title": "Testeo y comprobación",
+          "desc": "Comprobamos cada punto de red con equipos profesionales."
         },
         {
           "title": "Soporte post-venta",
@@ -504,7 +504,7 @@
       ],
       "guarantees": "Nuestras garantías",
       "guarantee1": "Garantía de 5 años en toda la instalación",
-      "guarantee2": "Certificación de cada punto de red",
+      "guarantee2": "Comprobación de cada punto de red",
       "guarantee3": "Materiales de primera calidad",
       "ctaTitle": "¿Listo para empezar?",
       "ctaSubtitle": "Solicita tu presupuesto gratuito hoy mismo.",

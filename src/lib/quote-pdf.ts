@@ -121,12 +121,12 @@ export function generateQuoteHTML(data: QuotePDFData): string {
       </div>
     </div>
 
-    ${data.notes ? `
     <div style="margin-top: 25px; background: #f8f6f1; border: 1px solid #e0dcd4; border-radius: 6px; padding: 14px;">
-      <h4 style="color: #8B6914; font-size: 10px; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 6px; font-weight: 700;">Notas</h4>
-      <p style="color: #555; font-size: 11px; line-height: 1.5;">${data.notes}</p>
+      <h4 style="color: #8B6914; font-size: 10px; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 6px; font-weight: 700;">Condiciones y Método de Pago</h4>
+      ${data.notes ? `<p style="color: #555; font-size: 11px; line-height: 1.5; margin-bottom: 8px; white-space: pre-wrap;">${data.notes}</p>` : ''}
+      <p style="color: #333; font-size: 11px; line-height: 1.5;">Condiciones: <strong>50% del total por adelantado</strong> en concepto de reserva y materiales para iniciar el proyecto.</p>
+      <p style="color: #333; font-size: 11px; margin-top: 4px;">Cuenta bancaria (IBAN): <strong>ES91 2103 7379 4000 3001 0959</strong></p>
     </div>
-    ` : ''}
 
     <!-- Footer -->
     <div style="margin-top: 35px; padding-top: 15px; border-top: 2px solid #C9A84C; font-size: 10px; color: #666; text-align: center; line-height: 1.8;">
