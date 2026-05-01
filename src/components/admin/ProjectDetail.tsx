@@ -46,13 +46,19 @@ export default function ProjectDetail({ project: initialProject, activities, tas
     });
     const [saving, setSaving] = useState(false);
 
-    const revenue = Number(project.total_revenue) || 0;
+    const grossRevenue = Number(project.total_revenue) || 0;
+    const baseRevenue = grossRevenue / 1.21;
+    const ivaDeduction = grossRevenue - baseRevenue;
+    const irpfDeduction = baseRevenue * 0.20;
+    const netRevenue = baseRevenue - irpfDeduction;
+
     const matCost = Number(costData.actual_material_cost) || 0;
     const labCost = Number(costData.actual_labor_cost) || 0;
     const othCost = Number(costData.actual_other_cost) || 0;
     const totalCost = matCost + labCost + othCost || Number(project.total_cost) || 0;
-    const profit = revenue - totalCost;
-    const margin = revenue > 0 ? ((profit / revenue) * 100).toFixed(1) : '0';
+    
+    const profit = netRevenue - totalCost;
+    const margin = grossRevenue > 0 ? ((profit / grossRevenue) * 100).toFixed(1) : '0';
 
     const handleSaveInfo = async () => {
         setSaving(true);
@@ -82,7 +88,7 @@ export default function ProjectDetail({ project: initialProject, activities, tas
         if (status === 'paid') {
             await addActivity({
                 type: 'payment',
-                description: `Pago recibido — ${revenue.toLocaleString('es-ES')}€`,
+                description: `Pago recibido — ${grossRevenue.toLocaleString('es-ES')}€`,
                 entity_type: 'project',
                 entity_id: project.id,
             });
@@ -231,8 +237,20 @@ export default function ProjectDetail({ project: initialProject, activities, tas
                         <h3 className="font-semibold text-white mb-4 text-sm">💰 Finanzas</h3>
                         <div className="space-y-3">
                             <div className="flex justify-between items-center">
-                                <span className="text-xs text-brand-gold-muted">Valor del proyecto</span>
-                                <span className="text-lg font-bold text-brand-gold">{revenue.toLocaleString('es-ES', {minimumFractionDigits: 2})}€</span>
+                                <span className="text-xs text-brand-gold-muted">Facturación (con IVA)</span>
+                                <span className="text-lg font-bold text-brand-gold">{grossRevenue.toLocaleString('es-ES', {minimumFractionDigits: 2})}€</span>
+                            </div>
+                            <div className="flex justify-between items-center text-red-400/80">
+                                <span className="text-xs">IVA (21%)</span>
+                                <span className="text-xs font-bold">-{ivaDeduction.toLocaleString('es-ES', {minimumFractionDigits: 2})}€</span>
+                            </div>
+                            <div className="flex justify-between items-center text-red-400/80">
+                                <span className="text-xs">IRPF (20%)</span>
+                                <span className="text-xs font-bold">-{irpfDeduction.toLocaleString('es-ES', {minimumFractionDigits: 2})}€</span>
+                            </div>
+                            <div className="flex justify-between items-center text-white pb-2 border-b border-white/5">
+                                <span className="text-xs">Ingreso neto (después de impuestos)</span>
+                                <span className="text-sm font-bold">{netRevenue.toLocaleString('es-ES', {minimumFractionDigits: 2})}€</span>
                             </div>
                             <div className="flex justify-between items-center">
                                 <span className="text-xs text-brand-gold-muted">Coste total</span>
