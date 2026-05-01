@@ -1149,12 +1149,14 @@ export default function AdminDashboard({ initialQuotes, initialLeads, initialMat
                                         email: selectedQuote.client_email,
                                         address: selectedQuote.client_address
                                     },
-                                    items: [
-                                        { description: 'Cableado ' + selectedQuote.cable_type, quantity: selectedQuote.cable_meters + 'm', unitPrice: '-', total: Number(selectedQuote.cable_cost).toFixed(2) + '€' },
-                                        { description: 'Puntos de Red', quantity: selectedQuote.network_points.toString(), unitPrice: '-', total: Number(selectedQuote.points_cost).toFixed(2) + '€' },
-                                        { description: 'Tendido de cable (' + instName + ')', quantity: selectedQuote.cable_meters + 'm', unitPrice: '-', total: Number(selectedQuote.installation_cost).toFixed(2) + '€' },
-                                        { description: 'Mano de obra (operarios y técnicos)', quantity: 'Global', unitPrice: '-', total: Number(selectedQuote.work_cost).toFixed(2) + '€' }
-                                    ],
+                                    items: selectedQuote.quote_items && Array.isArray(selectedQuote.quote_items) && selectedQuote.quote_items.length > 0
+                                        ? selectedQuote.quote_items
+                                        : [
+                                            { description: 'Cableado ' + selectedQuote.cable_type, quantity: selectedQuote.cable_meters + 'm', unitPrice: '-', total: Number(selectedQuote.cable_cost).toFixed(2) + '€' },
+                                            { description: 'Puntos de Red', quantity: selectedQuote.network_points.toString(), unitPrice: '-', total: Number(selectedQuote.points_cost).toFixed(2) + '€' },
+                                            { description: 'Tendido de cable (' + instName + ')', quantity: selectedQuote.cable_meters + 'm', unitPrice: '-', total: Number(selectedQuote.installation_cost).toFixed(2) + '€' },
+                                            { description: 'Mano de obra (operarios y técnicos)', quantity: 'Global', unitPrice: '-', total: Number(selectedQuote.work_cost).toFixed(2) + '€' }
+                                        ],
                                     subtotal: Number(selectedQuote.subtotal).toFixed(2) + '€',
                                     iva: Number(selectedQuote.iva).toFixed(2) + '€',
                                     total: Number(selectedQuote.total).toFixed(2) + '€'
