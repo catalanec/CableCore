@@ -40,9 +40,9 @@ export default function ProjectDetail({ project: initialProject, activities, tas
         end_date: project.end_date || '',
     });
     const [costData, setCostData] = useState({
-        actual_material_cost: project.actual_material_cost || 0,
-        actual_labor_cost: project.actual_labor_cost || 0,
-        actual_other_cost: project.actual_other_cost || 0,
+        actual_material_cost: String(project.actual_material_cost || 0),
+        actual_labor_cost: String(project.actual_labor_cost || 0),
+        actual_other_cost: String(project.actual_other_cost || 0),
     });
     const [saving, setSaving] = useState(false);
 
@@ -71,8 +71,13 @@ export default function ProjectDetail({ project: initialProject, activities, tas
 
     const handleSaveCosts = async () => {
         setSaving(true);
-        await updateProjectCosts(project.id, costData);
-        setProject({ ...project, ...costData });
+        const numericData = {
+            actual_material_cost: Number(costData.actual_material_cost) || 0,
+            actual_labor_cost: Number(costData.actual_labor_cost) || 0,
+            actual_other_cost: Number(costData.actual_other_cost) || 0,
+        };
+        await updateProjectCosts(project.id, numericData);
+        setProject({ ...project, ...numericData });
         setSaving(false);
     };
 
@@ -278,21 +283,21 @@ export default function ProjectDetail({ project: initialProject, activities, tas
                             <div>
                                 <label className="block text-xs text-brand-gold-muted mb-1">Materiales (Coste real)</label>
                                 <div className="flex gap-2 items-center">
-                                    <input type="number" value={costData.actual_material_cost} onChange={e => setCostData({ ...costData, actual_material_cost: Number(e.target.value) })} className="flex-1 bg-brand-dark border border-border-subtle rounded px-2 py-1.5 text-sm text-white focus:outline-none focus:border-brand-gold/50" />
+                                    <input type="number" step="0.01" value={costData.actual_material_cost} onChange={e => setCostData({ ...costData, actual_material_cost: e.target.value })} className="flex-1 bg-brand-dark border border-border-subtle rounded px-2 py-1.5 text-sm text-white focus:outline-none focus:border-brand-gold/50" />
                                     <span className="text-xs text-brand-gold-muted">€</span>
                                 </div>
                             </div>
                             <div>
                                 <label className="block text-xs text-brand-gold-muted mb-1">Mano de obra (Base para IRPF)</label>
                                 <div className="flex gap-2 items-center">
-                                    <input type="number" value={costData.actual_labor_cost} onChange={e => setCostData({ ...costData, actual_labor_cost: Number(e.target.value) })} className="flex-1 bg-brand-dark border border-border-subtle rounded px-2 py-1.5 text-sm text-white focus:outline-none focus:border-brand-gold/50" />
+                                    <input type="number" step="0.01" value={costData.actual_labor_cost} onChange={e => setCostData({ ...costData, actual_labor_cost: e.target.value })} className="flex-1 bg-brand-dark border border-border-subtle rounded px-2 py-1.5 text-sm text-white focus:outline-none focus:border-brand-gold/50" />
                                     <span className="text-xs text-brand-gold-muted">€</span>
                                 </div>
                             </div>
                             <div>
                                 <label className="block text-xs text-brand-gold-muted mb-1">Otros (Coste real)</label>
                                 <div className="flex gap-2 items-center">
-                                    <input type="number" value={costData.actual_other_cost} onChange={e => setCostData({ ...costData, actual_other_cost: Number(e.target.value) })} className="flex-1 bg-brand-dark border border-border-subtle rounded px-2 py-1.5 text-sm text-white focus:outline-none focus:border-brand-gold/50" />
+                                    <input type="number" step="0.01" value={costData.actual_other_cost} onChange={e => setCostData({ ...costData, actual_other_cost: e.target.value })} className="flex-1 bg-brand-dark border border-border-subtle rounded px-2 py-1.5 text-sm text-white focus:outline-none focus:border-brand-gold/50" />
                                     <span className="text-xs text-brand-gold-muted">€</span>
                                 </div>
                             </div>
