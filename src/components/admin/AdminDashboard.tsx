@@ -871,7 +871,7 @@ export default function AdminDashboard({ initialQuotes, initialLeads, initialMat
                                         <th className="text-left p-3">Cliente</th>
                                         <th className="text-right p-3">Ingresos</th>
                                         <th className="text-right p-3">Mat. Real</th>
-                                        <th className="text-right p-3">M.O. Real</th>
+                                        <th className="text-right p-3">Servicios (Beneficio)</th>
                                         <th className="text-right p-3">Otros</th>
                                         <th className="text-right p-3">Beneficio</th>
                                         <th className="text-center p-3">Pago</th>

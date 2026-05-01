@@ -288,7 +288,7 @@ export default function ProjectDetail({ project: initialProject, activities, tas
                                 </div>
                             </div>
                             <div>
-                                <label className="block text-xs text-brand-gold-muted mb-1">Mano de obra (Base para IRPF)</label>
+                                <label className="block text-xs text-brand-gold-muted mb-1">Tus Servicios (Mano de obra, Testeo, etc. - Base IRPF)</label>
                                 <div className="flex gap-2 items-center">
                                     <input type="number" step="0.01" value={costData.actual_labor_cost} onChange={e => setCostData({ ...costData, actual_labor_cost: e.target.value })} className="flex-1 bg-brand-dark border border-border-subtle rounded px-2 py-1.5 text-sm text-white focus:outline-none focus:border-brand-gold/50" />
                                     <span className="text-xs text-brand-gold-muted">€</span>
