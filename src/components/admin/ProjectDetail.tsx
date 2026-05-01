@@ -51,12 +51,12 @@ export default function ProjectDetail({ project: initialProject, activities, tas
     const ivaDeduction = grossRevenue - baseRevenue;
 
     const matCost = Number(costData.actual_material_cost) || 0;
-    const labCost = Number(costData.actual_labor_cost) || 0;
+    const laborAsProfitBase = Number(costData.actual_labor_cost) || 0; // Used for IRPF
     const othCost = Number(costData.actual_other_cost) || 0;
-    const totalCost = matCost + labCost + othCost || Number(project.total_cost) || 0;
+    const totalBusinessCost = matCost + othCost; // Real expenses, excluding labor
     
-    const grossProfit = baseRevenue - totalCost;
-    const irpfDeduction = grossProfit > 0 ? grossProfit * 0.20 : 0;
+    const grossProfit = baseRevenue - totalBusinessCost;
+    const irpfDeduction = laborAsProfitBase * 0.20; // IRPF only on labor
     const netProfit = grossProfit - irpfDeduction;
     
     const margin = baseRevenue > 0 ? ((netProfit / baseRevenue) * 100).toFixed(1) : '0';
@@ -250,8 +250,8 @@ export default function ProjectDetail({ project: initialProject, activities, tas
                                 <span className="text-sm font-bold">{baseRevenue.toLocaleString('es-ES', {minimumFractionDigits: 2})}€</span>
                             </div>
                             <div className="flex justify-between items-center text-red-400/80 pt-2">
-                                <span className="text-xs">Coste total</span>
-                                <span className="text-xs font-bold">-{totalCost.toLocaleString('es-ES', {minimumFractionDigits: 2})}€</span>
+                                <span className="text-xs">Costes (Mat + Otros)</span>
+                                <span className="text-xs font-bold">-{totalBusinessCost.toLocaleString('es-ES', {minimumFractionDigits: 2})}€</span>
                             </div>
                             <div className="flex justify-between items-center text-white pb-2 border-b border-white/5">
                                 <span className="text-xs">Beneficio Bruto</span>
@@ -273,26 +273,29 @@ export default function ProjectDetail({ project: initialProject, activities, tas
 
                     {/* Cost breakdown */}
                     <div className="card p-5 border-brand-gold/10">
-                        <h3 className="font-semibold text-white mb-4 text-sm">📊 Desglose costes</h3>
+                        <h3 className="font-semibold text-white mb-4 text-sm">📊 Desglose costes / ganancias</h3>
                         <div className="space-y-3">
-                            {[
-                                { label: 'Materiales', key: 'actual_material_cost' as const },
-                                { label: 'Mano de obra', key: 'actual_labor_cost' as const },
-                                { label: 'Otros', key: 'actual_other_cost' as const },
-                            ].map(({ label, key }) => (
-                                <div key={key}>
-                                    <label className="block text-xs text-brand-gold-muted mb-1">{label}</label>
-                                    <div className="flex gap-2 items-center">
-                                        <input
-                                            type="number"
-                                            value={costData[key]}
-                                            onChange={e => setCostData({ ...costData, [key]: Number(e.target.value) })}
-                                            className="flex-1 bg-brand-dark border border-border-subtle rounded px-2 py-1.5 text-sm text-white focus:outline-none focus:border-brand-gold/50"
-                                        />
-                                        <span className="text-xs text-brand-gold-muted">€</span>
-                                    </div>
+                            <div>
+                                <label className="block text-xs text-brand-gold-muted mb-1">Materiales (Coste real)</label>
+                                <div className="flex gap-2 items-center">
+                                    <input type="number" value={costData.actual_material_cost} onChange={e => setCostData({ ...costData, actual_material_cost: Number(e.target.value) })} className="flex-1 bg-brand-dark border border-border-subtle rounded px-2 py-1.5 text-sm text-white focus:outline-none focus:border-brand-gold/50" />
+                                    <span className="text-xs text-brand-gold-muted">€</span>
                                 </div>
-                            ))}
+                            </div>
+                            <div>
+                                <label className="block text-xs text-brand-gold-muted mb-1">Mano de obra (Base para IRPF)</label>
+                                <div className="flex gap-2 items-center">
+                                    <input type="number" value={costData.actual_labor_cost} onChange={e => setCostData({ ...costData, actual_labor_cost: Number(e.target.value) })} className="flex-1 bg-brand-dark border border-border-subtle rounded px-2 py-1.5 text-sm text-white focus:outline-none focus:border-brand-gold/50" />
+                                    <span className="text-xs text-brand-gold-muted">€</span>
+                                </div>
+                            </div>
+                            <div>
+                                <label className="block text-xs text-brand-gold-muted mb-1">Otros (Coste real)</label>
+                                <div className="flex gap-2 items-center">
+                                    <input type="number" value={costData.actual_other_cost} onChange={e => setCostData({ ...costData, actual_other_cost: Number(e.target.value) })} className="flex-1 bg-brand-dark border border-border-subtle rounded px-2 py-1.5 text-sm text-white focus:outline-none focus:border-brand-gold/50" />
+                                    <span className="text-xs text-brand-gold-muted">€</span>
+                                </div>
+                            </div>
                             <button onClick={handleSaveCosts} disabled={saving} className="w-full btn-outline py-2 text-xs mt-1 disabled:opacity-50">
                                 {saving ? 'Guardando...' : '✓ Actualizar costes'}
                             </button>
