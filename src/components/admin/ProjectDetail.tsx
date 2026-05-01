@@ -51,12 +51,12 @@ export default function ProjectDetail({ project: initialProject, activities, tas
     const ivaDeduction = grossRevenue - baseRevenue;
 
     const matCost = Number(costData.actual_material_cost) || 0;
-    const laborAsProfitBase = Number(costData.actual_labor_cost) || 0; // Used for IRPF
+    const laborAsProfitBase = Number(costData.actual_labor_cost) || 0; // This IS the gross profit
     const othCost = Number(costData.actual_other_cost) || 0;
-    const totalBusinessCost = matCost + othCost; // Real expenses, excluding labor
+    const totalBusinessCost = matCost + othCost; // Real expenses (pass-through to client)
     
-    const grossProfit = baseRevenue - totalBusinessCost;
-    const irpfDeduction = laborAsProfitBase * 0.20; // IRPF only on labor
+    const grossProfit = laborAsProfitBase; // The user's actual money
+    const irpfDeduction = grossProfit * 0.20; // 20% of labor
     const netProfit = grossProfit - irpfDeduction;
     
     const margin = baseRevenue > 0 ? ((netProfit / baseRevenue) * 100).toFixed(1) : '0';
@@ -254,7 +254,7 @@ export default function ProjectDetail({ project: initialProject, activities, tas
                                 <span className="text-xs font-bold">-{totalBusinessCost.toLocaleString('es-ES', {minimumFractionDigits: 2})}€</span>
                             </div>
                             <div className="flex justify-between items-center text-white pb-2 border-b border-white/5">
-                                <span className="text-xs">Beneficio Bruto</span>
+                                <span className="text-xs">Beneficio Bruto (Mano de obra)</span>
                                 <span className="text-sm font-bold">{grossProfit.toLocaleString('es-ES', {minimumFractionDigits: 2})}€</span>
                             </div>
                             <div className="flex justify-between items-center text-red-400/80 pt-2">
