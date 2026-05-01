@@ -884,11 +884,12 @@ export default function AdminDashboard({ initialQuotes, initialLeads, initialMat
                                     {projects.map(p => {
                                         const rev = Number(p.total_revenue) || 0;
                                         const matReal = Number(p.actual_material_cost) || 0;
-                                        const labReal = Number(p.actual_labor_cost) || 0;
+                                        const labReal = Number(p.actual_labor_cost) || 0; // Base para IRPF
                                         const othReal = Number(p.actual_other_cost) || 0;
-                                        const hasActual = matReal > 0 || labReal > 0 || othReal > 0;
-                                        const totalCost = hasActual ? matReal + labReal + othReal : (Number(p.total_cost) || 0);
-                                        const prf = rev - totalCost;
+                                        
+                                        const grossProfit = labReal;
+                                        const irpfDeduction = grossProfit * 0.20;
+                                        const prf = grossProfit - irpfDeduction;
                                         return (
                                         <tr key={p.id} className="border-b border-border-subtle/50 hover:bg-[rgba(201,168,76,0.03)] transition-colors">
                                             <td className="p-3">
