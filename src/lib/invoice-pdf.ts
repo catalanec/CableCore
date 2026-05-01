@@ -61,6 +61,7 @@ export function generateInvoiceHTML(data: InvoicePDFData): string {
 <html>
 <head>
   <meta charset="utf-8">
+  <meta name="format-detection" content="telephone=no, date=no, address=no, email=no">
   <title>Factura_CableCore_${formattedInvoiceNum}</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -156,7 +157,7 @@ export function generateInvoiceHTML(data: InvoicePDFData): string {
     <div style="margin-top: 25px; background: #f8f6f1; border: 1px solid #e0dcd4; border-radius: 6px; padding: 14px;">
       <h4 style="color: #8B6914; font-size: 10px; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 6px; font-weight: 700;">Método de Pago</h4>
       <p style="color: #555; font-size: 10px; line-height: 1.6; white-space: pre-wrap;">${data.notes}</p>
-      <p style="color: #333; font-size: 10px; margin-top: 8px;">Cuenta bancaria (IBAN): <strong>ES91 2103 7379 4000 3001 0959</strong></p>
+      <p style="color: #333; font-size: 10px; margin-top: 8px;">Cuenta bancaria (IBAN): <strong style="pointer-events: none; text-decoration: none; color: inherit;">ES91 2103<span></span> 7379<span></span> 4000<span></span> 3001<span></span> 0959</strong></p>
     </div>
     ` : ''}
 
