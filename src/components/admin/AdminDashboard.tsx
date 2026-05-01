@@ -887,6 +887,9 @@ export default function AdminDashboard({ initialQuotes, initialLeads, initialMat
                                         const labReal = Number(p.actual_labor_cost) || 0; // Base para IRPF
                                         const othReal = Number(p.actual_other_cost) || 0;
                                         
+                                        const hasActual = matReal > 0 || labReal > 0 || othReal > 0;
+                                        const totalCost = hasActual ? matReal + labReal + othReal : (Number(p.total_cost) || 0);
+
                                         const grossProfit = labReal;
                                         const irpfDeduction = grossProfit * 0.20;
                                         const prf = grossProfit - irpfDeduction;
@@ -931,7 +934,7 @@ export default function AdminDashboard({ initialQuotes, initialLeads, initialMat
                                                 />
                                             </td>
                                             <td className={`p-3 text-right font-bold ${prf >= 0 ? 'text-brand-gold' : 'text-red-400'}`}>
-                                                {hasActual ? `${prf.toFixed(2)}€` : <span className="text-brand-gold-muted text-xs italic">est. {(rev - totalCost).toFixed(0)}€</span>}
+                                                {hasActual ? `${prf.toFixed(2)}€` : <span className="text-brand-gold-muted text-xs italic">est. {(rev / 1.21 - totalCost).toFixed(0)}€</span>}
                                             </td>
                                             <td className="p-3 text-center">
                                                 <select
