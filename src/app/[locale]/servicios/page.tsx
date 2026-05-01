@@ -36,7 +36,7 @@ const allServices = [
     {
         icon: '📡',
         key: 'rj45',
-        features: ['Keystone RJ45', 'Placas de pared', 'Certificación de puntos'],
+        features: ['Keystone RJ45', 'Placas de pared', 'Comprobación de enlaces'],
     },
     {
         icon: '🗄️',

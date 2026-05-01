@@ -46,13 +46,13 @@ export default function HomePage() {
     ];
 
     const faqJsonLd = getFAQJsonLd([
-        { question: '¿Cuánto cuesta instalar cable de red en Barcelona?', answer: 'El precio de instalación de cable de red en Barcelona comienza desde 95€ por punto para Cat6, 115€ para Cat6A y 140€ para Cat7. El precio incluye cable, roseta RJ45, crimpado y certificación. Usa nuestra calculadora online para un presupuesto exacto.' },
+        { question: '¿Cuánto cuesta instalar cable de red en Barcelona?', answer: 'El precio de instalación de cable de red en Barcelona comienza desde 95€ por punto para Cat6, 115€ para Cat6A y 140€ para Cat7. El precio incluye cable, roseta RJ45, crimpado y comprobación de conexión. Usa nuestra calculadora online para un presupuesto exacto.' },
         { question: '¿Qué tipo de cable de red necesito para una oficina?', answer: 'Para una oficina en Barcelona recomendamos cable Cat6 (1 Gbps, ideal para hasta 20 puestos) o Cat6A (10 Gbps, para entornos exigentes). Cat7 es la opción premium para naves industriales y data centers.' },
         { question: '¿Cuánto tarda la instalación de cableado estructurado?', answer: 'Una instalación típica de 4-10 puntos de red se completa en 1-2 días laborables. Proyectos grandes (20+ puntos) pueden requerir 3-5 días. Hacemos visita técnica previa gratuita.' },
         { question: '¿Ofrecéis presupuesto gratis para instalación de red?', answer: 'Sí, la visita técnica y el presupuesto son completamente gratuitos y sin compromiso. Puedes llamar al +34 605 974 605, escribir por WhatsApp o usar nuestra calculadora online.' },
         { question: '¿En qué zonas de Barcelona instaláis cable de red?', answer: 'Trabajamos en toda el área metropolitana de Barcelona: ciudad de Barcelona, Badalona, Hospitalet de Llobregat, Sabadell, Terrassa, Mataró, Cornellà, Sant Cugat y alrededores. El desplazamiento es gratuito.' },
         { question: '¿Cuánto cuesta instalar un rack de red?', answer: 'La instalación de un rack mural de 6U cuesta desde 180€, un rack de 12U desde 280€ y un rack de suelo de 24U desde 450€. El precio incluye rack, patch panel, latiguillos y organización del cableado.' },
-        { question: '¿Qué garantía ofrece CableCore en sus instalaciones?', answer: 'Ofrecemos 5 años de garantía en mano de obra en todas nuestras instalaciones de cableado estructurado. Todos nuestros puntos de red se certifican con equipos profesionales Fluke.' },
+        { question: '¿Qué garantía ofrece CableCore en sus instalaciones?', answer: 'Ofrecemos 5 años de garantía en mano de obra en todas nuestras instalaciones de cableado estructurado. Todos nuestros puntos de red se verifican con equipos profesionales.' },
     ]);
 
     return (
@@ -374,7 +374,7 @@ export default function HomePage() {
                         </div>
                         <div className="space-y-3">
                             {[
-                                { q: '¿Cuánto cuesta instalar cable de red en Barcelona?', a: 'Cat6 desde 95€/punto, Cat6A desde 115€/punto y Cat7 desde 140€/punto. El precio incluye cable, roseta RJ45 y certificación. Usa nuestra calculadora para un presupuesto exacto.' },
+                                { q: '¿Cuánto cuesta instalar cable de red en Barcelona?', a: 'Cat6 desde 95€/punto, Cat6A desde 115€/punto y Cat7 desde 140€/punto. El precio incluye cable, roseta RJ45 y comprobación de conexión. Usa nuestra calculadora para un presupuesto exacto.' },
                                 { q: '¿Qué tipo de cable de red necesito para una oficina?', a: 'Recomendamos Cat6 para oficinas de hasta 20 puestos (1 Gbps) o Cat6A para entornos más exigentes (10 Gbps). Cat7 es la opción premium para naves industriales.' },
                                 { q: '¿Cuánto tarda la instalación de cableado estructurado?', a: 'Una instalación de 4-10 puntos se completa en 1-2 días. Proyectos de 20+ puntos requieren 3-5 días. Hacemos visita técnica previa gratuita.' },
                                 { q: '¿Ofrecéis presupuesto gratis para instalación de red?', a: 'Sí, la visita técnica y el presupuesto son completamente gratuitos y sin compromiso. Contacta por teléfono, WhatsApp o usa la calculadora.' },

@@ -39,7 +39,7 @@ const PRICES = [
         category: 'Mano de Obra',
         items: [
             { name: 'Visita técnica', price: 'Gratis', detail: 'Presupuesto sin compromiso' },
-            { name: 'Mano de obra (hora)', price: '35€/h', detail: 'Técnico certificado' },
+            { name: 'Mano de obra (hora)', price: '35€/h', detail: 'Técnico cualificado' },
             { name: 'Desplazamiento Barcelona', price: 'Incluido', detail: 'Zona metropolitana' },
         ],
     },
@@ -48,11 +48,11 @@ const PRICES = [
 const FAQS_ES = [
     {
         question: '¿Cuánto cuesta instalar un punto de red en Barcelona?',
-        answer: 'El precio de instalación de un punto de red en Barcelona varía según el tipo de cable. Cat6 cuesta desde 95€/punto, Cat6A desde 115€/punto y Cat7 desde 140€/punto. El precio incluye cable, roseta RJ45, crimpado y certificación. La mano de obra está incluida en el precio por punto.',
+        answer: 'El precio de instalación de un punto de red en Barcelona varía según el tipo de cable. Cat6 cuesta desde 95€/punto, Cat6A desde 115€/punto y Cat7 desde 140€/punto. El precio incluye cable, roseta RJ45, crimpado y comprobación de conexión. La mano de obra está incluida en el precio por punto.',
     },
     {
         question: '¿Qué incluye el precio de cableado estructurado?',
-        answer: 'El precio incluye: suministro e instalación del cable (Cat6/Cat6A/Cat7), rosetas de red empotradas o de superficie, crimpado y terminación RJ45, certificación de cada punto de red, canaleta o tubo corrugado, y garantía de 5 años en mano de obra.',
+        answer: 'El precio incluye: suministro e instalación del cable (Cat6/Cat6A/Cat7), rosetas de red empotradas o de superficie, crimpado y terminación RJ45, verificación de cada punto de red, canaleta o tubo corrugado, y garantía de 5 años en mano de obra.',
     },
     {
         question: '¿Cuánto cuesta instalar 10 puntos de red en una oficina?',
