@@ -49,16 +49,17 @@ export default function ProjectDetail({ project: initialProject, activities, tas
     const grossRevenue = Number(project.total_revenue) || 0;
     const baseRevenue = grossRevenue / 1.21;
     const ivaDeduction = grossRevenue - baseRevenue;
-    const irpfDeduction = baseRevenue * 0.20;
-    const netRevenue = baseRevenue - irpfDeduction;
 
     const matCost = Number(costData.actual_material_cost) || 0;
     const labCost = Number(costData.actual_labor_cost) || 0;
     const othCost = Number(costData.actual_other_cost) || 0;
     const totalCost = matCost + labCost + othCost || Number(project.total_cost) || 0;
     
-    const profit = netRevenue - totalCost;
-    const margin = grossRevenue > 0 ? ((profit / grossRevenue) * 100).toFixed(1) : '0';
+    const grossProfit = baseRevenue - totalCost;
+    const irpfDeduction = grossProfit > 0 ? grossProfit * 0.20 : 0;
+    const netProfit = grossProfit - irpfDeduction;
+    
+    const margin = baseRevenue > 0 ? ((netProfit / baseRevenue) * 100).toFixed(1) : '0';
 
     const handleSaveInfo = async () => {
         setSaving(true);
@@ -244,22 +245,26 @@ export default function ProjectDetail({ project: initialProject, activities, tas
                                 <span className="text-xs">IVA (21%)</span>
                                 <span className="text-xs font-bold">-{ivaDeduction.toLocaleString('es-ES', {minimumFractionDigits: 2})}€</span>
                             </div>
-                            <div className="flex justify-between items-center text-red-400/80">
+                            <div className="flex justify-between items-center text-white pb-2 border-b border-white/5">
+                                <span className="text-xs">Facturación Base</span>
+                                <span className="text-sm font-bold">{baseRevenue.toLocaleString('es-ES', {minimumFractionDigits: 2})}€</span>
+                            </div>
+                            <div className="flex justify-between items-center text-red-400/80 pt-2">
+                                <span className="text-xs">Coste total</span>
+                                <span className="text-xs font-bold">-{totalCost.toLocaleString('es-ES', {minimumFractionDigits: 2})}€</span>
+                            </div>
+                            <div className="flex justify-between items-center text-white pb-2 border-b border-white/5">
+                                <span className="text-xs">Beneficio Bruto</span>
+                                <span className="text-sm font-bold">{grossProfit.toLocaleString('es-ES', {minimumFractionDigits: 2})}€</span>
+                            </div>
+                            <div className="flex justify-between items-center text-red-400/80 pt-2">
                                 <span className="text-xs">IRPF (20%)</span>
                                 <span className="text-xs font-bold">-{irpfDeduction.toLocaleString('es-ES', {minimumFractionDigits: 2})}€</span>
                             </div>
-                            <div className="flex justify-between items-center text-white pb-2 border-b border-white/5">
-                                <span className="text-xs">Ingreso neto (después de impuestos)</span>
-                                <span className="text-sm font-bold">{netRevenue.toLocaleString('es-ES', {minimumFractionDigits: 2})}€</span>
-                            </div>
-                            <div className="flex justify-between items-center">
-                                <span className="text-xs text-brand-gold-muted">Coste total</span>
-                                <span className="text-sm font-bold text-red-400">{totalCost.toLocaleString('es-ES', {minimumFractionDigits: 2})}€</span>
-                            </div>
-                            <div className="border-t border-border-subtle pt-3 flex justify-between items-center">
+                            <div className="border-t border-border-subtle mt-3 pt-3 flex justify-between items-center">
                                 <span className="text-xs text-brand-gold-muted">Beneficio neto</span>
-                                <span className={`text-sm font-bold ${profit >= 0 ? 'text-green-400' : 'text-red-400'}`}>
-                                    {profit >= 0 ? '+' : ''}{profit.toLocaleString('es-ES', {minimumFractionDigits: 2})}€
+                                <span className={`text-sm font-bold ${netProfit >= 0 ? 'text-green-400' : 'text-red-400'}`}>
+                                    {netProfit >= 0 ? '+' : ''}{netProfit.toLocaleString('es-ES', {minimumFractionDigits: 2})}€
                                     <span className="text-xs ml-1 font-normal opacity-70">({margin}%)</span>
                                 </span>
                             </div>
