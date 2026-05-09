@@ -12,6 +12,8 @@ const telegramChatId = process.env.TELEGRAM_CHAT_ID || '';
 const getSupabase = () => {
     if (!supabaseUrl || !supabaseKey) {
         throw new Error('Supabase credentials not configured');
+
+        // CRM 3.0
     }
     return createClient(supabaseUrl, supabaseKey);
 };
@@ -704,3 +706,5 @@ export async function updateProjectInfo(id: string, data: {
         return { success: false, error: error.message };
     }
 }
+
+// CRM 3.0
