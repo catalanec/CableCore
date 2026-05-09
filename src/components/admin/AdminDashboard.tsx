@@ -202,31 +202,29 @@ export default function AdminDashboard({ initialQuotes, initialLeads, initialMat
     return (
         <div>
             {/* Top Bar: Tabs & Search */}
-            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8">
-                <div className="flex flex-wrap gap-2">
-                    {tabs.map(tab => (
-                        <button
-                            key={tab.id}
-                            onClick={() => setActiveTab(tab.id)}
-                            className={`px-4 py-2.5 rounded-lg text-sm font-medium transition-all ${activeTab === tab.id
-                                    ? 'bg-[rgba(201,168,76,0.15)] text-brand-gold border border-brand-gold/30'
-                                    : 'bg-surface-card text-brand-gold-muted border border-border-subtle hover:border-brand-gold/20'
-                                }`}
-                        >
-                            {tab.icon} {tab.label}
-                        </button>
-                    ))}
-                </div>
+            <div className="flex flex-wrap items-center gap-2 mb-8">
+                {tabs.map(tab => (
+                    <button
+                        key={tab.id}
+                        onClick={() => setActiveTab(tab.id)}
+                        className={`px-4 py-2.5 rounded-lg text-sm font-medium transition-all ${activeTab === tab.id
+                                ? 'bg-[rgba(201,168,76,0.15)] text-brand-gold border border-brand-gold/30'
+                                : 'bg-surface-card text-brand-gold-muted border border-border-subtle hover:border-brand-gold/20'
+                            }`}
+                    >
+                        {tab.icon} {tab.label}
+                    </button>
+                ))}
                 
                 {/* Search Bar */}
-                <div className="relative w-full md:w-72">
+                <div className="relative w-full md:w-72 ml-auto">
                     <span className="absolute left-3 top-1/2 -translate-y-1/2 text-brand-gold-muted text-sm">🔍</span>
                     <input 
                         type="search" 
                         placeholder="Buscar cliente, email o teléfono..." 
                         value={searchTerm}
                         onChange={e => setSearchTerm(e.target.value)}
-                        className="w-full bg-surface-card border border-border-subtle rounded-lg py-2 pl-9 pr-4 text-sm text-white focus:outline-none focus:border-brand-gold/50 transition-colors"
+                        className="w-full bg-surface-card border border-border-subtle rounded-lg py-2.5 pl-9 pr-4 text-sm text-white focus:outline-none focus:border-brand-gold/50 transition-colors"
                     />
                 </div>
             </div>
