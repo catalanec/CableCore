@@ -548,7 +548,11 @@ export default function ProjectDetail({ project: initialProject, activities, tas
                             fd.append('caption', '');
                             const res = await fetch('/api/photos', { method: 'POST', body: fd });
                             const data = await res.json();
-                            if (data.success) setPhotos(prev => [{ url: data.url, path: data.path, caption: '' }, ...prev]);
+                            if (data.success) {
+                                setPhotos(prev => [{ url: data.url, path: data.path, caption: '' }, ...prev]);
+                            } else {
+                                alert('Error al subir la foto: ' + (data.error || 'Desconocido'));
+                            }
                         }
                         setUploadingPhoto(false);
                         e.target.value = '';
