@@ -341,6 +341,52 @@ export default function ProjectDetail({ project: initialProject, activities, tas
                 </div>
 
                 {/* CENTER: Tasks */}
+
+                                <div className="card p-5 border-brand-gold/10">
+                                                    <h3 className="font-semibold text-white mb-4 text-sm">Ubicaciones / Multi-site</h3>h3>
+                                                    <div className="space-y-3 mb-4">
+                                                        {locations.map((loc: any, idx: number) => (
+                                        <div key={idx} className="flex items-center justify-between p-2 bg-white/5 rounded border border-white/10">
+                                                                        <div className="flex flex-col">
+                                                                                                            <span className="text-sm font-medium text-white">{loc.name}</span>span>
+                                                                                                            <span className={`text-[10px] uppercase font-bold ${STATUS_STYLES[loc.status as keyof typeof STATUS_STYLES]?.split(' ')[1]}`}>
+                                                                                                                {loc.status}
+                                                                                                                </span>span>
+                                                                            </div>div>
+                                                                        <div className="flex gap-1">
+                                                                                                            <select 
+                                                                                                                                                        className="bg-black border border-brand-gold/20 text-[10px] rounded p-1 text-brand-gold"
+                                                                                                                                                        value={loc.status}
+                                                                                                                                                        onChange={async (e) => {
+                                                                                                                                                                                                        const newLocs = [...locations];
+                                                                                                                                                                                                        newLocs[idx].status = e.target.value;
+                                                                                                                                                                                                        setLocations(newLocs);
+                                                                                                                                                                                                        await updateProjectLocations(project.id, newLocs);
+                                                                                                                                                            }}
+                                                                                                                                                    >
+                                                                                                                                                    <option value="planned">Planificado</option>option>
+                                                                                                                                                    <option value="in_progress">En curso</option>option>
+                                                                                                                                                    <option value="completed">Completado</option>option>
+                                                                                                                </select>select>
+                                                                                                            <button 
+                                                                                                                                                        onClick={async () => {
+                                                                                                                                                                                                        const newLocs = locations.filter((_: any, i: number) => i !== idx);
+                                                                                                                                                                                                        setLocations(newLocs);
+                                                                                                                                                                                                        await updateProjectLocations(project.id, newLocs);
+                                                                                                                                                            }}
+                                                                                                                                                        className="text-red-400 hover:text-red-300 p-1"
+                                                                                                                                                    >
+                                                                                                                                                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" /></svg>svg>
+                                                                                                                </button>button>
+                                                                            </div>div>
+                                        </div>div>
+                                    ))}
+                                                    </div>div></div>
+
+                                    <div className="flex gap-2">
+                                                            <input 
+                                                                                            type="text"
+                                                                                            placeholder="Nueva ubicaci</div>
                 <div className="card p-5 border-brand-gold/10">
                     <h3 className="font-semibold text-white mb-4 text-sm">✅ Tareas</h3>
                     <TaskManager
