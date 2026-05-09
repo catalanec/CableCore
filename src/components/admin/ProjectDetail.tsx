@@ -526,7 +526,6 @@ export default function ProjectDetail({ project: initialProject, activities, tas
                     </div>
                 )}
             </div>
-        </div>
 
         {/* ═══════ FOTOS DEL TRABAJO ═══════ */}
         <div className="card p-5 border-purple-400/15">
