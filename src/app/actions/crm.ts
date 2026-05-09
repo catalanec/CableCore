@@ -707,6 +707,6 @@ export async function updateProjectInfo(id: string, data: {
     }
 }
 
-// CRM 3.0
+// CRM 3.0 - locations, quarterly tax, gastos
 
 // CRM 3.0
