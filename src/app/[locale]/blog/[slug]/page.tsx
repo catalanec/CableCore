@@ -24,10 +24,10 @@ export function generateMetadata({ params }: { params: { slug: string; locale: s
         alternates: {
             canonical: `${BASE_URL}/${params.locale}/blog/${article.slug}`,
             languages: {
-                'es-ES': `${BASE_URL}/es/blog/${article.slug}`,
-                'en-US': `${BASE_URL}/en/blog/${article.slug}`,
-                'ru-RU': `${BASE_URL}/ru/blog/${article.slug}`,
-                'x-default': `${BASE_URL}/es/blog/${article.slug}`,
+                'es': `${BASE_URL}/es/blog/${article.slug}`,
+                'en': `${BASE_URL}/en/blog/${article.slug}`,
+                'ru': `${BASE_URL}/ru/blog/${article.slug}`,
+                'x-default': `${BASE_URL}/blog/${article.slug}`,
             },
         },
     };

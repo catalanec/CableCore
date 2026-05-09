@@ -1,5 +1,6 @@
 import { SEO_PAGES } from '@/lib/seo-data';
 import { BLOG_ARTICLES } from '@/lib/blog-data';
+import type { MetadataRoute } from 'next';
 
 const BASE_URL = 'https://cablecore.es';
 const PRIMARY_LOCALE = 'es';
@@ -9,7 +10,17 @@ const ALL_LOCALES = [PRIMARY_LOCALE, ...SECONDARY_LOCALES];
 // Priority multiplier for non-primary locales (Google focuses on primary first)
 const SECONDARY_PRIORITY_FACTOR = 0.5;
 
-export default function sitemap() {
+function generateAlternates(path: string) {
+    const languages: Record<string, string> = {
+        'x-default': `${BASE_URL}${path}`, // x-default points to base without locale (which middleware redirects to /es) or /es. Usually better to point x-default to the root redirector.
+    };
+    ALL_LOCALES.forEach(loc => {
+        languages[loc] = `${BASE_URL}/${loc}${path}`;
+    });
+    return { languages };
+}
+
+export default function sitemap(): MetadataRoute.Sitemap {
     const staticPages = [
         { path: '', changeFreq: 'weekly' as const, basePriority: 1.0 },
         { path: '/servicios', changeFreq: 'weekly' as const, basePriority: 0.9 },
@@ -32,6 +43,7 @@ export default function sitemap() {
             priority: locale === PRIMARY_LOCALE
                 ? page.basePriority
                 : Math.round(page.basePriority * SECONDARY_PRIORITY_FACTOR * 10) / 10,
+            alternates: generateAlternates(page.path),
         }))
     );
 
@@ -42,6 +54,7 @@ export default function sitemap() {
             lastModified: now,
             changeFrequency: 'weekly' as const,
             priority: locale === PRIMARY_LOCALE ? 0.9 : 0.4,
+            alternates: generateAlternates(`/servicios/${page.slug}`),
         }))
     );
 
@@ -56,6 +69,7 @@ export default function sitemap() {
             lastModified: article.date,
             changeFrequency: 'monthly' as const,
             priority: locale === PRIMARY_LOCALE ? 0.8 : 0.3,
+            alternates: generateAlternates(`/blog/${article.slug}`),
         }))
     );
 

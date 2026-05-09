@@ -155,10 +155,10 @@ export function generatePageMetadata(pageKey: string, locale: string, path: stri
 
     const alternates: Record<string, string> = {};
     LOCALES.forEach(loc => {
-        alternates[HREFLANG_MAP[loc]] = `${BASE_URL}/${loc}${path}`;
+        alternates[loc] = `${BASE_URL}/${loc}${path}`;
     });
-    // x-default apunta a la versión en español
-    alternates['x-default'] = `${BASE_URL}/es${path}`;
+    // x-default points to the root URL (without locale) which handles redirection
+    alternates['x-default'] = `${BASE_URL}${path}`;
 
     return {
         title,
