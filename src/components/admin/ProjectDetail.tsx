@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { updateProjectStatus, updateProjectInfo, updateProjectCosts, updateProjectPayment, addActivity } from '@/app/actions/crm';
+import { updateProjectStatus, updateProjectInfo, updateProjectCosts, updateProjectPayment, addActivity , updateProjectLocations} from '@/app/actions/crm';
 import ActivityFeed from './ActivityFeed';
 import TaskManager from './TaskManager';
 
@@ -44,7 +44,10 @@ export default function ProjectDetail({ project: initialProject, activities, tas
         actual_labor_cost: String(project.actual_labor_cost || 0),
         actual_other_cost: String(project.actual_other_cost || 0),
     });
-    const [saving, setSaving] = useState(false);
+    const [saving, setSaving] = useState(false)
+            const [locations, setLocations] = useState(project.locations || []);
+        const [editingLoc, setEditingLoc] = useState<number | null>(null);
+        const [newLoc, setNewLoc] = useState({ name: '', status: 'planned' });;
 
     const grossRevenue = Number(project.total_revenue) || 0;
     const baseRevenue = grossRevenue / 1.21;
