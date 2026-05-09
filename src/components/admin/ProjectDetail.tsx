@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useRef, useCallback, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { updateProjectStatus, updateProjectInfo, updateProjectCosts, updateProjectPayment, addActivity, updateProjectLocations } from '@/app/actions/crm';
 import ActivityFeed from './ActivityFeed';
@@ -50,6 +50,58 @@ export default function ProjectDetail({ project: initialProject, activities, tas
     const [locations, setLocations] = useState<Array<{name: string; total: number; done: number}>>(initialProject.locations || []);
     const [editingLoc, setEditingLoc] = useState(false);
     const [newLoc, setNewLoc] = useState({ name: '', total: 1, done: 0 });
+
+    // Photos
+    const [photos, setPhotos] = useState<Array<{id?: string; url: string; path: string; caption: string}>>([]);
+    const [photosLoaded, setPhotosLoaded] = useState(false);
+    const [uploadingPhoto, setUploadingPhoto] = useState(false);
+    const photoInputRef = useRef<HTMLInputElement>(null);
+
+    // Digital signature
+    const [sigMode, setSigMode] = useState<'text' | 'draw'>('text');
+    const [sigText, setSigText] = useState('');
+    const [sigDate, setSigDate] = useState(new Date().toLocaleDateString('es-ES'));
+    const canvasRef = useRef<HTMLCanvasElement>(null);
+    const [isDrawing, setIsDrawing] = useState(false);
+    const [hasSig, setHasSig] = useState(false);
+
+    // Load photos on mount
+    useEffect(() => {
+        if (photosLoaded) return;
+        fetch(`/api/photos?project_id=${project.id}`)
+            .then(r => r.json())
+            .then(d => { setPhotos(d.photos || []); setPhotosLoaded(true); })
+            .catch(() => setPhotosLoaded(true));
+    }, [project.id, photosLoaded]);
+
+    // Canvas drawing helpers
+    const startDraw = useCallback((e: React.MouseEvent<HTMLCanvasElement>) => {
+        const canvas = canvasRef.current; if (!canvas) return;
+        const ctx = canvas.getContext('2d')!;
+        const rect = canvas.getBoundingClientRect();
+        ctx.beginPath();
+        ctx.moveTo(e.clientX - rect.left, e.clientY - rect.top);
+        setIsDrawing(true);
+    }, []);
+
+    const draw = useCallback((e: React.MouseEvent<HTMLCanvasElement>) => {
+        if (!isDrawing) return;
+        const canvas = canvasRef.current; if (!canvas) return;
+        const ctx = canvas.getContext('2d')!;
+        const rect = canvas.getBoundingClientRect();
+        ctx.lineTo(e.clientX - rect.left, e.clientY - rect.top);
+        ctx.strokeStyle = '#1a1a2e'; ctx.lineWidth = 2; ctx.lineCap = 'round';
+        ctx.stroke();
+        setHasSig(true);
+    }, [isDrawing]);
+
+    const stopDraw = useCallback(() => setIsDrawing(false), []);
+
+    const clearCanvas = useCallback(() => {
+        const canvas = canvasRef.current; if (!canvas) return;
+        canvas.getContext('2d')!.clearRect(0, 0, canvas.width, canvas.height);
+        setHasSig(false);
+    }, []);
 
     const grossRevenue = Number(project.total_revenue) || 0;
     const baseRevenue = grossRevenue / 1.21;
@@ -475,5 +527,140 @@ export default function ProjectDetail({ project: initialProject, activities, tas
                 )}
             </div>
         </div>
+
+        {/* ═══════ FOTOS DEL TRABAJO ═══════ */}
+        <div className="card p-5 border-purple-400/15">
+            <div className="flex items-center justify-between mb-4">
+                <h3 className="font-semibold text-white text-sm">📸 Fotos del Trabajo</h3>
+                <button onClick={() => photoInputRef.current?.click()}
+                    disabled={uploadingPhoto}
+                    className="text-xs px-3 py-1.5 bg-purple-400/10 border border-purple-400/20 text-purple-300 rounded-lg hover:bg-purple-400/20 transition-all disabled:opacity-40">
+                    {uploadingPhoto ? 'Subiendo...' : '+ Añadir foto'}
+                </button>
+                <input ref={photoInputRef} type="file" accept="image/*" multiple className="hidden"
+                    onChange={async (e) => {
+                        const files = Array.from(e.target.files || []);
+                        if (!files.length) return;
+                        setUploadingPhoto(true);
+                        for (const file of files) {
+                            const fd = new FormData();
+                            fd.append('file', file);
+                            fd.append('project_id', project.id);
+                            fd.append('caption', '');
+                            const res = await fetch('/api/photos', { method: 'POST', body: fd });
+                            const data = await res.json();
+                            if (data.success) setPhotos(prev => [{ url: data.url, path: data.path, caption: '' }, ...prev]);
+                        }
+                        setUploadingPhoto(false);
+                        e.target.value = '';
+                    }}
+                />
+            </div>
+
+            {photos.length === 0 ? (
+                <div className="text-center py-8 border-2 border-dashed border-purple-400/20 rounded-lg cursor-pointer hover:border-purple-400/40 transition-all"
+                    onClick={() => photoInputRef.current?.click()}>
+                    <div className="text-3xl mb-2">📷</div>
+                    <div className="text-sm text-brand-gold-muted">Haz clic para subir fotos del trabajo</div>
+                    <div className="text-xs text-brand-gold-muted/60 mt-1">Antes / Durante / Después</div>
+                </div>
+            ) : (
+                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-3">
+                    {photos.map((photo, i) => (
+                        <div key={i} className="relative group rounded-lg overflow-hidden border border-border-subtle aspect-square">
+                            <img src={photo.url} alt={photo.caption || `Foto ${i + 1}`}
+                                className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105" />
+                            <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-center gap-2">
+                                <a href={photo.url} target="_blank" rel="noopener noreferrer"
+                                    className="text-xs text-white bg-white/20 px-3 py-1 rounded hover:bg-white/30">Ver</a>
+                                <button onClick={async () => {
+                                    await fetch('/api/photos', { method: 'DELETE', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ path: photo.path, id: photo.id }) });
+                                    setPhotos(prev => prev.filter((_, j) => j !== i));
+                                }} className="text-xs text-red-300 hover:text-red-200">Eliminar</button>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            )}
+            <div className="mt-3 text-xs text-brand-gold-muted/60">{photos.length} foto{photos.length !== 1 ? 's' : ''} · Guardadas en Supabase Storage</div>
+        </div>
+
+        {/* ═══════ FIRMA DIGITAL ═══════ */}
+        <div className="card p-5 border-emerald-400/15">
+            <div className="flex items-center justify-between mb-4">
+                <h3 className="font-semibold text-white text-sm">✍️ Firma Digital</h3>
+                <div className="flex gap-1">
+                    {(['text', 'draw'] as const).map(mode => (
+                        <button key={mode} onClick={() => setSigMode(mode)}
+                            className={`text-xs px-3 py-1.5 rounded-lg border transition-all ${
+                                sigMode === mode ? 'bg-emerald-400/20 border-emerald-400/40 text-emerald-300' : 'border-border-subtle text-brand-gold-muted hover:border-emerald-400/20'
+                            }`}>
+                            {mode === 'text' ? '✒️ Texto' : '✏️ Dibujar'}
+                        </button>
+                    ))}
+                </div>
+            </div>
+
+            {sigMode === 'text' ? (
+                <div className="space-y-3">
+                    <div className="grid grid-cols-2 gap-3">
+                        <div>
+                            <label className="block text-xs text-brand-gold-muted mb-1">Nombre del firmante</label>
+                            <input type="text" value={sigText} onChange={e => setSigText(e.target.value)}
+                                placeholder="Ej: Juan García Martínez"
+                                className="w-full bg-brand-dark border border-border-subtle rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-emerald-400/50" />
+                        </div>
+                        <div>
+                            <label className="block text-xs text-brand-gold-muted mb-1">Fecha de aceptación</label>
+                            <input type="text" value={sigDate} onChange={e => setSigDate(e.target.value)}
+                                className="w-full bg-brand-dark border border-border-subtle rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-emerald-400/50" />
+                        </div>
+                    </div>
+                    {sigText && (
+                        <div className="mt-3 p-4 bg-white rounded-lg border border-emerald-400/30">
+                            <div className="text-center">
+                                <p style={{ fontFamily: 'cursive', fontSize: '24px', color: '#1a1a2e' }}>{sigText}</p>
+                                <div className="border-t border-gray-300 mt-2 pt-2 text-xs text-gray-500">
+                                    Firmado digitalmente · {sigDate}
+                                </div>
+                            </div>
+                        </div>
+                    )}
+                    <p className="text-xs text-brand-gold-muted/60">La firma textual se incluirá en la factura PDF.</p>
+                </div>
+            ) : (
+                <div className="space-y-3">
+                    <p className="text-xs text-brand-gold-muted">Dibuja tu firma con el ratón o el dedo en el tablet:</p>
+                    <div className="border border-emerald-400/30 rounded-lg overflow-hidden bg-white">
+                        <canvas ref={canvasRef} width={600} height={180}
+                            className="w-full cursor-crosshair touch-none"
+                            onMouseDown={startDraw} onMouseMove={draw}
+                            onMouseUp={stopDraw} onMouseLeave={stopDraw}
+                            onTouchStart={e => { e.preventDefault(); const t = e.touches[0]; const rect = canvasRef.current!.getBoundingClientRect(); const ctx = canvasRef.current!.getContext('2d')!; ctx.beginPath(); ctx.moveTo(t.clientX - rect.left, t.clientY - rect.top); setIsDrawing(true); }}
+                            onTouchMove={e => { e.preventDefault(); if (!isDrawing) return; const t = e.touches[0]; const rect = canvasRef.current!.getBoundingClientRect(); const ctx = canvasRef.current!.getContext('2d')!; ctx.lineTo(t.clientX - rect.left, t.clientY - rect.top); ctx.strokeStyle = '#1a1a2e'; ctx.lineWidth = 2; ctx.lineCap = 'round'; ctx.stroke(); setHasSig(true); }}
+                            onTouchEnd={stopDraw}
+                        />
+                    </div>
+                    <div className="flex items-center justify-between">
+                        <p className="text-xs text-brand-gold-muted/60">{hasSig ? '✅ Firma registrada' : '⬆️ Dibuja aquí'}</p>
+                        <div className="flex gap-2">
+                            <button onClick={clearCanvas} className="text-xs px-3 py-1.5 border border-border-subtle rounded-lg text-brand-gold-muted hover:text-white">Borrar</button>
+                            {hasSig && (
+                                <button onClick={() => {
+                                    const dataUrl = canvasRef.current!.toDataURL('image/png');
+                                    const link = document.createElement('a');
+                                    link.download = `firma_${project.client_name}_${Date.now()}.png`;
+                                    link.href = dataUrl; link.click();
+                                }} className="text-xs px-3 py-1.5 bg-emerald-600/20 border border-emerald-400/30 text-emerald-300 rounded-lg hover:bg-emerald-600/30">
+                                    Descargar firma
+                                </button>
+                            )}
+                        </div>
+                    </div>
+                </div>
+            )}
+        </div>
+
+    </div>
     );
 }
