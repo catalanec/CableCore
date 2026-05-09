@@ -59,6 +59,25 @@ export default function AdminDashboard({ initialQuotes, initialLeads, initialMat
     const [newExpense, setNewExpense] = useState({ description: '', amount: '', category: 'materiales', date: new Date().toISOString().split('T')[0], project_id: '' });
     const [savingExpense, setSavingExpense] = useState(false);
 
+
+    // CSV export helper
+    const downloadCSV = (csv: string, filename: string) => {
+        const BOM = '\uFEFF';
+        const blob = new Blob([BOM + csv], { type: 'text/csv;charset=utf-8;' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = filename;
+        a.click();
+        URL.revokeObjectURL(url);
+    };
+    
+    // Convert to local states to allow optimistic UI updates (but server actions will revalidate props too)
+    const [quotes, setQuotes] = useState(initialQuotes);
+    const [leads, setLeads] = useState(initialLeads);
+    const [materials, setMaterials] = useState(initialMaterials);
+    const [projects, setProjects] = useState(initialProjects);
+
     // ── Quarterly tax ──
     const [selectedQuarter, setSelectedQuarter] = useState(() => Math.floor(new Date().getMonth() / 3) + 1);
     const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
@@ -80,24 +99,6 @@ export default function AdminDashboard({ initialQuotes, initialLeads, initialMat
         const beneficioNeto = irpfBase - irpfEstimado;
         return { totalConIva, baseImponible, ivaACobrar, irpfBase, irpfEstimado, beneficioNeto, projectCount: periodProjects.length };
     }, [projects, selectedQuarter, selectedYear]);
-
-    // CSV export helper
-    const downloadCSV = (csv: string, filename: string) => {
-        const BOM = '\uFEFF';
-        const blob = new Blob([BOM + csv], { type: 'text/csv;charset=utf-8;' });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = filename;
-        a.click();
-        URL.revokeObjectURL(url);
-    };
-    
-    // Convert to local states to allow optimistic UI updates (but server actions will revalidate props too)
-    const [quotes, setQuotes] = useState(initialQuotes);
-    const [leads, setLeads] = useState(initialLeads);
-    const [materials, setMaterials] = useState(initialMaterials);
-    const [projects, setProjects] = useState(initialProjects);
 
     // Keep it synced with incoming props from server via revalidatePath
     useEffect(() => {
