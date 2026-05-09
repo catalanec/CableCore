@@ -18,7 +18,7 @@ interface AdminDashboardProps {
 }
 
 /* Tab types */
-type Tab = 'overview' | 'quotes' | 'leads' | 'pipeline' | 'materials' | 'projects' | 'tasks' | 'facturas';
+type Tab = 'overview' | 'quotes' | 'leads' | 'pipeline' | 'materials' | 'projects' | 'tasks' | 'facturas' | 'gastos' | 'agenda';
 
 const STATUS_COLORS: Record<string, string> = {
     pending: 'bg-yellow-400/10 text-yellow-400',
@@ -52,6 +52,34 @@ export default function AdminDashboard({ initialQuotes, initialLeads, initialMat
     const [categoryFilter, setCategoryFilter] = useState('all');
     const [chartPeriod, setChartPeriod] = useState(6);
     const [newMat, setNewMat] = useState({ name: '', category: 'cable', unit: 'm', cost_price: 0, sell_price: 0, stock: 0, min_stock: 5 });
+
+    // ── Gastos rápidos ──
+    const [expenses, setExpenses] = useState<Array<{id: string; description: string; amount: number; category: string; date: string}>>([]);
+    const [showExpenseModal, setShowExpenseModal] = useState(false);
+    const [newExpense, setNewExpense] = useState({ description: '', amount: '', category: 'materiales', date: new Date().toISOString().split('T')[0], project_id: '' });
+    const [savingExpense, setSavingExpense] = useState(false);
+
+    // ── Quarterly tax ──
+    const [selectedQuarter, setSelectedQuarter] = useState(() => Math.floor(new Date().getMonth() / 3) + 1);
+    const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
+
+    const quarterlyData = useMemo(() => {
+        const qStart = (selectedQuarter - 1) * 3;
+        const qEnd = qStart + 2;
+        const periodProjects = projects.filter(p => {
+            const dateStr = (p.payment_status === 'paid' && p.payment_date) ? p.payment_date : p.created_at;
+            if (!dateStr) return false;
+            const d = new Date(dateStr);
+            return d.getFullYear() === selectedYear && d.getMonth() >= qStart && d.getMonth() <= qEnd;
+        });
+        const totalConIva = periodProjects.reduce((s, p) => s + (Number(p.total_revenue) || 0), 0);
+        const baseImponible = totalConIva / 1.21;
+        const ivaACobrar = totalConIva - baseImponible;
+        const irpfBase = periodProjects.reduce((s, p) => s + (Number(p.actual_labor_cost) || 0), 0);
+        const irpfEstimado = irpfBase * 0.20;
+        const beneficioNeto = irpfBase - irpfEstimado;
+        return { totalConIva, baseImponible, ivaACobrar, irpfBase, irpfEstimado, beneficioNeto, projectCount: periodProjects.length };
+    }, [projects, selectedQuarter, selectedYear]);
 
     // CSV export helper
     const downloadCSV = (csv: string, filename: string) => {
@@ -161,11 +189,13 @@ export default function AdminDashboard({ initialQuotes, initialLeads, initialMat
         { id: 'overview', label: 'Panel', icon: '📊' },
         { id: 'pipeline', label: 'Pipeline', icon: '🎯' },
         { id: 'tasks', label: 'Tareas', icon: '✅' },
+        { id: 'agenda', label: 'Agenda', icon: '📅' },
         { id: 'leads', label: 'Leads', icon: '👥' },
         { id: 'quotes', label: 'Presupuestos', icon: '📋' },
         { id: 'materials', label: 'Materiales', icon: '📦' },
         { id: 'projects', label: 'Proyectos', icon: '🏗️' },
         { id: 'facturas', label: 'Facturas', icon: '🧾' },
+        { id: 'gastos', label: 'Gastos', icon: '💸' },
     ];
 
     return (
@@ -270,6 +300,41 @@ export default function AdminDashboard({ initialQuotes, initialLeads, initialMat
                                 <div className="w-3 h-3 rounded-sm bg-gradient-to-t from-[#444] to-[#666]" /> Costes
                             </div>
                         </div>
+                    </div>
+
+                    {/* ── Quarterly Tax Widget ── */}
+                    <div className="card p-6 border-amber-400/20">
+                        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-5">
+                            <h3 className="font-heading font-semibold text-white flex items-center gap-2">🏛️ Resumen Fiscal Trimestral</h3>
+                            <div className="flex gap-2 items-center flex-wrap">
+                                <select value={selectedYear} onChange={e => setSelectedYear(Number(e.target.value))}
+                                    className="bg-surface-card border border-border-subtle rounded-lg px-2 py-1.5 text-sm text-white outline-none focus:border-brand-gold/50">
+                                    {[new Date().getFullYear() - 1, new Date().getFullYear()].map(y => <option key={y} value={y}>{y}</option>)}
+                                </select>
+                                {[1,2,3,4].map(q => (
+                                    <button key={q} onClick={() => setSelectedQuarter(q)}
+                                        className={`px-3 py-1.5 rounded-lg text-sm font-bold transition-all ${selectedQuarter === q ? 'bg-amber-400/20 text-amber-400 border border-amber-400/40' : 'bg-surface-card text-brand-gold-muted border border-border-subtle hover:border-amber-400/20'}`}>T{q}</button>
+                                ))}
+                            </div>
+                        </div>
+                        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3">
+                            {[
+                                { label: 'Facturado (c/IVA)', value: quarterlyData.totalConIva, color: 'text-white', icon: '💰', note: `${quarterlyData.projectCount} proyectos` },
+                                { label: 'Base Imponible', value: quarterlyData.baseImponible, color: 'text-brand-gold', icon: '📋', note: 'Sin IVA' },
+                                { label: 'IVA a declarar', value: quarterlyData.ivaACobrar, color: 'text-red-400', icon: '🏛️', note: 'Modelo 303' },
+                                { label: 'Base IRPF (Serv.)', value: quarterlyData.irpfBase, color: 'text-orange-400', icon: '👷', note: 'Mano de obra' },
+                                { label: 'IRPF estimado (20%)', value: quarterlyData.irpfEstimado, color: 'text-red-400', icon: '📤', note: 'Modelo 130' },
+                                { label: 'Beneficio neto', value: quarterlyData.beneficioNeto, color: 'text-green-400', icon: '✅', note: 'Tuyo real' },
+                            ].map((item, i) => (
+                                <div key={i} className="bg-brand-dark/60 border border-border-subtle rounded-xl p-3 text-center">
+                                    <div className="text-xl mb-1">{item.icon}</div>
+                                    <div className={`font-heading font-bold text-lg ${item.color}`}>{item.value.toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}€</div>
+                                    <div className="text-[10px] text-brand-gold-muted mt-1 leading-tight">{item.label}</div>
+                                    <div className="text-[9px] text-white/30 mt-0.5">{item.note}</div>
+                                </div>
+                            ))}
+                        </div>
+                        <p className="text-[10px] text-brand-gold-muted/60 mt-3">⚠️ Estimación orientativa. Consulta con tu gestor para la declaración oficial.</p>
                     </div>
 
                     {/* Bottom row */}
@@ -1674,6 +1739,150 @@ export default function AdminDashboard({ initialQuotes, initialLeads, initialMat
                 </div>
                 );
             })()}
+
+            {/* ═══════ GASTOS ═══════ */}
+            {activeTab === 'gastos' && (
+                <div className="space-y-6">
+                    <div className="flex items-center justify-between">
+                        <h3 className="font-heading font-semibold text-white">💸 Registro de Gastos</h3>
+                        <button onClick={() => setShowExpenseModal(true)} className="btn-gold px-4 py-2 text-sm">+ Añadir Gasto</button>
+                    </div>
+                    {expenses.length === 0 ? (
+                        <div className="card p-12 text-center border-brand-gold/10">
+                            <div className="text-4xl mb-3">💸</div>
+                            <div className="text-white font-semibold mb-1">No hay gastos registrados</div>
+                            <div className="text-sm text-brand-gold-muted mb-4">Añade gastos de materiales, herramientas, transporte, etc.</div>
+                            <button onClick={() => setShowExpenseModal(true)} className="btn-outline px-4 py-2 text-sm">+ Añadir primer gasto</button>
+                        </div>
+                    ) : (
+                        <div className="card border-brand-gold/10 overflow-hidden">
+                            <table className="w-full text-sm">
+                                <thead>
+                                    <tr className="border-b border-border-subtle text-brand-gold-muted text-xs uppercase tracking-wider">
+                                        <th className="text-left p-4">Fecha</th>
+                                        <th className="text-left p-4">Descripción</th>
+                                        <th className="text-left p-4">Categoría</th>
+                                        <th className="text-right p-4">Importe</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {expenses.map(e => (
+                                        <tr key={e.id} className="border-b border-border-subtle/50">
+                                            <td className="p-4 text-brand-gold-muted text-xs">{new Date(e.date).toLocaleDateString('es-ES')}</td>
+                                            <td className="p-4 text-white">{e.description}</td>
+                                            <td className="p-4"><span className="text-xs px-2 py-1 rounded-full bg-surface-card text-brand-gold-muted capitalize">{e.category}</span></td>
+                                            <td className="p-4 text-right font-bold text-red-400">-{Number(e.amount).toFixed(2)}€</td>
+                                        </tr>
+                                    ))}
+                                </tbody>
+                                <tfoot>
+                                    <tr className="border-t border-brand-gold/20">
+                                        <td colSpan={3} className="p-4 text-right text-brand-gold-muted font-semibold text-sm">Total gastos:</td>
+                                        <td className="p-4 text-right font-bold text-red-400 text-base">-{expenses.reduce((s, e) => s + Number(e.amount), 0).toFixed(2)}€</td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                        </div>
+                    )}
+                </div>
+            )}
+
+            {/* ═══════ AGENDA ═══════ */}
+            {activeTab === 'agenda' && (
+                <div className="space-y-4">
+                    <h3 className="font-heading font-semibold text-white">📅 Agenda de visitas</h3>
+                    <div className="card p-8 text-center border-brand-gold/10">
+                        <div className="text-4xl mb-3">📅</div>
+                        <div className="text-white font-semibold mb-1">Calendario — Próximamente</div>
+                        <div className="text-sm text-brand-gold-muted">Vista semanal de visitas y trabajos programados.</div>
+                        <div className="mt-4 text-xs text-brand-gold-muted">Por ahora usa la pestaña ✅ Tareas para gestionar fechas.</div>
+                    </div>
+                </div>
+            )}
+
+            {/* ═══════ QUICK EXPENSE MODAL ═══════ */}
+            {showExpenseModal && (
+                <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm">
+                    <div className="bg-surface-card border border-brand-gold/30 rounded-xl w-full max-w-md shadow-2xl">
+                        <div className="flex justify-between items-center p-5 border-b border-border-subtle">
+                            <h3 className="text-lg font-heading font-bold text-white">💸 Nuevo Gasto</h3>
+                            <button onClick={() => setShowExpenseModal(false)} className="text-gray-400 hover:text-white text-xl">✕</button>
+                        </div>
+                        <div className="p-5 space-y-4">
+                            <div>
+                                <label className="block text-xs text-brand-gold-muted mb-1">Descripción *</label>
+                                <input type="text" value={newExpense.description}
+                                    onChange={e => setNewExpense({...newExpense, description: e.target.value})}
+                                    placeholder="Ej: Pigtails SC/APC × 10 ud"
+                                    className="w-full bg-brand-dark border border-border-subtle rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-brand-gold/50" />
+                            </div>
+                            <div className="grid grid-cols-2 gap-3">
+                                <div>
+                                    <label className="block text-xs text-brand-gold-muted mb-1">Importe (€) *</label>
+                                    <input type="number" step="0.01" min="0" value={newExpense.amount}
+                                        onChange={e => setNewExpense({...newExpense, amount: e.target.value})}
+                                        placeholder="0.00"
+                                        className="w-full bg-brand-dark border border-border-subtle rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-brand-gold/50" />
+                                </div>
+                                <div>
+                                    <label className="block text-xs text-brand-gold-muted mb-1">Fecha</label>
+                                    <input type="date" value={newExpense.date}
+                                        onChange={e => setNewExpense({...newExpense, date: e.target.value})}
+                                        className="w-full bg-brand-dark border border-border-subtle rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-brand-gold/50" />
+                                </div>
+                            </div>
+                            <div>
+                                <label className="block text-xs text-brand-gold-muted mb-1">Categoría</label>
+                                <select value={newExpense.category}
+                                    onChange={e => setNewExpense({...newExpense, category: e.target.value})}
+                                    className="w-full bg-brand-dark border border-border-subtle rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-brand-gold/50">
+                                    <option value="materiales">📦 Materiales</option>
+                                    <option value="herramientas">🔧 Herramientas</option>
+                                    <option value="transporte">🚗 Transporte / Combustible</option>
+                                    <option value="subcontrata">👷 Subcontrata</option>
+                                    <option value="otros">📌 Otros</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label className="block text-xs text-brand-gold-muted mb-1">Proyecto (opcional)</label>
+                                <select value={newExpense.project_id}
+                                    onChange={e => setNewExpense({...newExpense, project_id: e.target.value})}
+                                    className="w-full bg-brand-dark border border-border-subtle rounded-lg px-3 py-2 text-sm text-white focus:outline-none focus:border-brand-gold/50">
+                                    <option value="">— Sin proyecto —</option>
+                                    {projects.map(p => <option key={p.id} value={p.id}>{p.client_name}</option>)}
+                                </select>
+                            </div>
+                        </div>
+                        <div className="flex gap-3 p-5 pt-0">
+                            <button onClick={() => setShowExpenseModal(false)}
+                                className="flex-1 px-4 py-2.5 border border-border-subtle rounded-lg text-brand-gold-muted hover:text-white transition-colors text-sm">
+                                Cancelar
+                            </button>
+                            <button disabled={savingExpense || !newExpense.description || !newExpense.amount}
+                                onClick={() => {
+                                    if (!newExpense.description || !newExpense.amount) return;
+                                    setSavingExpense(true);
+                                    const expense = {
+                                        id: Date.now().toString(),
+                                        description: newExpense.description,
+                                        amount: Number(newExpense.amount),
+                                        category: newExpense.category,
+                                        date: newExpense.date,
+                                    };
+                                    setExpenses(prev => [expense, ...prev]);
+                                    setNewExpense({ description: '', amount: '', category: 'materiales', date: new Date().toISOString().split('T')[0], project_id: '' });
+                                    setShowExpenseModal(false);
+                                    setSavingExpense(false);
+                                }}
+                                className="flex-1 px-4 py-2.5 bg-brand-gold text-black font-bold rounded-lg hover:bg-white transition-colors text-sm disabled:opacity-40 disabled:cursor-not-allowed">
+                                {savingExpense ? 'Guardando...' : '✓ Añadir Gasto'}
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            )}
+
         </div>
     );
 }
+
