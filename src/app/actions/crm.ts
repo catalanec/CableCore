@@ -707,6 +707,22 @@ export async function updateProjectInfo(id: string, data: {
     }
 }
 
-// CRM 3.0
+// ═══════════════════════════════════
+// CRM 3.0 — MULTI-SITE LOCATIONS
+// ═══════════════════════════════════
 
-// CRM 3.0
+export async function updateProjectLocations(id: string, locations: Array<{ name: string; total: number; done: number }>) {
+    try {
+        const supabase = getSupabase();
+        const { error } = await supabase
+            .from('projects')
+            .update({ locations })
+            .eq('id', id);
+        if (error) throw error;
+        revalidate();
+        return { success: true };
+    } catch (error: any) {
+        console.error('Failed to update project locations:', error);
+        return { success: false, error: error.message };
+    }
+}

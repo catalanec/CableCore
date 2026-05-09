@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { updateProjectStatus, updateProjectInfo, updateProjectCosts, updateProjectPayment, addActivity } from '@/app/actions/crm';
+import { updateProjectStatus, updateProjectInfo, updateProjectCosts, updateProjectPayment, addActivity, updateProjectLocations } from '@/app/actions/crm';
 import ActivityFeed from './ActivityFeed';
 import TaskManager from './TaskManager';
 
@@ -45,6 +45,11 @@ export default function ProjectDetail({ project: initialProject, activities, tas
         actual_other_cost: String(project.actual_other_cost || 0),
     });
     const [saving, setSaving] = useState(false);
+
+    // Locations / multi-site progress
+    const [locations, setLocations] = useState<Array<{name: string; total: number; done: number}>>(initialProject.locations || []);
+    const [editingLoc, setEditingLoc] = useState(false);
+    const [newLoc, setNewLoc] = useState({ name: '', total: 1, done: 0 });
 
     const grossRevenue = Number(project.total_revenue) || 0;
     const baseRevenue = grossRevenue / 1.21;
@@ -365,6 +370,110 @@ export default function ProjectDetail({ project: initialProject, activities, tas
                     <p className="text-sm text-brand-gold-muted leading-relaxed whitespace-pre-wrap">{project.notes}</p>
                 </div>
             )}
+
+            {/* Locations / Multi-site Progress */}
+            <div className="card p-5 border-cyan-400/15">
+                <div className="flex items-center justify-between mb-4">
+                    <h3 className="font-semibold text-white text-sm">📍 Progreso por Sedes</h3>
+                    <button onClick={() => setEditingLoc(!editingLoc)}
+                        className="text-xs px-3 py-1.5 bg-cyan-400/10 border border-cyan-400/20 text-cyan-400 rounded-lg hover:bg-cyan-400/20 transition-all">
+                        {editingLoc ? '✓ Hecho' : '✏️ Editar sedes'}
+                    </button>
+                </div>
+
+                {locations.length === 0 && !editingLoc && (
+                    <div className="text-center py-6 text-brand-gold-muted text-sm">
+                        <div className="text-2xl mb-2">📍</div>
+                        No hay sedes configuradas. Pulsa &quot;Editar sedes&quot; para añadir.
+                    </div>
+                )}
+
+                <div className="space-y-4">
+                    {locations.map((loc, i) => {
+                        const pct = loc.total > 0 ? Math.round((loc.done / loc.total) * 100) : 0;
+                        const isDone = pct === 100;
+                        return (
+                            <div key={i} className="space-y-1">
+                                <div className="flex items-center justify-between text-sm">
+                                    <span className={`font-medium ${isDone ? 'text-green-400' : 'text-white'}`}>
+                                        {isDone ? '✅' : '⏳'} {loc.name}
+                                    </span>
+                                    <div className="flex items-center gap-3">
+                                        {editingLoc && (
+                                            <>
+                                                <input type="number" min={0} value={loc.done}
+                                                    onChange={e => { const updated = locations.map((l, j) => j === i ? {...l, done: Math.min(Number(e.target.value), l.total)} : l); setLocations(updated); }}
+                                                    className="w-12 text-center bg-brand-dark border border-border-subtle rounded px-1 py-0.5 text-xs text-white focus:outline-none focus:border-cyan-400/50" />
+                                                <span className="text-brand-gold-muted text-xs">/ {loc.total}</span>
+                                                <button onClick={() => setLocations(locations.filter((_, j) => j !== i))}
+                                                    className="text-red-400 hover:text-red-300 text-xs">✕</button>
+                                            </>
+                                        )}
+                                        {!editingLoc && (
+                                            <span className="text-xs text-brand-gold-muted">{loc.done}/{loc.total} puntos · {pct}%</span>
+                                        )}
+                                    </div>
+                                </div>
+                                <div className="h-2 bg-brand-dark rounded-full overflow-hidden">
+                                    <div className={`h-full rounded-full transition-all duration-500 ${isDone ? 'bg-green-400' : 'bg-cyan-400'}`}
+                                        style={{ width: `${pct}%` }} />
+                                </div>
+                            </div>
+                        );
+                    })}
+                </div>
+
+                {editingLoc && (
+                    <div className="mt-4 pt-4 border-t border-border-subtle space-y-3">
+                        <div className="text-xs text-brand-gold-muted font-semibold uppercase">Añadir sede</div>
+                        <div className="flex gap-2 items-end">
+                            <div className="flex-1">
+                                <label className="block text-[11px] text-brand-gold-muted mb-1">Nombre</label>
+                                <input type="text" value={newLoc.name}
+                                    onChange={e => setNewLoc({...newLoc, name: e.target.value})}
+                                    placeholder="Ej: Sabadell"
+                                    className="w-full bg-brand-dark border border-border-subtle rounded px-2 py-1.5 text-sm text-white focus:outline-none focus:border-cyan-400/50" />
+                            </div>
+                            <div className="w-20">
+                                <label className="block text-[11px] text-brand-gold-muted mb-1">Total pts</label>
+                                <input type="number" min={1} value={newLoc.total}
+                                    onChange={e => setNewLoc({...newLoc, total: Number(e.target.value)})}
+                                    className="w-full bg-brand-dark border border-border-subtle rounded px-2 py-1.5 text-sm text-white focus:outline-none focus:border-cyan-400/50" />
+                            </div>
+                            <div className="w-20">
+                                <label className="block text-[11px] text-brand-gold-muted mb-1">Hechos</label>
+                                <input type="number" min={0} value={newLoc.done}
+                                    onChange={e => setNewLoc({...newLoc, done: Number(e.target.value)})}
+                                    className="w-full bg-brand-dark border border-border-subtle rounded px-2 py-1.5 text-sm text-white focus:outline-none focus:border-cyan-400/50" />
+                            </div>
+                            <button onClick={() => {
+                                if (!newLoc.name) return;
+                                setLocations([...locations, { name: newLoc.name, total: newLoc.total, done: newLoc.done }]);
+                                setNewLoc({ name: '', total: 1, done: 0 });
+                            }} className="px-3 py-1.5 bg-cyan-400/20 text-cyan-400 border border-cyan-400/30 rounded text-sm hover:bg-cyan-400/30 transition-all whitespace-nowrap">
+                                + Añadir
+                            </button>
+                        </div>
+                        <button onClick={async () => {
+                            setSaving(true);
+                            await updateProjectLocations(project.id, locations);
+                            setSaving(false);
+                            setEditingLoc(false);
+                        }} disabled={saving}
+                            className="w-full btn-gold py-2 text-sm mt-2 disabled:opacity-50">
+                            {saving ? 'Guardando...' : '✓ Guardar progreso'}
+                        </button>
+                    </div>
+                )}
+
+                {!editingLoc && locations.length > 0 && (
+                    <div className="mt-4 pt-3 border-t border-border-subtle flex justify-between text-xs text-brand-gold-muted">
+                        <span>Total puntos: {locations.reduce((s, l) => s + l.total, 0)}</span>
+                        <span className="text-green-400">Completados: {locations.reduce((s, l) => s + l.done, 0)}</span>
+                        <span>Pendientes: {locations.reduce((s, l) => s + (l.total - l.done), 0)}</span>
+                    </div>
+                )}
+            </div>
         </div>
     );
 }
