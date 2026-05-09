@@ -291,7 +291,9 @@ export function getLocalBusinessJsonLd() {
         sameAs: [],
         aggregateRating: {
             '@type': 'AggregateRating',
+            itemReviewed: { '@type': 'LocalBusiness', name: SITE_NAME },
             ratingValue: '4.9',
+            ratingCount: '47',
             reviewCount: '47',
             bestRating: '5',
             worstRating: '1',
@@ -299,6 +301,8 @@ export function getLocalBusinessJsonLd() {
         review: [
             {
                 '@type': 'Review',
+                name: 'Excelente servicio',
+                itemReviewed: { '@type': 'LocalBusiness', name: SITE_NAME },
                 author: { '@type': 'Person', name: 'Carlos M.' },
                 datePublished: '2025-03-15',
                 reviewRating: { '@type': 'Rating', ratingValue: '5', bestRating: '5' },
@@ -306,6 +310,8 @@ export function getLocalBusinessJsonLd() {
             },
             {
                 '@type': 'Review',
+                name: 'Muy profesionales',
+                itemReviewed: { '@type': 'LocalBusiness', name: SITE_NAME },
                 author: { '@type': 'Person', name: 'Ana L.' },
                 datePublished: '2025-02-20',
                 reviewRating: { '@type': 'Rating', ratingValue: '5', bestRating: '5' },
@@ -313,6 +319,8 @@ export function getLocalBusinessJsonLd() {
             },
             {
                 '@type': 'Review',
+                name: 'Rapidez y calidad',
+                itemReviewed: { '@type': 'LocalBusiness', name: SITE_NAME },
                 author: { '@type': 'Person', name: 'David R.' },
                 datePublished: '2025-01-10',
                 reviewRating: { '@type': 'Rating', ratingValue: '5', bestRating: '5' },
@@ -320,6 +328,8 @@ export function getLocalBusinessJsonLd() {
             },
             {
                 '@type': 'Review',
+                name: 'Resultado impecable',
+                itemReviewed: { '@type': 'LocalBusiness', name: SITE_NAME },
                 author: { '@type': 'Person', name: 'Marta G.' },
                 datePublished: '2024-12-05',
                 reviewRating: { '@type': 'Rating', ratingValue: '5', bestRating: '5' },
@@ -327,6 +337,8 @@ export function getLocalBusinessJsonLd() {
             },
             {
                 '@type': 'Review',
+                name: 'Increíble trabajo',
+                itemReviewed: { '@type': 'LocalBusiness', name: SITE_NAME },
                 author: { '@type': 'Person', name: 'Jordi P.' },
                 datePublished: '2024-11-18',
                 reviewRating: { '@type': 'Rating', ratingValue: '5', bestRating: '5' },
