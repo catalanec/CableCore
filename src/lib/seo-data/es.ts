@@ -27,6 +27,9 @@ export const SEO_PAGES_ES: SEOPageConfig[] = [
             { q: '¿Cuánto tarda la instalación?', a: 'Una instalación doméstica de 4-8 puntos se realiza en 1 día laborable. Proyectos empresariales de 20-30 puntos en 2-3 días. Trabajamos con mínimas molestias.' },
             { q: '¿Es mejor canaleta o empotrado?', a: 'La canaleta es más rápida y económica, ideal para instalaciones en locales ya construidos. El empotrado queda invisible pero requiere obra. En reformas recomendamos siempre empotrado.' },
             { q: '¿Qué categoría de cable necesito?', a: 'Cat6 para uso doméstico (1 Gbps). Cat6A para oficinas que necesiten 10 Gbps. Cat7 para entornos industriales o data centers con muchas interferencias.' },
+            { q: '¿Necesito cortar el suministro durante la instalación?', a: 'No. La instalación de cable de red no requiere cortar la electricidad. Trabajamos en paralelo a la actividad del local u hogar. Solo interrumpimos brevemente el switch si ya existe red, para conectar los nuevos puntos.' },
+            { q: '¿Ofrecéis garantía en la instalación?', a: 'Sí. Todas nuestras instalaciones tienen 5 años de garantía en materiales y mano de obra. Si un punto falla en ese periodo, lo reparamos sin coste.' },
+            { q: '¿Podéis instalar cable de red en un piso de alquiler?', a: 'Sí, usando canaleta adhesiva que no daña paredes ni requiere permiso del propietario. Al finalizar el contrato, la canaleta se retira sin dejar rastro.' },
         ],
     },
     {
@@ -247,6 +250,8 @@ export const SEO_PAGES_ES: SEOPageConfig[] = [
             { q: '¿Cuánto cuesta instalar red en Barcelona?', a: 'Punto Cat6 instalado desde 95€. Oficina de 10 puestos (cableado + rack + patch panel) desde 1.800€. Instalación doméstica de 4 puntos desde 450€. Pide presupuesto gratis sin compromiso.' },
             { q: '¿Cuánto tarda una instalación de red en Barcelona?', a: 'Un hogar de 4-8 puntos en 1 día. Oficina de 15-20 puntos en 2-3 días. Proyecto industrial de 50+ puntos en 1-2 semanas. Trabajamos fines de semana para no parar tu negocio.' },
             { q: '¿Trabajáis en toda Barcelona ciudad?', a: 'Sí, cubrimos todos los distritos: Eixample, Gràcia, Sant Martí (22@), Sants-Montjuïc, Zona Franca, Horta-Guinardó, Nou Barris, Sant Andreu, Sarrià-Sant Gervasi y Les Corts.' },
+            { q: '¿Usáis subcontratas?', a: 'No. Todos los trabajos los realiza personal propio de CableCore. Sin intermediarios, sin sorpresas. El técnico que hace la visita técnica es el mismo que realiza la instalación.' },
+            { q: '¿Podéis instalar red WiFi además del cableado?', a: 'Sí. Complementamos el cableado Ethernet con puntos de acceso WiFi empresarial (Ubiquiti, TP-Link EAP) para cobertura total. El cable es la columna vertebral y el WiFi complementa las zonas móviles.' },
             { q: '¿Sois empresa local o subcontratas el trabajo?', a: 'Somos empresa local con sede en Badalona. No subcontratamos. Los técnicos que hacen la visita son los mismos que instalan, lo que garantiza continuidad y responsabilidad.' },
         ],
     },
