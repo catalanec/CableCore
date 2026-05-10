@@ -24,7 +24,14 @@ async function setupSupabase() {
         if (createError) console.error('Error creating bucket:', createError);
         else console.log('Bucket created successfully!');
     } else {
-        console.log('Bucket "project-photos" already exists.');
+        console.log('Bucket "project-photos" already exists. Ensuring it is public...');
+        const { error: updateError } = await supabase.storage.updateBucket('project-photos', {
+            public: true,
+            allowedMimeTypes: ['image/png', 'image/jpeg', 'image/gif', 'image/webp'],
+            fileSizeLimit: 10485760
+        });
+        if (updateError) console.error('Error updating bucket:', updateError);
+        else console.log('Bucket updated to public successfully!');
     }
 
     console.log('Checking table "project_photos"...');

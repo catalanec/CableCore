@@ -541,21 +541,33 @@ export default function ProjectDetail({ project: initialProject, activities, tas
                         const files = Array.from(e.target.files || []);
                         if (!files.length) return;
                         setUploadingPhoto(true);
-                        for (const file of files) {
-                            const fd = new FormData();
-                            fd.append('file', file);
-                            fd.append('project_id', project.id);
-                            fd.append('caption', '');
-                            const res = await fetch('/api/photos', { method: 'POST', body: fd });
-                            const data = await res.json();
-                            if (data.success) {
-                                setPhotos(prev => [{ url: data.url, path: data.path, caption: '' }, ...prev]);
-                            } else {
-                                alert('Error al subir la foto: ' + (data.error || 'Desconocido'));
+                        try {
+                            for (const file of files) {
+                                const fd = new FormData();
+                                fd.append('file', file);
+                                fd.append('project_id', project.id);
+                                fd.append('caption', '');
+                                
+                                const res = await fetch('/api/photos', { method: 'POST', body: fd });
+                                if (!res.ok) {
+                                    const errorText = await res.text();
+                                    throw new Error(`Server responded with ${res.status}: ${errorText}`);
+                                }
+                                
+                                const data = await res.json();
+                                if (data.success) {
+                                    setPhotos(prev => [{ url: data.url, path: data.path, caption: '' }, ...prev]);
+                                } else {
+                                    alert('Error al subir la foto: ' + (data.error || 'Desconocido'));
+                                }
                             }
+                        } catch (err: any) {
+                            console.error('Error en la subida:', err);
+                            alert('Error técnico al subir la foto. Por favor, revisa el tamaño (máx 10MB) y tu conexión.');
+                        } finally {
+                            setUploadingPhoto(false);
+                            if (e.target) e.target.value = '';
                         }
-                        setUploadingPhoto(false);
-                        e.target.value = '';
                     }}
                 />
             </div>

@@ -711,6 +711,7 @@ export async function updateProjectInfo(id: string, data: {
 // CRM 3.0 — MULTI-SITE LOCATIONS
 // ═══════════════════════════════════
 
+
 export async function updateProjectLocations(id: string, locations: Array<{ name: string; total: number; done: number }>) {
     try {
         const supabase = getSupabase();
@@ -726,3 +727,50 @@ export async function updateProjectLocations(id: string, locations: Array<{ name
         return { success: false, error: error.message };
     }
 }
+
+// ═══════════════════════════════════
+// CRM 4.0 — EXPENSES
+// ═══════════════════════════════════
+
+export async function addExpense(data: {
+    description: string;
+    amount: number;
+    category: string;
+    date: string;
+    project_id?: string;
+}) {
+    try {
+        const supabase = getSupabase();
+        const { error } = await supabase.from('expenses').insert(data);
+        if (error) throw error;
+        revalidate();
+        return { success: true };
+    } catch (error: any) {
+        console.error('Failed to add expense:', error);
+        return { success: false, error: error.message };
+    }
+}
+
+export async function getExpenses() {
+    try {
+        const supabase = getSupabase();
+        const { data, error } = await supabase.from('expenses').select('*').order('date', { ascending: false });
+        if (error) throw error;
+        return { success: true, data: data || [] };
+    } catch (error: any) {
+        return { success: false, data: [], error: error.message };
+    }
+}
+
+export async function deleteExpense(id: string) {
+    try {
+        const supabase = getSupabase();
+        const { error } = await supabase.from('expenses').delete().eq('id', id);
+        if (error) throw error;
+        revalidate();
+        return { success: true };
+    } catch (error: any) {
+        return { success: false, error: error.message };
+    }
+}
+

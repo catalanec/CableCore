@@ -2,7 +2,7 @@
 
 import { useState, useMemo, useEffect } from 'react';
 import { useLocale } from 'next-intl';
-import { updateLeadStatus, updateQuoteStatus, updateMaterialStock, deleteLead, deleteQuote, updateLeadNotes, updateQuoteNotes, addMaterial, deleteMaterial, updateMaterial, updateProjectCosts, updateProjectPayment, seedMaterials, sendLowStockAlerts, exportMaterialsCSV, exportProjectsCSV, getAllTasks } from '@/app/actions/crm';
+import { updateLeadStatus, updateQuoteStatus, updateMaterialStock, deleteLead, deleteQuote, updateLeadNotes, updateQuoteNotes, addMaterial, deleteMaterial, updateMaterial, updateProjectCosts, updateProjectPayment, seedMaterials, sendLowStockAlerts, exportMaterialsCSV, exportProjectsCSV, getAllTasks, addExpense, getExpenses, deleteExpense } from '@/app/actions/crm';
 import { downloadQuotePDF, type QuotePDFData } from '@/lib/quote-pdf';
 import { downloadInvoicePDF, type InvoicePDFData } from '@/lib/invoice-pdf';
 import Pipeline from './Pipeline';
@@ -77,6 +77,13 @@ export default function AdminDashboard({ initialQuotes, initialLeads, initialMat
     const [leads, setLeads] = useState(initialLeads);
     const [materials, setMaterials] = useState(initialMaterials);
     const [projects, setProjects] = useState(initialProjects);
+
+    // Load expenses on mount
+    useEffect(() => {
+        getExpenses().then(res => {
+            if (res.success && res.data) setExpenses(res.data);
+        });
+    }, []);
 
     // ── Quarterly tax ──
     const [selectedQuarter, setSelectedQuarter] = useState(() => Math.floor(new Date().getMonth() / 3) + 1);
@@ -1762,15 +1769,23 @@ export default function AdminDashboard({ initialQuotes, initialLeads, initialMat
                                         <th className="text-left p-4">Descripción</th>
                                         <th className="text-left p-4">Categoría</th>
                                         <th className="text-right p-4">Importe</th>
+                                        <th className="text-center p-4 w-10"></th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     {expenses.map(e => (
-                                        <tr key={e.id} className="border-b border-border-subtle/50">
+                                        <tr key={e.id} className="border-b border-border-subtle/50 group">
                                             <td className="p-4 text-brand-gold-muted text-xs">{new Date(e.date).toLocaleDateString('es-ES')}</td>
                                             <td className="p-4 text-white">{e.description}</td>
                                             <td className="p-4"><span className="text-xs px-2 py-1 rounded-full bg-surface-card text-brand-gold-muted capitalize">{e.category}</span></td>
                                             <td className="p-4 text-right font-bold text-red-400">-{Number(e.amount).toFixed(2)}€</td>
+                                            <td className="p-4">
+                                                <button onClick={async () => {
+                                                    if (!confirm('¿Eliminar este gasto?')) return;
+                                                    await deleteExpense(e.id);
+                                                    setExpenses(prev => prev.filter(x => x.id !== e.id));
+                                                }} className="opacity-0 group-hover:opacity-100 text-red-400 hover:text-red-300 transition-all">🗑️</button>
+                                            </td>
                                         </tr>
                                     ))}
                                 </tbody>
@@ -1858,19 +1873,28 @@ export default function AdminDashboard({ initialQuotes, initialLeads, initialMat
                                 Cancelar
                             </button>
                             <button disabled={savingExpense || !newExpense.description || !newExpense.amount}
-                                onClick={() => {
+                                onClick={async () => {
                                     if (!newExpense.description || !newExpense.amount) return;
                                     setSavingExpense(true);
-                                    const expense = {
-                                        id: Date.now().toString(),
+                                    const expenseData = {
                                         description: newExpense.description,
                                         amount: Number(newExpense.amount),
                                         category: newExpense.category,
                                         date: newExpense.date,
+                                        project_id: newExpense.project_id || undefined
                                     };
-                                    setExpenses(prev => [expense, ...prev]);
-                                    setNewExpense({ description: '', amount: '', category: 'materiales', date: new Date().toISOString().split('T')[0], project_id: '' });
-                                    setShowExpenseModal(false);
+                                    
+                                    const res = await addExpense(expenseData);
+                                    if (res.success) {
+                                        // Refresh expenses list
+                                        const latest = await getExpenses();
+                                        if (latest.success) setExpenses(latest.data);
+                                        
+                                        setNewExpense({ description: '', amount: '', category: 'materiales', date: new Date().toISOString().split('T')[0], project_id: '' });
+                                        setShowExpenseModal(false);
+                                    } else {
+                                        alert('Error al guardar: ' + res.error);
+                                    }
                                     setSavingExpense(false);
                                 }}
                                 className="flex-1 px-4 py-2.5 bg-brand-gold text-black font-bold rounded-lg hover:bg-white transition-colors text-sm disabled:opacity-40 disabled:cursor-not-allowed">
