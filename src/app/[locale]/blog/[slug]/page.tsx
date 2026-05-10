@@ -27,7 +27,7 @@ export function generateMetadata({ params }: { params: { slug: string; locale: s
                 'es': `${BASE_URL}/es/blog/${article.slug}`,
                 'en': `${BASE_URL}/en/blog/${article.slug}`,
                 'ru': `${BASE_URL}/ru/blog/${article.slug}`,
-                'x-default': `${BASE_URL}/blog/${article.slug}`,
+                'x-default': `${BASE_URL}/es/blog/${article.slug}`,
             },
         },
     };

@@ -12,7 +12,7 @@ const SECONDARY_PRIORITY_FACTOR = 0.5;
 
 function generateAlternates(path: string) {
     const languages: Record<string, string> = {
-        'x-default': `${BASE_URL}${path}`, // x-default points to base without locale (which middleware redirects to /es) or /es. Usually better to point x-default to the root redirector.
+        'x-default': `${BASE_URL}/es${path}`,
     };
     ALL_LOCALES.forEach(loc => {
         languages[loc] = `${BASE_URL}/${loc}${path}`;

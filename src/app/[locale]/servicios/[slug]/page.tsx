@@ -25,7 +25,7 @@ export function generateMetadata({ params }: { params: { slug: string; locale: s
     LOCALES.forEach(loc => {
         alternates[loc] = `${BASE_URL}/${loc}/servicios/${page.slug}`;
     });
-    alternates['x-default'] = `${BASE_URL}/servicios/${page.slug}`;
+    alternates['x-default'] = `${BASE_URL}/es/servicios/${page.slug}`;
 
     return {
         title: page.title,

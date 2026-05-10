@@ -157,8 +157,7 @@ export function generatePageMetadata(pageKey: string, locale: string, path: stri
     LOCALES.forEach(loc => {
         alternates[loc] = `${BASE_URL}/${loc}${path}`;
     });
-    // x-default points to the root URL (without locale) which handles redirection
-    alternates['x-default'] = `${BASE_URL}${path}`;
+    alternates['x-default'] = `${BASE_URL}/es${path}`;
 
     return {
         title,
