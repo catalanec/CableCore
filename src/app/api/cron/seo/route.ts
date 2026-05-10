@@ -2,16 +2,18 @@ import { NextResponse } from 'next/server';
 
 const SITE_URL = 'https://cablecore.es/';
 const TARGET_KEYWORDS = [
-    'instalación cable de red Barcelona',
-    'cableado estructurado Barcelona',
-    'instalar red oficina Barcelona',
-    'precio punto de red Barcelona',
-    'instalador red barcelona',
-    'puntos de red barcelona precio',
-    'empresa cableado estructurado barcelona',
+    // Rastreados actualmente en GSC (tienen impresiones)
+    'cableado estructurado',
+    'cableados estructurados barcelona',
+    'cableado estructurado sant cugat del valles',
+    'cableado estructurado empresas',
+    'cable estructurado',
+    'cableado de red barcelona',
     'instalacion fibra optica barcelona',
-    'instalacion red hospitalet',
-    'instalacion red badalona',
+    'instalacion cable de red barcelona',
+    // Objetivos (long-tail a alcanzar)
+    'instalador red barcelona',
+    'precio punto de red barcelona',
 ];
 
 function positionEmoji(pos: number | null): string {
@@ -113,7 +115,7 @@ async function queryGSC(accessToken: string): Promise<Array<{
     ctr: number;
 }>> {
     const endDate = new Date().toISOString().split('T')[0];
-    const startDate = new Date(Date.now() - 7 * 86400000).toISOString().split('T')[0];
+    const startDate = new Date(Date.now() - 28 * 86400000).toISOString().split('T')[0];
 
     const res = await fetch(
         `https://searchconsole.googleapis.com/webmasters/v3/sites/${encodeURIComponent(SITE_URL)}/searchAnalytics/query`,
