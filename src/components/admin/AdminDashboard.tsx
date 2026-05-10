@@ -2,7 +2,7 @@
 
 import { useState, useMemo, useEffect } from 'react';
 import { useLocale } from 'next-intl';
-import { updateLeadStatus, updateQuoteStatus, updateMaterialStock, deleteLead, deleteQuote, updateLeadNotes, updateQuoteNotes, addMaterial, deleteMaterial, updateMaterial, updateProjectCosts, updateProjectPayment, seedMaterials, sendLowStockAlerts, exportMaterialsCSV, exportProjectsCSV, getAllTasks, addExpense, getExpenses, deleteExpense, notifyStaleLeads } from '@/app/actions/crm';
+import { updateLeadStatus, updateQuoteStatus, updateMaterialStock, deleteLead, deleteQuote, updateLeadNotes, updateQuoteNotes, addMaterial, deleteMaterial, updateMaterial, updateProjectCosts, updateProjectPayment, seedMaterials, sendLowStockAlerts, exportMaterialsCSV, exportProjectsCSV, getAllTasks, addExpense, getExpenses, deleteExpense, notifyStaleLeads, deleteProject } from '@/app/actions/crm';
 import { downloadQuotePDF, type QuotePDFData } from '@/lib/quote-pdf';
 import { downloadInvoicePDF, type InvoicePDFData } from '@/lib/invoice-pdf';
 import Pipeline from './Pipeline';
@@ -1332,12 +1332,28 @@ export default function AdminDashboard({ initialQuotes, initialLeads, initialMat
                                                 })()}
                                             </td>
                                             <td className="p-3 text-center">
-                                                <a
-                                                    href={`/${locale}/admin/project/${p.id}`}
-                                                    className="text-brand-gold hover:text-white transition-colors text-[10px] uppercase tracking-wider font-bold"
-                                                >
-                                                    Ver →
-                                                </a>
+                                                <div className="flex items-center justify-center gap-3">
+                                                    <a
+                                                        href={`/${locale}/admin/project/${p.id}`}
+                                                        className="text-brand-gold hover:text-white transition-colors text-[10px] uppercase tracking-wider font-bold"
+                                                    >
+                                                        Ver →
+                                                    </a>
+                                                    <button
+                                                        onClick={async () => {
+                                                            if (!confirm(`¿Eliminar el proyecto de "${p.client_name}" permanentemente? Esta acción no se puede deshacer.`)) return;
+                                                            const res = await deleteProject(p.id);
+                                                            if (res.success) {
+                                                                setProjects(prev => prev.filter(x => x.id !== p.id));
+                                                            } else {
+                                                                alert('❌ Error al eliminar: ' + res.error);
+                                                            }
+                                                        }}
+                                                        className="text-red-400 hover:text-red-300 transition-colors text-[10px] uppercase tracking-wider font-bold"
+                                                    >
+                                                        Del
+                                                    </button>
+                                                </div>
                                             </td>
                                         </tr>
                                         );

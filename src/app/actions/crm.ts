@@ -667,6 +667,24 @@ export async function getProjectDetail(id: string) {
     }
 }
 
+export async function deleteProject(id: string) {
+    try {
+        const supabase = getSupabase();
+        // Delete related records first to avoid FK constraint errors
+        await Promise.all([
+            supabase.from('activities').delete().eq('entity_id', id),
+            supabase.from('tasks').delete().eq('entity_id', id),
+            supabase.from('expenses').delete().eq('project_id', id),
+        ]);
+        const { error } = await supabase.from('projects').delete().eq('id', id);
+        if (error) throw error;
+        revalidate();
+        return { success: true };
+    } catch (error: any) {
+        return { success: false, error: error.message };
+    }
+}
+
 export async function updateProjectStatus(id: string, status: string) {
     try {
         const supabase = getSupabase();
