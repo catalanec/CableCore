@@ -103,7 +103,7 @@ export default function HomePage() {
                             <a
                                 href="https://wa.me/34605974605"
                                 target="_blank"
-                                rel="noopener"
+                                rel="noopener noreferrer"
                                 className="btn-outline text-base px-8 py-4 w-full sm:w-auto"
                             >
                                 💬 {t('hero.ctaWhatsapp')}
@@ -411,7 +411,7 @@ export default function HomePage() {
                             <a
                                 href="https://wa.me/34605974605"
                                 target="_blank"
-                                rel="noopener"
+                                rel="noopener noreferrer"
                                 className="btn-outline text-base px-8 py-4 w-full sm:w-auto"
                             >
                                 💬 WhatsApp

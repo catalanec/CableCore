@@ -193,7 +193,7 @@ export default function PreciosPage() {
                                 Solicitar presupuesto gratis →
                             </Link>
                             <a href="https://wa.me/34605974605?text=Hola,%20quiero%20un%20presupuesto%20para%20instalaci%C3%B3n%20de%20red"
-                                target="_blank" rel="noopener" className="btn-outline px-8 py-4">
+                                target="_blank" rel="noopener noreferrer" className="btn-outline px-8 py-4">
                                 💬 WhatsApp
                             </a>
                         </div>

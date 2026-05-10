@@ -32,8 +32,8 @@ interface PageSEO {
 const PAGE_SEO: Record<string, PageSEO> = {
     home: {
         title: {
-            es: 'Instalación de Cable de Red Barcelona | CableCore — Cableado Cat6/Cat7',
-            en: 'Network Cable Installation Barcelona | CableCore — Cat6/Cat7 Cabling',
+            es: 'Instalación de Red en Barcelona | CableCore — Cat6/Cat7',
+            en: 'Network Cable Installation Barcelona | CableCore — Cat6/Cat7',
             ru: 'Монтаж сетевого кабеля Барселона | CableCore — Cat6/Cat7',
         },
         description: {
@@ -44,9 +44,9 @@ const PAGE_SEO: Record<string, PageSEO> = {
     },
     servicios: {
         title: {
-            es: 'Servicios de Instalación de Red en Barcelona | Cableado Estructurado Cat6/Cat7',
-            en: 'Network Installation Services Barcelona | Cat6/Cat7 Structured Cabling',
-            ru: 'Услуги монтажа сети Барселона | Cat6/Cat7 кабельная система',
+            es: 'Servicios de Instalación de Red en Barcelona | CableCore',
+            en: 'Network Installation Services Barcelona | CableCore',
+            ru: 'Услуги монтажа сети в Барселоне | CableCore',
         },
         description: {
             es: 'Instalamos cableado estructurado Cat6, Cat6A y Cat7, puntos de red RJ45, racks y WiFi para oficinas y hogares en Barcelona y Badalona. Garantía 5 años ☎ +34 605 974 605.',
@@ -293,8 +293,8 @@ export function getLocalBusinessJsonLd() {
             '@type': 'AggregateRating',
             itemReviewed: { '@type': 'LocalBusiness', name: SITE_NAME },
             ratingValue: '4.9',
-            ratingCount: '47',
-            reviewCount: '47',
+            ratingCount: '5',
+            reviewCount: '5',
             bestRating: '5',
             worstRating: '1',
         },

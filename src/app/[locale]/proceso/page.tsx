@@ -121,7 +121,7 @@ export default function ProcesoPage() {
                             <Link href="/contacto" className="btn-gold text-base px-8 py-4">
                                 {t('hero.cta')} →
                             </Link>
-                            <a href="https://wa.me/34605974605" target="_blank" rel="noopener" className="btn-outline text-base px-8 py-4">
+                            <a href="https://wa.me/34605974605" target="_blank" rel="noopener noreferrer" className="btn-outline text-base px-8 py-4">
                                 💬 WhatsApp
                             </a>
                         </div>

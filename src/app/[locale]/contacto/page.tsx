@@ -96,7 +96,7 @@ export default function ContactoPage() {
                                         <div className="w-12 h-12 rounded-xl bg-[rgba(201,168,76,0.08)] border border-[rgba(201,168,76,0.12)] flex items-center justify-center text-xl">💬</div>
                                         <div>
                                             <h3 className="font-heading font-semibold text-white">WhatsApp</h3>
-                                            <a href="https://wa.me/34605974605" target="_blank" rel="noopener" className="text-sm text-brand-gold hover:underline">+34 605 974 605</a>
+                                            <a href="https://wa.me/34605974605" target="_blank" rel="noopener noreferrer" className="text-sm text-brand-gold hover:underline">+34 605 974 605</a>
                                         </div>
                                     </div>
                                 </div>
