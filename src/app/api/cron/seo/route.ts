@@ -22,6 +22,27 @@ function positionEmoji(pos: number | null): string {
     return '🔴';
 }
 
+// ── OAuth2 via Refresh Token (user account) ────────────────────────────────
+async function getGSCAccessTokenFromRefreshToken(
+    clientId: string,
+    clientSecret: string,
+    refreshToken: string
+): Promise<string> {
+    const res = await fetch('https://oauth2.googleapis.com/token', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams({
+            client_id: clientId,
+            client_secret: clientSecret,
+            refresh_token: refreshToken,
+            grant_type: 'refresh_token',
+        }),
+    });
+    const data = await res.json();
+    if (!data.access_token) throw new Error(`Refresh token error: ${JSON.stringify(data)}`);
+    return data.access_token;
+}
+
 // ── Google OAuth2 via Service Account JWT ──────────────────────────────────
 async function getGSCAccessToken(serviceAccountJson: string): Promise<string> {
     const sa = JSON.parse(serviceAccountJson);
@@ -148,6 +169,9 @@ export async function GET(request: Request) {
     const TELEGRAM_BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
     const TELEGRAM_CHAT_ID = process.env.TELEGRAM_CHAT_ID;
     const SERVICE_ACCOUNT_KEY = process.env.GOOGLE_SERVICE_ACCOUNT_KEY;
+    const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID;
+    const GOOGLE_CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET;
+    const GOOGLE_REFRESH_TOKEN = process.env.GOOGLE_REFRESH_TOKEN;
 
     if (!TELEGRAM_BOT_TOKEN || !TELEGRAM_CHAT_ID) {
         return NextResponse.json({ error: 'Missing Telegram credentials' }, { status: 500 });
@@ -162,14 +186,21 @@ export async function GET(request: Request) {
         let results: Array<{ keyword: string; position: number | null; clicks: number; impressions: number; ctr: number }>;
         let dataSource: string;
 
-        if (SERVICE_ACCOUNT_KEY) {
-            const accessToken = await getGSCAccessToken(SERVICE_ACCOUNT_KEY);
+        if (GOOGLE_REFRESH_TOKEN && GOOGLE_CLIENT_ID && GOOGLE_CLIENT_SECRET) {
+            // Preferred: OAuth2 refresh token (real user account with GSC access)
+            const accessToken = await getGSCAccessTokenFromRefreshToken(
+                GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET, GOOGLE_REFRESH_TOKEN
+            );
             results = await queryGSC(accessToken);
             dataSource = 'Google Search Console · datos reales (últimos 7 días)';
+        } else if (SERVICE_ACCOUNT_KEY) {
+            // Fallback: service account JWT
+            const accessToken = await getGSCAccessToken(SERVICE_ACCOUNT_KEY);
+            results = await queryGSC(accessToken);
+            dataSource = 'Google Search Console · service account (últimos 7 días)';
         } else {
-            // Fallback if not configured yet
             results = TARGET_KEYWORDS.map(kw => ({ keyword: kw, position: null, clicks: 0, impressions: 0, ctr: 0 }));
-            dataSource = '⚠️ Configura GOOGLE_SERVICE_ACCOUNT_KEY en Vercel';
+            dataSource = '⚠️ Configura GOOGLE_REFRESH_TOKEN en Vercel';
         }
 
         const rows = results.map(r => {
