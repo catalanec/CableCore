@@ -2,7 +2,7 @@
 
 import { useState, useMemo, useEffect } from 'react';
 import { useLocale } from 'next-intl';
-import { updateLeadStatus, updateQuoteStatus, updateMaterialStock, deleteLead, deleteQuote, updateLeadNotes, updateQuoteNotes, addMaterial, deleteMaterial, updateMaterial, updateProjectCosts, updateProjectPayment, seedMaterials, sendLowStockAlerts, exportMaterialsCSV, exportProjectsCSV, getAllTasks, addExpense, getExpenses, deleteExpense } from '@/app/actions/crm';
+import { updateLeadStatus, updateQuoteStatus, updateMaterialStock, deleteLead, deleteQuote, updateLeadNotes, updateQuoteNotes, addMaterial, deleteMaterial, updateMaterial, updateProjectCosts, updateProjectPayment, seedMaterials, sendLowStockAlerts, exportMaterialsCSV, exportProjectsCSV, getAllTasks, addExpense, getExpenses, deleteExpense, notifyStaleLeads } from '@/app/actions/crm';
 import { downloadQuotePDF, type QuotePDFData } from '@/lib/quote-pdf';
 import { downloadInvoicePDF, type InvoicePDFData } from '@/lib/invoice-pdf';
 import Pipeline from './Pipeline';
@@ -143,17 +143,64 @@ export default function AdminDashboard({ initialQuotes, initialLeads, initialMat
         const pendingQuotes = quotes.filter(q => q.status === 'pending' || q.status === 'sent').length;
         const completedProjects = projects.filter(p => p.status === 'completed').length || quotes.filter(q => q.status === 'completed').length;
         const newLeads = leads.filter(l => l.status === 'new').length;
-        const conversionRate = leads.length > 0 ? ((leads.filter(l => l.status === 'won').length / leads.length) * 100).toFixed(0) : '0';
+        const wonLeads = leads.filter(l => l.status === 'won').length;
+        const conversionRate = leads.length > 0 ? ((wonLeads / leads.length) * 100).toFixed(0) : '0';
         const lowStock = materials.filter(m => m.stock <= m.min_stock).length;
         const avgQuoteValue = quotes.length > 0 ? (quotes.reduce((s, q) => s + (Number(q.total) || 0), 0) / quotes.length) : 0;
-        
-        // Monthly revenue for current month
+
         const now = new Date();
-        const currentMonthRevenue = quotes
-            .filter(q => q.status === 'completed' && new Date(q.created_at).getMonth() === now.getMonth() && new Date(q.created_at).getFullYear() === now.getFullYear())
+        const curM = now.getMonth();
+        const curY = now.getFullYear();
+        const prevM = curM === 0 ? 11 : curM - 1;
+        const prevY = curM === 0 ? curY - 1 : curY;
+
+        // Current month revenue (projects preferred, fallback quotes)
+        const curProjectRev = projects
+            .filter(p => p.status === 'completed' && (() => { const d = new Date(p.payment_date || p.created_at); return d.getMonth() === curM && d.getFullYear() === curY; })())
+            .reduce((s, p) => s + (Number(p.total_revenue) || 0), 0);
+        const curQuoteRev = quotes
+            .filter(q => q.status === 'completed' && (() => { const d = new Date(q.created_at); return d.getMonth() === curM && d.getFullYear() === curY; })())
             .reduce((s, q) => s + (Number(q.total) || 0), 0);
-        
-        return { totalRevenue, totalCost, totalProfit, profitMargin, totalQuotes, pendingQuotes, completedProjects, newLeads, conversionRate, lowStock, avgQuoteValue, currentMonthRevenue };
+        const currentMonthRevenue = curProjectRev > 0 ? curProjectRev : curQuoteRev;
+
+        // Previous month revenue
+        const prevProjectRev = projects
+            .filter(p => p.status === 'completed' && (() => { const d = new Date(p.payment_date || p.created_at); return d.getMonth() === prevM && d.getFullYear() === prevY; })())
+            .reduce((s, p) => s + (Number(p.total_revenue) || 0), 0);
+        const prevQuoteRev = quotes
+            .filter(q => q.status === 'completed' && (() => { const d = new Date(q.created_at); return d.getMonth() === prevM && d.getFullYear() === prevY; })())
+            .reduce((s, q) => s + (Number(q.total) || 0), 0);
+        const prevMonthRevenue = prevProjectRev > 0 ? prevProjectRev : prevQuoteRev;
+
+        const monthChangePct = prevMonthRevenue > 0
+            ? Math.round(((currentMonthRevenue - prevMonthRevenue) / prevMonthRevenue) * 100)
+            : null;
+
+        // Average value of completed projects
+        const completedProjectsList = projects.filter(p => p.status === 'completed');
+        const avgProjectValue = completedProjectsList.length > 0
+            ? completedProjectsList.reduce((s, p) => s + (Number(p.total_revenue) || 0), 0) / completedProjectsList.length
+            : 0;
+
+        // Top lead sources
+        const sourceCounts: Record<string, number> = {};
+        leads.forEach(l => { const src = l.source || 'directo'; sourceCounts[src] = (sourceCounts[src] || 0) + 1; });
+        const topSources = Object.entries(sourceCounts)
+            .sort(([, a], [, b]) => b - a)
+            .slice(0, 5)
+            .map(([source, count]) => ({ source, count, pct: leads.length > 0 ? Math.round((count / leads.length) * 100) : 0 }));
+
+        // Stale leads (new + older than 24h)
+        const staleLeads = leads.filter(l => l.status === 'new' && new Date(l.created_at) < new Date(Date.now() - 86400000)).length;
+
+        return {
+            totalRevenue, totalCost, totalProfit, profitMargin,
+            totalQuotes, pendingQuotes, completedProjects,
+            newLeads, wonLeads, conversionRate, lowStock,
+            avgQuoteValue, avgProjectValue,
+            currentMonthRevenue, prevMonthRevenue, monthChangePct,
+            topSources, staleLeads,
+        };
     }, [quotes, leads, projects, materials]);
 
     // Monthly revenue for chart (dynamic based on chartPeriod)
@@ -241,21 +288,62 @@ export default function AdminDashboard({ initialQuotes, initialLeads, initialMat
                 <div className="space-y-6">
                     {/* KPI Cards */}
                     <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-                        {[
-                            { label: 'Ingresos (mes)', value: `${analytics.currentMonthRevenue.toLocaleString('es-ES', { minimumFractionDigits: 2 })}€`, icon: '💰', trend: `${analytics.totalRevenue > 0 ? '+' + ((analytics.currentMonthRevenue / analytics.totalRevenue) * 100).toFixed(0) + '%' : '—'}`, color: 'text-green-400' },
-                            { label: 'Beneficio neto', value: `${analytics.totalProfit.toLocaleString('es-ES', { minimumFractionDigits: 2 })}€`, icon: '📈', trend: `${analytics.profitMargin}% margen`, color: 'text-emerald-400' },
-                            { label: 'Presupuestos', value: analytics.totalQuotes.toString(), icon: '📋', trend: `${analytics.pendingQuotes} pendientes`, color: 'text-yellow-400' },
-                            { label: 'Leads nuevos', value: analytics.newLeads.toString(), icon: '👥', trend: `${analytics.conversionRate}% conversión`, color: 'text-cyan-400' },
-                        ].map((kpi, i) => (
-                            <div key={i} className="card p-5 border-brand-gold/10">
-                                <div className="flex items-start justify-between mb-3">
-                                    <span className="text-2xl">{kpi.icon}</span>
-                                    <span className={`text-xs font-medium ${kpi.color}`}>{kpi.trend}</span>
-                                </div>
-                                <div className="font-heading text-2xl font-bold text-white mb-1">{kpi.value}</div>
-                                <div className="text-xs text-brand-gold-muted">{kpi.label}</div>
+                        {/* Ingresos mes actual con MoM% */}
+                        <div className="card p-5 border-brand-gold/10">
+                            <div className="flex items-start justify-between mb-3">
+                                <span className="text-2xl">💰</span>
+                                {analytics.monthChangePct !== null ? (
+                                    <span className={`text-xs font-bold px-2 py-0.5 rounded-full ${analytics.monthChangePct >= 0 ? 'bg-green-400/10 text-green-400' : 'bg-red-400/10 text-red-400'}`}>
+                                        {analytics.monthChangePct >= 0 ? '▲' : '▼'} {Math.abs(analytics.monthChangePct)}% vs mes ant.
+                                    </span>
+                                ) : (
+                                    <span className="text-xs text-brand-gold-muted">primer mes</span>
+                                )}
                             </div>
-                        ))}
+                            <div className="font-heading text-2xl font-bold text-white mb-1">
+                                {analytics.currentMonthRevenue.toLocaleString('es-ES', { minimumFractionDigits: 2 })}€
+                            </div>
+                            <div className="text-xs text-brand-gold-muted">Ingresos (mes actual)</div>
+                            {analytics.prevMonthRevenue > 0 && (
+                                <div className="text-xs text-white/30 mt-1">Mes anterior: {analytics.prevMonthRevenue.toLocaleString('es-ES', { minimumFractionDigits: 0 })}€</div>
+                            )}
+                        </div>
+                        {/* Beneficio neto */}
+                        <div className="card p-5 border-brand-gold/10">
+                            <div className="flex items-start justify-between mb-3">
+                                <span className="text-2xl">📈</span>
+                                <span className="text-xs font-medium text-emerald-400">{analytics.profitMargin}% margen</span>
+                            </div>
+                            <div className="font-heading text-2xl font-bold text-white mb-1">
+                                {analytics.totalProfit.toLocaleString('es-ES', { minimumFractionDigits: 2 })}€
+                            </div>
+                            <div className="text-xs text-brand-gold-muted">Beneficio neto (total)</div>
+                            {analytics.avgProjectValue > 0 && (
+                                <div className="text-xs text-white/30 mt-1">Ticket medio: {analytics.avgProjectValue.toLocaleString('es-ES', { maximumFractionDigits: 0 })}€</div>
+                            )}
+                        </div>
+                        {/* Presupuestos */}
+                        <div className="card p-5 border-brand-gold/10">
+                            <div className="flex items-start justify-between mb-3">
+                                <span className="text-2xl">📋</span>
+                                <span className="text-xs font-medium text-yellow-400">{analytics.pendingQuotes} pendientes</span>
+                            </div>
+                            <div className="font-heading text-2xl font-bold text-white mb-1">{analytics.totalQuotes}</div>
+                            <div className="text-xs text-brand-gold-muted">Presupuestos totales</div>
+                            <div className="text-xs text-white/30 mt-1">Valor medio: {analytics.avgQuoteValue.toFixed(0)}€</div>
+                        </div>
+                        {/* Leads */}
+                        <div className={`card p-5 ${analytics.staleLeads > 0 ? 'border-red-400/30 bg-red-400/5' : 'border-brand-gold/10'}`}>
+                            <div className="flex items-start justify-between mb-3">
+                                <span className="text-2xl">👥</span>
+                                <span className="text-xs font-medium text-cyan-400">{analytics.conversionRate}% conversión</span>
+                            </div>
+                            <div className="font-heading text-2xl font-bold text-white mb-1">{analytics.newLeads}</div>
+                            <div className="text-xs text-brand-gold-muted">Leads nuevos</div>
+                            {analytics.staleLeads > 0 && (
+                                <div className="text-xs text-red-400 mt-1 font-semibold">⚠ {analytics.staleLeads} sin atender +24h</div>
+                            )}
+                        </div>
                     </div>
 
                     {/* Revenue Chart */}
@@ -341,6 +429,108 @@ export default function AdminDashboard({ initialQuotes, initialLeads, initialMat
                             ))}
                         </div>
                         <p className="text-[10px] text-brand-gold-muted/60 mt-3">⚠️ Estimación orientativa. Consulta con tu gestor para la declaración oficial.</p>
+                    </div>
+
+                    {/* ── Conversion Funnel + Top Sources ── */}
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                        <div className="card p-6 border-brand-gold/10">
+                            <h3 className="font-heading font-semibold text-white mb-5">🎯 Embudo de conversión</h3>
+                            <div className="space-y-3">
+                                {[
+                                    { label: 'Leads totales', value: leads.length, color: 'bg-cyan-400/30' },
+                                    { label: 'Contactados', value: leads.filter(l => l.status !== 'new').length, color: 'bg-blue-400/30' },
+                                    { label: 'Propuesta enviada', value: leads.filter(l => ['proposal', 'won'].includes(l.status)).length, color: 'bg-purple-400/30' },
+                                    { label: 'Ganados', value: analytics.wonLeads, color: 'bg-green-400/40' },
+                                ].map((stage, i, arr) => {
+                                    const pct = arr[0].value > 0 ? Math.round((stage.value / arr[0].value) * 100) : 0;
+                                    return (
+                                        <div key={i}>
+                                            <div className="flex justify-between text-xs mb-1.5">
+                                                <span className="text-brand-gold-muted">{stage.label}</span>
+                                                <span className="text-white font-semibold">{stage.value} <span className="text-white/40">({pct}%)</span></span>
+                                            </div>
+                                            <div className="w-full bg-white/5 rounded-full h-2">
+                                                <div className={`${stage.color} h-2 rounded-full transition-all`} style={{ width: `${pct}%` }} />
+                                            </div>
+                                        </div>
+                                    );
+                                })}
+                            </div>
+                        </div>
+                        <div className="card p-6 border-brand-gold/10">
+                            <h3 className="font-heading font-semibold text-white mb-5">📡 Fuentes de leads</h3>
+                            {analytics.topSources.length === 0 ? (
+                                <div className="text-sm text-brand-gold-muted text-center py-8">Sin datos de fuentes todavía</div>
+                            ) : (
+                                <div className="space-y-3">
+                                    {analytics.topSources.map(({ source, count, pct }) => (
+                                        <div key={source}>
+                                            <div className="flex justify-between text-xs mb-1.5">
+                                                <span className="text-brand-gold-muted capitalize">{source.replace(/_/g, ' ')}</span>
+                                                <span className="text-white font-semibold">{count} <span className="text-white/40">({pct}%)</span></span>
+                                            </div>
+                                            <div className="w-full bg-white/5 rounded-full h-2">
+                                                <div className="bg-brand-gold/40 h-2 rounded-full transition-all" style={{ width: `${pct}%` }} />
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            )}
+                        </div>
+                    </div>
+
+                    {/* ── P&L Rápido ── */}
+                    <div className="card p-6 border-brand-gold/10">
+                        <div className="flex items-center justify-between mb-5">
+                            <h3 className="font-heading font-semibold text-white">💹 P&L — Beneficio y Pérdidas</h3>
+                            <button
+                                onClick={() => {
+                                    const totalExpenses = expenses.reduce((s, e) => s + Number(e.amount), 0);
+                                    const netProfit = analytics.totalRevenue - analytics.totalCost - totalExpenses;
+                                    const rows = [
+                                        ['Concepto', 'Importe (€)'],
+                                        ['Ingresos totales (proyectos)', analytics.totalRevenue.toFixed(2)],
+                                        ['Costes directos (materiales + mano de obra)', analytics.totalCost.toFixed(2)],
+                                        ['Gastos registrados', totalExpenses.toFixed(2)],
+                                        ['Beneficio bruto', (analytics.totalRevenue - analytics.totalCost).toFixed(2)],
+                                        ['Beneficio neto (tras gastos)', netProfit.toFixed(2)],
+                                        ['Margen neto (%)', analytics.totalRevenue > 0 ? ((netProfit / analytics.totalRevenue) * 100).toFixed(1) : '0'],
+                                        [''],
+                                        ['--- Desglose gastos por categoría ---'],
+                                        ...Object.entries(
+                                            expenses.reduce((acc, e) => { acc[e.category] = (acc[e.category] || 0) + Number(e.amount); return acc; }, {} as Record<string, number>)
+                                        ).map(([cat, amt]) => [cat, (amt as number).toFixed(2)]),
+                                    ];
+                                    const csv = rows.map(r => r.join(',')).join('\n');
+                                    downloadCSV(csv, `pl_cablecore_${new Date().toISOString().split('T')[0]}.csv`);
+                                }}
+                                className="px-3 py-2 bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 rounded-lg text-xs font-bold hover:bg-emerald-500/30 transition-colors"
+                            >
+                                📥 Exportar P&L CSV
+                            </button>
+                        </div>
+                        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+                            {(() => {
+                                const totalExpenses = expenses.reduce((s, e) => s + Number(e.amount), 0);
+                                const netProfit = analytics.totalRevenue - analytics.totalCost - totalExpenses;
+                                const netMargin = analytics.totalRevenue > 0 ? ((netProfit / analytics.totalRevenue) * 100).toFixed(1) : '0';
+                                return [
+                                    { label: 'Ingresos', value: analytics.totalRevenue, color: 'text-green-400', icon: '📥' },
+                                    { label: 'Costes directos', value: -analytics.totalCost, color: 'text-red-400', icon: '🔧' },
+                                    { label: 'Gastos', value: -totalExpenses, color: 'text-orange-400', icon: '💸' },
+                                    { label: 'Beneficio neto', value: netProfit, color: netProfit >= 0 ? 'text-emerald-400' : 'text-red-500', icon: netProfit >= 0 ? '✅' : '⚠️', note: `${netMargin}% margen` },
+                                ].map((item, i) => (
+                                    <div key={i} className="bg-brand-dark/60 border border-border-subtle rounded-xl p-4 text-center">
+                                        <div className="text-xl mb-2">{item.icon}</div>
+                                        <div className={`font-heading font-bold text-xl ${item.color}`}>
+                                            {item.value >= 0 ? '' : '-'}{Math.abs(item.value).toLocaleString('es-ES', { minimumFractionDigits: 2 })}€
+                                        </div>
+                                        <div className="text-[10px] text-brand-gold-muted mt-1">{item.label}</div>
+                                        {'note' in item && <div className="text-[9px] text-white/30 mt-0.5">{item.note}</div>}
+                                    </div>
+                                ));
+                            })()}
+                        </div>
                     </div>
 
                     {/* Bottom row */}
@@ -489,6 +679,23 @@ export default function AdminDashboard({ initialQuotes, initialLeads, initialMat
             {/* ═══════ LEADS ═══════ */}
             {activeTab === 'leads' && (
                 <div className="space-y-6">
+                    {/* Header actions */}
+                    <div className="flex items-center justify-between">
+                        <h3 className="font-heading font-semibold text-white">👥 Gestión de Leads</h3>
+                        <button
+                            onClick={async () => {
+                                const res = await notifyStaleLeads();
+                                if (res.success) {
+                                    alert(`✅ Telegram enviado — ${res.staleCount} sin atender, ${res.followupCount} follow-up hoy`);
+                                } else {
+                                    alert('❌ Error: ' + res.error);
+                                }
+                            }}
+                            className="px-3 py-2 bg-blue-500/20 text-blue-300 border border-blue-500/30 rounded-lg text-xs font-bold hover:bg-blue-500/30 transition-colors"
+                        >
+                            🔔 Notificar leads sin respuesta
+                        </button>
+                    </div>
                     {/* Lead pipeline */}
                     <div className="grid grid-cols-2 lg:grid-cols-5 gap-3">
                         {['new', 'contacted', 'qualified', 'proposal', 'won'].map(status => {
@@ -1751,7 +1958,23 @@ export default function AdminDashboard({ initialQuotes, initialLeads, initialMat
                 <div className="space-y-6">
                     <div className="flex items-center justify-between">
                         <h3 className="font-heading font-semibold text-white">💸 Registro de Gastos</h3>
-                        <button onClick={() => setShowExpenseModal(true)} className="btn-gold px-4 py-2 text-sm">+ Añadir Gasto</button>
+                        <div className="flex items-center gap-2">
+                            <button
+                                onClick={() => {
+                                    if (expenses.length === 0) return alert('No hay gastos para exportar');
+                                    const header = 'Fecha,Descripción,Categoría,Importe (€),Proyecto';
+                                    const rows = expenses.map(e =>
+                                        `"${e.date}","${e.description.replace(/"/g, '""')}","${e.category}",${Number(e.amount).toFixed(2)},"${(e as any).project_id || ''}"`
+                                    );
+                                    const total = `,,Total,${expenses.reduce((s, e) => s + Number(e.amount), 0).toFixed(2)},`;
+                                    downloadCSV([header, ...rows, total].join('\n'), `gastos_cablecore_${new Date().toISOString().split('T')[0]}.csv`);
+                                }}
+                                className="px-3 py-2 bg-emerald-500/20 text-emerald-300 border border-emerald-500/30 rounded-lg text-xs font-bold hover:bg-emerald-500/30 transition-colors"
+                            >
+                                📥 Exportar CSV
+                            </button>
+                            <button onClick={() => setShowExpenseModal(true)} className="btn-gold px-4 py-2 text-sm">+ Añadir Gasto</button>
+                        </div>
                     </div>
                     {expenses.length === 0 ? (
                         <div className="card p-12 text-center border-brand-gold/10">

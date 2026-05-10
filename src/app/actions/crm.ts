@@ -774,3 +774,60 @@ export async function deleteExpense(id: string) {
     }
 }
 
+// ═══════════════════════════════════
+// CRM 5.0 — LEAD NOTIFICATIONS
+// ═══════════════════════════════════
+
+export async function notifyStaleLeads() {
+    try {
+        const supabase = getSupabase();
+        const cutoff = new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString();
+        const today = new Date().toISOString().split('T')[0];
+
+        const [{ data: staleLeads }, { data: followupLeads }] = await Promise.all([
+            supabase
+                .from('leads')
+                .select('name, phone, email, created_at')
+                .eq('status', 'new')
+                .lt('created_at', cutoff)
+                .order('created_at', { ascending: true }),
+            supabase
+                .from('leads')
+                .select('name, phone, email, next_followup')
+                .eq('next_followup', today)
+                .neq('status', 'won')
+                .neq('status', 'lost'),
+        ]);
+
+        const messages: string[] = [];
+
+        if (staleLeads && staleLeads.length > 0) {
+            const list = staleLeads
+                .map(l => `• <b>${l.name}</b> (${l.phone}) — desde ${new Date(l.created_at).toLocaleDateString('es-ES')}`)
+                .join('\n');
+            messages.push(`🚨 <b>${staleLeads.length} lead(s) sin atender +24h:</b>\n${list}`);
+        }
+
+        if (followupLeads && followupLeads.length > 0) {
+            const list = followupLeads
+                .map(l => `• <b>${l.name}</b> (${l.phone})`)
+                .join('\n');
+            messages.push(`📅 <b>Follow-up programado para hoy:</b>\n${list}`);
+        }
+
+        if (messages.length === 0) {
+            await sendTelegram('✅ <b>CRM Check:</b> No hay leads sin atender ni follow-ups hoy. ¡Todo al día!');
+        } else {
+            await sendTelegram(messages.join('\n\n'));
+        }
+
+        return {
+            success: true,
+            staleCount: staleLeads?.length || 0,
+            followupCount: followupLeads?.length || 0,
+        };
+    } catch (error: any) {
+        return { success: false, error: error.message };
+    }
+}
+
