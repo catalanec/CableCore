@@ -6,6 +6,7 @@ import type { NextRequest } from 'next/server';
 const routing = defineRouting({
     locales: ['es', 'en', 'ru'],
     defaultLocale: 'es',
+    localePrefix: 'always',
 });
 
 const intlMiddleware = createMiddleware(routing);
