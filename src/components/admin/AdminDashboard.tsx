@@ -1815,7 +1815,7 @@ export default function AdminDashboard({ initialQuotes, initialLeads, initialMat
             )}
 
             {/* Factura Modal */}
-            {showInvoiceModal && selectedQuote && (() => {
+            {showInvoiceModal && (() => {
                 const ivaPct = 0.21;
                 const computedSubtotal = invoiceItems.reduce((sum, it) => {
                     const qty = parseFloat(it.quantity) || 0;
