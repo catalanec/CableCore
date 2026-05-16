@@ -55,7 +55,7 @@ export function generateInvoiceHTML(data: InvoicePDFData): string {
     };
     const invoiceDate = parseDateES(data.date);
     const dueDate = new Date(invoiceDate);
-    dueDate.setDate(dueDate.getDate() + 60);
+    dueDate.setDate(dueDate.getDate() + 70);
     const dueDateStr = dueDate.toLocaleDateString('es-ES', { day: '2-digit', month: '2-digit', year: 'numeric' });
 
     return `
