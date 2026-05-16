@@ -46,7 +46,7 @@ export default function AdminDashboard({ initialQuotes, initialLeads, initialMat
     const [editMaterial, setEditMaterial] = useState<any>(null);
     const [showInvoiceModal, setShowInvoiceModal] = useState(false);
     const [isFacturando, setIsFacturando] = useState(false);
-    const [invoiceData, setInvoiceData] = useState({ razonSocial: '', cif: '', address: '', email: '', phone: '' });
+    const [invoiceData, setInvoiceData] = useState({ razonSocial: '', cif: '', address: '', email: '', phone: '', signatureEmisor: 'Anton Shapoval', signatureClient: '' });
     const [invoiceItems, setInvoiceItems] = useState<Array<{description: string; quantity: string; unitPrice: string}>>([]);
     const [invoices, setInvoices] = useState<any[]>(initialInvoices);
     const [categoryFilter, setCategoryFilter] = useState('all');
@@ -1406,14 +1406,15 @@ export default function AdminDashboard({ initialQuotes, initialLeads, initialMat
                                         </div>
                                     </div>
                                 </div>
+                                </div>
                                 <div>
                                     <div className="flex justify-between text-xs mb-2">
                                         <h4 className="text-brand-gold-muted uppercase">Notas Internas</h4>
-                                        <span className="text-white/30 italic">Autoguardado al hacer click fuera</span>
+                                        <span className="text-white/30 italic">Autoguardado</span>
                                     </div>
                                     <textarea 
-                                        className="w-full bg-black/30 border border-brand-gold/20 rounded-lg p-3 text-white text-sm focus:border-brand-gold outline-none min-h-[100px]"
-                                        placeholder="Escribe aquí notas internas, seguimiento, etc..."
+                                        className="w-full bg-black/30 border border-brand-gold/20 rounded-lg p-3 text-white text-xs focus:border-brand-gold outline-none min-h-[80px] mb-4"
+                                        placeholder="Notas para seguimiento..."
                                         defaultValue={selectedQuote.internal_notes || ''}
                                         onBlur={async (e) => {
                                             const newNotes = e.target.value;
@@ -1422,6 +1423,28 @@ export default function AdminDashboard({ initialQuotes, initialLeads, initialMat
                                             await updateQuoteNotes(selectedQuote.id, newNotes);
                                         }}
                                     />
+                                    
+                                    <h4 className="text-brand-gold-muted text-xs uppercase mb-2">Firmas en PDF</h4>
+                                    <div className="p-3 bg-black/20 rounded-lg space-y-3">
+                                        <div>
+                                            <label className="text-[10px] text-brand-gold-muted uppercase block mb-1">Firmante CableCore</label>
+                                            <input 
+                                                type="text" 
+                                                className="w-full bg-black/30 border border-brand-gold/20 rounded p-2 text-[11px] text-white outline-none focus:border-brand-gold"
+                                                value={selectedQuote.signature_emisor || 'Anton Shapoval'}
+                                                onChange={(e) => setSelectedQuote({...selectedQuote, signature_emisor: e.target.value})}
+                                            />
+                                        </div>
+                                        <div>
+                                            <label className="text-[10px] text-brand-gold-muted uppercase block mb-1">Firmante Cliente</label>
+                                            <input 
+                                                type="text" 
+                                                className="w-full bg-black/30 border border-brand-gold/20 rounded p-2 text-[11px] text-white outline-none focus:border-brand-gold"
+                                                value={selectedQuote.signature_client || selectedQuote.client_name || selectedQuote.client || ''}
+                                                onChange={(e) => setSelectedQuote({...selectedQuote, signature_client: e.target.value})}
+                                            />
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -1457,7 +1480,9 @@ export default function AdminDashboard({ initialQuotes, initialLeads, initialMat
                                         ],
                                     subtotal: Number(selectedQuote.subtotal).toFixed(2) + '€',
                                     iva: Number(selectedQuote.iva).toFixed(2) + '€',
-                                    total: Number(selectedQuote.total).toFixed(2) + '€'
+                                    total: Number(selectedQuote.total).toFixed(2) + '€',
+                                    signatureEmisor: selectedQuote.signature_emisor || 'Anton Shapoval',
+                                    signatureClient: selectedQuote.signature_client || selectedQuote.client_name || selectedQuote.client
                                 };
                                 downloadQuotePDF(pdfData);
                             }} className="px-4 py-2.5 bg-brand-gold text-black font-bold rounded-lg hover:bg-white transition-colors flex items-center gap-2">
@@ -1470,7 +1495,9 @@ export default function AdminDashboard({ initialQuotes, initialLeads, initialMat
                                     cif: '',
                                     address: selectedQuote.client_address || '',
                                     email: selectedQuote.client_email || '',
-                                    phone: selectedQuote.client_phone || ''
+                                    phone: selectedQuote.client_phone || '',
+                                    signatureEmisor: 'Anton Shapoval',
+                                    signatureClient: selectedQuote.client_name || ''
                                 });
                                 // Pre-populate items from quote data
                                 const hasCosts = Number(selectedQuote.cable_cost) > 0 || Number(selectedQuote.points_cost) > 0 || Number(selectedQuote.work_cost) > 0;
@@ -1747,6 +1774,8 @@ export default function AdminDashboard({ initialQuotes, initialLeads, initialMat
                                                                 iva: td.iva + '€',
                                                                 total: td.total + '€',
                                                                 notes: 'Pago realizable mediante transferencia bancaria.\nGracias por su confianza.',
+                                                                signatureEmisor: td.signatureEmisor || 'Anton Shapoval',
+                                                                signatureClient: td.signatureClient || inv.razon_social,
                                                             };
                                                             downloadInvoicePDF(pdfData);
                                                         }}
@@ -1820,6 +1849,14 @@ export default function AdminDashboard({ initialQuotes, initialLeads, initialMat
                             <div>
                                 <label className="text-xs text-brand-gold-muted uppercase block mb-1">Teléfono</label>
                                 <input type="text" value={invoiceData.phone} onChange={e => setInvoiceData({...invoiceData, phone: e.target.value})} className="w-full bg-brand-dark rounded-lg p-2.5 text-white border border-border-subtle text-sm" />
+                            </div>
+                            <div>
+                                <label className="text-xs text-brand-gold-muted uppercase block mb-1">Firmante (CableCore) *</label>
+                                <input type="text" value={invoiceData.signatureEmisor} onChange={e => setInvoiceData({...invoiceData, signatureEmisor: e.target.value})} className="w-full bg-brand-dark rounded-lg p-2.5 text-white border border-border-subtle text-sm" />
+                            </div>
+                            <div>
+                                <label className="text-xs text-brand-gold-muted uppercase block mb-1">Firmante (Cliente) *</label>
+                                <input type="text" value={invoiceData.signatureClient} onChange={e => setInvoiceData({...invoiceData, signatureClient: e.target.value})} className="w-full bg-brand-dark rounded-lg p-2.5 text-white border border-border-subtle text-sm" />
                             </div>
                         </div>
 
@@ -1927,7 +1964,14 @@ export default function AdminDashboard({ initialQuotes, initialLeads, initialMat
                                             address: invoiceData.address,
                                             email: invoiceData.email,
                                             phone: invoiceData.phone,
-                                            total_data: { subtotal: computedSubtotal.toFixed(2), iva: computedIva.toFixed(2), total: computedTotal.toFixed(2), items: finalItems }
+                                            total_data: { 
+                                                subtotal: computedSubtotal.toFixed(2), 
+                                                iva: computedIva.toFixed(2), 
+                                                total: computedTotal.toFixed(2), 
+                                                items: finalItems,
+                                                signatureEmisor: invoiceData.signatureEmisor,
+                                                signatureClient: invoiceData.signatureClient
+                                            }
                                         })
                                     });
                                     const r = await res.json();
@@ -1941,7 +1985,9 @@ export default function AdminDashboard({ initialQuotes, initialLeads, initialMat
                                             subtotal: computedSubtotal.toFixed(2) + '€',
                                             iva: computedIva.toFixed(2) + '€',
                                             total: computedTotal.toFixed(2) + '€',
-                                            notes: 'Pago realizable mediante transferencia bancaria.\nGracias por su confianza.'
+                                            notes: 'Pago realizable mediante transferencia bancaria.\nGracias por su confianza.',
+                                            signatureEmisor: invoiceData.signatureEmisor,
+                                            signatureClient: invoiceData.signatureClient
                                         };
                                         downloadInvoicePDF(pdfData);
                                         // Update local invoices list so Facturas tab shows it immediately
@@ -1950,10 +1996,16 @@ export default function AdminDashboard({ initialQuotes, initialLeads, initialMat
                                             invoice_number: r.invoice_number ?? 21,
                                             razon_social: invoiceData.razonSocial,
                                             cif: invoiceData.cif,
-                                            address: invoiceData.address,
                                             email: invoiceData.email,
                                             phone: invoiceData.phone,
-                                            total_data: { subtotal: computedSubtotal.toFixed(2), iva: computedIva.toFixed(2), total: computedTotal.toFixed(2), items: finalItems },
+                                            total_data: { 
+                                                subtotal: computedSubtotal.toFixed(2), 
+                                                iva: computedIva.toFixed(2), 
+                                                total: computedTotal.toFixed(2), 
+                                                items: finalItems,
+                                                signatureEmisor: invoiceData.signatureEmisor,
+                                                signatureClient: invoiceData.signatureClient
+                                            },
                                             created_at: new Date().toISOString(),
                                         }, ...prev]);
                                         setShowInvoiceModal(false);
