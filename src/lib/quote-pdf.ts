@@ -134,8 +134,8 @@ export function generateQuoteHTML(data: QuotePDFData): string {
       <div style="flex: 1; text-align: center;">
         <p style="font-size: 10px; color: #888; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 40px;">Firma del prestador del servicio</p>
         <div style="border-top: 1px solid #333; padding-top: 8px;">
-          <p style="font-size: 12px; font-weight: 700; color: #222;">CableCore</p>
-          <p style="font-size: 10px; color: #666;">Instalaciones de Red</p>
+          <p style="font-size: 12px; font-weight: 700; color: #222;">Anton Shapoval</p>
+          <p style="font-size: 10px; color: #666;">CableCore</p>
         </div>
       </div>
       <div style="flex: 1; text-align: center;">
