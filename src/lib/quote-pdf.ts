@@ -136,7 +136,7 @@ export function generateQuoteHTML(data: QuotePDFData): string {
     <div class="no-break" style="margin-top: 15px; display: grid; grid-template-columns: 1fr 1fr; gap: 40px;">
       <div style="text-align: center;">
         <div style="height: 80px; display: flex; align-items: flex-end; justify-content: center; margin-bottom: 10px;">
-          <p style="font-size: 8px; color: #bbb; text-transform: uppercase;">Sello y Firma del Prestador</p>
+          <p style="font-size: 8px; color: #bbb; text-transform: uppercase;">Sello o Firma del Prestador</p>
         </div>
         <div style="border-top: 1.5px solid #C9A84C; padding-top: 10px;">
           <p style="font-size: 11px; font-weight: 700; color: #222;">${data.signatureEmisor || 'Anton Shapoval'}</p>
@@ -145,11 +145,10 @@ export function generateQuoteHTML(data: QuotePDFData): string {
       </div>
       <div style="text-align: center;">
         <div style="height: 80px; display: flex; align-items: flex-end; justify-content: center; margin-bottom: 10px;">
-          <p style="font-size: 8px; color: #bbb; text-transform: uppercase;">Sello y Firma del Cliente</p>
+          <p style="font-size: 8px; color: #bbb; text-transform: uppercase;">Sello o Firma del Cliente</p>
         </div>
         <div style="border-top: 1.5px solid #C9A84C; padding-top: 10px;">
           <p style="font-size: 11px; font-weight: 700; color: #222;">${data.signatureClient || data.client.name}</p>
-          <p style="font-size: 9px; color: #666; font-weight: 500; text-transform: uppercase; letter-spacing: 1px;">Conforme el Cliente</p>
         </div>
       </div>
     </div>

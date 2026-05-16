@@ -1467,7 +1467,7 @@ export default function AdminDashboard({ initialQuotes, initialLeads, initialMat
 
                                 const pdfData: QuotePDFData = {
                                     quoteNumber: selectedQuote.id.split('-')[0].toUpperCase(),
-                                    date: new Date(selectedQuote.created_at).toLocaleDateString(),
+                                    date: new Date(selectedQuote.created_at).toLocaleDateString('es-ES', { day: '2-digit', month: '2-digit', year: 'numeric' }),
                                     client: {
                                         name: selectedQuote.client_name,
                                         phone: selectedQuote.client_phone,
@@ -1766,7 +1766,7 @@ export default function AdminDashboard({ initialQuotes, initialLeads, initialMat
                                                             const td = inv.total_data || {};
                                                             const pdfData: InvoicePDFData = {
                                                                 invoiceNumber: inv.invoice_number,
-                                                                date: new Date(inv.created_at).toLocaleDateString('es-ES'),
+                                                                date: new Date(inv.created_at).toLocaleDateString('es-ES', { day: '2-digit', month: '2-digit', year: 'numeric' }),
                                                                 client: {
                                                                     razonSocial: inv.razon_social,
                                                                     cif: inv.cif,
@@ -1984,7 +1984,7 @@ export default function AdminDashboard({ initialQuotes, initialLeads, initialMat
                                     if(r.success) {
                                         const pdfData: InvoicePDFData = {
                                             invoiceNumber: r.invoice_number ?? 21,
-                                            date: new Date().toLocaleDateString('es-ES'),
+                                            date: new Date().toLocaleDateString('es-ES', { day: '2-digit', month: '2-digit', year: 'numeric' }),
                                             client: { razonSocial: invoiceData.razonSocial, cif: invoiceData.cif, address: invoiceData.address, email: invoiceData.email, phone: invoiceData.phone },
                                             items: finalItems,
                                             subtotal: computedSubtotal.toFixed(2) + '€',

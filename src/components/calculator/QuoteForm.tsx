@@ -239,7 +239,7 @@ export default function QuoteForm({ locale, calculationData }: QuoteFormProps) {
 
         const pdfData: QuotePDFData = {
             quoteNumber: generateQuoteNumber(),
-            date: new Date().toLocaleDateString('es-ES'),
+            date: new Date().toLocaleDateString('es-ES', { day: '2-digit', month: '2-digit', year: 'numeric' }),
             client: { name, phone, email, address: address || undefined },
             items,
             subtotal: `${d.subtotal.toFixed(2)}€`,

@@ -56,7 +56,7 @@ export function generateInvoiceHTML(data: InvoicePDFData): string {
     const invoiceDate = parseDateES(data.date);
     const dueDate = new Date(invoiceDate);
     dueDate.setDate(dueDate.getDate() + 60);
-    const dueDateStr = dueDate.toLocaleDateString('es-ES');
+    const dueDateStr = dueDate.toLocaleDateString('es-ES', { day: '2-digit', month: '2-digit', year: 'numeric' });
 
     return `
 <!DOCTYPE html>
@@ -150,7 +150,7 @@ export function generateInvoiceHTML(data: InvoicePDFData): string {
         <div style="display: flex; justify-content: space-between; padding: 6px 10px; font-size: 10px; color: #555; border-bottom: 1px solid #e0dcd4;">
           <span>IVA (21%)</span> <span style="font-weight: 600; color: #333;">${data.iva}</span>
         </div>
-        <div style="display: flex; justify-content: space-between; padding: 8px 10px; font-size: 14px; font-weight: 800; color: #8B6914; background: #f8f6f1; border: 1.5px solid #C9A84C; border-radius: 4px; margin-top: 2px;">
+        <div style="display: flex; justify-content: space-between; padding: 8px 10px; font-size: 14px; font-weight: 800; color: #8B6914; background: #f8f6f1; border: 1.5px solid #C9A84C; border-radius: 4px; margin-top: 6px; margin-bottom: 6px;">
           <span>TOTAL</span> <span>${data.total}</span>
         </div>
       </div>
@@ -168,7 +168,7 @@ export function generateInvoiceHTML(data: InvoicePDFData): string {
     <div class="no-break" style="margin-top: 15px; display: grid; grid-template-columns: 1fr 1fr; gap: 40px;">
       <div style="text-align: center;">
         <div style="height: 80px; display: flex; align-items: flex-end; justify-content: center; margin-bottom: 10px;">
-          <p style="font-size: 8px; color: #bbb; text-transform: uppercase;">Sello y Firma del Prestador</p>
+          <p style="font-size: 8px; color: #bbb; text-transform: uppercase;">Sello o Firma del Prestador</p>
         </div>
         <div style="border-top: 1.5px solid #C9A84C; padding-top: 10px;">
           <p style="font-size: 11px; font-weight: 700; color: #222;">${data.signatureEmisor || 'Anton Shapoval'}</p>
@@ -177,11 +177,10 @@ export function generateInvoiceHTML(data: InvoicePDFData): string {
       </div>
       <div style="text-align: center;">
         <div style="height: 80px; display: flex; align-items: flex-end; justify-content: center; margin-bottom: 10px;">
-          <p style="font-size: 8px; color: #bbb; text-transform: uppercase;">Sello y Firma del Cliente</p>
+          <p style="font-size: 8px; color: #bbb; text-transform: uppercase;">Sello o Firma del Cliente</p>
         </div>
         <div style="border-top: 1.5px solid #C9A84C; padding-top: 10px;">
           <p style="font-size: 11px; font-weight: 700; color: #222;">${data.signatureClient || data.client.razonSocial}</p>
-          <p style="font-size: 9px; color: #666; font-weight: 500; text-transform: uppercase; letter-spacing: 1px;">Conforme el Cliente</p>
         </div>
       </div>
     </div>
