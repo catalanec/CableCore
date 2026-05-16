@@ -355,7 +355,7 @@ export default function FiberCalculator({ locale, onCalcUpdate }: FiberCalculato
     const l = fiberLabels[locale] || fiberLabels.es;
 
     // State
-    const [cableType, setCableType] = useState<keyof typeof FIBER_CONFIG.cablePrices | 'none'>('sm_2f');
+    const [cableType, setCableType] = useState<keyof typeof FIBER_CONFIG.cablePrices | 'none'>('none');
     const [points, setPoints] = useState(0);
     const [avgLength, setAvgLength] = useState(0);
     const [installType, setInstallType] = useState<keyof typeof FIBER_CONFIG.installationMultiplier>('ceiling');

@@ -417,7 +417,7 @@ export default function Calculator({ locale }: { locale: string }) {
     const [fiberCalcData, setFiberCalcData] = useState<FiberCalcResult | null>(null);
 
     // ── State ──
-    const [cableType, setCableType] = useState<keyof typeof CONFIG.cablePrices | 'none'>('cat6');
+    const [cableType, setCableType] = useState<keyof typeof CONFIG.cablePrices | 'none'>('none');
     const [points, setPoints] = useState(0);
     const [avgLength, setAvgLength] = useState(0);
     const [installType, setInstallType] = useState<keyof typeof CONFIG.installationMultiplier>('external');
@@ -504,7 +504,7 @@ export default function Calculator({ locale }: { locale: string }) {
         if (installType === 'trays') laborType = 'conduit';
 
         const baseLabor = CONFIG.laborPerPoint[laborType];
-        const cableMult = CONFIG.cableMultiplier[cableType];
+        const cableMult = cableType === 'none' ? 1.0 : CONFIG.cableMultiplier[cableType as keyof typeof CONFIG.cableMultiplier];
         const installMult = CONFIG.installationMultiplier[installType];
         const laborCost = points * baseLabor * cableMult * installMult;
 
