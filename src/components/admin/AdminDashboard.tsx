@@ -1826,8 +1826,8 @@ export default function AdminDashboard({ initialQuotes, initialLeads, initialMat
                 const computedTotal = computedSubtotal + computedIva;
 
                 return (
-                <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm overflow-y-auto">
-                    <div className="bg-surface-card border border-brand-gold/30 rounded-xl w-full max-w-3xl shadow-2xl p-6 my-4">
+                <div className="fixed inset-0 z-50 flex items-start justify-center p-4 bg-black/80 backdrop-blur-sm overflow-y-auto">
+                    <div className="bg-surface-card border border-brand-gold/30 rounded-xl w-full max-w-3xl shadow-2xl p-6 my-4 relative">
                         <h3 className="text-xl font-heading font-bold text-white border-b border-border-subtle pb-4 mb-6">🧾 Crear Factura</h3>
 
                         {/* Client info */}
