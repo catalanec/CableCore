@@ -1375,74 +1375,76 @@ export default function AdminDashboard({ initialQuotes, initialLeads, initialMat
                             <button onClick={() => setSelectedQuote(null)} className="text-gray-400 hover:text-white transition-colors">✕</button>
                         </div>
                         {/* Scrollable content */}
-                        <div className="p-6 grid grid-cols-1 md:grid-cols-2 gap-6 text-sm overflow-y-auto flex-1">
-                            <div className="space-y-4">
-                                <div>
-                                    <h4 className="text-brand-gold-muted text-xs uppercase mb-2">Cliente</h4>
-                                    <div className="p-3 bg-black/20 rounded-lg">
-                                        <p className="font-bold text-white">{selectedQuote.client_name || selectedQuote.client}</p>
-                                        <p className="text-gray-300">📞 {selectedQuote.client_phone || selectedQuote.phone}</p>
-                                        <p className="text-gray-300">✉️ {selectedQuote.client_email || selectedQuote.email}</p>
+                        <div className="p-6 space-y-6 text-sm overflow-y-auto flex-1">
+                            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                                <div className="space-y-4">
+                                    <div>
+                                        <h4 className="text-brand-gold-muted text-xs uppercase mb-2">Cliente</h4>
+                                        <div className="p-3 bg-black/20 rounded-lg">
+                                            <p className="font-bold text-white">{selectedQuote.client_name || selectedQuote.client}</p>
+                                            <p className="text-gray-300">📞 {selectedQuote.client_phone || selectedQuote.phone}</p>
+                                            <p className="text-gray-300">✉️ {selectedQuote.client_email || selectedQuote.email}</p>
+                                        </div>
                                     </div>
-                                </div>
-                                <div>
-                                    <h4 className="text-brand-gold-muted text-xs uppercase mb-2">Instalación</h4>
-                                    <div className="p-3 bg-black/20 rounded-lg space-y-1 text-gray-300">
-                                        <p>Cable: <span className="text-brand-gold font-mono">{selectedQuote.cable_type || selectedQuote.cable}</span> ({selectedQuote.cable_meters}m)</p>
-                                        <p>Puntos de Red: <span className="text-white font-bold">{selectedQuote.network_points || selectedQuote.points}</span></p>
-                                        <p>Tipo instalación: <span className="text-white">{selectedQuote.installation_type}</span> ({selectedQuote.installation_meters}m)</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="space-y-4">
-                                <div>
-                                    <h4 className="text-brand-gold-muted text-xs uppercase mb-2">Desglose de Costes</h4>
-                                    <div className="p-3 bg-black/20 rounded-lg space-y-2 text-gray-300">
-                                        <div className="flex justify-between border-b border-white/5 pb-1"><span>Materiales</span> <span>{Number(selectedQuote.materials_cost).toFixed(2)}€</span></div>
-                                        <div className="flex justify-between border-b border-white/5 pb-1"><span>Cable</span> <span>{Number(selectedQuote.cable_cost).toFixed(2)}€</span></div>
-                                        <div className="flex justify-between border-b border-white/5 pb-1"><span>Mano de Obra (Técnicos)</span> <span>{Number(selectedQuote.work_cost).toFixed(2)}€</span></div>
-                                        <div className="flex justify-between text-white font-bold text-lg pt-2 border-t border-brand-gold/30">
-                                            <span>TOTAL EUR</span> <span className="text-brand-gold">{Number(selectedQuote.total).toFixed(2)}€</span>
+                                    <div>
+                                        <h4 className="text-brand-gold-muted text-xs uppercase mb-2">Instalación</h4>
+                                        <div className="p-3 bg-black/20 rounded-lg space-y-1 text-gray-300">
+                                            <p>Cable: <span className="text-brand-gold font-mono">{selectedQuote.cable_type || selectedQuote.cable}</span> ({selectedQuote.cable_meters}m)</p>
+                                            <p>Puntos de Red: <span className="text-white font-bold">{selectedQuote.network_points || selectedQuote.points}</span></p>
+                                            <p>Tipo instalación: <span className="text-white">{selectedQuote.installation_type}</span> ({selectedQuote.installation_meters}m)</p>
                                         </div>
                                     </div>
                                 </div>
-                                </div>
-                                <div>
-                                    <div className="flex justify-between text-xs mb-2">
-                                        <h4 className="text-brand-gold-muted uppercase">Notas Internas</h4>
-                                        <span className="text-white/30 italic">Autoguardado</span>
+                                <div className="space-y-4">
+                                    <div>
+                                        <h4 className="text-brand-gold-muted text-xs uppercase mb-2">Resumen Financiero</h4>
+                                        <div className="p-3 bg-black/20 rounded-lg space-y-2 text-gray-300">
+                                            <div className="flex justify-between border-b border-white/5 pb-1"><span>Materiales</span> <span>{Number(selectedQuote.materials_cost).toFixed(2)}€</span></div>
+                                            <div className="flex justify-between border-b border-white/5 pb-1"><span>Cable</span> <span>{Number(selectedQuote.cable_cost).toFixed(2)}€</span></div>
+                                            <div className="flex justify-between border-b border-white/5 pb-1"><span>Mano de Obra (Técnicos)</span> <span>{Number(selectedQuote.work_cost).toFixed(2)}€</span></div>
+                                            <div className="flex justify-between text-white font-bold text-lg pt-2 border-t border-brand-gold/30">
+                                                <span>TOTAL EUR</span> <span className="text-brand-gold">{Number(selectedQuote.total).toFixed(2)}€</span>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <textarea 
-                                        className="w-full bg-black/30 border border-brand-gold/20 rounded-lg p-3 text-white text-xs focus:border-brand-gold outline-none min-h-[80px] mb-4"
-                                        placeholder="Notas para seguimiento..."
-                                        defaultValue={selectedQuote.internal_notes || ''}
-                                        onBlur={async (e) => {
-                                            const newNotes = e.target.value;
-                                            setSelectedQuote({...selectedQuote, internal_notes: newNotes});
-                                            setQuotes(quotes.map(q => q.id === selectedQuote.id ? {...q, internal_notes: newNotes} : q));
-                                            await updateQuoteNotes(selectedQuote.id, newNotes);
-                                        }}
-                                    />
                                     
-                                    <h4 className="text-brand-gold-muted text-xs uppercase mb-2">Firmas en PDF</h4>
-                                    <div className="p-3 bg-black/20 rounded-lg space-y-3">
-                                        <div>
-                                            <label className="text-[10px] text-brand-gold-muted uppercase block mb-1">Firmante CableCore</label>
-                                            <input 
-                                                type="text" 
-                                                className="w-full bg-black/30 border border-brand-gold/20 rounded p-2 text-[11px] text-white outline-none focus:border-brand-gold"
-                                                value={selectedQuote.signature_emisor || 'Anton Shapoval'}
-                                                onChange={(e) => setSelectedQuote({...selectedQuote, signature_emisor: e.target.value})}
-                                            />
+                                    <div>
+                                        <div className="flex justify-between text-xs mb-2">
+                                            <h4 className="text-brand-gold-muted uppercase">Notas Internas</h4>
+                                            <span className="text-white/30 italic">Autoguardado</span>
                                         </div>
-                                        <div>
-                                            <label className="text-[10px] text-brand-gold-muted uppercase block mb-1">Firmante Cliente</label>
-                                            <input 
-                                                type="text" 
-                                                className="w-full bg-black/30 border border-brand-gold/20 rounded p-2 text-[11px] text-white outline-none focus:border-brand-gold"
-                                                value={selectedQuote.signature_client || selectedQuote.client_name || selectedQuote.client || ''}
-                                                onChange={(e) => setSelectedQuote({...selectedQuote, signature_client: e.target.value})}
-                                            />
+                                        <textarea 
+                                            className="w-full bg-black/30 border border-brand-gold/20 rounded-lg p-3 text-white text-xs focus:border-brand-gold outline-none min-h-[80px] mb-4"
+                                            placeholder="Notas para seguimiento..."
+                                            defaultValue={selectedQuote.internal_notes || ''}
+                                            onBlur={async (e) => {
+                                                const newNotes = e.target.value;
+                                                setSelectedQuote({...selectedQuote, internal_notes: newNotes});
+                                                setQuotes(quotes.map(q => q.id === selectedQuote.id ? {...q, internal_notes: newNotes} : q));
+                                                await updateQuoteNotes(selectedQuote.id, newNotes);
+                                            }}
+                                        />
+                                        
+                                        <h4 className="text-brand-gold-muted text-xs uppercase mb-2">Firmas en PDF</h4>
+                                        <div className="p-3 bg-black/20 rounded-lg space-y-3">
+                                            <div>
+                                                <label className="text-[10px] text-brand-gold-muted uppercase block mb-1">Firmante CableCore</label>
+                                                <input 
+                                                    type="text" 
+                                                    className="w-full bg-black/30 border border-brand-gold/20 rounded p-2 text-[11px] text-white outline-none focus:border-brand-gold"
+                                                    value={selectedQuote.signature_emisor || 'Anton Shapoval'}
+                                                    onChange={(e) => setSelectedQuote({...selectedQuote, signature_emisor: e.target.value})}
+                                                />
+                                            </div>
+                                            <div>
+                                                <label className="text-[10px] text-brand-gold-muted uppercase block mb-1">Firmante Cliente</label>
+                                                <input 
+                                                    type="text" 
+                                                    className="w-full bg-black/30 border border-brand-gold/20 rounded p-2 text-[11px] text-white outline-none focus:border-brand-gold"
+                                                    value={selectedQuote.signature_client || selectedQuote.client_name || selectedQuote.client || ''}
+                                                    onChange={(e) => setSelectedQuote({...selectedQuote, signature_client: e.target.value})}
+                                                />
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
