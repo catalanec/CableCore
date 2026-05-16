@@ -161,8 +161,26 @@ export function generateInvoiceHTML(data: InvoicePDFData): string {
     </div>
     ` : ''}
 
+    <!-- Signatures -->
+    <div style="margin-top: 35px; display: flex; justify-content: space-between; gap: 40px;">
+      <div style="flex: 1; text-align: center;">
+        <p style="font-size: 9px; color: #888; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 40px;">Firma del prestador del servicio</p>
+        <div style="border-top: 1px solid #333; padding-top: 8px;">
+          <p style="font-size: 11px; font-weight: 700; color: #222;">Anton Shapoval</p>
+          <p style="font-size: 9px; color: #666;">CableCore</p>
+        </div>
+      </div>
+      <div style="flex: 1; text-align: center;">
+        <p style="font-size: 9px; color: #888; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 40px;">Conforme el cliente</p>
+        <div style="border-top: 1px solid #333; padding-top: 8px;">
+          <p style="font-size: 11px; font-weight: 700; color: #222;">${data.client.razonSocial}</p>
+          <p style="font-size: 9px; color: #666;">Cliente</p>
+        </div>
+      </div>
+    </div>
+
     <!-- Footer -->
-    <div style="margin-top: 35px; padding-top: 15px; border-top: 2px solid #C9A84C; font-size: 10px; color: #666; text-align: center; line-height: 1.8;">
+    <div style="margin-top: 25px; padding-top: 15px; border-top: 2px solid #C9A84C; font-size: 10px; color: #666; text-align: center; line-height: 1.8;">
       <div>Operación exenta/sujeta a normativa del IVA español. Todos los precios incluyen euros (€).</div>
     </div>
 
