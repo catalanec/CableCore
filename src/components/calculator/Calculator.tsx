@@ -464,7 +464,7 @@ export default function Calculator({ locale }: { locale: string }) {
     });
     const [rack, setRack] = useState('none');
     const [urgency, setUrgency] = useState('normal');
-    const [customItems, setCustomItems] = useState<Array<{ id: string; type: 'unit' | 'fixed'; name: string; qty?: number; price: number }>>([]);
+    const [customItems, setCustomItems] = useState<Array<{ id: string; type: 'unit' | 'fixed'; name: string; qty?: number; price: number | string }>>([]);
 
     // ── Per-point materials (keystone, roseta) — editable ──
     const [pointMaterials, setPointMaterials] = useState<Record<string, { enabled: boolean; qty: number; price: number; name: string; icon: string }>>({ 
@@ -479,8 +479,8 @@ export default function Calculator({ locale }: { locale: string }) {
         setPointCustomMats(prev => prev.map(m => m.id === id ? { ...m, [field]: value } : m));
 
 
-    const addCustomItem = () => setCustomItems(prev => [...prev, { id: crypto.randomUUID(), type: 'unit', name: '', qty: 1, price: 0 }]);
-    const addFixedItem = () => setCustomItems(prev => [...prev, { id: crypto.randomUUID(), type: 'fixed', name: '', price: 0 }]);
+    const addCustomItem = () => setCustomItems(prev => [...prev, { id: crypto.randomUUID(), type: 'unit', name: '', qty: 1, price: '' }]);
+    const addFixedItem = () => setCustomItems(prev => [...prev, { id: crypto.randomUUID(), type: 'fixed', name: '', price: '' }]);
     const removeCustomItem = (id: string) => setCustomItems(prev => prev.filter(i => i.id !== id));
     const updateCustomItem = (id: string, field: 'name' | 'qty' | 'price', value: string | number) =>
         setCustomItems(prev => prev.map(i => i.id === id ? { ...i, [field]: value } : i));
@@ -576,8 +576,9 @@ export default function Calculator({ locale }: { locale: string }) {
 
         // 8b. Custom items
         const customItemsCost = customItems.reduce((sum, item) => {
-            if (item.type === 'fixed') return sum + (item.price || 0);
-            return sum + (item.qty || 0) * (item.price || 0);
+            const priceVal = typeof item.price === 'string' ? parseFloat(item.price.replace(',', '.')) || 0 : item.price || 0;
+            if (item.type === 'fixed') return sum + priceVal;
+            return sum + (item.qty || 0) * priceVal;
         }, 0);
 
         // 9. СУММА до скидки и срочности
@@ -1147,7 +1148,7 @@ export default function Calculator({ locale }: { locale: string }) {
                                             value={item.price}
                                             min={0}
                                             step={0.01}
-                                            onChange={(e) => updateCustomItem(item.id, 'price', Number(e.target.value))}
+                                            onChange={(e) => updateCustomItem(item.id, 'price', e.target.value)}
                                             className={`w-full text-right text-sm bg-brand-dark border border-border-subtle rounded px-1 py-0.5 focus:outline-none ${isFixed ? 'text-cyan-300 focus:border-cyan-400/50' : 'text-brand-gold focus:border-brand-gold/50'}`}
                                             placeholder={isFixed ? (l as Record<string,string>).customItemTotal : (l as Record<string,string>).customItemPrice}
                                         />
@@ -1162,8 +1163,9 @@ export default function Calculator({ locale }: { locale: string }) {
                                 <div className="flex justify-end pt-1">
                                     <span className="text-xs text-brand-gold font-semibold">
                                         Total: {customItems.reduce((s, i) => {
-                                            if (i.type === 'fixed') return s + (i.price || 0);
-                                            return s + (i.qty || 0) * (i.price || 0);
+                                            const p = typeof i.price === 'string' ? parseFloat(i.price.replace(',', '.')) || 0 : i.price || 0;
+                                            if (i.type === 'fixed') return s + p;
+                                            return s + (i.qty || 0) * p;
                                         }, 0).toFixed(2)}€
                                     </span>
                                 </div>

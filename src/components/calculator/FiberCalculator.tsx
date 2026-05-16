@@ -367,9 +367,9 @@ export default function FiberCalculator({ locale, onCalcUpdate }: FiberCalculato
     const [rack, setRack] = useState('none');
     const [urgency, setUrgency] = useState('normal');
 
-    const [customItems, setCustomItems] = useState<Array<{ id: string; type: 'unit' | 'fixed'; name: string; qty?: number; price: number }>>([]);
-    const addCustomItem = () => setCustomItems(prev => [...prev, { id: crypto.randomUUID(), type: 'unit', name: '', qty: 1, price: 0 }]);
-    const addFixedItem = () => setCustomItems(prev => [...prev, { id: crypto.randomUUID(), type: 'fixed', name: '', price: 0 }]);
+    const [customItems, setCustomItems] = useState<Array<{ id: string; type: 'unit' | 'fixed'; name: string; qty?: number; price: number | string }>>([]);
+    const addCustomItem = () => setCustomItems(prev => [...prev, { id: crypto.randomUUID(), type: 'unit', name: '', qty: 1, price: '' }]);
+    const addFixedItem = () => setCustomItems(prev => [...prev, { id: crypto.randomUUID(), type: 'fixed', name: '', price: '' }]);
     const removeCustomItem = (id: string) => setCustomItems(prev => prev.filter(i => i.id !== id));
     const updateCustomItem = (id: string, field: 'name' | 'qty' | 'price', value: string | number) =>
         setCustomItems(prev => prev.map(i => i.id === id ? { ...i, [field]: value } : i));
@@ -398,8 +398,9 @@ export default function FiberCalculator({ locale, onCalcUpdate }: FiberCalculato
         const rackCost = rackOption.price;
 
         const customItemsCost = customItems.reduce((sum, item) => {
-            if (item.type === 'fixed') return sum + (item.price || 0);
-            return sum + (item.qty || 0) * (item.price || 0);
+            const priceVal = typeof item.price === 'string' ? parseFloat(item.price.replace(',', '.')) || 0 : item.price || 0;
+            if (item.type === 'fixed') return sum + priceVal;
+            return sum + (item.qty || 0) * priceVal;
         }, 0);
 
         const subtotal = cableCost + routingCost + laborCost + fusionCost + certificationCost + rosetaCost + patchCordCost + acopladorCost + bandejaCost + rackCost + customItemsCost;
@@ -685,7 +686,7 @@ export default function FiberCalculator({ locale, onCalcUpdate }: FiberCalculato
                                         min="0"
                                         step="0.01"
                                         value={item.price || ''}
-                                        onChange={(e) => updateCustomItem(item.id, 'price', Number(e.target.value))}
+                                        onChange={(e) => updateCustomItem(item.id, 'price', e.target.value)}
                                         placeholder={isFixed ? l.customItemTotal : l.customItemPrice}
                                         className={`w-24 bg-surface-card border-none outline-none text-sm px-3 py-2 rounded text-center focus:outline-none ${isFixed ? 'text-cyan-300 focus:border-cyan-400/50' : 'text-white focus:border-white/50'}`}
                                     />
