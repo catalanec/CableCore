@@ -48,6 +48,8 @@ export default function AdminDashboard({ initialQuotes, initialLeads, initialMat
     const [isFacturando, setIsFacturando] = useState(false);
     const [invoiceData, setInvoiceData] = useState({ razonSocial: '', cif: '', address: '', email: '', phone: '', signatureEmisor: 'Anton Shapoval', signatureClient: '' });
     const [invoiceItems, setInvoiceItems] = useState<Array<{description: string; quantity: string; unitPrice: string}>>([]);
+    const [currentQuoteId, setCurrentQuoteId] = useState<string | null>(null);
+
     const [invoices, setInvoices] = useState<any[]>(initialInvoices);
     const [categoryFilter, setCategoryFilter] = useState('all');
     const [chartPeriod, setChartPeriod] = useState(6);
@@ -1492,6 +1494,7 @@ export default function AdminDashboard({ initialQuotes, initialLeads, initialMat
                             </button>
 
                             <button onClick={() => {
+                                setCurrentQuoteId(selectedQuote.id); // Save ID before nullifying selectedQuote
                                 setInvoiceData({
                                     razonSocial: selectedQuote.client_name || '',
                                     cif: '',
@@ -1960,7 +1963,7 @@ export default function AdminDashboard({ initialQuotes, initialLeads, initialMat
                                         method: 'POST',
                                         headers: { 'Content-Type': 'application/json' },
                                         body: JSON.stringify({
-                                            quote_id: selectedQuote.id,
+                                            quote_id: currentQuoteId,
                                             razon_social: invoiceData.razonSocial,
                                             cif: invoiceData.cif,
                                             address: invoiceData.address,
