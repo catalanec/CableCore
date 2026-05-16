@@ -129,6 +129,24 @@ export function generateQuoteHTML(data: QuotePDFData): string {
       <p style="color: #333; font-size: 11px; margin-top: 4px;">Cuenta bancaria (IBAN): <strong style="pointer-events: none; text-decoration: none; color: inherit;">ES91 2103<span></span> 7379<span></span> 4000<span></span> 3001<span></span> 0959</strong></p>
     </div>
 
+    <!-- Signatures -->
+    <div style="margin-top: 35px; display: flex; justify-content: space-between; gap: 40px;">
+      <div style="flex: 1; text-align: center;">
+        <p style="font-size: 10px; color: #888; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 40px;">Firma del prestador del servicio</p>
+        <div style="border-top: 1px solid #333; padding-top: 8px;">
+          <p style="font-size: 12px; font-weight: 700; color: #222;">CableCore</p>
+          <p style="font-size: 10px; color: #666;">Instalaciones de Red</p>
+        </div>
+      </div>
+      <div style="flex: 1; text-align: center;">
+        <p style="font-size: 10px; color: #888; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 40px;">Conforme el cliente</p>
+        <div style="border-top: 1px solid #333; padding-top: 8px;">
+          <p style="font-size: 12px; font-weight: 700; color: #222;">${data.client.name}</p>
+          <p style="font-size: 10px; color: #666;">Cliente</p>
+        </div>
+      </div>
+    </div>
+
     <!-- Footer -->
     <div style="margin-top: 35px; padding-top: 15px; border-top: 2px solid #C9A84C; font-size: 10px; color: #666; text-align: center; line-height: 1.8;">
       <div><b style="color: #8B6914;">CableCore</b> — Instalación profesional de redes y cableado estructurado</div>
