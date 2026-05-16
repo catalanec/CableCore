@@ -45,6 +45,7 @@ const CABLE_TYPES = [
     { id: 'cat6' as const, name: 'Cat 6', price: CONFIG.cablePrices.cat6 },
     { id: 'cat6a' as const, name: 'Cat 6A', price: CONFIG.cablePrices.cat6a },
     { id: 'cat7' as const, name: 'Cat 7', price: CONFIG.cablePrices.cat7 },
+    { id: 'none' as const, name: 'Ninguno', price: 0 },
 ];
 
 const INSTALLATION_TYPES = [
@@ -204,7 +205,9 @@ const calcLabels: Record<string, Record<string, string>> = {
         customItemName: 'Descripción',
         customItemQty: 'Cant.',
         customItemPrice: 'Precio/ud.',
-        addCustomItem: '➕ Añadir partida',
+        customItemTotal: 'Total',
+        addCustomItem: '➕ Añadir por unidad',
+        addFixedItem: '➕ Añadir partida global (sin cálculo)',
     },
     en: {
         cableType: 'Cable type',
@@ -396,7 +399,9 @@ const calcLabels: Record<string, Record<string, string>> = {
         customItemName: 'Описание',
         customItemQty: 'Кол-во',
         customItemPrice: 'Цена/шт',
+        customItemTotal: 'Сумма',
         addCustomItem: '➕ Добавить',
+        addFixedItem: '➕ Добавить общую позицию (без расчетов)',
     },
 };
 
@@ -412,9 +417,9 @@ export default function Calculator({ locale }: { locale: string }) {
     const [fiberCalcData, setFiberCalcData] = useState<FiberCalcResult | null>(null);
 
     // ── State ──
-    const [cableType, setCableType] = useState<keyof typeof CONFIG.cablePrices>('cat6');
-    const [points, setPoints] = useState(4);
-    const [avgLength, setAvgLength] = useState(15);
+    const [cableType, setCableType] = useState<keyof typeof CONFIG.cablePrices | 'none'>('cat6');
+    const [points, setPoints] = useState(0);
+    const [avgLength, setAvgLength] = useState(0);
     const [installType, setInstallType] = useState<keyof typeof CONFIG.installationMultiplier>('external');
     const [trenchMode, setTrenchMode] = useState<'full' | 'manual'>('full');
     const [trenchLengthInput, setTrenchLengthInput] = useState(0);
@@ -459,7 +464,7 @@ export default function Calculator({ locale }: { locale: string }) {
     });
     const [rack, setRack] = useState('none');
     const [urgency, setUrgency] = useState('normal');
-    const [customItems, setCustomItems] = useState<Array<{ id: string; name: string; qty: number; price: number }>>([]);
+    const [customItems, setCustomItems] = useState<Array<{ id: string; type: 'unit' | 'fixed'; name: string; qty?: number; price: number }>>([]);
 
     // ── Per-point materials (keystone, roseta) — editable ──
     const [pointMaterials, setPointMaterials] = useState<Record<string, { enabled: boolean; qty: number; price: number; name: string; icon: string }>>({ 
@@ -474,7 +479,8 @@ export default function Calculator({ locale }: { locale: string }) {
         setPointCustomMats(prev => prev.map(m => m.id === id ? { ...m, [field]: value } : m));
 
 
-    const addCustomItem = () => setCustomItems(prev => [...prev, { id: crypto.randomUUID(), name: '', qty: 1, price: 0 }]);
+    const addCustomItem = () => setCustomItems(prev => [...prev, { id: crypto.randomUUID(), type: 'unit', name: '', qty: 1, price: 0 }]);
+    const addFixedItem = () => setCustomItems(prev => [...prev, { id: crypto.randomUUID(), type: 'fixed', name: '', price: 0 }]);
     const removeCustomItem = (id: string) => setCustomItems(prev => prev.filter(i => i.id !== id));
     const updateCustomItem = (id: string, field: 'name' | 'qty' | 'price', value: string | number) =>
         setCustomItems(prev => prev.map(i => i.id === id ? { ...i, [field]: value } : i));
@@ -485,7 +491,7 @@ export default function Calculator({ locale }: { locale: string }) {
         const totalCableLength = points * avgLength;
 
         // 2. Кабель
-        const cablePricePerMeter = CONFIG.cablePrices[cableType];
+        const cablePricePerMeter = cableType === 'none' ? 0 : CONFIG.cablePrices[cableType as keyof typeof CONFIG.cablePrices];
         const cableCost = totalCableLength * cablePricePerMeter;
 
         // 3. Работа с коэффициентами
@@ -569,7 +575,10 @@ export default function Calculator({ locale }: { locale: string }) {
         }
 
         // 8b. Custom items
-        const customItemsCost = customItems.reduce((sum, item) => sum + (item.qty || 0) * (item.price || 0), 0);
+        const customItemsCost = customItems.reduce((sum, item) => {
+            if (item.type === 'fixed') return sum + (item.price || 0);
+            return sum + (item.qty || 0) * (item.price || 0);
+        }, 0);
 
         // 9. СУММА до скидки и срочности
         const subtotal = cableCost + routingCost + laborCost + trenchCost + canetaCost + materialsCost + additionalMaterialsCost + equipmentCost + rackCost + upsellCost + customItemsCost;
@@ -1084,17 +1093,22 @@ export default function Calculator({ locale }: { locale: string }) {
 
                 {/* Custom Line Items */}
                 <div className="card p-6">
-                    <div className="flex items-center justify-between mb-2">
+                    <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-2 gap-2">
                         <h3 className="font-heading font-semibold text-white flex items-center gap-2">📝 {(l as Record<string,string>).customItems}</h3>
-                        <button onClick={addCustomItem} className="text-xs px-3 py-1.5 rounded-lg border border-brand-gold/40 text-brand-gold hover:bg-[rgba(201,168,76,0.1)] transition-colors">
-                            {(l as Record<string,string>).addCustomItem}
-                        </button>
+                        <div className="flex items-center gap-2">
+                            <button onClick={addCustomItem} className="text-xs px-3 py-1.5 rounded-lg border border-brand-gold/40 text-brand-gold hover:bg-[rgba(201,168,76,0.1)] transition-colors">
+                                {(l as Record<string,string>).addCustomItem}
+                            </button>
+                            <button onClick={addFixedItem} className="text-xs px-3 py-1.5 rounded-lg border border-cyan-400/40 text-cyan-400 hover:bg-cyan-400/10 transition-colors">
+                                {(l as Record<string,string>).addFixedItem}
+                            </button>
+                        </div>
                     </div>
                     <p className="text-xs text-brand-gold-muted mb-4">{(l as Record<string,string>).customItemsHint}</p>
 
                     {customItems.length === 0 ? (
                         <div className="text-center py-6 text-brand-gold-muted text-xs border border-dashed border-border-subtle rounded-lg">
-                            {(l as Record<string,string>).addCustomItem}
+                            {(l as Record<string,string>).addCustomItem} / {(l as Record<string,string>).addFixedItem}
                         </div>
                     ) : (
                         <div className="space-y-2">
@@ -1102,11 +1116,11 @@ export default function Calculator({ locale }: { locale: string }) {
                             <div className="grid grid-cols-[1fr_64px_80px_32px] gap-2 text-xs text-brand-gold-muted px-1">
                                 <span>{(l as Record<string,string>).customItemName}</span>
                                 <span className="text-center">{(l as Record<string,string>).customItemQty}</span>
-                                <span className="text-right">{(l as Record<string,string>).customItemPrice}</span>
+                                <span className="text-right">Precio/Total</span>
                                 <span />
                             </div>
                             {customItems.map((item) => {
-                                const lineTotal = (item.qty || 0) * (item.price || 0);
+                                const isFixed = item.type === 'fixed';
                                 return (
                                 <div key={item.id} className="grid grid-cols-[1fr_64px_80px_32px] gap-2 items-center bg-surface-card border border-border-subtle rounded-lg px-3 py-2">
                                     <input
@@ -1116,13 +1130,17 @@ export default function Calculator({ locale }: { locale: string }) {
                                         onChange={(e) => updateCustomItem(item.id, 'name', e.target.value)}
                                         className="bg-transparent text-sm text-white placeholder-gray-600 focus:outline-none w-full"
                                     />
-                                    <input
-                                        type="number"
-                                        value={item.qty}
-                                        min={1}
-                                        onChange={(e) => updateCustomItem(item.id, 'qty', Number(e.target.value))}
-                                        className="w-full text-center text-sm bg-brand-dark border border-border-subtle rounded px-1 py-0.5 text-brand-gold focus:outline-none focus:border-brand-gold/50"
-                                    />
+                                    {isFixed ? (
+                                        <div className="text-center text-xs text-brand-gold-muted bg-brand-dark border border-border-subtle/50 rounded px-1 py-0.5 opacity-50 cursor-not-allowed">—</div>
+                                    ) : (
+                                        <input
+                                            type="number"
+                                            value={item.qty}
+                                            min={1}
+                                            onChange={(e) => updateCustomItem(item.id, 'qty', Number(e.target.value))}
+                                            className="w-full text-center text-sm bg-brand-dark border border-border-subtle rounded px-1 py-0.5 text-brand-gold focus:outline-none focus:border-brand-gold/50"
+                                        />
+                                    )}
                                     <div className="flex items-center gap-1">
                                         <input
                                             type="number"
@@ -1130,7 +1148,8 @@ export default function Calculator({ locale }: { locale: string }) {
                                             min={0}
                                             step={0.01}
                                             onChange={(e) => updateCustomItem(item.id, 'price', Number(e.target.value))}
-                                            className="w-full text-right text-sm bg-brand-dark border border-border-subtle rounded px-1 py-0.5 text-brand-gold focus:outline-none focus:border-brand-gold/50"
+                                            className={`w-full text-right text-sm bg-brand-dark border border-border-subtle rounded px-1 py-0.5 focus:outline-none ${isFixed ? 'text-cyan-300 focus:border-cyan-400/50' : 'text-brand-gold focus:border-brand-gold/50'}`}
+                                            placeholder={isFixed ? (l as Record<string,string>).customItemTotal : (l as Record<string,string>).customItemPrice}
                                         />
                                         <span className="text-xs text-brand-gold-muted flex-shrink-0">€</span>
                                     </div>
@@ -1142,7 +1161,10 @@ export default function Calculator({ locale }: { locale: string }) {
                             {customItems.length > 0 && (
                                 <div className="flex justify-end pt-1">
                                     <span className="text-xs text-brand-gold font-semibold">
-                                        Total: {customItems.reduce((s, i) => s + (i.qty||0)*(i.price||0), 0).toFixed(2)}€
+                                        Total: {customItems.reduce((s, i) => {
+                                            if (i.type === 'fixed') return s + (i.price || 0);
+                                            return s + (i.qty || 0) * (i.price || 0);
+                                        }, 0).toFixed(2)}€
                                     </span>
                                 </div>
                             )}

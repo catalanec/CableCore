@@ -51,6 +51,7 @@ const FIBER_CABLE_TYPES = [
     { id: 'sm_12f' as const, name: 'Monomodo 12F', desc: 'SM multi-hilo', price: FIBER_CONFIG.cablePrices.sm_12f },
     { id: 'mm_om3' as const, name: 'Multimodo OM3', desc: '10Gb hasta 300m', price: FIBER_CONFIG.cablePrices.mm_om3 },
     { id: 'mm_om4' as const, name: 'Multimodo OM4', desc: '10Gb hasta 550m', price: FIBER_CONFIG.cablePrices.mm_om4 },
+    { id: 'none' as const, name: 'Ninguno', desc: 'Sin cable', price: 0 },
 ];
 
 const FIBER_INSTALL_TYPES = [
@@ -153,7 +154,9 @@ const fiberLabels: Record<string, Record<string, string>> = {
         customItemName: 'Descripción',
         customItemQty: 'Cant.',
         customItemPrice: 'Precio/ud.',
-        addCustomItem: '➕ Añadir partida',
+        customItemTotal: 'Total',
+        addCustomItem: '➕ Añadir por unidad',
+        addFixedItem: '➕ Añadir partida global (sin cálculo)',
     },
     en: {
         title: 'Fiber Optic Calculator',
@@ -227,7 +230,9 @@ const fiberLabels: Record<string, Record<string, string>> = {
         customItemName: 'Description',
         customItemQty: 'Qty.',
         customItemPrice: 'Price/unit',
-        addCustomItem: '➕ Add item',
+        customItemTotal: 'Total',
+        addCustomItem: '➕ Add per unit',
+        addFixedItem: '➕ Add fixed item (no calc)',
     },
     ru: {
         title: 'Калькулятор оптоволокна',
@@ -301,7 +306,9 @@ const fiberLabels: Record<string, Record<string, string>> = {
         customItemName: 'Описание',
         customItemQty: 'Кол-во',
         customItemPrice: 'Цена/шт',
+        customItemTotal: 'Сумма',
         addCustomItem: '➕ Добавить',
+        addFixedItem: '➕ Добавить общую позицию (без расчетов)',
     },
 };
 
@@ -348,27 +355,28 @@ export default function FiberCalculator({ locale, onCalcUpdate }: FiberCalculato
     const l = fiberLabels[locale] || fiberLabels.es;
 
     // State
-    const [cableType, setCableType] = useState<keyof typeof FIBER_CONFIG.cablePrices>('sm_2f');
-    const [points, setPoints] = useState(4);
-    const [avgLength, setAvgLength] = useState(20);
+    const [cableType, setCableType] = useState<keyof typeof FIBER_CONFIG.cablePrices | 'none'>('sm_2f');
+    const [points, setPoints] = useState(0);
+    const [avgLength, setAvgLength] = useState(0);
     const [installType, setInstallType] = useState<keyof typeof FIBER_CONFIG.installationMultiplier>('ceiling');
-    const [fusionCount, setFusionCount] = useState(8); // default: points × 2 fibras
+    const [fusionCount, setFusionCount] = useState(0); // default: points × 2 fibras
     const [doCertification, setDoCertification] = useState(false);
-    const [patchCordCount, setPatchCordCount] = useState(4);
-    const [acopladorCount, setAcopladorCount] = useState(4);
-    const [bandeja, setBandeja] = useState<'none' | 'bandeja12' | 'bandeja24'>('bandeja12');
-    const [rack, setRack] = useState('caja_mural_8f');
+    const [patchCordCount, setPatchCordCount] = useState(0);
+    const [acopladorCount, setAcopladorCount] = useState(0);
+    const [bandeja, setBandeja] = useState<'none' | 'bandeja12' | 'bandeja24'>('none');
+    const [rack, setRack] = useState('none');
     const [urgency, setUrgency] = useState('normal');
 
-    const [customItems, setCustomItems] = useState<Array<{ id: string; name: string; qty: number; price: number }>>([]);
-    const addCustomItem = () => setCustomItems(prev => [...prev, { id: crypto.randomUUID(), name: '', qty: 1, price: 0 }]);
+    const [customItems, setCustomItems] = useState<Array<{ id: string; type: 'unit' | 'fixed'; name: string; qty?: number; price: number }>>([]);
+    const addCustomItem = () => setCustomItems(prev => [...prev, { id: crypto.randomUUID(), type: 'unit', name: '', qty: 1, price: 0 }]);
+    const addFixedItem = () => setCustomItems(prev => [...prev, { id: crypto.randomUUID(), type: 'fixed', name: '', price: 0 }]);
     const removeCustomItem = (id: string) => setCustomItems(prev => prev.filter(i => i.id !== id));
     const updateCustomItem = (id: string, field: 'name' | 'qty' | 'price', value: string | number) =>
         setCustomItems(prev => prev.map(i => i.id === id ? { ...i, [field]: value } : i));
 
     const calc = useMemo(() => {
         const totalCableLength = points * avgLength;
-        const cablePrice = FIBER_CONFIG.cablePrices[cableType];
+        const cablePrice = cableType === 'none' ? 0 : FIBER_CONFIG.cablePrices[cableType as keyof typeof FIBER_CONFIG.cablePrices];
         const cableCost = totalCableLength * cablePrice;
 
         const installMult = FIBER_CONFIG.installationMultiplier[installType];
@@ -389,7 +397,10 @@ export default function FiberCalculator({ locale, onCalcUpdate }: FiberCalculato
         const rackOption = FIBER_RACK_OPTIONS.find(r => r.id === rack) || FIBER_RACK_OPTIONS[0];
         const rackCost = rackOption.price;
 
-        const customItemsCost = customItems.reduce((sum, item) => sum + (item.qty || 0) * (item.price || 0), 0);
+        const customItemsCost = customItems.reduce((sum, item) => {
+            if (item.type === 'fixed') return sum + (item.price || 0);
+            return sum + (item.qty || 0) * (item.price || 0);
+        }, 0);
 
         const subtotal = cableCost + routingCost + laborCost + fusionCost + certificationCost + rosetaCost + patchCordCost + acopladorCost + bandejaCost + rackCost + customItemsCost;
 
@@ -628,13 +639,25 @@ export default function FiberCalculator({ locale, onCalcUpdate }: FiberCalculato
 
                 {/* Custom Items */}
                 <div className="card p-6 border-cyan-400/10">
-                    <h3 className="font-heading font-semibold text-white mb-2 flex items-center gap-2">
-                        ✍️ {l.customItems}
-                    </h3>
+                    <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between mb-2 gap-2">
+                        <h3 className="font-heading font-semibold text-white flex items-center gap-2">
+                            ✍️ {l.customItems}
+                        </h3>
+                        <div className="flex items-center gap-2">
+                            <button onClick={addCustomItem} className="text-xs px-3 py-1.5 rounded-lg border border-cyan-300/40 text-cyan-300 hover:bg-[rgba(0,180,255,0.1)] transition-colors">
+                                {l.addCustomItem}
+                            </button>
+                            <button onClick={addFixedItem} className="text-xs px-3 py-1.5 rounded-lg border border-cyan-400/40 text-cyan-400 hover:bg-cyan-400/10 transition-colors">
+                                {l.addFixedItem}
+                            </button>
+                        </div>
+                    </div>
                     <p className="text-xs text-brand-gold-muted mb-4">{l.customItemsHint}</p>
                     
                     <div className="space-y-3">
-                        {customItems.map((item) => (
+                        {customItems.map((item) => {
+                            const isFixed = item.type === 'fixed';
+                            return (
                             <div key={item.id} className="flex flex-col sm:flex-row gap-3 items-start sm:items-center bg-background/50 p-3 rounded-lg border border-border-subtle">
                                 <input
                                     type="text"
@@ -644,14 +667,18 @@ export default function FiberCalculator({ locale, onCalcUpdate }: FiberCalculato
                                     className="flex-1 bg-surface-card border-none outline-none text-sm text-white px-3 py-2 rounded"
                                 />
                                 <div className="flex items-center gap-2 w-full sm:w-auto">
-                                    <input
-                                        type="number"
-                                        min="0"
-                                        value={item.qty || ''}
-                                        onChange={(e) => updateCustomItem(item.id, 'qty', Number(e.target.value))}
-                                        placeholder={l.customItemQty}
-                                        className="w-20 bg-surface-card border-none outline-none text-sm text-white px-3 py-2 rounded text-center"
-                                    />
+                                    {isFixed ? (
+                                        <div className="w-20 bg-surface-card border-none text-sm text-brand-gold-muted px-3 py-2 rounded text-center opacity-50 cursor-not-allowed">—</div>
+                                    ) : (
+                                        <input
+                                            type="number"
+                                            min="0"
+                                            value={item.qty || ''}
+                                            onChange={(e) => updateCustomItem(item.id, 'qty', Number(e.target.value))}
+                                            placeholder={l.customItemQty}
+                                            className="w-20 bg-surface-card border-none outline-none text-sm text-white px-3 py-2 rounded text-center focus:border-cyan-400/50"
+                                        />
+                                    )}
                                     <span className="text-brand-gold-muted text-xs">×</span>
                                     <input
                                         type="number"
@@ -659,8 +686,8 @@ export default function FiberCalculator({ locale, onCalcUpdate }: FiberCalculato
                                         step="0.01"
                                         value={item.price || ''}
                                         onChange={(e) => updateCustomItem(item.id, 'price', Number(e.target.value))}
-                                        placeholder={l.customItemPrice}
-                                        className="w-24 bg-surface-card border-none outline-none text-sm text-white px-3 py-2 rounded text-center"
+                                        placeholder={isFixed ? l.customItemTotal : l.customItemPrice}
+                                        className={`w-24 bg-surface-card border-none outline-none text-sm px-3 py-2 rounded text-center focus:outline-none ${isFixed ? 'text-cyan-300 focus:border-cyan-400/50' : 'text-white focus:border-white/50'}`}
                                     />
                                     <span className="text-brand-gold-muted text-xs">€</span>
                                     <button
@@ -671,13 +698,7 @@ export default function FiberCalculator({ locale, onCalcUpdate }: FiberCalculato
                                     </button>
                                 </div>
                             </div>
-                        ))}
-                        <button
-                            onClick={addCustomItem}
-                            className="text-sm text-cyan-300 hover:text-cyan-200 transition-colors uppercase font-bold tracking-wider pt-2 flex items-center gap-2"
-                        >
-                            {l.addCustomItem}
-                        </button>
+                        )})}
                     </div>
                 </div>
             </div>
