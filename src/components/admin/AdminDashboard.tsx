@@ -46,7 +46,7 @@ export default function AdminDashboard({ initialQuotes, initialLeads, initialMat
     const [editMaterial, setEditMaterial] = useState<any>(null);
     const [showInvoiceModal, setShowInvoiceModal] = useState(false);
     const [isFacturando, setIsFacturando] = useState(false);
-    const [invoiceData, setInvoiceData] = useState({ razonSocial: '', cif: '', address: '', email: '', phone: '', signatureEmisor: 'Anton Shapoval', signatureClient: '' });
+    const [invoiceData, setInvoiceData] = useState({ razonSocial: '', cif: '', address: '', email: '', phone: '', signatureEmisor: 'Anton Shapoval', signatureClient: '', refAdicional: '' });
     const [invoiceItems, setInvoiceItems] = useState<Array<{description: string; quantity: string; unitPrice: string}>>([]);
     const [currentQuoteId, setCurrentQuoteId] = useState<string | null>(null);
 
@@ -1863,6 +1863,10 @@ export default function AdminDashboard({ initialQuotes, initialLeads, initialMat
                                 <label className="text-xs text-brand-gold-muted uppercase block mb-1">Firmante (Cliente) *</label>
                                 <input type="text" value={invoiceData.signatureClient} onChange={e => setInvoiceData({...invoiceData, signatureClient: e.target.value})} className="w-full bg-brand-dark rounded-lg p-2.5 text-white border border-border-subtle text-sm" />
                             </div>
+                            <div className="col-span-2">
+                                <label className="text-xs text-brand-gold-muted uppercase block mb-1">Ref. adicional cliente</label>
+                                <input type="text" value={invoiceData.refAdicional} onChange={e => setInvoiceData({...invoiceData, refAdicional: e.target.value})} placeholder="Ej: PO-2026-001, Obra Diagonal 47..." className="w-full bg-brand-dark rounded-lg p-2.5 text-white border border-border-subtle text-sm placeholder:text-white/20" />
+                            </div>
                         </div>
 
                         {/* Line items editor */}
@@ -1992,7 +1996,8 @@ export default function AdminDashboard({ initialQuotes, initialLeads, initialMat
                                             total: computedTotal.toFixed(2) + '€',
                                             notes: 'Pago realizable mediante transferencia bancaria.\nGracias por su confianza.',
                                             signatureEmisor: invoiceData.signatureEmisor,
-                                            signatureClient: invoiceData.signatureClient
+                                            signatureClient: invoiceData.signatureClient,
+                                            refAdicional: invoiceData.refAdicional || undefined,
                                         };
                                         downloadInvoicePDF(pdfData);
                                         // Update local invoices list so Facturas tab shows it immediately
