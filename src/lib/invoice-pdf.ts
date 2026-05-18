@@ -26,6 +26,7 @@ export interface InvoicePDFData {
     notes?: string;
     signatureEmisor?: string;
     signatureClient?: string;
+    refAdicional?: string;
 }
 
 // Ensure the invoice number is padded with zeros (e.g., 21 -> 00021)
@@ -89,6 +90,7 @@ export function generateInvoiceHTML(data: InvoicePDFData): string {
         <div>Nº ${formattedInvoiceNum}</div>
         <div>Fecha: ${data.date}</div>
         <div style="color: #c0392b; font-weight: 600;">Vencimiento: ${dueDateStr}</div>
+        ${data.refAdicional ? `<div style="color: #555; font-size: 10px; margin-top: 4px;">Ref. adicional cliente: <strong>${data.refAdicional}</strong></div>` : ''}
       </div>
     </div>
 
