@@ -1,5 +1,202 @@
 [
   {
+    "slug": "poe-para-camaras-seguridad-ip",
+    "date": "2026-05-22",
+    "readTime": "7 min",
+    "es": {
+      "title": "PoE+ para Cámaras de Seguridad e IP: Eficiencia y Conectividad",
+      "metaTitle": "PoE+ para Cámaras de Seguridad e IP | CableCore",
+      "metaDescription": "Descubre cómo PoE+ optimiza la instalación de cámaras de seguridad e IP, mejorando la eficiencia energética y la conectividad en tu red.",
+      "excerpt": "La tecnología PoE+ (Power over Ethernet) transforma la forma en que se instalan y gestionan las cámaras de seguridad e IP, ofreciendo soluciones eficientes y rentables.",
+      "category": "Guías",
+      "tags": [
+        "redes"
+      ],
+      "content": [
+        {
+          "type": "h2",
+          "text": "¿Qué es PoE+?"
+        },
+        {
+          "type": "p",
+          "text": "Power over Ethernet (PoE) permite la transmisión de energía eléctrica y datos a través de un solo cable de red. PoE+ es una versión mejorada que proporciona hasta 30 vatios por puerto, ideal para dispositivos que requieren más energía, como cámaras de seguridad IP."
+        },
+        {
+          "type": "h2",
+          "text": "Ventajas de PoE+ para cámaras de seguridad"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Instalación simplificada: reduce la necesidad de cables eléctricos adicionales.",
+            "Flexibilidad en la ubicación: permite instalar cámaras en lugares sin toma de corriente.",
+            "Reducción de costos: minimiza el gasto en materiales y mano de obra."
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "Consideraciones al implementar PoE+"
+        },
+        {
+          "type": "p",
+          "text": "Al implementar PoE+, es crucial considerar la capacidad de tu infraestructura de red. Asegúrate de que los switches y dispositivos sean compatibles con PoE+ para evitar problemas de sobrecarga. Además, evalúa la longitud del cableado, ya que la distancia máxima recomendada es de 100 metros."
+        },
+        {
+          "type": "tip",
+          "text": "💡 Asegúrate de realizar un análisis de carga para determinar cuántas cámaras puedes instalar por puerto sin exceder el límite de potencia."
+        },
+        {
+          "type": "h2",
+          "text": "Mejores prácticas para la instalación de cámaras PoE+"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Utiliza cables de categoría 5e o superior para asegurar la transmisión adecuada de datos y energía.",
+            "Implementa un sistema de gestión de red para monitorear el rendimiento y la carga de dispositivos.",
+            "Realiza pruebas de certificación en el cableado para garantizar su correcto funcionamiento."
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "Conclusión"
+        },
+        {
+          "type": "p",
+          "text": "PoE+ es una solución eficiente y rentable para la instalación de cámaras de seguridad e IP. Al adoptar esta tecnología, no solo optimizas la instalación, sino que también garantizas una red más robusta y flexible."
+        }
+      ]
+    },
+    "en": {
+      "title": "PoE+ for Security and IP Cameras: Efficiency and Connectivity",
+      "metaTitle": "PoE+ for Security and IP Cameras | CableCore",
+      "metaDescription": "Discover how PoE+ optimizes the installation of security and IP cameras, enhancing energy efficiency and connectivity in your network.",
+      "excerpt": "PoE+ (Power over Ethernet) technology is transforming the way security and IP cameras are installed and managed, providing efficient and cost-effective solutions.",
+      "category": "Guides",
+      "tags": [
+        "networks"
+      ],
+      "content": [
+        {
+          "type": "h2",
+          "text": "What is PoE+?"
+        },
+        {
+          "type": "p",
+          "text": "Power over Ethernet (PoE) allows electrical power and data to be transmitted over a single network cable. PoE+ is an enhanced version that provides up to 30 watts per port, ideal for devices that require more power, such as IP security cameras."
+        },
+        {
+          "type": "h2",
+          "text": "Advantages of PoE+ for Security Cameras"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Simplified installation: reduces the need for additional electrical cabling.",
+            "Flexibility in location: allows cameras to be installed in areas without power outlets.",
+            "Cost reduction: minimizes expenditure on materials and labor."
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "Considerations When Implementing PoE+"
+        },
+        {
+          "type": "p",
+          "text": "When implementing PoE+, it is crucial to consider the capacity of your network infrastructure. Ensure that your switches and devices are PoE+ compatible to avoid overload issues. Additionally, evaluate the length of the cabling, as the maximum recommended distance is 100 meters."
+        },
+        {
+          "type": "tip",
+          "text": "💡 Make sure to conduct a load analysis to determine how many cameras you can install per port without exceeding the power limit."
+        },
+        {
+          "type": "h2",
+          "text": "Best Practices for PoE+ Camera Installation"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Use category 5e or higher cables to ensure proper data and power transmission.",
+            "Implement a network management system to monitor device performance and load.",
+            "Conduct certification tests on the cabling to ensure its proper functioning."
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "Conclusion"
+        },
+        {
+          "type": "p",
+          "text": "PoE+ is an efficient and cost-effective solution for the installation of security and IP cameras. By adopting this technology, you not only optimize the installation but also ensure a more robust and flexible network."
+        }
+      ]
+    },
+    "ru": {
+      "title": "PoE+ для камер безопасности и IP: эффективность и подключение",
+      "metaTitle": "PoE+ для камер безопасности и IP | CableCore",
+      "metaDescription": "Узнайте, как PoE+ оптимизирует установку камер безопасности и IP, повышая энергетическую эффективность и подключение вашей сети.",
+      "excerpt": "Технология PoE+ (Power over Ethernet) меняет подход к установке и управлению камерами безопасности и IP, предлагая эффективные и экономически выгодные решения.",
+      "category": "Руководства",
+      "tags": [
+        "сети"
+      ],
+      "content": [
+        {
+          "type": "h2",
+          "text": "Что такое PoE+?"
+        },
+        {
+          "type": "p",
+          "text": "Power over Ethernet (PoE) позволяет передавать электрическую энергию и данные по одному сетевому кабелю. PoE+ — это улучшенная версия, которая обеспечивает до 30 ватт на порт, что идеально подходит для устройств, требующих большего количества энергии, таких как IP-камеры безопасности."
+        },
+        {
+          "type": "h2",
+          "text": "Преимущества PoE+ для камер безопасности"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Упрощенная установка: сокращает необходимость в дополнительных электрических кабелях.",
+            "Гибкость в размещении: позволяет устанавливать камеры в местах без электрических розеток.",
+            "Снижение затрат: минимизирует расходы на материалы и труд."
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "Учет при внедрении PoE+"
+        },
+        {
+          "type": "p",
+          "text": "При внедрении PoE+ важно учитывать мощность вашей сетевой инфраструктуры. Убедитесь, что ваши коммутаторы и устройства совместимы с PoE+, чтобы избежать проблем с перегрузкой. Кроме того, оцените длину кабеля, так как максимальная рекомендованная длина составляет 100 метров."
+        },
+        {
+          "type": "tip",
+          "text": "💡 Обязательно проведите анализ нагрузки, чтобы определить, сколько камер вы можете установить на порт, не превышая лимит мощности."
+        },
+        {
+          "type": "h2",
+          "text": "Лучшие практики установки камер PoE+"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Используйте кабели категории 5e или выше для обеспечения надлежащей передачи данных и энергии.",
+            "Внедрите систему управления сетью для мониторинга производительности и нагрузки устройств.",
+            "Проводите сертификационные тесты на кабелях, чтобы убедиться в их правильной работе."
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "Заключение"
+        },
+        {
+          "type": "p",
+          "text": "PoE+ — это эффективное и экономически выгодное решение для установки камер безопасности и IP. Применяя эту технологию, вы не только оптимизируете установку, но и обеспечиваете более надежную и гибкую сеть."
+        }
+      ]
+    }
+  },
+  {
     "slug": "cableado-estructurado-en-naves-industriales-consideraciones",
     "date": "2026-05-15",
     "readTime": "6 min",
