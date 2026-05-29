@@ -1,5 +1,175 @@
 [
   {
+    "slug": "ventajas-cableado-fibra-optica",
+    "date": "2026-05-29",
+    "readTime": "7 min",
+    "es": {
+      "title": "Ventajas del Cableado de Fibra Óptica en Redes Modernas",
+      "metaTitle": "Ventajas del Cableado de Fibra Óptica | CableCore Barcelona",
+      "metaDescription": "Descubre las ventajas del cableado de fibra óptica en redes modernas. Mejora la velocidad, la seguridad y la eficiencia de tu red con CableCore en Barcelona.",
+      "excerpt": "El cableado de fibra óptica se está convirtiendo en la opción preferida para las redes modernas. En este artículo, exploramos sus ventajas y por qué deberías considerar esta tecnología para tu empresa.",
+      "category": "Guías",
+      "tags": [
+        "redes",
+        "fibra óptica"
+      ],
+      "content": [
+        {
+          "type": "h2",
+          "text": "¿Qué es el Cableado de Fibra Óptica?"
+        },
+        {
+          "type": "p",
+          "text": "El cableado de fibra óptica utiliza filamentos de vidrio o plástico para transmitir datos a través de pulsos de luz. Esta tecnología permite una mayor velocidad y capacidad de transmisión en comparación con los cables de cobre tradicionales."
+        },
+        {
+          "type": "h2",
+          "text": "Ventajas del Cableado de Fibra Óptica"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Alta velocidad de transmisión",
+            "Mayor ancho de banda",
+            "Menor interferencia electromagnética",
+            "Mayor distancia de transmisión sin pérdida de señal",
+            "Mayor seguridad en la transmisión de datos"
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "Aplicaciones del Cableado de Fibra Óptica"
+        },
+        {
+          "type": "p",
+          "text": "El cableado de fibra óptica es ideal para diversas aplicaciones, incluyendo redes de área local (LAN), conexiones a Internet de alta velocidad, y sistemas de comunicación empresarial."
+        },
+        {
+          "type": "tip",
+          "text": "💡 Considera la instalación de fibra óptica si tu empresa requiere alta velocidad y seguridad en la transferencia de datos."
+        },
+        {
+          "type": "h2",
+          "text": "Conclusión"
+        },
+        {
+          "type": "p",
+          "text": "Invertir en cableado de fibra óptica es una decisión estratégica para cualquier empresa que busque mejorar su infraestructura de red. Con CableCore, tienes la garantía de una instalación profesional y eficiente en Barcelona."
+        }
+      ]
+    },
+    "en": {
+      "title": "Advantages of Fiber Optic Cabling in Modern Networks",
+      "metaTitle": "Advantages of Fiber Optic Cabling | CableCore Barcelona",
+      "metaDescription": "Discover the advantages of fiber optic cabling in modern networks. Enhance your network's speed, security, and efficiency with CableCore in Barcelona.",
+      "excerpt": "Fiber optic cabling is becoming the preferred choice for modern networks. In this article, we explore its advantages and why you should consider this technology for your business.",
+      "category": "Guides",
+      "tags": [
+        "networks",
+        "fiber optic"
+      ],
+      "content": [
+        {
+          "type": "h2",
+          "text": "What is Fiber Optic Cabling?"
+        },
+        {
+          "type": "p",
+          "text": "Fiber optic cabling uses glass or plastic filaments to transmit data through pulses of light. This technology allows for higher speed and transmission capacity compared to traditional copper cables."
+        },
+        {
+          "type": "h2",
+          "text": "Advantages of Fiber Optic Cabling"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "High transmission speed",
+            "Greater bandwidth",
+            "Less electromagnetic interference",
+            "Longer transmission distance without signal loss",
+            "Increased data transmission security"
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "Applications of Fiber Optic Cabling"
+        },
+        {
+          "type": "p",
+          "text": "Fiber optic cabling is ideal for various applications, including local area networks (LAN), high-speed Internet connections, and business communication systems."
+        },
+        {
+          "type": "tip",
+          "text": "💡 Consider installing fiber optics if your business requires high speed and security in data transfer."
+        },
+        {
+          "type": "h2",
+          "text": "Conclusion"
+        },
+        {
+          "type": "p",
+          "text": "Investing in fiber optic cabling is a strategic decision for any business looking to improve its network infrastructure. With CableCore, you are guaranteed professional and efficient installation in Barcelona."
+        }
+      ]
+    },
+    "ru": {
+      "title": "Преимущества оптоволоконного кабелирования в современных сетях",
+      "metaTitle": "Преимущества оптоволоконного кабелирования | CableCore Barcelona",
+      "metaDescription": "Узнайте о преимуществах оптоволоконного кабелирования в современных сетях. Улучшите скорость, безопасность и эффективность вашей сети с CableCore в Барселоне.",
+      "excerpt": "Оптоволоконное кабелирование становится предпочтительным выбором для современных сетей. В этой статье мы исследуем его преимущества и почему вам стоит рассмотреть эту технологию для вашего бизнеса.",
+      "category": "Руководства",
+      "tags": [
+        "сети",
+        "оптоволокно"
+      ],
+      "content": [
+        {
+          "type": "h2",
+          "text": "Что такое оптоволоконное кабелирование?"
+        },
+        {
+          "type": "p",
+          "text": "Оптоволоконное кабелирование использует стеклянные или пластиковые волокна для передачи данных с помощью импульсов света. Эта технология обеспечивает более высокую скорость и пропускную способность по сравнению с традиционными медными кабелями."
+        },
+        {
+          "type": "h2",
+          "text": "Преимущества оптоволоконного кабелирования"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Высокая скорость передачи",
+            "Большая пропускная способность",
+            "Меньше электромагнитных помех",
+            "Большее расстояние передачи без потери сигнала",
+            "Повышенная безопасность передачи данных"
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "Применение оптоволоконного кабелирования"
+        },
+        {
+          "type": "p",
+          "text": "Оптоволоконное кабелирование идеально подходит для различных приложений, включая локальные сети (LAN), высокоскоростные интернет-соединения и бизнес-коммуникационные системы."
+        },
+        {
+          "type": "tip",
+          "text": "💡 Рассмотрите возможность установки оптоволокна, если вашему бизнесу требуется высокая скорость и безопасность передачи данных."
+        },
+        {
+          "type": "h2",
+          "text": "Заключение"
+        },
+        {
+          "type": "p",
+          "text": "Инвестиции в оптоволоконное кабелирование — это стратегическое решение для любого бизнеса, стремящегося улучшить свою сетевую инфраструктуру. С CableCore вы получаете гарантии профессиональной и эффективной установки в Барселоне."
+        }
+      ]
+    }
+  },
+  {
     "slug": "poe-para-camaras-seguridad-ip",
     "date": "2026-05-22",
     "readTime": "7 min",
