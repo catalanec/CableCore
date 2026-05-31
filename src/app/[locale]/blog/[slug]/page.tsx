@@ -30,6 +30,16 @@ export function generateMetadata({ params }: { params: { slug: string; locale: s
                 'x-default': `${BASE_URL}/es/blog/${article.slug}`,
             },
         },
+        openGraph: {
+            title: article.metaTitle,
+            description: article.metaDescription,
+            url: `${BASE_URL}/${params.locale}/blog/${article.slug}`,
+            siteName: 'CableCore',
+            locale: params.locale === 'ru' ? 'ru_RU' : params.locale === 'en' ? 'en_US' : 'es_ES',
+            type: 'article',
+            publishedTime: article.date,
+            section: article.category,
+        },
     };
 }
 
