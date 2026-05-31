@@ -17,6 +17,20 @@ const nextConfig = {
     experimental: {
         workerThreads: false,
     },
+    async redirects() {
+        return [
+            {
+                source: '/servicios/:slug',
+                destination: '/es/servicios/:slug',
+                permanent: true,
+            },
+            {
+                source: '/blog/:slug',
+                destination: '/es/blog/:slug',
+                permanent: true,
+            },
+        ];
+    },
 };
 
 export default withNextIntl(nextConfig);
