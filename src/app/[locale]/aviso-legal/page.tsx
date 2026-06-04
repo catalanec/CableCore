@@ -1,5 +1,23 @@
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
+import type { Metadata } from 'next';
+
+const BASE_URL = 'https://cablecore.es';
+
+export function generateMetadata({ params }: { params: { locale: string } }): Metadata {
+    return {
+        title: 'Aviso Legal | CableCore',
+        description: 'Aviso legal y condiciones de uso del sitio web de CableCore, empresa de instalación de redes en Barcelona.',
+        robots: { index: params.locale === 'es', follow: true },
+        alternates: {
+            canonical: `${BASE_URL}/es/aviso-legal`,
+            languages: {
+                'es': `${BASE_URL}/es/aviso-legal`,
+                'x-default': `${BASE_URL}/es/aviso-legal`,
+            },
+        },
+    };
+}
 
 export default function AvisoLegalPage() {
     return (

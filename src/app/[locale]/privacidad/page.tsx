@@ -1,5 +1,23 @@
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
+import type { Metadata } from 'next';
+
+const BASE_URL = 'https://cablecore.es';
+
+export function generateMetadata({ params }: { params: { locale: string } }): Metadata {
+    return {
+        title: 'Política de Privacidad | CableCore',
+        description: 'Política de privacidad y protección de datos de CableCore, empresa de instalación de redes en Barcelona.',
+        robots: { index: params.locale === 'es', follow: true },
+        alternates: {
+            canonical: `${BASE_URL}/es/privacidad`,
+            languages: {
+                'es': `${BASE_URL}/es/privacidad`,
+                'x-default': `${BASE_URL}/es/privacidad`,
+            },
+        },
+    };
+}
 
 export default function PrivacidadPage() {
     return (
