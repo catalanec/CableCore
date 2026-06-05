@@ -1,5 +1,196 @@
 [
   {
+    "slug": "mejores-practicas-cableado-estructurado",
+    "date": "2026-06-05",
+    "readTime": "8 min",
+    "es": {
+      "title": "Mejores Prácticas en Cableado Estructurado",
+      "metaTitle": "Mejores Prácticas en Cableado Estructurado - CableCore Barcelona",
+      "metaDescription": "Descubre las mejores prácticas en cableado estructurado para optimizar tu red en Barcelona. Aumenta la eficiencia y confiabilidad de tus conexiones.",
+      "excerpt": "Aprende sobre las mejores prácticas en cableado estructurado para garantizar una red eficiente y fiable en tu empresa.",
+      "category": "Guías",
+      "tags": [
+        "redes"
+      ],
+      "content": [
+        {
+          "type": "h2",
+          "text": "¿Qué es el Cableado Estructurado?"
+        },
+        {
+          "type": "p",
+          "text": "El cableado estructurado es un sistema de cables y componentes de telecomunicaciones que proporciona una infraestructura de red eficiente y flexible. Se utiliza para transmitir datos, voz y video en entornos empresariales."
+        },
+        {
+          "type": "h2",
+          "text": "Importancia de las Mejores Prácticas"
+        },
+        {
+          "type": "p",
+          "text": "Implementar las mejores prácticas en cableado estructurado es vital para asegurar que la red funcione de manera óptima. Esto incluye la selección de materiales, la instalación adecuada y el mantenimiento continuo."
+        },
+        {
+          "type": "h2",
+          "text": "Principales Consideraciones"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Utilizar cables de calidad",
+            "Planificación del diseño de la red",
+            "Evitar interferencias electromagnéticas",
+            "Mantenimiento regular del sistema",
+            "Documentar la instalación"
+          ]
+        },
+        {
+          "type": "tip",
+          "text": "💡 Asegúrate de etiquetar todos los cables para facilitar el mantenimiento y la identificación."
+        },
+        {
+          "type": "h2",
+          "text": "Normativas a Seguir"
+        },
+        {
+          "type": "p",
+          "text": "Es crucial seguir normativas como ANSI/TIA-568 y ISO/IEC 11801 para garantizar la calidad y confiabilidad del cableado estructurado."
+        },
+        {
+          "type": "h2",
+          "text": "Conclusión"
+        },
+        {
+          "type": "p",
+          "text": "Adoptar estas mejores prácticas no solo mejora la eficiencia de la red, sino que también reduce costos a largo plazo al minimizar problemas de conectividad."
+        }
+      ]
+    },
+    "en": {
+      "title": "Best Practices in Structured Cabling",
+      "metaTitle": "Best Practices in Structured Cabling - CableCore Barcelona",
+      "metaDescription": "Discover best practices in structured cabling to optimize your network in Barcelona. Increase the efficiency and reliability of your connections.",
+      "excerpt": "Learn about best practices in structured cabling to ensure an efficient and reliable network in your business.",
+      "category": "Guides",
+      "tags": [
+        "networks"
+      ],
+      "content": [
+        {
+          "type": "h2",
+          "text": "What is Structured Cabling?"
+        },
+        {
+          "type": "p",
+          "text": "Structured cabling is a system of cables and telecommunications components that provides an efficient and flexible network infrastructure. It is used for transmitting data, voice, and video in business environments."
+        },
+        {
+          "type": "h2",
+          "text": "Importance of Best Practices"
+        },
+        {
+          "type": "p",
+          "text": "Implementing best practices in structured cabling is vital to ensure that the network operates optimally. This includes material selection, proper installation, and ongoing maintenance."
+        },
+        {
+          "type": "h2",
+          "text": "Key Considerations"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Use quality cables",
+            "Plan the network design",
+            "Avoid electromagnetic interference",
+            "Regular system maintenance",
+            "Document the installation"
+          ]
+        },
+        {
+          "type": "tip",
+          "text": "💡 Make sure to label all cables for easier maintenance and identification."
+        },
+        {
+          "type": "h2",
+          "text": "Standards to Follow"
+        },
+        {
+          "type": "p",
+          "text": "It is crucial to follow standards such as ANSI/TIA-568 and ISO/IEC 11801 to ensure the quality and reliability of structured cabling."
+        },
+        {
+          "type": "h2",
+          "text": "Conclusion"
+        },
+        {
+          "type": "p",
+          "text": "Adopting these best practices not only improves network efficiency but also reduces long-term costs by minimizing connectivity issues."
+        }
+      ]
+    },
+    "ru": {
+      "title": "Лучшие Практики Структурного Кабелирования",
+      "metaTitle": "Лучшие Практики Структурного Кабелирования - CableCore Barcelona",
+      "metaDescription": "Узнайте о лучших практиках структурного кабелирования для оптимизации вашей сети в Барселоне. Увеличьте эффективность и надежность ваших соединений.",
+      "excerpt": "Изучите лучшие практики структурного кабелирования для обеспечения эффективной и надежной сети в вашем бизнесе.",
+      "category": "Руководства",
+      "tags": [
+        "сети"
+      ],
+      "content": [
+        {
+          "type": "h2",
+          "text": "Что такое Структурное Кабелирование?"
+        },
+        {
+          "type": "p",
+          "text": "Структурное кабелирование - это система кабелей и компонентов телекоммуникаций, которая обеспечивает эффективную и гибкую инфраструктуру сети. Она используется для передачи данных, голоса и видео в бизнес-средах."
+        },
+        {
+          "type": "h2",
+          "text": "Важность Лучших Практик"
+        },
+        {
+          "type": "p",
+          "text": "Реализация лучших практик в структурном кабелировании жизненно важна для обеспечения оптимальной работы сети. Это включает в себя выбор материалов, правильную установку и постоянное обслуживание."
+        },
+        {
+          "type": "h2",
+          "text": "Основные Соображения"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Используйте качественные кабели",
+            "Планируйте дизайн сети",
+            "Избегайте электромагнитных помех",
+            "Регулярное обслуживание системы",
+            "Документируйте установку"
+          ]
+        },
+        {
+          "type": "tip",
+          "text": "💡 Обязательно маркируйте все кабели для облегчения обслуживания и идентификации."
+        },
+        {
+          "type": "h2",
+          "text": "Стандарты для Соблюдения"
+        },
+        {
+          "type": "p",
+          "text": "Крайне важно следовать стандартам, таким как ANSI/TIA-568 и ISO/IEC 11801, чтобы гарантировать качество и надежность структурного кабелирования."
+        },
+        {
+          "type": "h2",
+          "text": "Заключение"
+        },
+        {
+          "type": "p",
+          "text": "Применение этих лучших практик не только повышает эффективность сети, но и снижает долгосрочные затраты за счет минимизации проблем с подключением."
+        }
+      ]
+    }
+  },
+  {
     "slug": "ventajas-cableado-fibra-optica",
     "date": "2026-05-29",
     "readTime": "3 min",
