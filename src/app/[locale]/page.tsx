@@ -4,7 +4,7 @@ import { Link } from '@/i18n/routing';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import Image from 'next/image';
-import { generatePageMetadata, getFAQJsonLd, getBreadcrumbJsonLd, BASE_URL } from '@/lib/seo-metadata';
+import { generatePageMetadata, getFAQJsonLd, getBreadcrumbJsonLd, getLocalBusinessJsonLd, BASE_URL } from '@/lib/seo-metadata';
 
 export function generateMetadata({ params }: { params: { locale: string } }): Metadata {
     return generatePageMetadata('home', params.locale, '');
@@ -55,9 +55,15 @@ export default function HomePage() {
         { question: '¿Qué garantía ofrece CableCore en sus instalaciones?', answer: 'Ofrecemos 5 años de garantía en mano de obra en todas nuestras instalaciones de cableado estructurado. Todos nuestros puntos de red se verifican con equipos profesionales.' },
     ]);
 
+    const localBusinessJsonLd = getLocalBusinessJsonLd();
+
     return (
         <>
             <Header />
+            <script
+                type="application/ld+json"
+                dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessJsonLd) }}
+            />
             <script
                 type="application/ld+json"
                 dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}

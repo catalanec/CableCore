@@ -1,7 +1,7 @@
 import type { Metadata } from 'next';
 import { Inter, Outfit } from 'next/font/google';
 import Script from 'next/script';
-import { getLocalBusinessJsonLd, getWebSiteJsonLd } from '@/lib/seo-metadata';
+import { getWebSiteJsonLd } from '@/lib/seo-metadata';
 import WhatsAppButton from '@/components/layout/WhatsAppButton';
 import CookieBanner from '@/components/layout/CookieBanner';
 import './globals.css';
@@ -89,7 +89,6 @@ export default function RootLayout({
 }: {
     children: React.ReactNode;
 }) {
-    const localBusinessJsonLd = getLocalBusinessJsonLd();
     const webSiteJsonLd = getWebSiteJsonLd();
 
     return (
@@ -97,10 +96,6 @@ export default function RootLayout({
             <head>
                 <link rel="icon" type="image/png" href="/favicon.png" />
                 <link rel="apple-touch-icon" href="/favicon.png" />
-                <script
-                    type="application/ld+json"
-                    dangerouslySetInnerHTML={{ __html: JSON.stringify(localBusinessJsonLd) }}
-                />
                 <script
                     type="application/ld+json"
                     dangerouslySetInnerHTML={{ __html: JSON.stringify(webSiteJsonLd) }}
