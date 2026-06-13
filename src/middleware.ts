@@ -34,7 +34,10 @@ export default function middleware(req: NextRequest) {
     const response = intlMiddleware(req);
     // next-intl uses 307 (temporary) — change to 308 (permanent) for SEO
     if (response.status === 307) {
-        return new Response(null, { status: 308, headers: response.headers });
+        const location = response.headers.get('Location');
+        if (location) {
+            return NextResponse.redirect(location, { status: 308 });
+        }
     }
     return response;
 }
