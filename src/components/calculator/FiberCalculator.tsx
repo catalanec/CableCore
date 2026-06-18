@@ -779,7 +779,7 @@ export default function FiberCalculator({ locale, onCalcUpdate }: FiberCalculato
                             `${l.whatsappText} ${points} ${l.whatsappPoints} (${calc.totalCableLength}m ${FIBER_CABLE_TYPES.find(c => c.id === cableType)!.name}). ${l.whatsappType}: ${l[installType]}. ${l.whatsappEstimate}: ${calc.total.toFixed(2)}€`
                         )}`}
                         target="_blank"
-                        rel="noopener"
+                        rel="noopener noreferrer"
                         className="btn-outline w-full justify-center text-sm py-3"
                     >
                         💬 WhatsApp

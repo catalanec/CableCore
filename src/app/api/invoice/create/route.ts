@@ -1,6 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { requireAdminAuth } from '@/lib/api-auth';
 
 export async function POST(request: NextRequest) {
+    const authError = requireAdminAuth(request);
+    if (authError) return authError;
+
     try {
         const data = await request.json();
 

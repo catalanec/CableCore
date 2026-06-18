@@ -1,5 +1,15 @@
 import nodemailer from 'nodemailer';
 
+function esc(s: string | undefined | null): string {
+    if (!s) return '';
+    return String(s)
+        .replace(/&/g, '&amp;')
+        .replace(/</g, '&lt;')
+        .replace(/>/g, '&gt;')
+        .replace(/"/g, '&quot;')
+        .replace(/'/g, '&#039;');
+}
+
 const transporter = nodemailer.createTransport({
     host: process.env.SMTP_HOST || 'smtp.hostinger.com',
     port: Number(process.env.SMTP_PORT) || 465,
@@ -45,12 +55,12 @@ export async function sendLeadNotification(data: LeadEmailData) {
         </div>
         <div style="background: #222; padding: 20px; border-radius: 8px; border-left: 4px solid #C9A84C;">
             <h2 style="color: #C9A84C; font-size: 16px; margin-top: 0;">Datos del cliente</h2>
-            <p><strong>Nombre:</strong> ${data.name}</p>
-            <p><strong>Teléfono:</strong> <a href="tel:${data.phone}" style="color: #C9A84C;">${data.phone}</a></p>
-            <p><strong>Email:</strong> <a href="mailto:${data.email}" style="color: #C9A84C;">${data.email}</a></p>
-            ${data.service ? `<p><strong>Servicio:</strong> ${data.service}</p>` : ''}
-            ${data.message ? `<p><strong>Mensaje:</strong> ${data.message}</p>` : ''}
-            <p><strong>Origen:</strong> ${data.source}</p>
+            <p><strong>Nombre:</strong> ${esc(data.name)}</p>
+            <p><strong>Teléfono:</strong> <a href="tel:${esc(data.phone)}" style="color: #C9A84C;">${esc(data.phone)}</a></p>
+            <p><strong>Email:</strong> <a href="mailto:${esc(data.email)}" style="color: #C9A84C;">${esc(data.email)}</a></p>
+            ${data.service ? `<p><strong>Servicio:</strong> ${esc(data.service)}</p>` : ''}
+            ${data.message ? `<p><strong>Mensaje:</strong> ${esc(data.message)}</p>` : ''}
+            <p><strong>Origen:</strong> ${esc(data.source)}</p>
         </div>
         <p style="color: #666; font-size: 12px; text-align: center; margin-top: 20px;">
             Este email fue generado automáticamente por cablecore.es
@@ -64,7 +74,7 @@ export async function sendLeadNotification(data: LeadEmailData) {
             <p style="color: #999; font-size: 14px;">Hemos recibido tu solicitud</p>
         </div>
         <div style="background: #222; padding: 20px; border-radius: 8px; border-left: 4px solid #C9A84C;">
-            <h2 style="color: #C9A84C; font-size: 16px; margin-top: 0;">Hola ${data.name},</h2>
+            <h2 style="color: #C9A84C; font-size: 16px; margin-top: 0;">Hola ${esc(data.name)},</h2>
             <p>Gracias por contactar con <strong>CableCore</strong>. Hemos recibido tu solicitud correctamente.</p>
             <p>Nuestro equipo técnico revisará los datos proporcionados y se pondrá en contacto contigo lo antes posible para ayudarte con tu proyecto.</p>
         </div>
@@ -97,7 +107,6 @@ export async function sendLeadNotification(data: LeadEmailData) {
             });
         }
         
-        console.log('Admin notification and client auto-responder emails sent');
     } catch (err) {
         console.error('Failed to send lead emails:', err);
     }
@@ -119,14 +128,14 @@ export async function sendQuoteNotification(data: QuoteEmailData) {
             <p style="color: #999; font-size: 14px;">Nuevo presupuesto generado</p>
         </div>
         <div style="background: #222; padding: 20px; border-radius: 8px; border-left: 4px solid #C9A84C;">
-            <h2 style="color: #C9A84C; font-size: 16px; margin-top: 0;">Presupuesto ${data.quoteNumber}</h2>
-            <p><strong>Cliente:</strong> ${data.clientName}</p>
-            <p><strong>Teléfono:</strong> <a href="tel:${data.clientPhone}" style="color: #C9A84C;">${data.clientPhone}</a></p>
-            <p><strong>Email:</strong> <a href="mailto:${data.clientEmail}" style="color: #C9A84C;">${data.clientEmail}</a></p>
+            <h2 style="color: #C9A84C; font-size: 16px; margin-top: 0;">Presupuesto ${esc(data.quoteNumber)}</h2>
+            <p><strong>Cliente:</strong> ${esc(data.clientName)}</p>
+            <p><strong>Teléfono:</strong> <a href="tel:${esc(data.clientPhone)}" style="color: #C9A84C;">${esc(data.clientPhone)}</a></p>
+            <p><strong>Email:</strong> <a href="mailto:${esc(data.clientEmail)}" style="color: #C9A84C;">${esc(data.clientEmail)}</a></p>
             <hr style="border-color: #333;">
-            <p><strong>Cable:</strong> ${data.cableType} — ${data.cableMeters}m</p>
+            <p><strong>Cable:</strong> ${esc(data.cableType)} — ${data.cableMeters}m</p>
             <p><strong>Puntos de red:</strong> ${data.networkPoints}</p>
-            <p><strong>Instalación:</strong> ${data.installationType}</p>
+            <p><strong>Instalación:</strong> ${esc(data.installationType)}</p>
             <hr style="border-color: #333;">
             <p style="font-size: 24px; color: #C9A84C; text-align: center; margin: 10px 0;">
                 <strong>TOTAL: ${data.total.toFixed(2)}€</strong>
@@ -145,13 +154,13 @@ export async function sendQuoteNotification(data: QuoteEmailData) {
             <p style="color: #999; font-size: 14px;">Tu presupuesto de instalación</p>
         </div>
         <div style="background: #222; padding: 20px; border-radius: 8px; border-left: 4px solid #C9A84C;">
-            <h2 style="color: #C9A84C; font-size: 16px; margin-top: 0;">Hola ${data.clientName},</h2>
+            <h2 style="color: #C9A84C; font-size: 16px; margin-top: 0;">Hola ${esc(data.clientName)},</h2>
             <p>Gracias por utilizar nuestro calculador. Aquí tienes un resumen de tu presupuesto:</p>
             <hr style="border-color: #333;">
-            <p><strong>Nº Presupuesto:</strong> ${data.quoteNumber}</p>
-            <p><strong>Cable:</strong> ${data.cableType} — ${data.cableMeters}m</p>
+            <p><strong>Nº Presupuesto:</strong> ${esc(data.quoteNumber)}</p>
+            <p><strong>Cable:</strong> ${esc(data.cableType)} — ${data.cableMeters}m</p>
             <p><strong>Puntos de red:</strong> ${data.networkPoints}</p>
-            <p><strong>Tipo de instalación:</strong> ${data.installationType}</p>
+            <p><strong>Tipo de instalación:</strong> ${esc(data.installationType)}</p>
             <hr style="border-color: #333;">
             <p style="font-size: 24px; color: #C9A84C; text-align: center; margin: 10px 0;">
                 <strong>TOTAL: ${data.total.toFixed(2)}€</strong>
@@ -188,7 +197,6 @@ export async function sendQuoteNotification(data: QuoteEmailData) {
             html: clientHtml,
         });
 
-        console.log('Quote notification emails sent');
     } catch (err) {
         console.error('Failed to send quote emails:', err);
     }

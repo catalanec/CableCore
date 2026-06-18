@@ -11,9 +11,10 @@ export async function POST(request: NextRequest) {
             return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
         }
 
-        // Generate quote number
+        // Generate quote number using crypto for uniqueness
         const now = new Date();
-        const quoteNumber = `CC-${now.getFullYear()}${String(now.getMonth()+1).padStart(2,'0')}${String(now.getDate()).padStart(2,'0')}-${Math.floor(Math.random()*900+100)}`;
+        const uniqueSuffix = crypto.randomUUID().slice(0, 6).toUpperCase();
+        const quoteNumber = `CC-${now.getFullYear()}${String(now.getMonth()+1).padStart(2,'0')}${String(now.getDate()).padStart(2,'0')}-${uniqueSuffix}`;
 
         // If Supabase is configured, save to database
         const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;

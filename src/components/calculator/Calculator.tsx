@@ -1472,7 +1472,7 @@ export default function Calculator({ locale }: { locale: string }) {
                             `Hola, me gustaría un presupuesto para ${points} puntos de red (${calc.totalCableLength}m de cable ${CABLE_TYPES.find(c => c.id === cableType)!.name}). Tipo: ${l[installType]}. Estimación: ${calc.total.toFixed(2)}€`
                         )}`}
                         target="_blank"
-                        rel="noopener"
+                        rel="noopener noreferrer"
                         className="btn-outline w-full justify-center text-sm py-3"
                     >
                         💬 WhatsApp

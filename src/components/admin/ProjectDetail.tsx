@@ -219,7 +219,7 @@ export default function ProjectDetail({ project: initialProject, activities, tas
                                 <a
                                     href={`https://wa.me/${project.client_phone.replace(/\D/g, '')}?text=${encodeURIComponent(`Hola ${project.client_name?.split(' ')[0]}, te contactamos desde CableCore sobre tu proyecto.`)}`}
                                     target="_blank"
-                                    rel="noopener"
+                                    rel="noopener noreferrer"
                                     onClick={() => addActivity({ type: 'whatsapp', description: `WhatsApp a ${project.client_name}`, entity_type: 'project', entity_id: project.id })}
                                     className="flex items-center gap-1.5 px-3 py-2 bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 rounded-lg text-sm hover:bg-emerald-500/20 transition-all"
                                 >

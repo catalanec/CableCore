@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
+import { requireAdminAuth } from '@/lib/api-auth';
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
 const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
@@ -7,8 +8,14 @@ if (!supabaseKey) throw new Error('SUPABASE_SERVICE_ROLE_KEY is not configured')
 
 const supabase = createClient(supabaseUrl, supabaseKey!);
 
+const MAX_SIZE = 10 * 1024 * 1024; // 10MB
+const ALLOWED_TYPES = ['image/jpeg', 'image/png', 'image/webp', 'image/gif'];
+
 // POST /api/photos — upload a photo for a project
 export async function POST(req: NextRequest) {
+    const authError = requireAdminAuth(req);
+    if (authError) return authError;
+
     try {
         const formData = await req.formData();
         const file = formData.get('file') as File;
@@ -17,6 +24,13 @@ export async function POST(req: NextRequest) {
 
         if (!file || !projectId) {
             return NextResponse.json({ success: false, error: 'file and project_id required' }, { status: 400 });
+        }
+
+        if (file.size > MAX_SIZE) {
+            return NextResponse.json({ success: false, error: 'File too large (max 10MB)' }, { status: 413 });
+        }
+        if (!ALLOWED_TYPES.includes(file.type)) {
+            return NextResponse.json({ success: false, error: 'Invalid file type' }, { status: 415 });
         }
 
         // Build file path: project_id/timestamp_filename
@@ -55,6 +69,9 @@ export async function POST(req: NextRequest) {
 
 // GET /api/photos?project_id=xxx — list photos for a project
 export async function GET(req: NextRequest) {
+    const authError = requireAdminAuth(req);
+    if (authError) return authError;
+
     try {
         const { searchParams } = new URL(req.url);
         const projectId = searchParams.get('project_id');
@@ -90,6 +107,9 @@ export async function GET(req: NextRequest) {
 
 // DELETE /api/photos — delete a photo
 export async function DELETE(req: NextRequest) {
+    const authError = requireAdminAuth(req);
+    if (authError) return authError;
+
     try {
         const { path, id } = await req.json();
         if (path) {

@@ -3,8 +3,12 @@ import { Resend } from 'resend';
 import Stripe from 'stripe';
 import { createClient } from '@supabase/supabase-js';
 import { generateInvoiceEmailHTML, generateInvoiceEmailSubject } from '@/lib/invoice-email';
+import { requireAdminAuth } from '@/lib/api-auth';
 
 export async function POST(req: NextRequest) {
+    const authError = requireAdminAuth(req);
+    if (authError) return authError;
+
     try {
         const resendKey = (process.env.RESEND_API_KEY || '').trim();
         const stripeKey = (process.env.STRIPE_SECRET_KEY || '').trim();

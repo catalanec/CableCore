@@ -119,7 +119,7 @@ export default function Footer() {
                                 </a>
                             </li>
                             <li>
-                                <a href="https://wa.me/34605974605" target="_blank" rel="noopener" className="flex items-center gap-2 text-sm text-brand-gold-muted hover:text-brand-gold transition-colors">
+                                <a href="https://wa.me/34605974605" target="_blank" rel="noopener noreferrer" className="flex items-center gap-2 text-sm text-brand-gold-muted hover:text-brand-gold transition-colors">
                                     💬 WhatsApp
                                 </a>
                             </li>
