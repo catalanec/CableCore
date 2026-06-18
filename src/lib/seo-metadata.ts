@@ -37,9 +37,9 @@ const PAGE_SEO: Record<string, PageSEO> = {
             ru: 'Монтаж сетевого кабеля Барселона | CableCore — Cat6/Cat7',
         },
         description: {
-            es: 'Instalación profesional de cableado estructurado Cat6, Cat6A y Cat7 en Barcelona. Puntos de red, racks y WiFi para oficinas y hogares. Presupuesto gratis en 24h ☎ +34 605 974 605.',
-            en: 'Professional Cat6, Cat6A and Cat7 structured cabling installation in Barcelona. Network points, racks and WiFi for offices and homes. Free quote in 24h ☎ +34 605 974 605.',
-            ru: 'Профессиональный монтаж кабеля Cat6, Cat6A и Cat7 в Барселоне. Розетки, шкафы, WiFi. Бесплатная смета за 24ч ☎ +34 605 974 605.',
+            es: 'Cat6/Cat6A/Cat7 en Barcelona. Puntos de red, racks y WiFi para oficinas y hogares. Presupuesto gratis ☎ +34 605 974 605.',
+            en: 'Cat6, Cat6A and Cat7 structured cabling in Barcelona. Network points, racks, WiFi for offices and homes. Free quote ☎ +34 605 974 605.',
+            ru: 'Монтаж Cat6, Cat6A и Cat7 в Барселоне. Розетки, шкафы, WiFi. Бесплатная смета ☎ +34 605 974 605.',
         },
     },
     servicios: {
@@ -49,8 +49,8 @@ const PAGE_SEO: Record<string, PageSEO> = {
             ru: 'Услуги монтажа сети в Барселоне | CableCore',
         },
         description: {
-            es: 'Instalamos cableado estructurado Cat6, Cat6A y Cat7, puntos de red RJ45, racks y WiFi para oficinas y hogares en Barcelona y Badalona. Garantía 5 años ☎ +34 605 974 605.',
-            en: 'We install Cat6, Cat6A and Cat7 structured cabling, RJ45 network points, racks and WiFi for offices and homes in Barcelona. 5-year warranty ☎ +34 605 974 605.',
+            es: 'Cableado Cat6/Cat6A/Cat7, puntos RJ45, racks y WiFi para oficinas y hogares en Barcelona. Garantía 5 años. ☎ +34 605 974 605.',
+            en: 'Cat6, Cat6A and Cat7 structured cabling, RJ45 network points, racks and WiFi for offices in Barcelona. 5-year warranty ☎ +34 605 974 605.',
             ru: 'Монтаж Cat6, Cat6A и Cat7, розетки RJ45, шкафы и WiFi в Барселоне. Гарантия 5 лет ☎ +34 605 974 605.',
         },
     },
@@ -104,7 +104,7 @@ const PAGE_SEO: Record<string, PageSEO> = {
     },
     calculator: {
         title: {
-            es: 'Calculadora Precio Cableado Estructurado Barcelona — CableCore',
+            es: 'Calculadora Precio Red Barcelona | CableCore',
             en: 'Structured Cabling Price Calculator Barcelona — CableCore',
             ru: 'Калькулятор цены кабельной системы Барселона — CableCore',
         },
@@ -155,7 +155,7 @@ export function generatePageMetadata(pageKey: string, locale: string, path: stri
 
     const alternates: Record<string, string> = {};
     LOCALES.forEach(loc => {
-        alternates[loc] = `${BASE_URL}/${loc}${path}`;
+        alternates[HREFLANG_MAP[loc]] = `${BASE_URL}/${loc}${path}`;
     });
     alternates['x-default'] = `${BASE_URL}/es${path}`;
 
@@ -287,15 +287,10 @@ export function getLocalBusinessJsonLd() {
                 },
             ],
         },
-        sameAs: [],
-        aggregateRating: {
-            '@type': 'AggregateRating',
-            ratingValue: '4.9',
-            ratingCount: '5',
-            reviewCount: '5',
-            bestRating: '5',
-            worstRating: '1',
-        },
+        sameAs: [
+            // Add Google Business Profile URL, Facebook, LinkedIn when available
+            // e.g. 'https://g.page/cablecore-barcelona'
+        ],
     };
 }
 

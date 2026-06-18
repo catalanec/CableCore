@@ -1,4 +1,4 @@
-import { Metadata } from 'next';
+import type { Metadata } from 'next';
 import { generatePageMetadata } from '@/lib/seo-metadata';
 
 export function generateMetadata({ params }: { params: { locale: string } }): Metadata {
@@ -6,5 +6,5 @@ export function generateMetadata({ params }: { params: { locale: string } }): Me
 }
 
 export default function ContactoLayout({ children }: { children: React.ReactNode }) {
-    return children;
+    return <>{children}</>;
 }

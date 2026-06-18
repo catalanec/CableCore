@@ -24,7 +24,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     const staticPages = [
         { path: '', changeFreq: 'weekly' as const, basePriority: 1.0 },
         { path: '/servicios', changeFreq: 'weekly' as const, basePriority: 0.9 },
-        { path: '/calculator', changeFreq: 'monthly' as const, basePriority: 0.9 },
+        { path: '/precios', changeFreq: 'monthly' as const, basePriority: 0.85 },
+        { path: '/calculator', changeFreq: 'monthly' as const, basePriority: 0.85 },
         { path: '/blog', changeFreq: 'daily' as const, basePriority: 0.8 },
         { path: '/contacto', changeFreq: 'monthly' as const, basePriority: 0.8 },
         { path: '/proceso', changeFreq: 'monthly' as const, basePriority: 0.7 },

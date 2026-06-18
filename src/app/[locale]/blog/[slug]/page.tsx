@@ -52,6 +52,10 @@ export default function BlogArticlePage({ params }: { params: { slug: string } }
 
     if (!article) notFound();
 
+    const BASE_URL = 'https://cablecore.es';
+    const articleUrl = `${BASE_URL}/${locale}/blog/${article.slug}`;
+    const inLanguage = locale === 'ru' ? 'ru-RU' : locale === 'en' ? 'en-US' : 'es-ES';
+
     // JSON-LD structured data
     const jsonLd = {
         '@context': 'https://schema.org',
@@ -59,15 +63,27 @@ export default function BlogArticlePage({ params }: { params: { slug: string } }
         headline: article.title,
         description: article.metaDescription,
         datePublished: article.date,
+        dateModified: article.date,
+        image: `${BASE_URL}/images/og-image.png`,
+        mainEntityOfPage: {
+            '@type': 'WebPage',
+            '@id': articleUrl,
+        },
+        inLanguage,
+        keywords: article.tags.join(', '),
         author: {
             '@type': 'Organization',
             name: 'CableCore',
-            url: 'https://cablecore.es',
+            url: BASE_URL,
         },
         publisher: {
             '@type': 'Organization',
             name: 'CableCore',
-            url: 'https://cablecore.es',
+            url: BASE_URL,
+            logo: {
+                '@type': 'ImageObject',
+                url: `${BASE_URL}/logocablecore.png`,
+            },
         },
     };
 

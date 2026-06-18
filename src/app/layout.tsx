@@ -92,7 +92,7 @@ export default function RootLayout({
     const webSiteJsonLd = getWebSiteJsonLd();
 
     return (
-        <html className={`${inter.variable} ${outfit.variable}`} suppressHydrationWarning>
+        <html lang="es" className={`${inter.variable} ${outfit.variable}`} suppressHydrationWarning>
             <head>
                 <link rel="icon" type="image/png" href="/favicon.png" />
                 <link rel="apple-touch-icon" href="/favicon.png" />
