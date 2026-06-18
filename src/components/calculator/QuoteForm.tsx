@@ -97,6 +97,10 @@ const workLabels: Record<string, string> = {
     router: 'Instalación router',
     network_config: 'Configuración de red',
     patch_panel: 'Instalación patch panel',
+    testing: 'Testeo y verificación',
+    labeling: 'Etiquetado profesional',
+    cableManagement: 'Organización de cables',
+    extendedWarranty: 'Garantía extendida',
 };
 
 const rackLabels: Record<string, string> = {
@@ -214,7 +218,7 @@ export default function QuoteForm({ locale, calculationData }: QuoteFormProps) {
             if (val) {
                 const custom = d.equipmentCustom?.[key];
                 const name = custom?.name || workLabels[key] || key;
-                const price = custom?.price ?? ({ switch: 40, router: 50, accessPoint: 70, configuration: 150, network_config: 120, patch_panel: 80 }[key] || 0);
+                const price = custom?.price ?? ({ switch: 40, router: 50, accessPoint: 70, configuration: 150, network_config: 120, patch_panel: 80, testing: 50, labeling: 20, cableManagement: 50, extendedWarranty: 30 }[key] || 0);
                 items.push({
                     description: name,
                     quantity: '1',
@@ -274,7 +278,7 @@ export default function QuoteForm({ locale, calculationData }: QuoteFormProps) {
         if ((d.patchPanel24 || 0) > 0) quoteItems.push({ description: 'Patch Panel 24p', quantity: `${d.patchPanel24} ud`, unitPrice: '65.00€', total: `${(d.patchPanel24 * 65).toFixed(2)}€` });
         if ((d.patchPanel48 || 0) > 0) quoteItems.push({ description: 'Patch Panel 48p', quantity: `${d.patchPanel48} ud`, unitPrice: '100.00€', total: `${(d.patchPanel48 * 100).toFixed(2)}€` });
         (d.customItems || []).forEach(item => { if (item.name && item.qty > 0 && item.price > 0) quoteItems.push({ description: item.name, quantity: `${item.qty} ud`, unitPrice: `${item.price.toFixed(2)}€`, total: `${(item.qty * item.price).toFixed(2)}€` }); });
-        Object.entries(d.additionalWork).forEach(([key, val]) => { if (val) { const custom = d.equipmentCustom?.[key]; const nm = custom?.name || workLabels[key] || key; const pr = custom?.price ?? ({ switch: 40, router: 50, accessPoint: 70, configuration: 150, network_config: 120, patch_panel: 80 }[key] || 0); quoteItems.push({ description: nm, quantity: '1', unitPrice: `${pr.toFixed(2)}€`, total: `${pr.toFixed(2)}€` }); } });
+        Object.entries(d.additionalWork).forEach(([key, val]) => { if (val) { const custom = d.equipmentCustom?.[key]; const nm = custom?.name || workLabels[key] || key; const pr = custom?.price ?? ({ switch: 40, router: 50, accessPoint: 70, configuration: 150, network_config: 120, patch_panel: 80, testing: 50, labeling: 20, cableManagement: 50, extendedWarranty: 30 }[key] || 0); quoteItems.push({ description: nm, quantity: '1', unitPrice: `${pr.toFixed(2)}€`, total: `${pr.toFixed(2)}€` }); } });
         if (d.rack !== 'none') { const fb = rackLabels[d.rack] || d.rack; const fp = ({ rack_6u: 90, rack_9u: 130, rack_12u: 180, rack_18u: 250, rack_22u: 380, rack_42u: 650 }[d.rack] || d.rackCost); const rn = d.rackCustomName || fb; const rp = d.rackCustomPrice > 0 ? d.rackCustomPrice : fp; quoteItems.push({ description: rn, quantity: '1', unitPrice: `${rp.toFixed(2)}€`, total: `${d.rackCost.toFixed(2)}€` }); }
 
         // Save to Supabase

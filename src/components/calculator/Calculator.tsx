@@ -1517,7 +1517,10 @@ export default function Calculator({ locale }: { locale: string }) {
                                 rackCustomPrice: rackCustom[rack]?.price ?? 0,
                                 equipmentCustom,
                                 customItems,
-                                additionalWork: Object.fromEntries(Object.entries(equipment).map(([k, v]) => [k, v > 0])),
+                                additionalWork: {
+                                    ...Object.fromEntries(Object.entries(equipment).map(([k, v]) => [k, v > 0])),
+                                    ...upsellOptions,
+                                },
                                 rack,
                                 urgency,
                                 cablesCost: calc.cableCost,
