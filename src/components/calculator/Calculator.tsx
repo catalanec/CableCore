@@ -532,7 +532,7 @@ export default function Calculator({ locale }: { locale: string }) {
                 canetaLength = canetaLengthInput || 0;
             }
         }
-        const canetaCost = canetaLength * CONFIG.materials.trunking;
+        const canetaCost = canetaLength * (materialsCustom.trunking?.price ?? CONFIG.materials.trunking);
 
         // 5. Материалы на точку (настраиваемые)
         const materialsPerPoint =
@@ -545,10 +545,10 @@ export default function Calculator({ locale }: { locale: string }) {
         const trunkingQty = additionalMaterials.trunking || 0;
         const pvcQty = additionalMaterials.pvc || 0;
         const corrugatedQty = additionalMaterials.corrugated || 0;
-        additionalMaterialsCost += trunkingQty * CONFIG.materials.trunking;
-        additionalMaterialsCost += pvcQty * CONFIG.materials.pvc;
-        additionalMaterialsCost += corrugatedQty * CONFIG.materials.corrugated;
-        additionalMaterialsCost += (additionalMaterials.laborHour || 0) * CONFIG.materials.laborHour;
+        additionalMaterialsCost += trunkingQty * (materialsCustom.trunking?.price ?? CONFIG.materials.trunking);
+        additionalMaterialsCost += pvcQty * (materialsCustom.pvc?.price ?? CONFIG.materials.pvc);
+        additionalMaterialsCost += corrugatedQty * (materialsCustom.corrugated?.price ?? CONFIG.materials.corrugated);
+        additionalMaterialsCost += (additionalMaterials.laborHour || 0) * (materialsCustom.laborHour?.price ?? CONFIG.materials.laborHour);
         // Patch panels por cantidad de puertos
         additionalMaterialsCost += (patchPanelCounts.pp12 || 0) * CONFIG.materials.patchPanel12;
         additionalMaterialsCost += (patchPanelCounts.pp24 || 0) * CONFIG.materials.patchPanel24;
@@ -605,7 +605,7 @@ export default function Calculator({ locale }: { locale: string }) {
             equipmentCost, rackCost, upsellCost, customItemsCost, subtotal, discountPercent, discount,
             urgencyOption, afterUrgency, iva, total,
         };
-    }, [cableType, points, avgLength, installType, trenchMode, trenchLengthInput, canetaMode, canetaLengthInput, additionalMaterials, patchPanelCounts, equipment, equipmentCustom, rack, rackCustom, upsellOptions, urgency, customItems, pointMaterials, pointCustomMats]);
+    }, [cableType, points, avgLength, installType, trenchMode, trenchLengthInput, canetaMode, canetaLengthInput, additionalMaterials, materialsCustom, patchPanelCounts, equipment, equipmentCustom, rack, rackCustom, upsellOptions, urgency, customItems, pointMaterials, pointCustomMats]);
 
     const installationDisabled = points === 0 && avgLength === 0;
 
