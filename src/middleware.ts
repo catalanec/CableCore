@@ -14,8 +14,11 @@ const intlMiddleware = createMiddleware(routing);
 export default function middleware(req: NextRequest) {
     if (req.nextUrl.pathname.includes('/admin')) {
         const basicAuth = req.headers.get('authorization');
-        const adminUser = process.env.ADMIN_USER || 'admin';
-        const adminPass = process.env.ADMIN_PASSWORD || 'secretadmin24';
+        const adminUser = process.env.ADMIN_USER;
+        const adminPass = process.env.ADMIN_PASSWORD;
+        if (!adminUser || !adminPass) {
+            return new NextResponse('Server misconfigured', { status: 500 });
+        }
 
         if (basicAuth) {
             const authValue = basicAuth.split(' ')[1];
