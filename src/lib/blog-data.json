@@ -1,5 +1,214 @@
 [
   {
+    "slug": "mejores-practicas-cableado-structurado",
+    "date": "2026-06-19",
+    "readTime": "8 min",
+    "es": {
+      "title": "Mejores Prácticas para el Cableado Estructurado",
+      "metaTitle": "Mejores Prácticas en Cableado Estructurado | CableCore",
+      "metaDescription": "Descubre las mejores prácticas de cableado estructurado para optimizar tu red en Barcelona. Aprende sobre instalación, mantenimiento y más.",
+      "excerpt": "El cableado estructurado es fundamental para el rendimiento de las redes. Conoce las mejores prácticas para su instalación y mantenimiento.",
+      "category": "Guías",
+      "tags": [
+        "redes"
+      ],
+      "content": [
+        {
+          "type": "h2",
+          "text": "Introducción al Cableado Estructurado"
+        },
+        {
+          "type": "p",
+          "text": "El cableado estructurado es la base de cualquier red de comunicaciones eficiente. En este artículo, exploraremos las mejores prácticas para su instalación y mantenimiento, asegurando un rendimiento óptimo y una vida útil prolongada."
+        },
+        {
+          "type": "h2",
+          "text": "Planificación del Cableado"
+        },
+        {
+          "type": "p",
+          "text": "Antes de iniciar la instalación, es crucial realizar una planificación adecuada. Esto incluye la identificación de las áreas de trabajo, la elección de rutas de cableado y la consideración de futuras expansiones."
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Realizar un estudio de sitio previo",
+            "Definir el tipo de cables necesarios",
+            "Considerar la distancia y el entorno del cableado"
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "Selección de Materiales"
+        },
+        {
+          "type": "p",
+          "text": "La calidad de los materiales utilizados influye directamente en el rendimiento de la red. Optar por cables de alta calidad y componentes certificados es esencial."
+        },
+        {
+          "type": "tip",
+          "text": "💡 Utiliza cables de categoría 6 o superior para garantizar un rendimiento óptimo en redes de alta velocidad."
+        },
+        {
+          "type": "h2",
+          "text": "Instalación Adecuada"
+        },
+        {
+          "type": "p",
+          "text": "La instalación debe seguir las normativas y estándares de la industria. Asegúrate de que los cables estén correctamente etiquetados y organizados."
+        },
+        {
+          "type": "h2",
+          "text": "Mantenimiento y Verificación"
+        },
+        {
+          "type": "p",
+          "text": "Un mantenimiento regular es vital para asegurar que la red funcione correctamente. Considera realizar verificaciones periódicas con equipos especializados."
+        },
+        {
+          "type": "tip",
+          "text": "💡 Implementa un programa de mantenimiento preventivo para evitar problemas futuros en la red."
+        }
+      ]
+    },
+    "en": {
+      "title": "Best Practices for Structured Cabling",
+      "metaTitle": "Best Practices in Structured Cabling | CableCore",
+      "metaDescription": "Discover the best practices for structured cabling to optimize your network in Barcelona. Learn about installation, maintenance, and more.",
+      "excerpt": "Structured cabling is essential for network performance. Learn the best practices for installation and maintenance.",
+      "category": "Guides",
+      "tags": [
+        "networks"
+      ],
+      "content": [
+        {
+          "type": "h2",
+          "text": "Introduction to Structured Cabling"
+        },
+        {
+          "type": "p",
+          "text": "Structured cabling forms the backbone of any efficient communication network. In this article, we will explore the best practices for its installation and maintenance, ensuring optimal performance and longevity."
+        },
+        {
+          "type": "h2",
+          "text": "Cabling Planning"
+        },
+        {
+          "type": "p",
+          "text": "Before starting the installation, proper planning is crucial. This includes identifying work areas, choosing cabling routes, and considering future expansions."
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Conduct a site study",
+            "Define the necessary cable types",
+            "Consider distance and cabling environment"
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "Material Selection"
+        },
+        {
+          "type": "p",
+          "text": "The quality of the materials used directly influences network performance. Choosing high-quality cables and certified components is essential."
+        },
+        {
+          "type": "tip",
+          "text": "💡 Use Category 6 cables or higher to ensure optimal performance in high-speed networks."
+        },
+        {
+          "type": "h2",
+          "text": "Proper Installation"
+        },
+        {
+          "type": "p",
+          "text": "Installation should follow industry standards and regulations. Ensure that cables are properly labeled and organized."
+        },
+        {
+          "type": "h2",
+          "text": "Maintenance and Verification"
+        },
+        {
+          "type": "p",
+          "text": "Regular maintenance is vital to ensure that the network operates correctly. Consider conducting periodic checks with specialized equipment."
+        },
+        {
+          "type": "tip",
+          "text": "💡 Implement a preventive maintenance program to avoid future network issues."
+        }
+      ]
+    },
+    "ru": {
+      "title": "Лучшие практики структурированного кабелирования",
+      "metaTitle": "Лучшие практики в структурированном кабелировании | CableCore",
+      "metaDescription": "Узнайте о лучших практиках структурированного кабелирования для оптимизации вашей сети в Барселоне. Узнайте о монтаже, обслуживании и многом другом.",
+      "excerpt": "Структурированное кабелирование имеет решающее значение для производительности сети. Узнайте о лучших практиках монтажа и обслуживания.",
+      "category": "Руководства",
+      "tags": [
+        "сети"
+      ],
+      "content": [
+        {
+          "type": "h2",
+          "text": "Введение в структурированное кабелирование"
+        },
+        {
+          "type": "p",
+          "text": "Структурированное кабелирование является основой любой эффективной сети связи. В этой статье мы рассмотрим лучшие практики его установки и обслуживания, обеспечивая оптимальную производительность и долговечность."
+        },
+        {
+          "type": "h2",
+          "text": "Планирование кабелирования"
+        },
+        {
+          "type": "p",
+          "text": "Перед началом установки важно провести правильное планирование. Это включает в себя определение рабочих зон, выбор маршрутов прокладки кабелей и учет будущих расширений."
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Проведение обследования площадки",
+            "Определение необходимых типов кабелей",
+            "Учет расстояния и среды прокладки кабелей"
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "Выбор материалов"
+        },
+        {
+          "type": "p",
+          "text": "Качество используемых материалов напрямую влияет на производительность сети. Важно выбирать высококачественные кабели и сертифицированные компоненты."
+        },
+        {
+          "type": "tip",
+          "text": "💡 Используйте кабели категории 6 или выше для обеспечения оптимальной производительности в высокоскоростных сетях."
+        },
+        {
+          "type": "h2",
+          "text": "Правильная установка"
+        },
+        {
+          "type": "p",
+          "text": "Установка должна соответствовать стандартам и нормативам отрасли. Убедитесь, что кабели правильно маркированы и организованы."
+        },
+        {
+          "type": "h2",
+          "text": "Обслуживание и проверка"
+        },
+        {
+          "type": "p",
+          "text": "Регулярное обслуживание жизненно важно для обеспечения корректной работы сети. Рассмотрите возможность проведения периодических проверок с использованием специализированного оборудования."
+        },
+        {
+          "type": "tip",
+          "text": "💡 Реализуйте программу профилактического обслуживания, чтобы избежать будущих проблем с сетью."
+        }
+      ]
+    }
+  },
+  {
     "slug": "mejores-practicas-cableado-estructurado",
     "date": "2026-06-05",
     "readTime": "8 min",
