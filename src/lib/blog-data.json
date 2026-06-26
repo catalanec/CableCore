@@ -1,5 +1,172 @@
 [
   {
+    "slug": "ventajas-poe-para-camaras-ip",
+    "date": "2026-06-26",
+    "readTime": "7 min",
+    "es": {
+      "title": "Ventajas del PoE para Cámaras de Seguridad IP",
+      "metaTitle": "PoE para Cámaras de Seguridad IP en Barcelona - CableCore",
+      "metaDescription": "Descubre las ventajas del Power over Ethernet (PoE) para cámaras de seguridad IP, incluyendo instalación simplificada y reducción de costos.",
+      "excerpt": "El Power over Ethernet (PoE) está revolucionando la instalación de cámaras de seguridad IP. Descubre sus múltiples ventajas y cómo puede optimizar tu sistema de vigilancia.",
+      "category": "Guías",
+      "tags": [
+        "redes"
+      ],
+      "content": [
+        {
+          "type": "h2",
+          "text": "¿Qué es el Power over Ethernet (PoE)?"
+        },
+        {
+          "type": "p",
+          "text": "El Power over Ethernet (PoE) es una tecnología que permite la transmisión de energía eléctrica junto con datos a través de un solo cable Ethernet. Esta tecnología simplifica la instalación de dispositivos como cámaras de seguridad, puntos de acceso y teléfonos VoIP."
+        },
+        {
+          "type": "h2",
+          "text": "Ventajas del PoE para cámaras de seguridad IP"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Instalación simplificada: Menos cables y componentes necesarios",
+            "Reducción de costos: Ahorro en materiales y mano de obra",
+            "Flexibilidad: Posicionamiento de cámaras en lugares difíciles",
+            "Escalabilidad: Fácil expansión del sistema de seguridad",
+            "Menor riesgo de fallos: Menos conexiones físicas"
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "Consideraciones al implementar PoE"
+        },
+        {
+          "type": "p",
+          "text": "Es crucial considerar la capacidad del switch PoE y la potencia requerida por las cámaras. Asegúrate de que tu infraestructura de red sea compatible con la tecnología PoE, y evalúa la distancia máxima de transmisión para evitar pérdidas de energía."
+        },
+        {
+          "type": "tip",
+          "text": "💡 Tip: Utiliza cables de categoría 5e o superior para garantizar un rendimiento óptimo del PoE."
+        },
+        {
+          "type": "h2",
+          "text": "Conclusión"
+        },
+        {
+          "type": "p",
+          "text": "El PoE es una solución eficiente y económica para la instalación de cámaras de seguridad IP. Su capacidad para combinar datos y energía en un solo cable no solo simplifica la instalación, sino que también ofrece flexibilidad y escalabilidad, lo que lo convierte en una excelente opción para sistemas de vigilancia modernos."
+        }
+      ]
+    },
+    "en": {
+      "title": "Benefits of PoE for IP Security Cameras",
+      "metaTitle": "PoE for IP Security Cameras in Barcelona - CableCore",
+      "metaDescription": "Discover the benefits of Power over Ethernet (PoE) for IP security cameras, including simplified installation and cost reduction.",
+      "excerpt": "Power over Ethernet (PoE) is revolutionizing the installation of IP security cameras. Explore its multiple advantages and how it can optimize your surveillance system.",
+      "category": "Guides",
+      "tags": [
+        "networks"
+      ],
+      "content": [
+        {
+          "type": "h2",
+          "text": "What is Power over Ethernet (PoE)?"
+        },
+        {
+          "type": "p",
+          "text": "Power over Ethernet (PoE) is a technology that allows the transmission of electrical power along with data over a single Ethernet cable. This technology simplifies the installation of devices such as security cameras, access points, and VoIP phones."
+        },
+        {
+          "type": "h2",
+          "text": "Benefits of PoE for IP Security Cameras"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Simplified installation: Fewer cables and components needed",
+            "Cost reduction: Savings on materials and labor",
+            "Flexibility: Positioning cameras in challenging locations",
+            "Scalability: Easy expansion of the security system",
+            "Lower risk of failures: Fewer physical connections"
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "Considerations When Implementing PoE"
+        },
+        {
+          "type": "p",
+          "text": "It's crucial to consider the capacity of the PoE switch and the power required by the cameras. Ensure that your network infrastructure is compatible with PoE technology, and evaluate the maximum transmission distance to avoid power loss."
+        },
+        {
+          "type": "tip",
+          "text": "💡 Tip: Use Category 5e or higher cables to ensure optimal PoE performance."
+        },
+        {
+          "type": "h2",
+          "text": "Conclusion"
+        },
+        {
+          "type": "p",
+          "text": "PoE is an efficient and cost-effective solution for installing IP security cameras. Its ability to combine data and power over a single cable not only simplifies installation but also offers flexibility and scalability, making it an excellent choice for modern surveillance systems."
+        }
+      ]
+    },
+    "ru": {
+      "title": "Преимущества PoE для IP-камер безопасности",
+      "metaTitle": "PoE для IP-камер безопасности в Барселоне - CableCore",
+      "metaDescription": "Узнайте о преимуществах Power over Ethernet (PoE) для IP-камер безопасности, включая упрощенную установку и снижение затрат.",
+      "excerpt": "Power over Ethernet (PoE) революционизирует установку IP-камер безопасности. Изучите его многочисленные преимущества и то, как он может оптимизировать вашу систему видеонаблюдения.",
+      "category": "Руководства",
+      "tags": [
+        "сети"
+      ],
+      "content": [
+        {
+          "type": "h2",
+          "text": "Что такое Power over Ethernet (PoE)?"
+        },
+        {
+          "type": "p",
+          "text": "Power over Ethernet (PoE) — это технология, позволяющая передавать электрическую энергию вместе с данными по одному кабелю Ethernet. Эта технология упрощает установку таких устройств, как камеры безопасности, точки доступа и телефоны VoIP."
+        },
+        {
+          "type": "h2",
+          "text": "Преимущества PoE для IP-камер безопасности"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Упрощенная установка: меньше кабелей и компонентов",
+            "Снижение затрат: экономия на материалах и рабочей силе",
+            "Гибкость: установка камер в труднодоступных местах",
+            "Масштабируемость: легкое расширение системы безопасности",
+            "Меньший риск сбоев: меньше физических соединений"
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "Соображения при внедрении PoE"
+        },
+        {
+          "type": "p",
+          "text": "Важно учитывать мощность PoE-выключателя и потребляемую камерами мощность. Убедитесь, что ваша сетевая инфраструктура совместима с технологией PoE, и оцените максимальное расстояние передачи, чтобы избежать потерь энергии."
+        },
+        {
+          "type": "tip",
+          "text": "💡 Совет: Используйте кабели категории 5e или выше для обеспечения оптимальной работы PoE."
+        },
+        {
+          "type": "h2",
+          "text": "Заключение"
+        },
+        {
+          "type": "p",
+          "text": "PoE — это эффективное и экономически выгодное решение для установки IP-камер безопасности. Его способность комбинировать данные и питание по одному кабелю не только упрощает установку, но и предлагает гибкость и масштабируемость, что делает его отличным выбором для современных систем видеонаблюдения."
+        }
+      ]
+    }
+  },
+  {
     "slug": "mejores-practicas-cableado-structurado",
     "date": "2026-06-19",
     "readTime": "8 min",
