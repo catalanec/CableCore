@@ -1144,11 +1144,15 @@ export default function Calculator({ locale }: { locale: string }) {
                                     )}
                                     <div className="flex items-center gap-1">
                                         <input
-                                            type="number"
+                                            type="text"
+                                            inputMode="decimal"
                                             value={item.price}
-                                            min={0}
-                                            step={0.01}
-                                            onChange={(e) => updateCustomItem(item.id, 'price', e.target.value)}
+                                            onChange={(e) => {
+                                                const val = e.target.value.replace(',', '.');
+                                                if (/^(\d*\.?\d*)$/.test(val)) {
+                                                    updateCustomItem(item.id, 'price', val);
+                                                }
+                                            }}
                                             className={`w-full text-right text-sm bg-brand-dark border border-border-subtle rounded px-1 py-0.5 focus:outline-none ${isFixed ? 'text-cyan-300 focus:border-cyan-400/50' : 'text-brand-gold focus:border-brand-gold/50'}`}
                                             placeholder={isFixed ? (l as Record<string,string>).customItemTotal : (l as Record<string,string>).customItemPrice}
                                         />
