@@ -34,7 +34,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     ];
 
     // Static pages use a fixed date — avoid triggering unnecessary re-crawls on every deploy
-    const STATIC_LAST_MODIFIED = '2026-06-20T00:00:00.000Z';
+    const STATIC_LAST_MODIFIED = '2026-07-03T00:00:00.000Z';
 
     // Static pages — primary locale first with high priority
     const staticUrls = staticPages.flatMap(page =>

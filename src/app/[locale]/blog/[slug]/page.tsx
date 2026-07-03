@@ -243,15 +243,17 @@ export default function BlogArticlePage({ params }: { params: { slug: string } }
                             {p('relatedArticles')}
                         </h2>
                         <div className="grid grid-cols-1 sm:grid-cols-4 gap-4">
+                            <Link href="/servicios/instalacion-cable-red-barcelona" className="card p-5 text-center hover:border-brand-gold/30 transition-all">
+                                <div className="text-2xl mb-2">🔌</div>
+                                <p className="text-sm text-brand-gold-muted">
+                                    {locale === 'ru' ? 'Монтаж сети' : locale === 'en' ? 'Network install' : 'Instalación red'}
+                                </p>
+                            </Link>
                             <Link href="/precios" className="card p-5 text-center hover:border-brand-gold/30 transition-all">
                                 <div className="text-2xl mb-2">💰</div>
                                 <p className="text-sm text-brand-gold-muted">
                                     {locale === 'ru' ? 'Цены' : locale === 'en' ? 'Prices' : 'Precios'}
                                 </p>
-                            </Link>
-                            <Link href="/servicios" className="card p-5 text-center hover:border-brand-gold/30 transition-all">
-                                <div className="text-2xl mb-2">🔌</div>
-                                <p className="text-sm text-brand-gold-muted">{t('nav.services')}</p>
                             </Link>
                             <Link href="/calculator" className="card p-5 text-center hover:border-brand-gold/30 transition-all">
                                 <div className="text-2xl mb-2">🧮</div>
