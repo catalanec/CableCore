@@ -3,6 +3,7 @@ import { getMessages } from 'next-intl/server';
 import { routing } from '@/i18n/routing';
 import { notFound } from 'next/navigation';
 import type { Metadata } from 'next';
+import CookieBanner from '@/components/layout/CookieBanner';
 
 const BASE_URL = 'https://cablecore.es';
 const HREFLANG_MAP: Record<string, string> = {
@@ -50,6 +51,7 @@ export default async function LocaleLayout({
     return (
         <NextIntlClientProvider messages={messages}>
             {children}
+            <CookieBanner />
         </NextIntlClientProvider>
     );
 }

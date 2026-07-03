@@ -3,7 +3,6 @@ import { Inter, Outfit } from 'next/font/google';
 import Script from 'next/script';
 import { getWebSiteJsonLd } from '@/lib/seo-metadata';
 import WhatsAppButton from '@/components/layout/WhatsAppButton';
-import CookieBanner from '@/components/layout/CookieBanner';
 import './globals.css';
 
 const GA_ID = 'G-TJV2HYNQ9L';
@@ -124,7 +123,6 @@ export default function RootLayout({
                 </Script>
                 {children}
                 <WhatsAppButton />
-                <CookieBanner />
             </body>
         </html>
     );
