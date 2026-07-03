@@ -53,7 +53,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     const seoUrls = SEO_PAGES.flatMap(page =>
         ALL_LOCALES.map(locale => ({
             url: `${BASE_URL}/${locale}/servicios/${page.slug}`,
-            lastModified: now,
+            lastModified: STATIC_LAST_MODIFIED,
             changeFrequency: 'weekly' as const,
             priority: locale === PRIMARY_LOCALE ? 0.9 : 0.4,
             alternates: generateAlternates(`/servicios/${page.slug}`),
