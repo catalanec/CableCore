@@ -1,5 +1,193 @@
 [
   {
+    "slug": "poe-plus-para-camaras-de-seguridad",
+    "date": "2026-07-03",
+    "readTime": "8 min",
+    "es": {
+      "title": "PoE+ (Power over Ethernet) para cámaras de seguridad e IP",
+      "metaTitle": "PoE+ para cámaras de seguridad: Todo lo que necesitas saber",
+      "metaDescription": "Descubre cómo PoE+ puede transformar la instalación de tus cámaras de seguridad e IP en Barcelona. Aprende sobre sus ventajas, instalación y más.",
+      "excerpt": "El PoE+ ofrece una solución eficiente y flexible para alimentar cámaras de seguridad e IP. Este artículo profundiza en su funcionamiento y ventajas.",
+      "category": "Guías",
+      "tags": [
+        "redes"
+      ],
+      "content": [
+        {
+          "type": "h2",
+          "text": "¿Qué es PoE+?"
+        },
+        {
+          "type": "p",
+          "text": "Power over Ethernet Plus (PoE+) es una tecnología que permite transmitir energía eléctrica junto con datos a través de cables Ethernet. Esto simplifica la instalación de dispositivos como cámaras de seguridad, ya que elimina la necesidad de cables de alimentación separados."
+        },
+        {
+          "type": "h2",
+          "text": "Ventajas de utilizar PoE+"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Instalación simplificada",
+            "Menor costo de cableado",
+            "Flexibilidad en la ubicación de cámaras",
+            "Menor riesgo de cortes de energía"
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "¿Cómo funciona PoE+?"
+        },
+        {
+          "type": "p",
+          "text": "PoE+ puede suministrar hasta 30 vatios de potencia a través de un cable Ethernet. Utiliza dos pares de cables en un cable Cat5e o superior, lo que permite la transmisión de datos y energía simultáneamente."
+        },
+        {
+          "type": "tip",
+          "text": "💡 Asegúrate de utilizar un switch PoE+ o un inyector PoE+ para proveer energía a tus cámaras."
+        },
+        {
+          "type": "h2",
+          "text": "Consideraciones de instalación"
+        },
+        {
+          "type": "p",
+          "text": "Es crucial evaluar la cantidad de energía que requieren tus cámaras y asegurarte de que el switch o inyector PoE+ seleccionado sea capaz de manejar esa carga. Además, verifica la longitud máxima del cable para asegurar una transmisión óptima."
+        },
+        {
+          "type": "h2",
+          "text": "Conclusión"
+        },
+        {
+          "type": "p",
+          "text": "La implementación de PoE+ en tu sistema de cámaras de seguridad no solo optimiza la instalación, sino que también ofrece una solución robusta y eficiente. Considera esta tecnología para mejorar la seguridad en tu entorno."
+        }
+      ]
+    },
+    "en": {
+      "title": "PoE+ (Power over Ethernet) for Security and IP Cameras",
+      "metaTitle": "PoE+ for Security Cameras: Everything You Need to Know",
+      "metaDescription": "Discover how PoE+ can transform the installation of your security and IP cameras in Barcelona. Learn about its advantages, installation, and more.",
+      "excerpt": "PoE+ offers an efficient and flexible solution for powering security and IP cameras. This article delves into its functionality and benefits.",
+      "category": "Guides",
+      "tags": [
+        "networks"
+      ],
+      "content": [
+        {
+          "type": "h2",
+          "text": "What is PoE+?"
+        },
+        {
+          "type": "p",
+          "text": "Power over Ethernet Plus (PoE+) is a technology that allows electrical power to be transmitted along with data through Ethernet cables. This simplifies the installation of devices like security cameras by eliminating the need for separate power cables."
+        },
+        {
+          "type": "h2",
+          "text": "Advantages of Using PoE+"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Simplified installation",
+            "Reduced cabling costs",
+            "Flexibility in camera placement",
+            "Lower risk of power outages"
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "How Does PoE+ Work?"
+        },
+        {
+          "type": "p",
+          "text": "PoE+ can provide up to 30 watts of power over an Ethernet cable. It uses two pairs of wires in a Cat5e or higher cable, allowing simultaneous data and power transmission."
+        },
+        {
+          "type": "tip",
+          "text": "💡 Ensure you use a PoE+ switch or PoE+ injector to supply power to your cameras."
+        },
+        {
+          "type": "h2",
+          "text": "Installation Considerations"
+        },
+        {
+          "type": "p",
+          "text": "It's crucial to assess the power requirements of your cameras and ensure that the chosen PoE+ switch or injector can handle that load. Additionally, check the maximum cable length to ensure optimal transmission."
+        },
+        {
+          "type": "h2",
+          "text": "Conclusion"
+        },
+        {
+          "type": "p",
+          "text": "Implementing PoE+ in your security camera system not only optimizes installation but also offers a robust and efficient solution. Consider this technology to enhance security in your environment."
+        }
+      ]
+    },
+    "ru": {
+      "title": "PoE+ (Power over Ethernet) для камер безопасности и IP",
+      "metaTitle": "PoE+ для камер безопасности: Все, что вам нужно знать",
+      "metaDescription": "Узнайте, как PoE+ может преобразовать установку ваших камер безопасности и IP в Барселоне. Узнайте о его преимуществах, установке и многом другом.",
+      "excerpt": "PoE+ предлагает эффективное и гибкое решение для питания камер безопасности и IP. Эта статья углубляется в его функциональность и преимущества.",
+      "category": "Гиды",
+      "tags": [
+        "сети"
+      ],
+      "content": [
+        {
+          "type": "h2",
+          "text": "Что такое PoE+?"
+        },
+        {
+          "type": "p",
+          "text": "Power over Ethernet Plus (PoE+) — это технология, позволяющая передавать электрическую энергию вместе с данными по Ethernet-кабелям. Это упрощает установку таких устройств, как камеры безопасности, устраняя необходимость в отдельных кабелях питания."
+        },
+        {
+          "type": "h2",
+          "text": "Преимущества использования PoE+"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Упрощенная установка",
+            "Сниженные затраты на кабелирование",
+            "Гибкость в размещении камер",
+            "Меньший риск отключений питания"
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "Как работает PoE+?"
+        },
+        {
+          "type": "p",
+          "text": "PoE+ может обеспечить до 30 ватт мощности через Ethernet-кабель. Он использует две пары проводов в кабеле Cat5e или выше, что позволяет одновременно передавать данные и питание."
+        },
+        {
+          "type": "tip",
+          "text": "💡 Убедитесь, что вы используете коммутатор PoE+ или инжектор PoE+, чтобы обеспечить питание для ваших камер."
+        },
+        {
+          "type": "h2",
+          "text": "Рекомендации по установке"
+        },
+        {
+          "type": "p",
+          "text": "Крайне важно оценить потребности в мощности ваших камер и убедиться, что выбранный коммутатор или инжектор PoE+ может справиться с этой нагрузкой. Также проверьте максимальную длину кабеля для обеспечения оптимальной передачи."
+        },
+        {
+          "type": "h2",
+          "text": "Заключение"
+        },
+        {
+          "type": "p",
+          "text": "Внедрение PoE+ в вашу систему камер безопасности не только оптимизирует установку, но и предлагает надежное и эффективное решение. Рассмотрите эту технологию для повышения безопасности в вашем окружении."
+        }
+      ]
+    }
+  },
+  {
     "slug": "ventajas-poe-para-camaras-ip",
     "date": "2026-06-26",
     "readTime": "7 min",
