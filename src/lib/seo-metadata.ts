@@ -109,9 +109,9 @@ const PAGE_SEO: Record<string, PageSEO> = {
             ru: 'Калькулятор цены кабельной системы Барселона — CableCore',
         },
         description: {
-            es: 'Calcula el precio de tu instalación de red en segundos. Cat6 desde 95€/punto, Cat7 desde 140€/punto. Presupuesto gratis sin compromiso ☎ +34 605 974 605.',
-            en: 'Calculate your network installation price in seconds. Cat6 from €95/point, Cat7 from €140/point. Free quote with no obligation ☎ +34 605 974 605.',
-            ru: 'Рассчитайте стоимость монтажа сети за секунды. Cat6 от 95€/точка, Cat7 от 140€/точка. Бесплатная смета ☎ +34 605 974 605.',
+            es: 'Calcula el precio de tu instalación de red en segundos. Cat6 desde 110€/punto, Cat6A desde 130€/punto. Presupuesto gratis sin compromiso ☎ +34 605 974 605.',
+            en: 'Calculate your network installation price in seconds. Cat6 from €110/point, Cat6A from €130/point. Free quote with no obligation ☎ +34 605 974 605.',
+            ru: 'Рассчитайте стоимость монтажа сети за секунды. Cat6 от 110€/точка, Cat6A от 130€/точка. Бесплатная смета ☎ +34 605 974 605.',
         },
     },
     precios: {
@@ -121,9 +121,9 @@ const PAGE_SEO: Record<string, PageSEO> = {
             ru: 'Цены монтаж сетевого кабеля Барселона 2025 | CableCore',
         },
         description: {
-            es: '¿Cuánto cuesta instalar cable de red en Barcelona? Cat6 desde 95€/punto, Cat7 desde 140€/punto. Precios transparentes con IVA incluido ☎ +34 605 974 605.',
-            en: 'How much does network cable installation cost in Barcelona? Cat6 from €95/point, Cat7 from €140/point. Transparent prices including VAT ☎ +34 605 974 605.',
-            ru: 'Сколько стоит монтаж сетевого кабеля в Барселоне? Cat6 от 95€/точка. Прозрачные цены с НДС ☎ +34 605 974 605.',
+            es: '¿Cuánto cuesta instalar cable de red en Barcelona? Cat6 desde 110€/punto, Cat6A desde 130€/punto. Precios reales con IVA incluido ☎ +34 605 974 605.',
+            en: 'How much does network cable installation cost in Barcelona? Cat6 from €110/point, Cat6A from €130/point. Real prices including VAT ☎ +34 605 974 605.',
+            ru: 'Сколько стоит монтаж сетевого кабеля в Барселоне? Cat6 от 110€/точка, Cat6A от 130€/точка. Реальные цены с НДС ☎ +34 605 974 605.',
         },
     },
     blog: {

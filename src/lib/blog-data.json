@@ -3959,7 +3959,7 @@
         },
         {
           "type": "ul",
-          "text": "<li>Cat6: desde 95€/punto</li><li>Cat7: desde 140€/punto</li>"
+          "text": "<li>Cat6: desde 110€/punto IVA incluido</li><li>Cat7: desde 155€/punto IVA incluido</li>"
         },
         {
           "type": "h2",
@@ -4510,8 +4510,8 @@
         {
           "type": "ul",
           "items": [
-            "Cat6 U/UTP — hasta 1 Gbps a 100 m. Ideal para la mayoría de hogares. Diámetro 5-6 mm. Precio instalado desde 95€/punto.",
-            "Cat6A U/FTP — hasta 10 Gbps a 100 m. Recomendado para futuras necesidades y PoE++. Diámetro 6-8 mm. Desde 115€/punto.",
+            "Cat6 U/UTP — hasta 1 Gbps a 100 m. Ideal para la mayoría de hogares. Diámetro 5-6 mm. Precio instalado desde 110€/punto IVA incluido.",
+            "Cat6A U/FTP — hasta 10 Gbps a 100 m. Recomendado para futuras necesidades y PoE++. Diámetro 6-8 mm. Desde 130€/punto.",
             "Cat7 — mismo rendimiento que Cat6A con conectores RJ45. No aporta ventajas reales en uso doméstico. Más caro y más rígido."
           ]
         },
@@ -4551,7 +4551,7 @@
         {
           "type": "ul",
           "items": [
-            "1 punto de red Cat6 en canaleta: desde 95€ con materiales y mano de obra.",
+            "1 punto de red Cat6 en canaleta: desde 110€ IVA incluido (cable + roseta + testeo).",
             "4 puntos Cat6 en canaleta superficial: desde 380-450€.",
             "6-8 puntos Cat6 en canaleta + 1 rack de pared: desde 700-1.100€.",
             "4 puntos Cat6A empotrado en obra nueva: desde 550-700€.",
@@ -4685,7 +4685,7 @@
           "type": "ul",
           "items": [
             "Cat6 — up to 1 Gbps at 100m. Ideal for most homes. From 95€/point.",
-            "Cat6A — up to 10 Gbps at 100m. Recommended for future needs. From 115€/point.",
+            "Cat6A — up to 10 Gbps at 100m. Recommended for future needs. From 130€/point.",
             "Cat7 — up to 10 Gbps with extra shielding. Maximum interference protection. From 140€/point."
           ]
         },
@@ -4811,7 +4811,7 @@
           "type": "ul",
           "items": [
             "Cat6 — до 1 Гбит/с на 100м. Подходит для большинства домов. От 95€/точка.",
-            "Cat6A — до 10 Гбит/с на 100м. Рекомендован на будущее. От 115€/точка.",
+            "Cat6A — до 10 Гбит/с на 100м. Рекомендован на будущее. От 130€/точка.",
             "Cat7 — до 10 Гбит/с с усиленным экранированием. Максимальная защита от помех. От 140€/точка."
           ]
         },
@@ -4933,8 +4933,8 @@
         {
           "type": "ul",
           "items": [
-            "Cat6 UTP — 1 Gbps / 100m, 250 MHz, sin blindaje, ~95€/punto instalado en Barcelona",
-            "Cat6A UTP/S-FTP — 10 Gbps / 100m, 500 MHz, blindaje parcial, ~115€/punto instalado",
+            "Cat6 UTP — 1 Gbps / 100m, 250 MHz, sin blindaje, ~110€/punto IVA incluido en Barcelona",
+            "Cat6A UTP/S-FTP — 10 Gbps / 100m, 500 MHz, blindaje parcial, ~130€/punto instalado",
             "Cat7 S/FTP — 10 Gbps / 100m, 600 MHz, blindaje completo, ~140€/punto (con matiz: ver más abajo)"
           ]
         },
@@ -5040,8 +5040,8 @@
         {
           "type": "ul",
           "items": [
-            "Punto Cat6 instalado (incluye roseta, patcheo, testeo): desde 95€ en Barcelona",
-            "Punto Cat6A UTP instalado: desde 115€",
+            "Punto Cat6 instalado (incluye roseta, patcheo, testeo): desde 110€ IVA incluido en Barcelona",
+            "Punto Cat6A U/FTP instalado: desde 130€",
             "Punto Cat6A S/FTP instalado: desde 135€",
             "Punto Cat7 con conectores RJ45 (rendimiento Cat6A): desde 140€",
             "Instalación de rack + patch panel 24 puertos (sin cables): 350-550€",
@@ -5283,7 +5283,7 @@
         },
         {
           "type": "p",
-          "text": "Cat6: 1 Гбит/с, до 250 МГц, без экранирования, 95€/точка. Cat6A: 10 Гбит/с, до 500 МГц, частичное экранирование, 115€/точка. Cat7: 10 Гбит/с, до 600 МГц, полное экранирование (S/FTP), 140€/точка."
+          "text": "Cat6: 1 Гбит/с, до 250 МГц, без экранирования, 95€/точка. Cat6A: 10 Гбит/с, до 500 МГц, частичное экранирование, 130€/точка. Cat7: 10 Гбит/с, до 600 МГц, полное экранирование (S/FTP), 140€/точка."
         },
         {
           "type": "h2",
@@ -6750,8 +6750,8 @@
         {
           "type": "ul",
           "items": [
-            "Cat6 — 95€/punto (ideal para oficinas pequeñas)",
-            "Cat6A — 115€/punto (recomendado para oficinas medianas)",
+            "Cat6 — 110€/punto IVA incluido (ideal para oficinas pequeñas)",
+            "Cat6A U/FTP — 130€/punto IVA incluido (recomendado para oficinas medianas)",
             "Cat7 — 140€/punto (empresas con alta demanda)"
           ]
         },
@@ -6969,7 +6969,7 @@
           "type": "ul",
           "items": [
             "Cat6 — 95€/точка (небольшие офисы)",
-            "Cat6A — 115€/точка (средние офисы)",
+            "Cat6A — 130€/точка (средние офисы)",
             "Cat7 — 140€/точка (крупные компании)"
           ]
         },

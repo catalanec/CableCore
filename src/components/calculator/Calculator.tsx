@@ -11,9 +11,9 @@ import FiberCalculator, { FiberCalcResult } from './FiberCalculator';
    ═════════════════════════════════════ */
 
 const CONFIG = {
-    cablePrices: { cat5: 0.30, cat6: 0.55, cat6a: 1.10, cat7: 2.00 },
+    cablePrices: { cat5: 0.30, cat6: 0.55, cat6a_utp: 0.85, cat6a_ftp: 1.10, cat6a_sftp: 1.50, cat7: 2.00 },
     laborPerPoint: { basic: 30, conduit: 50, advanced: 90 },
-    cableMultiplier: { cat5: 1.0, cat6: 1.1, cat6a: 1.25, cat7: 1.4 },
+    cableMultiplier: { cat5: 1.0, cat6: 1.1, cat6a_utp: 1.20, cat6a_ftp: 1.25, cat6a_sftp: 1.30, cat7: 1.4 },
     installationMultiplier: {
         external: 1.0, ceiling: 1.1, existing_wall: 1.2,
         new_wall: 1.0, // штроба считается отдельно
@@ -42,10 +42,25 @@ const IVA_RATE = 0.21;
 
 const CABLE_TYPES = [
     { id: 'cat5' as const, name: 'Cat 5e', price: CONFIG.cablePrices.cat5 },
-    { id: 'cat6' as const, name: 'Cat 6', price: CONFIG.cablePrices.cat6 },
-    { id: 'cat6a' as const, name: 'Cat 6A', price: CONFIG.cablePrices.cat6a },
-    { id: 'cat7' as const, name: 'Cat 7', price: CONFIG.cablePrices.cat7 },
+    { id: 'cat6' as const, name: 'Cat 6 UTP', price: CONFIG.cablePrices.cat6 },
+    { id: 'cat6a_utp' as const, name: 'Cat 6A U/UTP', price: CONFIG.cablePrices.cat6a_utp },
+    { id: 'cat6a_ftp' as const, name: 'Cat 6A U/FTP', price: CONFIG.cablePrices.cat6a_ftp },
+    { id: 'cat6a_sftp' as const, name: 'Cat 6A S/FTP', price: CONFIG.cablePrices.cat6a_sftp },
+    { id: 'cat7' as const, name: 'Cat 7 S/FTP', price: CONFIG.cablePrices.cat7 },
     { id: 'none' as const, name: 'Ninguno', price: 0 },
+];
+
+const CABLE_TYPES_PRIMARY = [
+    { id: 'cat5' as const, name: 'Cat 5e', price: CONFIG.cablePrices.cat5 },
+    { id: 'cat6' as const, name: 'Cat 6 UTP', price: CONFIG.cablePrices.cat6 },
+    { id: 'cat7' as const, name: 'Cat 7 S/FTP', price: CONFIG.cablePrices.cat7 },
+    { id: 'none' as const, name: 'Ninguno', price: 0 },
+];
+
+const CAT6A_SUBTYPES = [
+    { id: 'cat6a_utp' as const, label: 'U/UTP', badge: 'Doméstico', price: CONFIG.cablePrices.cat6a_utp, desc: 'Sin blindaje. Hogar y SOHO.' },
+    { id: 'cat6a_ftp' as const, label: 'U/FTP', badge: 'Estándar', price: CONFIG.cablePrices.cat6a_ftp, desc: 'Pantalla general. Estándar para oficinas.' },
+    { id: 'cat6a_sftp' as const, label: 'S/FTP', badge: 'Industrial', price: CONFIG.cablePrices.cat6a_sftp, desc: 'Doble blindaje. Alta densidad EMI.' },
 ];
 
 const INSTALLATION_TYPES = [
@@ -651,8 +666,8 @@ export default function Calculator({ locale }: { locale: string }) {
                     <h3 className="font-heading font-semibold text-white mb-4 flex items-center gap-2">
                         🔌 {l.cableType}
                     </h3>
-                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-                        {CABLE_TYPES.map((cable) => (
+                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-4">
+                        {CABLE_TYPES_PRIMARY.map((cable) => (
                             <button
                                 key={cable.id}
                                 onClick={() => setCableType(cable.id)}
@@ -661,15 +676,35 @@ export default function Calculator({ locale }: { locale: string }) {
                                     : 'bg-surface-card border-border-subtle text-brand-gold-muted hover:border-brand-gold/30'
                                     }`}
                             >
-                                {cable.id === 'cat6' && (
-                                    <div className="absolute -top-2 left-1/2 -translate-x-1/2 text-[10px] bg-brand-gold text-black px-2 py-0.5 rounded-full font-bold whitespace-nowrap">
-                                        {l.recommended}
-                                    </div>
-                                )}
                                 <div className="font-heading font-bold text-lg">{cable.name}</div>
-                                <div className="text-sm mt-1">{cable.price}€/m</div>
+                                {cable.id !== 'none' && <div className="text-sm mt-1">{cable.price}€/m</div>}
                             </button>
                         ))}
+                    </div>
+                    <div className="border border-border-subtle rounded-lg p-4">
+                        <p className="text-xs font-semibold uppercase tracking-wider text-brand-gold mb-3">Cat 6A — variantes de blindaje</p>
+                        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                            {CAT6A_SUBTYPES.map((sub) => (
+                                <button
+                                    key={sub.id}
+                                    onClick={() => setCableType(sub.id)}
+                                    className={`p-3 rounded-lg border text-center transition-all duration-200 relative ${cableType === sub.id
+                                        ? 'bg-[rgba(201,168,76,0.1)] border-brand-gold text-brand-gold'
+                                        : 'bg-surface-card border-border-subtle text-brand-gold-muted hover:border-brand-gold/30'
+                                        }`}
+                                >
+                                    {sub.id === 'cat6a_ftp' && (
+                                        <div className="absolute -top-2 left-1/2 -translate-x-1/2 text-[10px] bg-brand-gold text-black px-2 py-0.5 rounded-full font-bold whitespace-nowrap">
+                                            {l.recommended}
+                                        </div>
+                                    )}
+                                    <div className="text-[10px] font-bold uppercase tracking-wider opacity-60 mb-1">{sub.badge}</div>
+                                    <div className="font-heading font-bold text-base">{sub.label}</div>
+                                    <div className="text-sm mt-1">{sub.price}€/m</div>
+                                    <div className="text-xs mt-1 opacity-60 leading-tight">{sub.desc}</div>
+                                </button>
+                            ))}
+                        </div>
                     </div>
                 </div>
 

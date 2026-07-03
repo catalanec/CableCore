@@ -23,7 +23,7 @@ export const SEO_PAGES_ES: SEOPageConfig[] = [
             { icon: '📋', title: 'Informe de instalación', text: 'Entregamos documentación con el esquema de la instalación y los resultados del testeo de cada punto.' },
         ],
         faq: [
-            { q: '¿Cuánto cuesta instalar cable de red en Barcelona?', a: 'Un punto Cat6 completamente instalado (cable + roseta + comprobación) cuesta desde 95€. El precio final depende del número de puntos, metros de cable y tipo de acabado (canaleta o empotrado). Pide presupuesto sin compromiso.' },
+            { q: '¿Cuánto cuesta instalar cable de red en Barcelona?', a: 'Un punto Cat6 completamente instalado (cable + roseta + comprobación) cuesta desde 110€ IVA incluido. Un punto Cat6A U/FTP desde 130€ IVA incluido. El precio final depende del número de puntos, metros de cable y tipo de acabado. Pide presupuesto sin compromiso.' },
             { q: '¿Cuánto tarda la instalación?', a: 'Una instalación doméstica de 4-8 puntos se realiza en 1 día laborable. Proyectos empresariales de 20-30 puntos en 2-3 días. Trabajamos con mínimas molestias.' },
             { q: '¿Es mejor canaleta o empotrado?', a: 'La canaleta es más rápida y económica, ideal para instalaciones en locales ya construidos. El empotrado queda invisible pero requiere obra. En reformas recomendamos siempre empotrado.' },
             { q: '¿Qué categoría de cable necesito?', a: 'Cat6 para uso doméstico (1 Gbps). Cat6A para oficinas que necesiten 10 Gbps. Cat7 para entornos industriales o data centers con muchas interferencias.' },
@@ -177,7 +177,7 @@ export const SEO_PAGES_ES: SEOPageConfig[] = [
             { icon: '📋', title: 'Documentación', text: 'Planos de red, etiquetado y documentación técnica completa.' },
         ],
         faq: [
-            { q: '¿Cuánto cuesta montar la red de una oficina?', a: 'Depende del tamaño: una oficina de 10 puestos desde 1.500€, de 20 puestos desde 3.000€, y de 50 puestos desde 6.000€.' },
+            { q: '¿Cuánto cuesta montar la red de una oficina?', a: 'Depende del tamaño: una oficina de 10 puestos desde 2.200€ IVA incluido, de 20 puestos desde 3.500€ IVA incluido, y de 50 puestos desde 7.000€ IVA incluido. Incluye cableado Cat6A, rack, patch panel y switch.' },
             { q: '¿Podéis trabajar fuera de horario?', a: 'Sí, instalamos en horario nocturno o fines de semana para no interrumpir tu actividad.' },
         ],
     },
@@ -247,7 +247,7 @@ export const SEO_PAGES_ES: SEOPageConfig[] = [
             { icon: '✅', title: 'Garantía 5 años', text: 'Todas las instalaciones con testeo profesional, documentación y garantía de 5 años en materiales y mano de obra.' },
         ],
         faq: [
-            { q: '¿Cuánto cuesta instalar red en Barcelona?', a: 'Punto Cat6 instalado desde 95€. Oficina de 10 puestos (cableado + rack + patch panel) desde 1.800€. Instalación doméstica de 4 puntos desde 450€. Pide presupuesto gratis sin compromiso.' },
+            { q: '¿Cuánto cuesta instalar red en Barcelona?', a: 'Punto Cat6 instalado desde 110€ IVA incluido. Punto Cat6A U/FTP desde 130€ IVA incluido. Oficina de 10 puestos (cableado Cat6A + rack + patch panel) desde 2.200€ IVA incluido. Instalación doméstica de 4 puntos Cat6 desde 500€ IVA incluido. Pide presupuesto gratis sin compromiso.' },
             { q: '¿Cuánto tarda una instalación de red en Barcelona?', a: 'Un hogar de 4-8 puntos en 1 día. Oficina de 15-20 puntos en 2-3 días. Proyecto industrial de 50+ puntos en 1-2 semanas. Trabajamos fines de semana para no parar tu negocio.' },
             { q: '¿Trabajáis en toda Barcelona ciudad?', a: 'Sí, cubrimos todos los distritos: Eixample, Gràcia, Sant Martí (22@), Sants-Montjuïc, Zona Franca, Horta-Guinardó, Nou Barris, Sant Andreu, Sarrià-Sant Gervasi y Les Corts.' },
             { q: '¿Usáis subcontratas?', a: 'No. Todos los trabajos los realiza personal propio de CableCore. Sin intermediarios, sin sorpresas. El técnico que hace la visita técnica es el mismo que realiza la instalación.' },
@@ -277,8 +277,8 @@ export const SEO_PAGES_ES: SEOPageConfig[] = [
             {
                 h2: 'Precios de instalación de red en Barcelona (2025)',
                 paragraphs: [
-                    'Los precios de instalación de red en Barcelona varían según el tipo de proyecto, el cableado elegido y el acceso al inmueble. Como referencia orientativa: un punto de red Cat6 instalado con roseta, canaleta y prueba de certificación cuesta desde 95€. Un punto Cat6A en canalización empotrada o existente cuesta desde 115€.',
-                    'Una instalación básica para oficina de 10 puestos (cableado Cat6A + rack de 12U + patch panel + switch 24 puertos) tiene un coste orientativo de 2.200-2.800€, incluyendo materiales y mano de obra. Para hogares, una red de 4 puntos Cat6 en canaleta decorativa parte de 450€.',
+                    'Los precios de instalación de red en Barcelona varían según el tipo de proyecto, el cableado elegido y el acceso al inmueble. Como referencia orientativa: un punto de red Cat6 instalado con roseta, canaleta y prueba de certificación cuesta desde 110€ IVA incluido. Un punto Cat6A U/FTP (el estándar para oficinas) cuesta desde 130€ IVA incluido. Cat6A S/FTP para entornos industriales, desde 155€ IVA incluido.',
+                    'Una instalación básica para oficina de 10 puestos (cableado Cat6A U/FTP + rack de 12U + patch panel + switch 24 puertos) tiene un coste orientativo de 2.200-3.000€ IVA incluido, dependiendo del tipo de acabado y la complejidad. Para hogares, una red de 4 puntos Cat6 en canaleta decorativa parte de 500€ IVA incluido.',
                     'Todos los presupuestos incluyen visita técnica gratuita, materiales certificados, prueba de certificación canal por canal y garantía de 5 años. Solicitá presupuesto sin compromiso: te respondemos en menos de 24 horas.',
                 ],
             },
@@ -309,7 +309,7 @@ export const SEO_PAGES_ES: SEOPageConfig[] = [
             { icon: '📋', title: 'Presupuesto gratis', text: "Visita técnica en L'Hospitalet sin coste. Presupuesto detallado en 24 horas." },
         ],
         faq: [
-            { q: "¿Cuánto cuesta instalar red en L'Hospitalet?", a: "Aplicamos los mismos precios que en Barcelona ciudad. Un punto Cat6 instalado desde 95€, sin recargo por desplazamiento a L'Hospitalet." },
+            { q: "¿Cuánto cuesta instalar red en L'Hospitalet?", a: "Aplicamos los mismos precios que en Barcelona ciudad. Un punto Cat6 instalado desde 110€ IVA incluido, sin recargo por desplazamiento a L'Hospitalet. Cat6A U/FTP desde 130€ IVA incluido." },
             { q: "¿Instaláis en las oficinas de Gran Via L'Hospitalet?", a: "Sí, tenemos experiencia en los edificios de oficinas del área de Gran Via, incluyendo torres y plantas diáfanas. Trabajamos fuera de horario laboral si es necesario." },
             { q: "¿Podéis instalar red en un piso en La Torrassa o Collblanc?", a: "Sí, cubrimos todos los barrios de L'Hospitalet. Para pisos usamos canaleta decorativa o aprovechamos la canalización existente para no hacer obra." },
             { q: "¿Cuánto tardáis en llegar a L'Hospitalet?", a: "Nuestra sede está en Badalona, pero L'Hospitalet está a menos de 30 minutos. Podemos hacer visita técnica el mismo día si contactas antes de las 14h." },
@@ -328,8 +328,8 @@ export const SEO_PAGES_ES: SEOPageConfig[] = [
             {
                 h2: "Precios de instalación de red en L'Hospitalet de Llobregat",
                 paragraphs: [
-                    "Aplicamos los mismos precios que en Barcelona ciudad, sin recargo por desplazamiento a L'Hospitalet. Un punto de red Cat6 instalado con roseta y prueba de certificación parte desde 95€. Cat6A desde 115€ por punto. No cobramos por la visita técnica previa.",
-                    "Para proyectos de oficina en L'Hospitalet de 10-20 puestos, el presupuesto orientativo oscila entre 1.800€ y 3.500€ según la complejidad (cableado Cat6A, rack, patch panel, switch y configuración básica de red). Pide presupuesto online y te respondemos en menos de 24 horas.",
+                    "Aplicamos los mismos precios que en Barcelona ciudad, sin recargo por desplazamiento a L'Hospitalet. Un punto de red Cat6 instalado con roseta y prueba de certificación parte desde 110€ IVA incluido. Cat6A U/FTP desde 130€ por punto IVA incluido. Cat6A S/FTP desde 155€ IVA incluido. No cobramos por la visita técnica previa.",
+                    "Para proyectos de oficina en L'Hospitalet de 10-20 puestos, el presupuesto orientativo oscila entre 2.200€ y 4.000€ IVA incluido según la complejidad (cableado Cat6A, rack, patch panel, switch y configuración básica de red). Pide presupuesto online y te respondemos en menos de 24 horas.",
                 ],
             },
         ],
@@ -354,7 +354,7 @@ export const SEO_PAGES_ES: SEOPageConfig[] = [
             { q: '¿Dónde está vuestra oficina en Badalona?', a: 'Estamos en Carrer Vitor Balaguer 33, 08914 Badalona. Puedes venir a visitarnos o llamar al +34 605 974 605 para concertar una visita técnica.' },
             { q: '¿Cubrís todos los barrios de Badalona?', a: 'Sí, cubrimos toda Badalona: Centre, Llefià, La Salut, Gorg, Sant Roc, Artigues, Bufalà, Sistrells, Pomar, Montigalà y el área industrial.' },
             { q: '¿Hacéis instalaciones en los polígonos de Badalona?', a: 'Sí, tenemos amplia experiencia en los polígonos Badalona Sud y Mas Rampinyo. Instalamos redes industriales Cat6A y Cat7 con canalización IP.' },
-            { q: '¿Cuánto cuesta instalar red en Badalona?', a: 'Un punto Cat6 instalado desde 95€, sin ningún recargo por estar en Badalona. Al ser empresa local, nuestros desplazamientos internos son gratuitos.' },
+            { q: '¿Cuánto cuesta instalar red en Badalona?', a: 'Un punto Cat6 instalado desde 110€ IVA incluido, sin ningún recargo por estar en Badalona. Al ser empresa local, nuestros desplazamientos internos son gratuitos.' },
         ],
     },
     {
@@ -419,7 +419,7 @@ export const SEO_PAGES_ES: SEOPageConfig[] = [
         ],
         faq: [
             { q: '¿Hacéis instalaciones en chalets de Sant Cugat?', a: 'Sí, tenemos amplia experiencia en viviendas unifamiliares de Sant Cugat. Instalamos red en todas las plantas con empotrado de cable para un acabado completamente invisible.' },
-            { q: '¿Cuánto cuesta cablear un chalet en Sant Cugat?', a: 'Un chalet de 3 plantas con 8-12 puntos de red y WiFi mesh está entre 1.800€ y 3.500€ dependiendo del tamaño y acabado. Incluye todos los puntos empotrados y sistema WiFi profesional.' },
+            { q: '¿Cuánto cuesta cablear un chalet en Sant Cugat?', a: 'Un chalet de 3 plantas con 8-12 puntos de red y WiFi mesh está entre 2.200€ y 4.000€ IVA incluido, dependiendo del tamaño y acabado. Incluye todos los puntos empotrados Cat6A y sistema WiFi profesional.' },
             { q: '¿Instaláis en las empresas del Parc Empresarial Can Sant Joan?', a: 'Sí, tenemos experiencia en el parque empresarial. Instalamos fuera de horario laboral para no interrumpir la actividad y entregamos documentación completa.' },
             { q: '¿Podéis hacer la instalación empotrada sin hacer mucha obra?', a: 'Sí, usamos técnicas de canalización por falso techo técnico o empotrado mínimo por las tabiques. En viviendas de nueva construcción siempre recomendamos empotrado completo.' },
         ],
@@ -443,7 +443,7 @@ export const SEO_PAGES_ES: SEOPageConfig[] = [
         faq: [
             { q: '¿Cubrís Cornellà de Llobregat?', a: 'Sí, cubrimos Cornellà y todos los municipios del Baix Llobregat: Esplugues, Sant Joan Despí, Sant Just, El Prat, Gavà, Viladecans, Castelldefels y más.' },
             { q: '¿Instaláis en los polígonos industriales de Cornellà?', a: 'Sí, tenemos experiencia en el Polígon Gran Via Sud y la zona industrial de la Almeda. Instalamos Cat6A y Cat7 para entornos industriales.' },
-            { q: '¿Cuánto cuesta instalar red en Cornellà?', a: 'Aplicamos los mismos precios que en Barcelona ciudad. Punto Cat6 desde 95€ instalado, sin recargo por desplazamiento.' },
+            { q: '¿Cuánto cuesta instalar red en Cornellà?', a: 'Aplicamos los mismos precios que en Barcelona ciudad. Punto Cat6 desde 110€ IVA incluido, sin recargo por desplazamiento.' },
         ],
     },
     {
@@ -465,7 +465,7 @@ export const SEO_PAGES_ES: SEOPageConfig[] = [
         faq: [
             { q: '¿Instaláis en Sant Boi de Llobregat?', a: 'Sí, cubrimos Sant Boi y toda la zona sur del Baix Llobregat: Viladecans, Gavà, Castelldefels y l\'Aeroport del Prat.' },
             { q: '¿Hacéis instalaciones en los polígonos de Sant Boi?', a: 'Sí, instalamos en el Polígon Fontsanta y Can Gambús. Para entornos industriales recomendamos Cat6A o Cat7 según el nivel de interferencias.' },
-            { q: '¿Cuánto cuesta instalar red en Sant Boi?', a: 'Mismos precios que en Barcelona. Punto Cat6 desde 95€. Sin recargo por desplazamiento al Baix Llobregat.' },
+            { q: '¿Cuánto cuesta instalar red en Sant Boi?', a: 'Mismos precios que en Barcelona. Punto Cat6 desde 110€ IVA incluido. Sin recargo por desplazamiento al Baix Llobregat.' },
         ],
     },
     {
@@ -488,7 +488,7 @@ export const SEO_PAGES_ES: SEOPageConfig[] = [
             { q: '¿Hacéis instalaciones en chalets de Castelldefels?', a: 'Sí, es uno de nuestros servicios principales en la zona. Instalamos red en todas las plantas del chalet con cable empotrado o canaleta y añadimos WiFi exterior para jardín y terraza.' },
             { q: '¿Podéis instalar WiFi en el jardín o junto a la piscina?', a: 'Sí, instalamos puntos de acceso exterior certificados IP65, resistentes al agua y al sol. Se conectan por cable desde el interior para señal estable en toda la parcela.' },
             { q: '¿Instaláis en segunda residencia?', a: 'Sí, hacemos instalaciones en segunda residencia. Podemos coordinar el acceso con el servicio de limpieza o conserje y enviarte el informe de la instalación por email.' },
-            { q: '¿Cuánto cuesta cablear un chalet en Castelldefels?', a: 'Un chalet de 2 plantas con 6-10 puntos de red y WiFi exterior cuesta entre 1.500€ y 2.800€ según el tamaño y acabados. Pide presupuesto sin compromiso.' },
+            { q: '¿Cuánto cuesta cablear un chalet en Castelldefels?', a: 'Un chalet de 2 plantas con 6-10 puntos de red y WiFi exterior cuesta entre 1.800€ y 3.200€ IVA incluido, según el tamaño y acabados. Pide presupuesto sin compromiso.' },
         ],
     },
     {
@@ -689,7 +689,7 @@ export const SEO_PAGES_ES: SEOPageConfig[] = [
             { icon: '📊', title: 'Testeo y documentación', text: 'Entregamos informe de testeo de cada punto instalado. Si no pasa el test, lo reparamos hasta que lo haga. Garantía escrita de 5 años.' },
         ],
         faq: [
-            { q: '¿Cuánto cobra un instalador de red en Barcelona?', a: 'Un punto de red Cat6 instalado completo (cable + roseta + testeo) cuesta desde 95€. Una red doméstica de 4 puntos con canaleta desde 450€. Una oficina de 10 puestos (cableado + rack + patch panel) desde 1.800€. Pide presupuesto sin compromiso.' },
+            { q: '¿Cuánto cobra un instalador de red en Barcelona?', a: 'Un punto de red Cat6 instalado completo (cable + roseta + testeo) cuesta desde 110€ IVA incluido. Cat6A U/FTP desde 130€ IVA incluido. Una red doméstica de 4 puntos Cat6 con canaleta desde 500€ IVA incluido. Una oficina de 10 puestos (cableado Cat6A + rack + patch panel) desde 2.200€ IVA incluido. Pide presupuesto sin compromiso.' },
             { q: '¿Cuánto tarda la instalación?', a: 'Un hogar de 2-4 puntos en medio día. Una instalación de 8-10 puntos en 1 día. Una oficina de 15-20 puestos en 2-3 días. Siempre acordamos una fecha concreta.' },
             { q: '¿Trabajáis en toda Barcelona?', a: 'Sí, cubrimos todos los distritos de Barcelona: Eixample, Gràcia, Sant Martí, Sants, Horta-Guinardó, Nou Barris, Sant Andreu, Sarrià y Les Corts. También cubrimos toda el área metropolitana (Badalona, Hospitalet, Sant Cugat, Sabadell, Terrassa y más).' },
             { q: '¿Instaláis también WiFi?', a: 'Sí, complementamos el cableado Ethernet con puntos de acceso WiFi profesionales (Ubiquiti, TP-Link EAP). El cable es la columna vertebral y el WiFi complementa las zonas donde no llega el cable.' },
