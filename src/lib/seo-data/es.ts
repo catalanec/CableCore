@@ -562,6 +562,25 @@ export const SEO_PAGES_ES: SEOPageConfig[] = [
             { q: '¿Hacéis fusión de fibra óptica en Barcelona?', a: 'Sí, realizamos fusiones por arco eléctrico con fusionadora profesional Fujikura. Cada fusión se mide con OTDR y se documenta en informe técnico.' },
             { q: '¿Instaláis FTTH en edificios de viviendas de Barcelona?', a: 'Sí, instalamos FTTH vertical en comunidades de vecinos: desde el rack del sótano o cuarto técnico hasta la roseta SC/APC de cada piso. Trabajamos con administradores de fincas.' },
             { q: '¿Tenéis servicio de urgencia para fibra cortada?', a: 'Sí, ofrecemos servicio de urgencia 24/7 para reparación de fibra dañada en Barcelona. Llamada al +34 605 974 605 y enviamos técnico en el menor tiempo posible.' },
+            { q: '¿Qué es la fibra óptica FTTH y cómo funciona en un edificio?', a: 'FTTH (Fiber To The Home) lleva la fibra óptica directamente al piso del usuario. En un edificio, instalamos un splitter óptico en el cuarto técnico o sótano, y tendemos fibra individual a cada vivienda terminando en una roseta SC/APC. Cada vecino conecta su router directamente a esa roseta.' },
+            { q: '¿Cuánto tiempo tarda instalar fibra óptica en un edificio de Barcelona?', a: 'Un edificio de 10 viviendas se instala en 2-3 días con un equipo de dos técnicos. Incluye instalación del rack, tendido de fibra por canalización, fusiones en la bandeja de empalme, tiro al piso y certificación OTDR.' },
+        ],
+        richSections: [
+            {
+                h2: 'Tipos de instalación de fibra óptica que realizamos en Barcelona',
+                paragraphs: [
+                    'En CableCore especializamos en tres tipos principales de instalación de fibra óptica en Barcelona. FTTH para comunidades de vecinos: instalamos la red vertical de fibra desde el punto de interconexión (PTR) del operador hasta cada vivienda, con fusiones y testeo OTDR completo. Es el tipo de proyecto más habitual que realizamos en edificios del Eixample, Gràcia y Sarrià.',
+                    'Backbone de edificio empresarial: conectamos los armarios de telecomunicaciones de cada planta con fibra multimodo OM4 para velocidades de 10 a 100 Gbps entre switches de distribución. Ideal para edificios de oficinas en el 22@, hoteles de cuatro estrellas y hospitales.',
+                    'Interconexión entre edificios: cuando dos naves industriales o edificios de la misma empresa están a menos de 500 metros, instalamos fibra monomodo directamente enterrada o en canalización para un enlace privado sin costes recurrentes de operador. Este servicio es especialmente demandado en el Polígon Pratenc y Zona Franca.',
+                ],
+            },
+            {
+                h2: 'Fibra óptica en Barcelona: qué tipo elegir',
+                paragraphs: [
+                    'La elección del tipo de fibra depende de la distancia y la velocidad requerida. Para FTTH en edificios residenciales usamos fibra monomodo G.657A.2, que es resistente a curvaturas pequeñas y facilita el tendido por tubos de pequeño diámetro. Para backbone de edificios de hasta 300 metros usamos multimodo OM4 con latiguillo LC-LC y transceptores SFP+ para 10 Gbps. Para distancias superiores a 300 metros o entre edificios, la fibra monomodo G.652D es el estándar.',
+                    'En todos los casos, testeo OTDR está incluido en el presupuesto. Entregamos un informe gráfico de cada hilo, mostrando las pérdidas en cada fusión, conector y curva. La atenuación total de la fibra instalada por CableCore es siempre inferior al 80% del límite normativo, lo que garantiza margen para futuras ampliaciones.',
+                ],
+            },
         ],
     },
     {
