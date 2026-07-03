@@ -8,4 +8,5 @@ export interface SEOPageConfig {
     faq: { q: string; a: string }[];
     metaDescription: string;
     cta: string;
+    richSections?: { h2: string; paragraphs: string[] }[];
 }

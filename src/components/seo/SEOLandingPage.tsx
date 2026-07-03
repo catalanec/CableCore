@@ -18,6 +18,7 @@ interface SEOPageData {
     faq: { q: string; a: string }[];
     metaDescription: string;
     cta: string;
+    richSections?: { h2: string; paragraphs: string[] }[];
 }
 
 const TRUST_STATS = [
@@ -195,6 +196,22 @@ export default function SEOLandingPage({ data }: { data: SEOPageData }) {
                         </div>
                     </div>
                 </section>
+
+                {/* Rich Content Sections */}
+                {data.richSections && data.richSections.length > 0 && (
+                    <section className="py-16 border-t border-border-subtle">
+                        <div className="container-custom max-w-3xl mx-auto space-y-10">
+                            {data.richSections.map((section, i) => (
+                                <div key={i}>
+                                    <h2 className="font-heading text-2xl font-bold text-white mb-4">{section.h2}</h2>
+                                    {section.paragraphs.map((p, j) => (
+                                        <p key={j} className="text-brand-gold-muted leading-relaxed mb-3">{p}</p>
+                                    ))}
+                                </div>
+                            ))}
+                        </div>
+                    </section>
+                )}
 
                 {/* Process */}
                 <section className="py-16 border-t border-border-subtle">

@@ -253,6 +253,42 @@ export const SEO_PAGES_ES: SEOPageConfig[] = [
             { q: '¿Usáis subcontratas?', a: 'No. Todos los trabajos los realiza personal propio de CableCore. Sin intermediarios, sin sorpresas. El técnico que hace la visita técnica es el mismo que realiza la instalación.' },
             { q: '¿Podéis instalar red WiFi además del cableado?', a: 'Sí. Complementamos el cableado Ethernet con puntos de acceso WiFi empresarial (Ubiquiti, TP-Link EAP) para cobertura total. El cable es la columna vertebral y el WiFi complementa las zonas móviles.' },
             { q: '¿Sois empresa local o subcontratas el trabajo?', a: 'Somos empresa local con sede en Badalona. No subcontratamos. Los técnicos que hacen la visita son los mismos que instalan, lo que garantiza continuidad y responsabilidad.' },
+            { q: '¿Qué cable Cat6, Cat6A o Cat7 recomendáis para una oficina en Barcelona?', a: 'Para oficinas nuevas siempre recomendamos Cat6A U/FTP. Soporta 10 Gbps hasta 100 metros y está preparado para el futuro. Cat6 es adecuado para remodelaciones y hogares. Cat7 no añade ventajas reales sobre Cat6A y es más caro e inflexible.' },
+            { q: '¿Podéis hacer instalación de red fuera de horario laboral en Barcelona?', a: 'Sí. Para oficinas en el 22@, Eixample y otras zonas empresariales ofrecemos instalación nocturna y en fines de semana para no interrumpir la actividad de tu empresa.' },
+            { q: '¿Instaláis fibra óptica de interior (FTTO) en Barcelona?', a: 'Sí. Para proyectos que requieren ancho de banda superior a 10 Gbps o distancias largas dentro del edificio instalamos fibra óptica interior con conectores LC o SC y latiguillos certificados.' },
+        ],
+        richSections: [
+            {
+                h2: 'Tipos de instalación de red que realizamos en Barcelona',
+                paragraphs: [
+                    'En CableCore realizamos todo tipo de instalaciones de red en Barcelona, adaptadas a las necesidades de cada cliente. Para oficinas en el 22@, el Eixample o la Diagonal, instalamos cableado Cat6A estructurado con rack, patch panel y switch gestionable, siguiendo el estándar TIA-568-C.2. El resultado es una red profesional con documentación completa, testeo canal por canal y garantía de 5 años.',
+                    'Para hogares y pisos en Gràcia, Sarrià o Sant Andreu, utilizamos cableado Cat6 con canaleta decorativa o empotrado. En una jornada instalamos entre 4 y 8 puntos de red, preparando el hogar para teletrabajo, streaming 4K y dispositivos NAS.',
+                    'Para naves industriales en Zona Franca, Polígon Pratenc o Badalona Sud, trabajamos con cableado Cat6A o Cat7 en bandeja metálica o tubo rígido, resistente a interferencias electromagnéticas y vibraciones. Configuramos redes VLAN para separar producción, administración y videovigilancia.',
+                ],
+            },
+            {
+                h2: 'Cableado Cat6A: el estándar recomendado para Barcelona en 2025',
+                paragraphs: [
+                    'El cable Cat6A (Categoría 6 Aumentada) es el estándar profesional para instalaciones en Barcelona en 2025. Soporta velocidades de 10 Gbps hasta 100 metros, reduce la diafonía alienada (AXT) y es compatible con PoE++ para alimentar cámaras 4K, puntos de acceso WiFi 6E y teléfonos IP de alta potencia.',
+                    'Frente al Cat6 estándar, el Cat6A tiene un diámetro mayor (6-8 mm vs 5-6 mm) y requiere cajas de registro más profundas. En proyectos con muchos puntos de red es importante planificar el espacio en la canalización. En CableCore trabajamos exclusivamente con cable Cat6A U/FTP de marcas certificadas como Belden, Nexans o Prysmian para garantizar el rendimiento a lo largo de toda la instalación.',
+                    'Si tu empresa en Barcelona planea adoptar tecnología 10 Gbps en los próximos 5-10 años, invertir hoy en Cat6A es más rentable que rehacer la instalación más adelante. El coste adicional de Cat6A frente a Cat6 es de aproximadamente 10-15€ por punto instalado.',
+                ],
+            },
+            {
+                h2: 'Precios de instalación de red en Barcelona (2025)',
+                paragraphs: [
+                    'Los precios de instalación de red en Barcelona varían según el tipo de proyecto, el cableado elegido y el acceso al inmueble. Como referencia orientativa: un punto de red Cat6 instalado con roseta, canaleta y prueba de certificación cuesta desde 95€. Un punto Cat6A en canalización empotrada o existente cuesta desde 115€.',
+                    'Una instalación básica para oficina de 10 puestos (cableado Cat6A + rack de 12U + patch panel + switch 24 puertos) tiene un coste orientativo de 2.200-2.800€, incluyendo materiales y mano de obra. Para hogares, una red de 4 puntos Cat6 en canaleta decorativa parte de 450€.',
+                    'Todos los presupuestos incluyen visita técnica gratuita, materiales certificados, prueba de certificación canal por canal y garantía de 5 años. Solicitá presupuesto sin compromiso: te respondemos en menos de 24 horas.',
+                ],
+            },
+            {
+                h2: 'Barrios y zonas de Barcelona donde instalamos red',
+                paragraphs: [
+                    'Cubrimos todos los distritos de Barcelona ciudad: Eixample (oficinas y hoteles), Gràcia (pisos y estudios), Sant Martí y el 22@ (startups y tech companies), Sants-Montjuïc y Zona Franca (industria y logística), Horta-Guinardó, Nou Barris, Sant Andreu, Sarrià-Sant Gervasi y Les Corts.',
+                    'También operamos en toda el área metropolitana de Barcelona: Badalona (sede central, tiempo de respuesta <20 min), L\'Hospitalet de Llobregat, Cornellà, Esplugues, Sant Joan Despí, Gavà, Castelldefels, Viladecans, Sant Boi, Molins de Rei, Martorell, Sant Cugat del Vallès, Cerdanyola, Sabadell, Terrassa, Mataró y Granollers.',
+                ],
+            },
         ],
     },
 
