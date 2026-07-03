@@ -4484,87 +4484,103 @@
       ],
       "content": [
         {
+          "type": "p",
+          "text": "Instalar cable de red Ethernet en casa mejora la velocidad, estabilidad y latencia de tu conexión a Internet. El Wi-Fi es conveniente, pero el cable ofrece velocidades hasta 10 veces más rápidas, latencia menor de 1 ms y cero interferencias. En esta guía explicamos cómo instalar cable de red en casa paso a paso, qué materiales necesitas, cuánto cuesta y cuándo conviene llamar a un profesional."
+        },
+        {
           "type": "h2",
           "text": "¿Por qué instalar cable de red en casa?"
         },
         {
           "type": "p",
-          "text": "El Wi-Fi es cómodo, pero el cable Ethernet ofrece velocidades más estables, menor latencia y mayor fiabilidad. Para gaming, streaming 4K, teletrabajo o domótica, un cableado estructurado marca la diferencia."
+          "text": "El cable Ethernet ofrece ventajas reales sobre el Wi-Fi: velocidades de hasta 10 Gbps (vs 1-2 Gbps del Wi-Fi 6 en condiciones ideales), latencia de menos de 1 ms (vs 10-30 ms del Wi-Fi), sin pérdidas por paredes ni interferencias de vecinos, y conexión siempre estable para videollamadas, teletrabajo y streaming 4K."
+        },
+        {
+          "type": "p",
+          "text": "En un piso típico de Barcelona, el Wi-Fi suele dar entre 200 y 500 Mbps en el mejor caso, mientras que un punto de red Cat6 a 1 metro del router da la velocidad contratada completa. Para gaming online, la diferencia entre 5 ms de latencia por cable y 25 ms por Wi-Fi es la diferencia entre ganar y perder."
         },
         {
           "type": "h2",
-          "text": "Tipos de cable: Cat6 vs Cat6A vs Cat7"
+          "text": "Tipos de cable de red: Cat6, Cat6A y Cat7 para casa"
+        },
+        {
+          "type": "p",
+          "text": "Para instalaciones domésticas en 2025 recomendamos Cat6A como estándar mínimo. Cat6 soporta 1 Gbps y es suficiente si tu fibra es de hasta 1 Gbps. Cat6A soporta 10 Gbps hasta 100 metros y es la opción inteligente si planeas contratar 10 Gbps en los próximos años o si usas NAS con conexión multi-gig."
         },
         {
           "type": "ul",
           "items": [
-            "Cat6 — hasta 1 Gbps a 100m. Ideal para la mayoría de hogares. Desde 95€/punto.",
-            "Cat6A — hasta 10 Gbps a 100m. Recomendado para futuras necesidades. Desde 115€/punto.",
-            "Cat7 — hasta 10 Gbps con blindaje extra. Máxima protección contra interferencias. Desde 140€/punto."
+            "Cat6 U/UTP — hasta 1 Gbps a 100 m. Ideal para la mayoría de hogares. Diámetro 5-6 mm. Precio instalado desde 95€/punto.",
+            "Cat6A U/FTP — hasta 10 Gbps a 100 m. Recomendado para futuras necesidades y PoE++. Diámetro 6-8 mm. Desde 115€/punto.",
+            "Cat7 — mismo rendimiento que Cat6A con conectores RJ45. No aporta ventajas reales en uso doméstico. Más caro y más rígido."
           ]
         },
         {
           "type": "h2",
-          "text": "¿Qué incluye cada punto de red?"
+          "text": "¿Qué incluye un punto de red profesional?"
         },
         {
           "type": "p",
-          "text": "Un punto de red profesional incluye: cable Ethernet de la categoría elegida, keystone RJ45, placa de pared, canaleta o tubo corrugado si es necesario, y verificación con equipo profesional."
+          "text": "Un punto de red profesional instalado por CableCore incluye: cable Ethernet de la categoría elegida tendido desde el switch o router, keystone RJ45 certificado, placa de pared doble con toma RJ45 y cubierta, prueba de continuidad y certificación del canal, y canaleta o tubo por donde va el cable. El cable queda oculto o bien ordenado en canaleta desde el origen hasta el punto."
         },
         {
           "type": "h2",
-          "text": "Tipos de instalación"
+          "text": "Tipos de instalación de cable de red en casa"
+        },
+        {
+          "type": "p",
+          "text": "La canalización determina el coste y el aspecto final de la instalación. Las opciones más habituales son:"
         },
         {
           "type": "ul",
           "items": [
-            "Superficial (canaleta) — 8€/m. Visible pero económica.",
-            "Techo técnico — 6€/m. Se oculta en el falso techo.",
-            "Empotrado existente — 12€/m. Usando conductos existentes.",
-            "Empotrado nuevo — 18€/m. Abriendo nueva roza."
+            "Canaleta superficial PVC (8€/m) — solución más económica y rápida. El cable queda visible pero ordenado en canaleta blanca o negra adherida a la pared o el rodapié. Perfecta para pisos en alquiler o cuando no se quiere hacer obra.",
+            "Falso techo / pladur (6€/m) — el cable se tiende por el espacio del falso techo o dentro del trasdosado. Instalación invisible, ideal para salones y despachos.",
+            "Empotrado en obra (15€/m) — el cable pasa por tubo corrugado dentro de la pared. Es la solución más limpia y duradera, pero requiere regata y posterior pintura. Recomendado en reformas integrales.",
+            "Tubo bajo suelo elevado (10€/m) — para suelos técnicos en oficinas o estudios, el cable va bajo el suelo con rosetas enrasadas."
           ]
         },
         {
           "type": "h2",
-          "text": "¿Cuánto cuesta instalar red en casa?"
+          "text": "¿Cuánto cuesta instalar cable de red en casa? Precios 2025"
         },
         {
           "type": "p",
-          "text": "Un hogar típico con 6–8 puntos de red Cat6 cuesta entre 800€ y 1.200€ (IVA incluido). Puedes calcular tu presupuesto exacto con nuestra calculadora de instalación."
-        },
-        {
-          "type": "tip",
-          "text": "💡 Usa nuestra calculadora gratuita para obtener un presupuesto detallado en segundos."
-        },
-        {
-          "type": "h2",
-          "text": "¿Puedo hacerlo yo mismo?"
-        },
-        {
-          "type": "p",
-          "text": "Si tienes experiencia en bricolaje puedes colocar canaletas o pasar cables. Pero para la terminación (crimpado RJ45, patch panel, verificación), recomendamos un profesional. Un punto mal terminado puede causar pérdida de velocidad y desconexiones."
-        },
-        {
-          "type": "h2",
-          "text": "¿Cuándo llamar a un profesional?"
+          "text": "El precio de instalar cable de red en casa depende del número de puntos, el tipo de cable y el tipo de canalización. Como referencia orientativa para Barcelona en 2025:"
         },
         {
           "type": "ul",
           "items": [
-            "Más de 4 puntos de red",
-            "Instalación empotrada",
-            "Necesitas rack y patch panel",
-            "Quieres verificación Fluke",
-            "Necesitas VLANs o red segmentada"
+            "1 punto de red Cat6 en canaleta: desde 95€ con materiales y mano de obra.",
+            "4 puntos Cat6 en canaleta superficial: desde 380-450€.",
+            "6-8 puntos Cat6 en canaleta + 1 rack de pared: desde 700-1.100€.",
+            "4 puntos Cat6A empotrado en obra nueva: desde 550-700€.",
+            "Hogar completo con router central, 8 puntos Cat6A y switch 8 puertos: desde 1.200-1.600€."
           ]
         },
         {
+          "type": "p",
+          "text": "Todos los precios incluyen visita técnica gratuita, materiales certificados, prueba de continuidad por punto y garantía de 5 años. Usa nuestra calculadora online para obtener un presupuesto personalizado en 2 minutos."
+        },
+        {
           "type": "h2",
-          "text": "Qué herramientas necesitas realmente"
+          "text": "Instalación de cable de red paso a paso"
         },
         {
           "type": "p",
-          "text": "El kit mínimo para una instalación doméstica incluye: crimpadora RJ45 (preferiblemente con guía de cable), sacapuntas para keystone (o herramienta de impacto 110), brida métrica para medir longitudes aproximadas, cúter y pelacables. Con estas herramientas se pueden instalar puntos de red en canaleta vista con acabado limpio. Si vas a perforar tabiques de obra, añade taladradora con broca de 20 mm y varilla guía pasacables."
+          "text": "Si decides instalar el cableado tú mismo, el proceso básico es: 1) Planificar la ubicación de cada punto de red y la ruta del cable. 2) Fijar la canaleta desde el router/switch hasta cada punto. 3) Tender el cable por la canaleta dejando 30 cm extra en cada extremo. 4) Terminar el keystone en la placa de pared siguiendo el esquema T568B. 5) Conectar el otro extremo al patch panel o directamente al switch. 6) Probar continuidad con un tester."
+        },
+        {
+          "type": "h2",
+          "text": "Herramientas necesarias para instalar cable de red"
+        },
+        {
+          "type": "p",
+          "text": "El kit mínimo para una instalación doméstica incluye: crimpadora RJ45 con guía de posicionamiento (15-30€), tester de continuidad básico (10-25€), brida o llave de cierre para canaleta (5€), pelacables o cuchilla de impacto para keystone (8-15€), y taladro con broca para pasar el cable entre habitaciones o instalar la canaleta."
+        },
+        {
+          "type": "p",
+          "text": "Para instalaciones más grandes o empotradas: nivel láser (50-100€), tubo corrugado para empotrar (0.30€/m), y varilla guía flexible para pasar cable por espacios cerrados (20-40€). Un técnico profesional añade a esto una crimpadora de impacto con cuchilla IDC, una certificadora de cable o tester avanzado que mide atenuación y NEXT."
         },
         {
           "type": "h2",
@@ -4572,27 +4588,71 @@
         },
         {
           "type": "p",
-          "text": "Al tender el cable, siempre deja un excedente de al menos 30 cm en el punto de usuario y 50 cm en el rack. Un cable demasiado corto que se queda a 5 cm de llegar al conector obliga a repasar toda la tirada. Los rollos de cable se venden en bobinas de 305 m — con 20-25 m por punto de media en una casa, un rollo cubre entre 12 y 15 puntos. No escatimes en cable."
+          "text": "Al tender el cable, siempre deja un excedente de al menos 30 cm en el punto de usuario (roseta) y 50 cm en el rack o switch. Los cortes prematuros son el error número uno en instalaciones domésticas. Un cable demasiado corto obliga a usar un empalme, que degrada el rendimiento y no está permitido en instalaciones certificadas Cat6 o superiores."
         },
         {
           "type": "h2",
-          "text": "Terminación correcta del conector keystone"
+          "text": "Cómo terminar un conector keystone RJ45 correctamente"
         },
         {
           "type": "p",
-          "text": "El keystone es el conector que se instala en la roseta de pared. Para terminarlo correctamente: pelar 4 cm de cubierta exterior sin tocar los pares, separar los 4 pares de colores, seguir el código T568B (el más habitual en Europa: naranja, naranja-blanco, verde, azul, azul-blanco, verde-blanco, marrón, marrón-blanco en los pines 1-8), y presionar con la herramienta de impacto. El par no debe destrenzarse más de 1,3 cm (Cat6) o 0,6 cm (Cat6A) desde el punto de terminación — ese trenzado es lo que mantiene los parámetros de diafonía."
+          "text": "El keystone es el conector que se instala en la roseta de pared. Para terminarlo correctamente: pela 3-4 cm de la vaina exterior del cable sin dañar los pares. Separa los 4 pares (azul, naranja, verde, marrón con sus respectivos blancos). Sigue el esquema T568B (el estándar en España): blanco-naranja, naranja, blanco-verde, azul, blanco-azul, verde, blanco-marrón, marrón. Inserta cada hilo en su ranura del keystone y cierra con la cuchilla de impacto. El resultado debe quedar firme sin hilos sueltos."
         },
         {
           "type": "h2",
-          "text": "Cuándo llamar a un profesional en lugar de hacerlo tú mismo"
+          "text": "¿Puedo instalar el cable de red yo mismo o necesito un profesional?"
         },
         {
           "type": "p",
-          "text": "La instalación DIY funciona para 2-4 puntos en canaleta vista en una vivienda. A partir de ahí, los costes ocultos (tiempo, errores, material desperdiciado) superan ampliamente el ahorro frente a un instalador profesional. Además, si la instalación no certifica Cat6, no podrás aprovechar switches de 2,5 o 10 Gbps ni garantizar el rendimiento en los próximos 10-15 años. Para instalaciones de más de 6 puntos o en edificios de obra nueva, contrata un profesional."
+          "text": "La instalación DIY funciona para 2-4 puntos en canaleta visible en una vivienda pequeña. A partir de ahí, los beneficios de contratar un profesional superan el ahorro: un instalador tiene las herramientas, los materiales al por mayor y la experiencia para terminar el trabajo en la mitad del tiempo y con garantía. El coste de un error DIY (cable mal terminado, trayecto mal planificado, cable pinchado al pasar tubo) puede superar el precio de la instalación profesional."
+        },
+        {
+          "type": "ul",
+          "items": [
+            "DIY adecuado: 2-4 puntos en canaleta visible, vivienda pequeña, experiencia previa.",
+            "Profesional recomendado: más de 4 puntos, instalación empotrada, reforma integral, hogar grande o piso de alquiler donde no puedes hacer obra.",
+            "Profesional obligatorio: instalaciones certificadas Cat6A/Cat7, racks, switch gestionable, VLANs, fibra óptica."
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "Preguntas frecuentes (FAQ) sobre instalación de cable de red en casa"
+        },
+        {
+          "type": "h3",
+          "text": "¿Qué cable de red es mejor para casa en 2025: Cat6 o Cat6A?"
+        },
+        {
+          "type": "p",
+          "text": "Para uso doméstico estándar (fibra hasta 1 Gbps, streaming, teletrabajo), Cat6 es suficiente y más económico. Si tienes o planeas contratar fibra simétrica de 10 Gbps, usas NAS con Multi-Gig o quieres una instalación a prueba de futuro, Cat6A es la mejor inversión. La diferencia de coste por punto instalado es de unos 15-20€."
+        },
+        {
+          "type": "h3",
+          "text": "¿Cuántos puntos de red necesito en casa?"
+        },
+        {
+          "type": "p",
+          "text": "Planifica un mínimo de un punto por televisor/pantalla, uno por despacho/zona de trabajo y uno cerca del router WiFi (para el propio router o para conectar un punto de acceso WiFi). Una vivienda de 3 habitaciones típica necesita entre 6 y 10 puntos. Es más barato instalar todos los puntos en una sola obra que añadir puntos sueltos más adelante."
+        },
+        {
+          "type": "h3",
+          "text": "¿Se puede instalar cable de red sin hacer obra en un piso de alquiler?"
+        },
+        {
+          "type": "p",
+          "text": "Sí. La canaleta superficial PVC permite instalar cable de red sin taladrar paredes estructurales (solo puntos de fijación pequeños). Se retira fácilmente al dejar el piso. También existe cable plano ultra-thin que se pasa bajo puertas y por las juntas de rodapié, aunque sacrifica algo de rendimiento."
+        },
+        {
+          "type": "h3",
+          "text": "¿Cuánto tiempo tarda la instalación de cable de red en una vivienda?"
+        },
+        {
+          "type": "p",
+          "text": "Un profesional instala entre 4 y 8 puntos de red en una vivienda en 4-8 horas (una jornada). Una instalación doméstica completa con rack, switch y 8-12 puntos suele completarse en 1-2 días. Las instalaciones empotradas en reforma pueden requerir 2-3 días más por el tiempo de secado de los yesos."
         },
         {
           "type": "tip",
-          "text": "Si vas a hacer una reforma integral de la vivienda, ese es el momento ideal para instalar el cableado estructurado. Con tabiques abiertos y falsos techos sin cerrar, el coste de instalación baja un 30-40% respecto a una obra terminada. Planifica los puntos de red en la misma reunión que las tomas de corriente."
+          "text": "Consejo CableCore: si estás en plena reforma de tu piso, ese es el momento ideal para instalar el cableado de red. Con tabiques abiertos y falsos techos sin cerrar, el coste de instalación baja un 30-40% respecto a una obra terminada. Planifica los puntos de red en la misma reunión que las tomas de corriente."
         }
       ]
     },
