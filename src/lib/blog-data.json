@@ -3330,8 +3330,8 @@
     "readTime": "3 min",
     "es": {
       "title": "Cuántos puntos de red necesito y cuánto cuesta instalarlos en Barcelona",
-      "metaTitle": "Puntos de Red en Barcelona: Precios y Guía Práctica 2025",
-      "metaDescription": "Descubre cuántos puntos de red necesitas y su precio en Barcelona. Contacta al +34 605 974 605 para más información.",
+      "metaTitle": "Precio Punto de Red Barcelona 2025 ⚡ Desde 95€ instalado — CableCore",
+      "metaDescription": "¿Cuánto cuesta instalar un punto de red en Barcelona? Desde 95€/punto Cat6 instalado. Presupuesto gratis en 24h. +500 instalaciones. Técnicos propios. ☎ +34 605 974 605",
       "excerpt": "Una guía práctica para determinar cuántos puntos de red necesitas para tu hogar u oficina en Barcelona, incluyendo precios y consejos útiles.",
       "category": "Guías",
       "tags": [],
@@ -4472,8 +4472,8 @@
     "readTime": "4 min",
     "es": {
       "title": "Cómo instalar cable de red en casa: guía completa",
-      "metaTitle": "Cómo instalar cable de red en casa — Guía profesional 2024",
-      "metaDescription": "Guía paso a paso para instalar cable de red Ethernet en tu hogar. Cat6 vs Cat6A, herramientas necesarias, coste y consejos profesionales.",
+      "metaTitle": "Cómo Instalar Cable de Red en Casa: Guía Paso a Paso 2025 [+Precios]",
+      "metaDescription": "Guía completa para instalar cable de red Ethernet Cat6 en casa: herramientas, pasos, coste por punto y cuándo contratar un profesional. Instaladores con +500 proyectos en Barcelona.",
       "excerpt": "Todo lo que necesitas saber para cablear tu hogar con Ethernet: tipos de cable, herramientas, costes y cuándo llamar a un profesional.",
       "category": "Guías",
       "tags": [
@@ -4598,8 +4598,8 @@
     },
     "en": {
       "title": "How to install network cable at home: complete guide",
-      "metaTitle": "How to install network cable at home — Professional guide 2024",
-      "metaDescription": "Step-by-step guide to installing Ethernet cable in your home. Cat6 vs Cat6A, tools needed, cost and professional tips.",
+      "metaTitle": "How to Install Network Cable at Home: Step-by-Step Guide 2025",
+      "metaDescription": "Install Cat6 network cable at home yourself or hire a professional. Steps, tools needed, cost per point and when DIY makes sense. Updated guide 2025.",
       "excerpt": "Everything you need to know about wiring your home with Ethernet: cable types, tools, costs and when to call a professional.",
       "category": "Guides",
       "tags": [
@@ -4847,8 +4847,8 @@
     "readTime": "3 min",
     "es": {
       "title": "Cat6 vs Cat6A vs Cat7: ¿cuál elegir?",
-      "metaTitle": "Cat6 vs Cat6A vs Cat7 — Diferencias, precios y recomendaciones",
-      "metaDescription": "Comparativa completa entre cables Cat6, Cat6A y Cat7. Velocidades, precios, usos recomendados.",
+      "metaTitle": "Cat6 vs Cat6A vs Cat7: Diferencias, Precios y Cuál Elegir (2025)",
+      "metaDescription": "Comparativa técnica Cat6 vs Cat6A vs Cat7. Velocidades reales, precios en Barcelona, pros y contras. Instaladores expertos responden: ¿cuál necesitas? ✓ Guía actualizada 2025.",
       "excerpt": "Comparativa detallada entre los tres cables Ethernet más populares: velocidad, precio, blindaje y para qué sirve cada uno.",
       "category": "Comparativas",
       "tags": [
@@ -4859,105 +4859,181 @@
       ],
       "content": [
         {
+          "type": "p",
+          "text": "Cat6, Cat6A y Cat7 son los tres cables de red más instalados hoy en hogar, oficina e industria. Elegir mal puede suponer repasar el cableado en 5 años o gastar dinero innecesariamente en prestaciones que nunca usarás. Esta guía, escrita por técnicos de CableCore con más de 500 instalaciones en Barcelona, explica con datos reales cuándo usar cada uno."
+        },
+        {
           "type": "h2",
-          "text": "Tabla comparativa rápida"
+          "text": "Tabla comparativa: Cat6 vs Cat6A vs Cat7"
         },
         {
           "type": "p",
-          "text": "Cat6: 1 Gbps, hasta 250 MHz, sin blindaje estándar, 95€/punto. Cat6A: 10 Gbps, hasta 500 MHz, blindaje parcial, 115€/punto. Cat7: 10 Gbps, hasta 600 MHz, blindaje completo (S/FTP), 140€/punto."
-        },
-        {
-          "type": "h2",
-          "text": "Cat6 — El estándar para hogares"
-        },
-        {
-          "type": "p",
-          "text": "Cat6 soporta velocidades de hasta 1 Gbps a 100 metros. Es suficiente para la mayoría de hogares y pequeñas oficinas."
-        },
-        {
-          "type": "h2",
-          "text": "Cat6A — La inversión a futuro"
-        },
-        {
-          "type": "p",
-          "text": "Cat6A es la opción recomendada para quien quiere preparar su red para el futuro. Soporta 10 Gbps a 100 metros."
-        },
-        {
-          "type": "h2",
-          "text": "Cat7 — Máxima protección"
-        },
-        {
-          "type": "p",
-          "text": "Cat7 incluye blindaje completo (S/FTP). Es la mejor opción para entornos con muchas interferencias electromagnéticas: naves industriales, hospitales."
-        },
-        {
-          "type": "h2",
-          "text": "¿Cuál elegir?"
+          "text": "Resumen rápido para quien no quiere leer la guía completa: Cat6 = 1 Gbps estándar, ideal para hogares. Cat6A = 10 Gbps a 100 metros, estándar profesional. Cat7 = blindaje premium con matices importantes que explicamos más abajo."
         },
         {
           "type": "ul",
           "items": [
-            "Hogar: Cat6 (suficiente para 99% de necesidades)",
-            "Oficina: Cat6A (preparado para 10 Gbps)",
-            "Industrial/Clínica: Cat7 (máxima protección)"
+            "Cat6 UTP — 1 Gbps / 100m, 250 MHz, sin blindaje, ~95€/punto instalado en Barcelona",
+            "Cat6A UTP/S-FTP — 10 Gbps / 100m, 500 MHz, blindaje parcial, ~115€/punto instalado",
+            "Cat7 S/FTP — 10 Gbps / 100m, 600 MHz, blindaje completo, ~140€/punto (con matiz: ver más abajo)"
           ]
         },
         {
+          "type": "h2",
+          "text": "Cat6: el cable de red para hogares y remodelaciones"
+        },
+        {
+          "type": "p",
+          "text": "Cat6 (también escrito Cat 6 o categoría 6) soporta 1 Gbps a los 100 metros estándar y hasta 10 Gbps en distancias inferiores a 55 metros bajo condiciones ideales. Ancho de banda de 250 MHz. Compatible al 100% con enchufes RJ45 universales y con todos los switches, routers y NAS del mercado."
+        },
+        {
+          "type": "p",
+          "text": "En la práctica, es el cable correcto para: pisos en reforma, ampliación de la red doméstica existente, instalaciones donde la conexión de internet no supera 1 Gbps, y presupuestos ajustados donde el ahorro de 20-30€ por punto importa."
+        },
+        {
+          "type": "p",
+          "text": "El cable Cat6 tiene un diámetro exterior de 5,7-6,4 mm y es más flexible que el Cat6A, lo que facilita su paso por canaletas estrechas. En una instalación doméstica de 6 puntos, la diferencia en material entre Cat6 y Cat6A suele estar en 80-150€ — algo a tener en cuenta pero no determinante en el total del presupuesto."
+        },
+        {
+          "type": "h2",
+          "text": "Cat6A: el estándar profesional para oficinas y obra nueva"
+        },
+        {
+          "type": "p",
+          "text": "Cat6A (Augmented Category 6) garantiza 10 Gbps a 100 metros sin restricciones. Ancho de banda de 500 MHz. Es el cable que especifican los arquitectos de red en cualquier instalación de cierta entidad desde 2020, y el que CableCore recomienda como mínimo para toda obra nueva o reforma integral."
+        },
+        {
+          "type": "p",
+          "text": "La diferencia práctica respecto a Cat6 es clara cuando hay switches 10G (cada vez más asequibles) o servidores NAS. Una instalación Cat6A mantiene 10 Gbps entre el NAS y cada puesto de trabajo sin limitaciones de distancia. Con Cat6, la misma instalación funciona a 1 Gbps o a 10 Gbps solo si las tiradas son cortas."
+        },
+        {
+          "type": "p",
+          "text": "Cat6A viene en dos variantes: UTP (sin blindaje, el más habitual en obra civil) y S/FTP (doble blindaje, para entornos con interferencias: hospitales, naves industriales, salas técnicas). El cable S/FTP es más rígido y requiere más espacio en canaleta, pero ofrece inmunidad total a interferencias electromagnéticas."
+        },
+        {
           "type": "tip",
-          "text": "📞 Llámanos al +34 605 974 605 o usa nuestra calculadora para comparar precios."
+          "text": "Recomendación CableCore: en toda instalación nueva, usa Cat6A UTP como mínimo. El sobrecoste frente a Cat6 en una instalación de 15 puntos es de 250-350€ en material — menos del 10% del presupuesto total — pero te garantiza 10 Gbps para los próximos 15-20 años."
         },
         {
           "type": "h2",
-          "text": "La confusión del 'Cat7': por qué probablemente no lo necesitas"
+          "text": "Cat7: lo que nadie te cuenta"
         },
         {
           "type": "p",
-          "text": "Cat7 existe como estándar (ISO/IEC 11801 Class F) y tiene especificaciones técnicas impresionantes: 600 MHz de banda, pantalla S/FTP completa. El problema es que requiere conectores GG45 o TERA — no compatibles con los RJ45 universales — y que los equipos activos (switches, routers, servidores) usan RJ45. En la práctica, las instalaciones 'Cat7' en España usan cable Cat7 con conectores RJ45, lo que los degrada automáticamente a rendimiento Cat6A según la norma. Es decir, pagas más por un cable que no certifica como Cat7. Nuestra recomendación: Cat6A siempre sobre Cat7 para cableado estructurado convencional."
-        },
-        {
-          "type": "h2",
-          "text": "Cat6 vs Cat6A: la diferencia que importa a 10 Gbps"
+          "text": "Cat7 (Class F según ISO/IEC 11801) es el cable más incomprendido del mercado. Sus especificaciones son impresionantes: 600 MHz de ancho de banda, blindaje S/FTP completo con pantalla individual por par y pantalla global. Pero tiene un problema fundamental para la gran mayoría de instalaciones."
         },
         {
           "type": "p",
-          "text": "Cat6 (250 MHz) soporta 10GBASE-T pero solo hasta 37-55 metros, dependiendo del nivel de diafonía alienada (AXT). Cat6A (500 MHz) soporta 10GBASE-T hasta 100 metros sin restricciones. Para distancias inferiores a 30 metros donde no haya cables de la misma categoría en paralelo, Cat6 puede ser suficiente para 10G. Pero en una instalación nueva donde no conoces las distancias finales ni los recorridos exactos, Cat6A es la opción correcta: garantiza 10G en cualquier longitud estándar."
+          "text": "Cat7 requiere conectores GG45 o TERA para certificar como Cat7. Estos conectores NO son RJ45 estándar, y prácticamente ningún dispositivo de consumo o empresa (switches, routers, NAS, PCs) los incorpora. Resultado: cuando se instala Cat7 con conectores RJ45 convencionales — que es lo que hace el 99% de los instaladores en España — el sistema baja automáticamente a rendimiento Cat6A según la norma. Pagas el 50% más por el cable y obtienes las mismas prestaciones que Cat6A."
+        },
+        {
+          "type": "p",
+          "text": "¿Cuándo tiene sentido Cat7 real? En centros de datos con equipos activos que soporten GG45 o TERA, en instalaciones industriales con muy alta densidad de interferencias donde el blindaje adicional justifica el coste, y en proyectos donde el cliente especifica explícitamente Cat7 por política interna. En el 95% de los casos de oficina, hogar e instalación comercial, Cat6A es técnica y económicamente superior."
         },
         {
           "type": "h2",
-          "text": "Precio y disponibilidad en Barcelona (2025)"
+          "text": "La pregunta que importa: Cat6 vs Cat6A en tu instalación"
+        },
+        {
+          "type": "p",
+          "text": "Esta es la decisión real para la mayoría de proyectos. Cat7 queda descartado por lo explicado arriba. La elección es entre Cat6 y Cat6A."
         },
         {
           "type": "ul",
           "items": [
-            "Cable Cat6 UTP 305m Belden, Legrand o Panduit: 90-130 €/bobina (0,30-0,43 €/m)",
-            "Cable Cat6A UTP 305m de marcas equivalentes: 180-250 €/bobina (0,59-0,82 €/m)",
-            "Cable Cat6A S/FTP 305m: 300-420 €/bobina (0,98-1,38 €/m)",
-            "Cable 'Cat7' con conectores RJ45 (en realidad Cat6A funcional): no recomendado",
-            "Conectores keystone Cat6: 1,5-3 € por unidad — Cat6A: 3,5-6 € por unidad"
+            "Hogar con router de hasta 1 Gbps y sin NAS: Cat6 es suficiente",
+            "Hogar con NAS, múltiples streams 4K, o router >1 Gbps: Cat6A",
+            "Oficina de cualquier tamaño: Cat6A sin dudarlo",
+            "Nave industrial o entorno con interferencias: Cat6A S/FTP",
+            "Reforma integral o edificio nuevo: Cat6A, siempre",
+            "Ampliación de instalación Cat6 existente y funcional: Cat6 para mantener uniformidad"
           ]
         },
         {
           "type": "h2",
-          "text": "Decisión práctica: ¿qué instalo hoy?"
+          "text": "Precios reales de instalación en Barcelona (2025)"
         },
         {
           "type": "p",
-          "text": "Para obra nueva o reforma: Cat6A sin dudarlo. El sobrecoste frente a Cat6 en una instalación de 30 puntos es de 400-600 € en material — una fracción del total. A cambio, tienes garantizada la categoría para 10GBASE-T durante los próximos 20 años sin importar cómo evolucionen los equipos activos."
+          "text": "Los precios que verás online a menudo son solo el material. El precio que importa incluye mano de obra, canaletas, rosetas, parcheo en el rack o caja de distribución y testeo."
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Punto Cat6 instalado (incluye roseta, patcheo, testeo): desde 95€ en Barcelona",
+            "Punto Cat6A UTP instalado: desde 115€",
+            "Punto Cat6A S/FTP instalado: desde 135€",
+            "Punto Cat7 con conectores RJ45 (rendimiento Cat6A): desde 140€",
+            "Instalación de rack + patch panel 24 puertos (sin cables): 350-550€",
+            "Switch 8 puertos 10G SFP+: 200-400€ (para sacar partido al Cat6A)"
+          ]
         },
         {
           "type": "p",
-          "text": "Para ampliar una instalación Cat6 existente en buen estado: añade los nuevos puntos en Cat6A y documenta qué puntos son de cada categoría. Los switches actuales negocian la velocidad por puerto automáticamente (autonegociación), así que Cat6 y Cat6A pueden coexistir en el mismo switch sin problemas."
+          "text": "En una instalación doméstica de 8 puntos, elegir Cat6A sobre Cat6 supone unos 160€ más en el presupuesto final. En una oficina de 20 puestos, la diferencia asciende a unos 400€. Comparado con el coste de repasar el cableado en 5-10 años si la tecnología avanza más rápido de lo esperado, siempre recomendamos Cat6A."
+        },
+        {
+          "type": "h2",
+          "text": "Preguntas frecuentes (FAQ)"
+        },
+        {
+          "type": "h3",
+          "text": "¿Es Cat7 mejor que Cat6A?"
+        },
+        {
+          "type": "p",
+          "text": "En papel sí, en la práctica no. Cat7 con conectores RJ45 (que es lo habitual en instalaciones domésticas y de oficina) rinde igual que Cat6A según la normativa. Si alguien te ofrece Cat7 como upgrade premium, pide que te explique qué conectores usa. Si son RJ45 estándar, estás pagando de más."
+        },
+        {
+          "type": "h3",
+          "text": "¿Puedo mezclar Cat6 y Cat6A en la misma red?"
+        },
+        {
+          "type": "p",
+          "text": "Sí. Los switches modernos tienen autonegociación por puerto, de modo que cada puerto corre a la máxima velocidad soportada por el cable conectado. Un puerto Cat6A irá a 10 Gbps y un puerto Cat6 irá a 1 Gbps, en el mismo switch sin problemas."
+        },
+        {
+          "type": "h3",
+          "text": "¿Cat6A funciona con mi router WiFi 6?"
+        },
+        {
+          "type": "p",
+          "text": "Sí. Cat6A es perfectamente compatible con cualquier router, switch o dispositivo con conector RJ45. El ancho de banda del cable no limita la velocidad del WiFi — la interfaz aérea del WiFi 6 trabaja a hasta 9,6 Gbps teóricos, y Cat6A soporta 10 Gbps, por lo que no hay cuello de botella por el cable."
+        },
+        {
+          "type": "h3",
+          "text": "¿Cuánto dura una instalación de Cat6A?"
+        },
+        {
+          "type": "p",
+          "text": "El cableado estructurado tiene una vida útil de 20-25 años si se instala correctamente. Los conectores y patch panels pueden necesitar sustitución antes, pero el cable en sí puede aguantar décadas dentro de las paredes o en canaleta. Es una infraestructura de larga duración — razón de más para instalar Cat6A hoy."
+        },
+        {
+          "type": "h3",
+          "text": "¿Cat6A sirve para cámaras de seguridad PoE?"
+        },
+        {
+          "type": "p",
+          "text": "Sí, Cat6A es la elección correcta para cámaras IP con PoE (Power over Ethernet). Admite hasta 90W con estándar PoE++ (802.3bt), suficiente para cámaras PTZ de alta potencia. Si las cámaras están a más de 55 metros del switch, Cat6A garantiza la alimentación correcta; con Cat6 UTP puede haber caída de tensión en tiradas largas."
+        },
+        {
+          "type": "h3",
+          "text": "¿Necesito cable apantallado (S/FTP) en mi oficina?"
+        },
+        {
+          "type": "p",
+          "text": "En oficinas convencionales sin maquinaria industrial cercana ni alta densidad de cables de potencia, el Cat6A UTP (sin apantallamiento) es suficiente. El apantallamiento S/FTP se justifica en: naves industriales con equipos de alta potencia, hospitales (IRM, equipos de rayos X), salas con muchos UPS o motores eléctricos, y edificios con cableado eléctrico sin canalización separada."
         },
         {
           "type": "tip",
-          "text": "Si un instalador te propone Cat5e en 2025 para una instalación nueva, descártalo. Cat5e (100 MHz, máximo 1 Gbps) fue el estándar de hace 20 años. Hoy es insuficiente para cualquier aplicación que no sea VoIP o IoT de bajo ancho de banda."
+          "text": "¿No sabes qué elegir para tu proyecto en Barcelona? Llámanos al +34 605 974 605 o usa nuestra calculadora online. En 5 minutos te decimos qué cable necesitas y el precio exacto de la instalación."
         }
       ]
     },
     "en": {
       "title": "Cat6 vs Cat6A vs Cat7: which one to choose?",
-      "metaTitle": "Cat6 vs Cat6A vs Cat7 — Differences, prices and recommendations",
-      "metaDescription": "Complete comparison between Cat6, Cat6A and Cat7 cables. Speeds, prices and recommended uses.",
+      "metaTitle": "Cat6 vs Cat6A vs Cat7: Differences, Prices & Which to Choose (2025)",
+      "metaDescription": "Technical comparison of Cat6 vs Cat6A vs Cat7 cables. Real speeds, prices, pros and cons. Expert network installers answer: which cable do you need? ✓ Updated guide 2025.",
       "excerpt": "Detailed comparison of the three most popular Ethernet cables: speed, price, shielding and what each one is for.",
       "category": "Comparisons",
       "tags": [
@@ -4968,81 +5044,127 @@
       ],
       "content": [
         {
+          "type": "p",
+          "text": "Cat6, Cat6A and Cat7 are the three most commonly installed network cables today in homes, offices and industry. Choosing wrong can mean rerouting cables in 5 years or wasting money on performance you'll never use. This guide, written by CableCore technicians with 500+ installations in Barcelona, explains with real data when to use each type."
+        },
+        {
           "type": "h2",
-          "text": "Quick comparison table"
+          "text": "Quick comparison: Cat6 vs Cat6A vs Cat7"
         },
         {
           "type": "p",
-          "text": "Cat6: 1 Gbps, up to 250 MHz, no standard shielding, 95€/point. Cat6A: 10 Gbps, up to 500 MHz, partial shielding, 115€/point. Cat7: 10 Gbps, up to 600 MHz, full shielding (S/FTP), 140€/point."
-        },
-        {
-          "type": "h2",
-          "text": "Cat6 — The standard for homes"
-        },
-        {
-          "type": "p",
-          "text": "Cat6 supports speeds up to 1 Gbps at 100 meters. It is sufficient for most homes and small offices."
-        },
-        {
-          "type": "h2",
-          "text": "Cat6A — Future-proof investment"
-        },
-        {
-          "type": "p",
-          "text": "Cat6A is the recommended choice for those who want to prepare their network for the future. Supports 10 Gbps at 100 meters."
-        },
-        {
-          "type": "h2",
-          "text": "Cat7 — Maximum protection"
-        },
-        {
-          "type": "p",
-          "text": "Cat7 includes full shielding (S/FTP). It is the best option for environments with heavy electromagnetic interference: warehouses, hospitals."
-        },
-        {
-          "type": "h2",
-          "text": "Which one to choose?"
+          "text": "Short version: Cat6 = 1 Gbps standard, ideal for homes. Cat6A = 10 Gbps at 100 meters, professional standard. Cat7 = premium shielding with important nuances we explain below."
         },
         {
           "type": "ul",
           "items": [
-            "Home: Cat6 (enough for 99% of needs)",
-            "Office: Cat6A (ready for 10 Gbps)",
-            "Industrial/Clinic: Cat7 (maximum protection)"
+            "Cat6 UTP — 1 Gbps / 100m, 250 MHz, no shielding, ~€95/point installed in Barcelona",
+            "Cat6A UTP/S-FTP — 10 Gbps / 100m, 500 MHz, partial shielding, ~€115/point installed",
+            "Cat7 S/FTP — 10 Gbps / 100m, 600 MHz, full shielding, ~€140/point (with caveats below)"
           ]
         },
         {
+          "type": "h2",
+          "text": "Cat6: the network cable for homes and renovations"
+        },
+        {
+          "type": "p",
+          "text": "Cat6 supports 1 Gbps at 100 meters and up to 10 Gbps in distances under 55 meters under ideal conditions. 250 MHz bandwidth. 100% compatible with standard RJ45 jacks and all switches, routers and NAS devices on the market."
+        },
+        {
+          "type": "p",
+          "text": "In practice, it's the right cable for: apartment renovations, expanding existing home networks, installations where internet speed doesn't exceed 1 Gbps, and tight budgets where saving €20-30 per point matters."
+        },
+        {
+          "type": "h2",
+          "text": "Cat6A: the professional standard for offices and new construction"
+        },
+        {
+          "type": "p",
+          "text": "Cat6A guarantees 10 Gbps at 100 meters without restrictions. 500 MHz bandwidth. It's the cable that network architects specify for any significant installation since 2020, and what CableCore recommends as the minimum for all new construction or complete renovation."
+        },
+        {
+          "type": "p",
+          "text": "The practical difference from Cat6 becomes clear with 10G switches (increasingly affordable) or NAS servers. A Cat6A installation maintains 10 Gbps between NAS and every workstation without distance limitations. With Cat6, the same installation runs at 1 Gbps or 10 Gbps only if cable runs are short."
+        },
+        {
           "type": "tip",
-          "text": "📞 Call us at +34 605 974 605 or use our calculator to compare prices."
+          "text": "CableCore recommendation: in any new installation, use Cat6A UTP as minimum. The extra cost over Cat6 in a 15-point installation is €250-350 in materials — less than 10% of the total budget — but guarantees 10 Gbps for the next 15-20 years."
         },
         {
           "type": "h2",
-          "text": "The Cat7 confusion: why you probably don't need it"
+          "text": "Cat7: what nobody tells you"
         },
         {
           "type": "p",
-          "text": "Cat7 (ISO/IEC 11801 Class F) has impressive specs: 600 MHz bandwidth, full S/FTP screening. The problem: it requires GG45 or TERA connectors — not compatible with universal RJ45. Real-world 'Cat7' installations in Spain use Cat7 cable with RJ45 connectors, automatically degrading performance to Cat6A per the standard. You pay more for cable that doesn't certify as Cat7. Our recommendation: always Cat6A over Cat7 for conventional structured cabling."
+          "text": "Cat7 requires GG45 or TERA connectors to certify as Cat7. These connectors are NOT standard RJ45, and virtually no consumer or business device (switches, routers, NAS, PCs) includes them. Result: when Cat7 is installed with standard RJ45 connectors — which 99% of installers in Spain do — the system automatically drops to Cat6A performance per specification. You pay 50% more for cable and get the same performance as Cat6A."
         },
         {
           "type": "h2",
-          "text": "Cat6 vs Cat6A: the difference that matters at 10 Gbps"
-        },
-        {
-          "type": "p",
-          "text": "Cat6 (250 MHz) supports 10GBASE-T but only up to 37-55 m depending on alien crosstalk (AXT) levels. Cat6A (500 MHz) supports 10GBASE-T up to 100 m without restrictions. For new installations where final distances and routes are unknown, Cat6A is always the right choice: guaranteed 10G at any standard length."
+          "text": "Cat6 vs Cat6A: the decision that matters"
         },
         {
           "type": "ul",
           "items": [
-            "Cat6 UTP 305m Belden/Legrand/Panduit: 90-130 €/reel (0.30-0.43 €/m)",
-            "Cat6A UTP 305m equivalent brands: 180-250 €/reel (0.59-0.82 €/m)",
-            "Cat6A S/FTP 305m: 300-420 €/reel (0.98-1.38 €/m)",
-            "Cat6 keystone connectors: 1.5-3 € each — Cat6A: 3.5-6 € each"
+            "Home with router up to 1 Gbps and no NAS: Cat6 is sufficient",
+            "Home with NAS, multiple 4K streams, or router >1 Gbps: Cat6A",
+            "Office of any size: Cat6A without hesitation",
+            "Industrial facility or environment with interference: Cat6A S/FTP",
+            "Complete renovation or new building: Cat6A, always"
           ]
         },
         {
+          "type": "h2",
+          "text": "Real installation prices in Barcelona (2025)"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Cat6 point installed (includes rosette, patching, testing): from €95 in Barcelona",
+            "Cat6A UTP point installed: from €115",
+            "Cat6A S/FTP point installed: from €135",
+            "24-port rack + patch panel installation: €350-550"
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "Frequently asked questions (FAQ)"
+        },
+        {
+          "type": "h3",
+          "text": "Is Cat7 better than Cat6A?"
+        },
+        {
+          "type": "p",
+          "text": "On paper yes, in practice no. Cat7 with RJ45 connectors (standard in home and office installations) performs the same as Cat6A per specification. If someone offers you Cat7 as a premium upgrade, ask what connectors they'll use. If they're standard RJ45, you're overpaying."
+        },
+        {
+          "type": "h3",
+          "text": "Can I mix Cat6 and Cat6A on the same network?"
+        },
+        {
+          "type": "p",
+          "text": "Yes. Modern switches use per-port autonegotiation, so each port runs at the maximum speed supported by the connected cable. A Cat6A port runs at 10 Gbps and a Cat6 port at 1 Gbps, on the same switch without issues."
+        },
+        {
+          "type": "h3",
+          "text": "Does Cat6A work with my WiFi 6 router?"
+        },
+        {
+          "type": "p",
+          "text": "Yes. Cat6A is fully compatible with any router, switch or device with an RJ45 connector. The cable bandwidth doesn't limit WiFi speed — WiFi 6 works at up to 9.6 Gbps theoretical, and Cat6A supports 10 Gbps, so there's no bottleneck from the cable."
+        },
+        {
+          "type": "h3",
+          "text": "Is Cat6A suitable for PoE security cameras?"
+        },
+        {
+          "type": "p",
+          "text": "Yes, Cat6A is the right choice for IP cameras with PoE. It supports up to 90W with PoE++ (802.3bt) standard, sufficient for high-power PTZ cameras. If cameras are more than 55 meters from the switch, Cat6A guarantees proper power delivery; with Cat6 UTP there may be voltage drop on long runs."
+        },
+        {
           "type": "tip",
-          "text": "If an installer proposes Cat5e in 2025 for a new installation, reject them. Cat5e (100 MHz, max 1 Gbps) was the standard 20 years ago. It is insufficient for anything beyond VoIP or low-bandwidth IoT today."
+          "text": "Not sure what to choose for your project in Barcelona? Call us at +34 605 974 605 or use our online calculator. We'll tell you exactly what cable you need and the precise installation price in 5 minutes."
         }
       ]
     },
@@ -5519,8 +5641,8 @@
     "readTime": "3 min",
     "es": {
       "title": "Qué es el cableado estructurado y por qué lo necesitas",
-      "metaTitle": "Qué es cableado estructurado — Guía completa para empresas",
-      "metaDescription": "Qué es el cableado estructurado, cómo funciona y por qué tu empresa necesita una red profesional.",
+      "metaTitle": "Qué es el Cableado Estructurado: Guía Completa 2025 para Empresas",
+      "metaDescription": "Cableado estructurado: qué es, cómo funciona, normativa TIA-568 y cuánto cuesta instalar en Barcelona. Guía técnica con ejemplos reales de CableCore, especialistas con +500 proyectos.",
       "excerpt": "El cableado estructurado es la base de toda infraestructura de red moderna. Descubre qué es y por qué lo necesitas.",
       "category": "Educación",
       "tags": [
@@ -5530,78 +5652,69 @@
       ],
       "content": [
         {
+          "type": "p",
+          "text": "El cableado estructurado es el sistema de cableado de red estandarizado que organiza todos los cables, conectores y equipos de telecomunicaciones de un edificio o empresa siguiendo una arquitectura jerárquica definida por las normas TIA-568 (ANSI) y EN 50173 (CENELEC/ISO). A diferencia de una instalación de red ad-hoc, el cableado estructurado es independiente del fabricante de equipos y tiene una vida útil de 15-25 años."
+        },
+        {
           "type": "h2",
-          "text": "¿Qué es el cableado estructurado?"
+          "text": "¿Qué es exactamente el cableado estructurado?"
         },
         {
           "type": "p",
-          "text": "Es un sistema de cableado de red estandarizado que conecta todos los dispositivos de un edificio a través de una infraestructura organizada, comprobada y fácil de mantener."
+          "text": "Cuando decimos que una empresa tiene cableado estructurado, significa que su red física (los cables y conectores) sigue un esquema normalizado: los puestos de trabajo están conectados a rosetas Cat6 o Cat6A, que van mediante cable horizontal hasta un panel de parcheo en el armario de comunicaciones, que a su vez conecta con el switch. Este recorrido predecible hace posible identificar, añadir o eliminar puestos sin rediseñar la red."
+        },
+        {
+          "type": "p",
+          "text": "El término \"estructurado\" significa que el sistema es independiente de la aplicación que lo usa. El mismo cableado sirve para datos Ethernet, telefonía IP, videovigilancia PoE, sistemas de control de acceso y cualquier aplicación que use RJ45. Esta versatilidad es la razón por la que la normativa obliga al cableado estructurado en edificios de uso terciario (oficinas, hoteles, hospitales) en España."
         },
         {
           "type": "h2",
-          "text": "Componentes del cableado estructurado"
+          "text": "Los seis subsistemas del cableado estructurado según TIA-568"
+        },
+        {
+          "type": "p",
+          "text": "La norma TIA-568 divide el cableado estructurado en seis subsistemas jerárquicos. Entender esta estructura ayuda a comunicarse con cualquier instalador o consultor de redes:"
         },
         {
           "type": "ul",
           "items": [
-            "Cable Ethernet (Cat6/Cat6A/Cat7)",
-            "Patch panels",
-            "Rack de telecomunicaciones",
-            "Keystones RJ45 y placas de pared",
-            "Switchs y routers",
-            "Canaletas y gestión de cables"
+            "1. Sala de entrada del edificio (EF) — punto de entrada de los operadores de telecomunicaciones (fibra óptica exterior, líneas telefónicas). Aquí se conecta la red exterior con la red interna.",
+            "2. Sala de equipos (ER) — local técnico con el núcleo de la red: servidores, switches de core, sistemas de almacenamiento, SAI/UPS. Puede coincidir con el armario principal o ser una sala independiente.",
+            "3. Cableado backbone (troncal) — cables que interconectan salas de telecomunicaciones entre plantas o edificios. Generalmente fibra óptica multimodo (OM3/OM4) o monomodo para distancias largas.",
+            "4. Sala de telecomunicaciones (TR) — armario rack en cada planta donde terminan los cables horizontales. Contiene el patch panel, el switch de planta y el cableado de acometida.",
+            "5. Cableado horizontal — los cables Cat6/Cat6A que van desde el armario de planta hasta cada roseta de usuario. Máximo 90 metros de tirada permanente según norma.",
+            "6. Área de trabajo — la roseta empotrada o en canaleta donde el usuario conecta su dispositivo mediante un latigillo (patchcord) de no más de 5 metros."
           ]
         },
         {
           "type": "h2",
-          "text": "Ventajas"
+          "text": "Componentes físicos que forman parte del sistema"
         },
         {
           "type": "ul",
           "items": [
-            "Velocidad y estabilidad garantizadas",
-            "Fácil de ampliar",
-            "Cumple estándares TIA/EIA-568",
-            "Menores costes de mantenimiento",
-            "Comprobable"
+            "Cable UTP/FTP Cat6 o Cat6A — el cable de cobre que forma la infraestructura horizontal. Cat6A (500 MHz) es el estándar mínimo para instalaciones nuevas desde 2022.",
+            "Rosetas (outlets) — conectores RJ45 hembra empotrados en la pared o en canaleta de superficie. Pueden ser simples (1 puerto) o dobles (2 puertos).",
+            "Panel de parcheo (patch panel) — regleta en el armario con un puerto RJ45 para cada roseta de usuario. Permite reconfigurar la red desconectando y reconectando latillos sin tocar el cableado permanente.",
+            "Latillos (patch cords) — cables cortos con conectores RJ45 en ambos extremos. Conectan el patch panel con el switch, y la roseta con el dispositivo del usuario.",
+            "Armario rack — bastidor metálico de 19\" donde se instalan el patch panel, el switch, el SAI y cualquier equipo activo. Puede ser de pared (6-12U para plantas pequeñas) o de pie (18-42U para salas técnicas).",
+            "Fibra óptica backbone — para interconectar armarios entre plantas o edificios. OM3 o OM4 para distancias hasta 550 metros, monomodo para distancias superiores."
           ]
         },
         {
           "type": "h2",
-          "text": "¿Cuándo lo necesitas?"
+          "text": "¿Cuándo necesitas cableado estructurado?"
         },
         {
           "type": "ul",
           "items": [
-            "Oficinas con más de 5 equipos",
-            "Empresas en crecimiento",
-            "Clínicas, hoteles, tiendas",
-            "Edificios nuevos o reformas"
+            "Oficina nueva o traslado: el mejor momento para instalar correctamente desde el principio.",
+            "Más de 10 puestos de trabajo: a partir de este volumen, la gestión sin cableado estructurado es caótica.",
+            "Reforma integral: aprovechar el derribo de paredes para tender el cableado correctamente.",
+            "Red actual problemática: caídas frecuentes, cables mal identificados, velocidades irregulares.",
+            "Ampliación con videovigilancia o control de acceso: sistemas que requieren red Ethernet separada o PoE dedicado.",
+            "Certificación o auditoría: muchos clientes corporativos y contratos de seguro exigen red certificada según TIA-568."
           ]
-        },
-        {
-          "type": "tip",
-          "text": "📋 Solicita tu presupuesto — diseñamos la red perfecta para tu negocio."
-        },
-        {
-          "type": "h2",
-          "text": "Los seis subsistemas del cableado estructurado"
-        },
-        {
-          "type": "p",
-          "text": "La norma TIA-568 define el cableado estructurado como un sistema de seis subsistemas interdependientes: la entrada de servicios del edificio (donde llegan los proveedores de telecomunicaciones), la sala de equipos o MDF (Main Distribution Frame, el rack principal), el backbone horizontal entre plantas, el backbone vertical entre edificios, los cuartos de telecomunicaciones o IDFs (distribuidores de planta), y el cableado horizontal desde los IDFs hasta cada puesto de trabajo."
-        },
-        {
-          "type": "p",
-          "text": "Esta arquitectura jerárquica permite escalar la instalación sin rehacer el trabajo previo: si la empresa crece y ocupa una planta adicional, basta con añadir un IDF en esa planta y extender el backbone hasta el MDF. Si cambia el proveedor de internet, solo hay que intervenir en la entrada de servicios y el MDF."
-        },
-        {
-          "type": "h2",
-          "text": "¿Por qué 'estructurado' y no simplemente 'cableado de red'?"
-        },
-        {
-          "type": "p",
-          "text": "El término 'estructurado' significa que el sistema es independiente de las aplicaciones que lo usan. El mismo cableado estructurado Cat6A puede transportar simultáneamente tráfico de datos (LAN, VoIP), señal de videovigilancia IP y datos de IoT industrial, siempre que los equipos activos gestionen el etiquetado VLAN correctamente. Esto es lo contrario de las instalaciones específicas de aplicación que se popularizaron antes de los años 90, donde había un cableado diferente para telefonía, datos y alarmas."
         },
         {
           "type": "h2",
@@ -5609,19 +5722,63 @@
         },
         {
           "type": "p",
-          "text": "Un cableado estructurado bien instalado y certificado tiene una vida útil de 20-25 años. Durante ese tiempo, los equipos activos (switches, routers, APs) se renovarán probablemente 4-5 veces, pero el cableado permanecerá. Esto convierte la instalación de cableado en una de las inversiones con mejor retorno en infraestructura de TI: un coste único que sirve para múltiples generaciones de equipos."
-        },
-        {
-          "type": "h2",
-          "text": "Cableado estructurado en edificios históricos de Barcelona"
+          "text": "Un cableado estructurado correctamente instalado y certificado tiene una vida útil de 20-25 años. Durante ese tiempo, puedes cambiar switches, servidores, ordenadores, routers WiFi y cualquier equipo activo sin tocar el cableado. Esta capacidad de reutilización convierte la inversión inicial en infraestructura de red en un activo amortizable a largo plazo."
         },
         {
           "type": "p",
-          "text": "En el Eixample y el Gòtic, muchos inmuebles no tienen falsos techos ni suelos técnicos. En estos casos el cableado se instala en canaleta vista de PVC o aluminio, lo que requiere una planificación especialmente cuidadosa del recorrido para que sea funcional y estéticamente aceptable. También es habitual aprovechar los conductos de ventilación existentes o los huecos entre forjados en edificaciones más antiguas."
+          "text": "En números: una instalación básica de 20 puestos en Barcelona cuesta entre 4.000€ y 7.000€ (cableado Cat6A + patch panel + armario + mano de obra). Dividido entre 20 años, son 200-350€ anuales, o 10-18€ por puesto al año. Una red ad-hoc de switches apilados y cables sin gestión puede costar más en tiempo perdido de IT y problemas de conectividad."
+        },
+        {
+          "type": "h2",
+          "text": "Cableado estructurado en Barcelona: peculiaridades locales"
+        },
+        {
+          "type": "p",
+          "text": "En el Eixample y el Gòtic, muchos inmuebles no tienen falsos techos ni canaletas prexistentes. La instalación requiere canaleta de PVC de superficie o, cuando el cliente lo prefiere, rozar la pared y tapar con yeso. Los edificios del Eixample tienen muros de carga de 60-80 cm de grosor que complican el paso de cables entre locales o plantas."
+        },
+        {
+          "type": "p",
+          "text": "En la zona 22@ (Sant Martí) y las oficinas de nueva construcción, los inmuebles suelen tener falso techo y suelo técnico, lo que facilita enormemente la instalación. En polígonos industriales de Badalona, Cornellà o Zona Franca, el reto es el ruido electromagnético de la maquinaria, que requiere cable Cat6A S/FTP apantallado."
+        },
+        {
+          "type": "h2",
+          "text": "Preguntas frecuentes sobre cableado estructurado"
+        },
+        {
+          "type": "h3",
+          "text": "¿Cuánto cuesta instalar cableado estructurado en una empresa en Barcelona?"
+        },
+        {
+          "type": "p",
+          "text": "El coste depende del número de puestos, la superficie y si hay obra civil. Orientativamente: instalación de 10 puestos (cableado Cat6A + pequeño rack + switch) desde 2.500€; 20 puestos desde 4.500€; 50 puestos desde 9.000€. CableCore ofrece presupuesto gratis en 24 horas con visita técnica."
+        },
+        {
+          "type": "h3",
+          "text": "¿Qué diferencia hay entre cableado estructurado y cableado de red normal?"
+        },
+        {
+          "type": "p",
+          "text": "El cableado de red \"normal\" puede ser cualquier solución: cables directos de PC a switch, extensores WiFi, PLC Powerline. El cableado estructurado es una implementación normalizada según TIA-568/ISO que documenta, etiqueta y certifica cada tirada. La diferencia práctica: el cableado estructurado puede ser auditado, ampliado y mantenido por cualquier técnico; el cableado ad-hoc es un puzzle que solo entiende quien lo instaló."
+        },
+        {
+          "type": "h3",
+          "text": "¿Es obligatorio el cableado estructurado en oficinas?"
+        },
+        {
+          "type": "p",
+          "text": "En España, el Reglamento de Infraestructuras Comunes de Telecomunicación (RICT) y el Real Decreto 346/2011 exigen cableado estructurado en edificios de nueva construcción para uso terciario. Para reformas de locales existentes, la obligatoriedad depende de la envergadura de la obra. Consultar con un instalador homologado es la forma más rápida de saber si tu proyecto requiere cumplir con la normativa."
+        },
+        {
+          "type": "h3",
+          "text": "¿Cuánto tiempo tarda la instalación?"
+        },
+        {
+          "type": "p",
+          "text": "Una instalación de 15-20 puestos en oficina nueva suele completarse en 2-3 días. Instalaciones en local en uso, donde trabajamos fuera de horario o por zonas para no interrumpir la actividad, pueden durar 1 semana. Instalaciones de 50+ puestos: 1-3 semanas. CableCore proporciona planificación detallada y cronograma antes de comenzar."
         },
         {
           "type": "tip",
-          "text": "Si tu empresa ocupa un edificio con más de 10 años de antigüedad y no tienes documentación de la instalación de red, solicita una auditoría antes de cualquier ampliación. Frecuentemente encontramos instalaciones catalogadas como Cat6 que en realidad son Cat5e sin certificar — lo que limita la velocidad máxima a 1 Gbps y puede causar fallos intermitentes en redes de alta densidad."
+          "text": "¿Quieres un presupuesto sin compromiso? CableCore realiza visita técnica gratuita en Barcelona y área metropolitana. Llámanos al +34 605 974 605 o usa la calculadora online para obtener un precio orientativo en menos de 5 minutos."
         }
       ]
     },
@@ -6793,8 +6950,8 @@
     "readTime": "3 min",
     "es": {
       "title": "Fibra óptica vs Ethernet: ¿qué necesita tu empresa?",
-      "metaTitle": "Fibra óptica vs Ethernet — Diferencias y cuál elegir para tu empresa",
-      "metaDescription": "Comparativa entre fibra óptica y cable Ethernet. Ventajas, costes y cuándo usar cada uno.",
+      "metaTitle": "Fibra Óptica vs Ethernet: ¿Cuál Necesitas? Guía 2025 para Empresas",
+      "metaDescription": "Fibra óptica interior vs cable Ethernet Cat6A: ¿qué instalar en tu empresa? Comparativa de velocidad, coste, distancia y casos reales. Técnicos CableCore explican cuándo usar cada uno.",
       "excerpt": "Fibra óptica o Ethernet: ¿cuál es mejor para tu negocio? Comparamos velocidad, coste y casos de uso reales.",
       "category": "Comparativas",
       "tags": [

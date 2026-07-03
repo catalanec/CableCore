@@ -101,6 +101,30 @@ export default function BlogArticlePage({ params }: { params: { slug: string } }
         },
     };
 
+    // Extract FAQ pairs from content: h3 followed immediately by p
+    const faqItems: { q: string; a: string }[] = [];
+    let inFaqSection = false;
+    for (let i = 0; i < article.content.length; i++) {
+        const block = article.content[i];
+        if (block.type === 'h2') {
+            const lower = (block.text || '').toLowerCase();
+            inFaqSection = lower.includes('pregunta') || lower.includes('faq') || lower.includes('frequent') || lower.includes('вопрос');
+        }
+        if (inFaqSection && block.type === 'h3' && article.content[i + 1]?.type === 'p') {
+            faqItems.push({ q: block.text || '', a: article.content[i + 1].text || '' });
+        }
+    }
+
+    const faqJsonLd = faqItems.length > 0 ? {
+        '@context': 'https://schema.org',
+        '@type': 'FAQPage',
+        mainEntity: faqItems.map(item => ({
+            '@type': 'Question',
+            name: item.q,
+            acceptedAnswer: { '@type': 'Answer', text: item.a },
+        })),
+    } : null;
+
     return (
         <>
             <Header />
@@ -118,6 +142,12 @@ export default function BlogArticlePage({ params }: { params: { slug: string } }
                     type="application/ld+json"
                     dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
                 />
+                {faqJsonLd && (
+                    <script
+                        type="application/ld+json"
+                        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
+                    />
+                )}
 
                 {/* ═══════════════ ARTICLE HEADER ═══════════════ */}
                 <section className="py-16 lg:py-24 relative overflow-hidden">
