@@ -4847,7 +4847,7 @@
     "readTime": "3 min",
     "es": {
       "title": "Cat6 vs Cat6A vs Cat7: ¿cuál elegir?",
-      "metaTitle": "Cat6 vs Cat6A vs Cat7: Diferencias, Precios y Cuál Elegir (2025)",
+      "metaTitle": "Cat6A vs Cat7: ¿Cuál es Mejor? Comparativa Definitiva 2025",
       "metaDescription": "Comparativa técnica Cat6 vs Cat6A vs Cat7. Velocidades reales, precios en Barcelona, pros y contras. Instaladores expertos responden: ¿cuál necesitas? ✓ Guía actualizada 2025.",
       "excerpt": "Comparativa detallada entre los tres cables Ethernet más populares: velocidad, precio, blindaje y para qué sirve cada uno.",
       "category": "Comparativas",
@@ -4916,7 +4916,7 @@
         },
         {
           "type": "h2",
-          "text": "Cat7: lo que nadie te cuenta"
+          "text": "Cat6A vs Cat7: la comparativa definitiva"
         },
         {
           "type": "p",
@@ -4929,6 +4929,26 @@
         {
           "type": "p",
           "text": "¿Cuándo tiene sentido Cat7 real? En centros de datos con equipos activos que soporten GG45 o TERA, en instalaciones industriales con muy alta densidad de interferencias donde el blindaje adicional justifica el coste, y en proyectos donde el cliente especifica explícitamente Cat7 por política interna. En el 95% de los casos de oficina, hogar e instalación comercial, Cat6A es técnica y económicamente superior."
+        },
+        {
+          "type": "h2",
+          "text": "Cat7 vs Cat6A: tabla de diferencias clave"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Velocidad: ambos soportan 10 Gbps hasta 100 m — empate técnico",
+            "Ancho de banda: Cat7 = 600 MHz vs Cat6A = 500 MHz — diferencia irrelevante para uso real",
+            "Conectores: Cat6A usa RJ45 estándar / Cat7 real requiere GG45 o TERA (rarísimos)",
+            "Compatibilidad: Cat6A compatible con todos los dispositivos / Cat7 con RJ45 = rendimiento Cat6A",
+            "Precio del cable: Cat7 es 30-50% más caro que Cat6A",
+            "Flexibilidad: Cat7 es más rígido y difícil de pasar por canalización",
+            "Conclusión: Cat6A U/FTP en obra nueva, Cat6A S/FTP en entornos industriales — Cat7 solo si el cliente lo especifica"
+          ]
+        },
+        {
+          "type": "p",
+          "text": "Para la inmensa mayoría de proyectos en Barcelona — oficinas en el 22@, hoteles, clínicas, pisos de teletrabajo y naves logísticas — Cat6A es la respuesta correcta. Tiene más sentido técnico y económico que Cat7 en el 95% de los casos."
         },
         {
           "type": "h2",
@@ -5023,6 +5043,22 @@
         {
           "type": "p",
           "text": "En oficinas convencionales sin maquinaria industrial cercana ni alta densidad de cables de potencia, el Cat6A UTP (sin apantallamiento) es suficiente. El apantallamiento S/FTP se justifica en: naves industriales con equipos de alta potencia, hospitales (IRM, equipos de rayos X), salas con muchos UPS o motores eléctricos, y edificios con cableado eléctrico sin canalización separada."
+        },
+        {
+          "type": "h3",
+          "text": "¿Cat6A o Cat7: cuál comprar en 2025?"
+        },
+        {
+          "type": "p",
+          "text": "En 2025, Cat6A es la elección correcta para el 95% de proyectos. Soporta 10 Gbps, es compatible con todos los dispositivos y es más económico que Cat7. Cat7 solo tiene sentido en instalaciones industriales con alta densidad de interferencias o cuando el cliente lo exige por política interna. No te dejes convencer por el número mayor: Cat6A supera a Cat7 en practicidad."
+        },
+        {
+          "type": "h3",
+          "text": "¿Cuál es mejor para teletrabajo: Cat6, Cat6A o Cat7?"
+        },
+        {
+          "type": "p",
+          "text": "Para teletrabajo en casa, Cat6 es suficiente si tienes fibra hasta 1 Gbps y usas pocos dispositivos. Si quieres preparar la instalación para el futuro o tienes necesidades de NAS y streaming 4K simultáneo, Cat6A es la mejor inversión. Cat7 no aporta ninguna ventaja real en un entorno doméstico y es más difícil de instalar por su rigidez."
         },
         {
           "type": "tip",
