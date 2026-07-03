@@ -1,4 +1,5 @@
 import { notFound } from 'next/navigation';
+import { permanentRedirect } from 'next/navigation';
 import { useTranslations, useLocale } from 'next-intl';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
@@ -7,13 +8,20 @@ import { getBlogArticles, BLOG_ARTICLES } from '@/lib/blog-data';
 import Breadcrumbs from '@/components/seo/Breadcrumbs';
 import type { Metadata } from 'next';
 
+// Slugs with typos that should 308-redirect to the canonical slug
+const SLUG_REDIRECTS: Record<string, string> = {
+    'mejores-practicas-cableado-structurado': 'mejores-practicas-cableado-estructurado',
+};
+
 export function generateStaticParams() {
     return BLOG_ARTICLES.map((article) => ({ slug: article.slug }));
 }
 
 export function generateMetadata({ params }: { params: { slug: string; locale: string } }): Metadata {
+    // If this is a typo slug, point canonical to the correct one
+    const canonicalSlug = SLUG_REDIRECTS[params.slug] ?? params.slug;
     const articles = getBlogArticles(params.locale);
-    const article = articles.find((a) => a.slug === params.slug);
+    const article = articles.find((a) => a.slug === canonicalSlug);
     if (!article) return {};
 
     const BASE_URL = 'https://cablecore.es';
@@ -22,12 +30,12 @@ export function generateMetadata({ params }: { params: { slug: string; locale: s
         title: article.metaTitle,
         description: article.metaDescription,
         alternates: {
-            canonical: `${BASE_URL}/${params.locale}/blog/${article.slug}`,
+            canonical: `${BASE_URL}/${params.locale}/blog/${canonicalSlug}`,
             languages: {
-                'es': `${BASE_URL}/es/blog/${article.slug}`,
-                'en': `${BASE_URL}/en/blog/${article.slug}`,
-                'ru': `${BASE_URL}/ru/blog/${article.slug}`,
-                'x-default': `${BASE_URL}/es/blog/${article.slug}`,
+                'es-ES': `${BASE_URL}/es/blog/${canonicalSlug}`,
+                'en-US': `${BASE_URL}/en/blog/${canonicalSlug}`,
+                'ru-RU': `${BASE_URL}/ru/blog/${canonicalSlug}`,
+                'x-default': `${BASE_URL}/es/blog/${canonicalSlug}`,
             },
         },
         openGraph: {
@@ -45,6 +53,12 @@ export function generateMetadata({ params }: { params: { slug: string; locale: s
 
 export default function BlogArticlePage({ params }: { params: { slug: string } }) {
     const locale = useLocale();
+
+    // Redirect typo slugs permanently to the canonical slug
+    if (SLUG_REDIRECTS[params.slug]) {
+        permanentRedirect(`/${locale}/blog/${SLUG_REDIRECTS[params.slug]}`);
+    }
+
     const articles = getBlogArticles(locale);
     const article = articles.find((a) => a.slug === params.slug);
     const t = useTranslations();

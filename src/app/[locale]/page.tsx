@@ -1,5 +1,5 @@
 import { Metadata } from 'next';
-import { useTranslations } from 'next-intl';
+import { useTranslations, useLocale } from 'next-intl';
 import { Link } from '@/i18n/routing';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
@@ -12,6 +12,7 @@ export function generateMetadata({ params }: { params: { locale: string } }): Me
 
 export default function HomePage() {
     const t = useTranslations();
+    const locale = useLocale();
 
     const serviceIcons = ['🏠', '🏢', '🛍️', '🏭', '🔆'];
     const serviceKeys = ['home', 'office', 'retail', 'business', 'fiber'] as const;
@@ -359,9 +360,9 @@ export default function HomePage() {
                             ))}
                         </div>
                         <div className="text-center">
-                            <a href="/es/precios" className="btn-outline px-6 py-3 text-sm">
-                                Ver tabla de precios completa →
-                            </a>
+                            <Link href="/precios" className="btn-outline px-6 py-3 text-sm">
+                                {locale === 'en' ? 'View full price table →' : locale === 'ru' ? 'Полная таблица цен →' : 'Ver tabla de precios completa →'}
+                            </Link>
                         </div>
                     </div>
                 </section>

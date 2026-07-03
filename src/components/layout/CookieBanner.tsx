@@ -1,8 +1,10 @@
 'use client';
 
 import { useState, useEffect } from 'react';
+import { useLocale } from 'next-intl';
 
 export default function CookieBanner() {
+    const locale = useLocale();
     const [visible, setVisible] = useState(false);
 
     useEffect(() => {
@@ -56,10 +58,10 @@ export default function CookieBanner() {
             <p style={{ margin: 0, fontSize: '14px', color: '#a1a1aa', flex: 1, minWidth: '220px' }}>
                 🍪 Usamos cookies para mejorar tu experiencia.{' '}
                 <a
-                    href="/es/privacidad"
+                    href={`/${locale}/privacidad`}
                     style={{ color: '#C9A84C', textDecoration: 'underline' }}
                 >
-                    Política de privacidad
+                    {locale === 'en' ? 'Privacy policy' : locale === 'ru' ? 'Политика конфиденциальности' : 'Política de privacidad'}
                 </a>
             </p>
 

@@ -23,7 +23,7 @@ export function generateMetadata({ params }: { params: { slug: string; locale: s
 
     const alternates: Record<string, string> = {};
     LOCALES.forEach(loc => {
-        alternates[loc] = `${BASE_URL}/${loc}/servicios/${page.slug}`;
+        alternates[HREFLANG_MAP[loc]] = `${BASE_URL}/${loc}/servicios/${page.slug}`;
     });
     alternates['x-default'] = `${BASE_URL}/es/servicios/${page.slug}`;
 

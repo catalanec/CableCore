@@ -33,13 +33,14 @@ export default function sitemap(): MetadataRoute.Sitemap {
         { path: '/nosotros', changeFreq: 'monthly' as const, basePriority: 0.6 },
     ];
 
-    const now = new Date().toISOString();
+    // Static pages use a fixed date — avoid triggering unnecessary re-crawls on every deploy
+    const STATIC_LAST_MODIFIED = '2026-06-20T00:00:00.000Z';
 
     // Static pages — primary locale first with high priority
     const staticUrls = staticPages.flatMap(page =>
         ALL_LOCALES.map(locale => ({
             url: `${BASE_URL}/${locale}${page.path}`,
-            lastModified: now,
+            lastModified: STATIC_LAST_MODIFIED,
             changeFrequency: page.changeFreq,
             priority: locale === PRIMARY_LOCALE
                 ? page.basePriority
@@ -59,10 +60,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
         }))
     );
 
+    // Slugs with known typos that redirect to canonical — exclude from sitemap
+    const TYPO_SLUGS = new Set(['mejores-practicas-cableado-structurado']);
+
     // Blog articles — sorted by date, primary locale prioritized
-    const sortedArticles = [...BLOG_ARTICLES].sort(
-        (a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()
-    );
+    const sortedArticles = [...BLOG_ARTICLES]
+        .filter(a => !TYPO_SLUGS.has(a.slug))
+        .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
 
     const blogUrls = sortedArticles.flatMap(article =>
         ALL_LOCALES.map(locale => ({

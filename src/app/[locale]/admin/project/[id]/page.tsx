@@ -2,6 +2,11 @@ import { notFound } from 'next/navigation';
 import { createClient } from '@supabase/supabase-js';
 import Header from '@/components/layout/Header';
 import ProjectDetail from '@/components/admin/ProjectDetail';
+import type { Metadata } from 'next';
+
+export const metadata: Metadata = {
+    robots: { index: false, follow: false },
+};
 
 async function getProject(id: string) {
     const supabase = createClient(
