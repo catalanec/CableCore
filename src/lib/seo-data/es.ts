@@ -313,6 +313,25 @@ export const SEO_PAGES_ES: SEOPageConfig[] = [
             { q: "¿Instaláis en las oficinas de Gran Via L'Hospitalet?", a: "Sí, tenemos experiencia en los edificios de oficinas del área de Gran Via, incluyendo torres y plantas diáfanas. Trabajamos fuera de horario laboral si es necesario." },
             { q: "¿Podéis instalar red en un piso en La Torrassa o Collblanc?", a: "Sí, cubrimos todos los barrios de L'Hospitalet. Para pisos usamos canaleta decorativa o aprovechamos la canalización existente para no hacer obra." },
             { q: "¿Cuánto tardáis en llegar a L'Hospitalet?", a: "Nuestra sede está en Badalona, pero L'Hospitalet está a menos de 30 minutos. Podemos hacer visita técnica el mismo día si contactas antes de las 14h." },
+            { q: "¿Qué tipo de cableado instaláis en L'Hospitalet?", a: "Instalamos Cat6, Cat6A y fibra óptica interior. Para oficinas nuevas recomendamos Cat6A U/FTP que soporta 10 Gbps y es compatible con PoE++ para cámaras y WiFi 6. Para remodelaciones y hogares, Cat6 es más que suficiente." },
+            { q: "¿Cuánto cuesta una red completa para una oficina en L'Hospitalet?", a: "Una oficina de 10 puestos con cableado Cat6A, rack de 12U, patch panel 24 puertos y switch gestionable tiene un coste orientativo de 2.000-2.600€ en L'Hospitalet, sin recargo de desplazamiento." },
+        ],
+        richSections: [
+            {
+                h2: "Instalación de red en L'Hospitalet: sectores y zonas",
+                paragraphs: [
+                    "L'Hospitalet de Llobregat es la segunda ciudad más poblada de Cataluña y alberga uno de los corredores empresariales más activos de España. Gran Via Sud, con sus torres de oficinas y hoteles, concentra gran parte de nuestra actividad: instalamos redes Cat6A estructuradas para empresas que necesitan alta disponibilidad y ancho de banda garantizado.",
+                    "La Zona Franca, gestionada desde L'Hospitalet, es otro polo clave donde realizamos instalaciones industriales. Diseñamos redes segregadas mediante VLAN para separar producción, cámaras IP y administración, utilizando cableado Cat6A en bandeja metálica o tubo rígido según las condiciones del entorno.",
+                    "En los barrios residenciales de Collblanc, La Torrassa y Santa Eulàlia atendemos a particulares que trabajan desde casa y necesitan una conexión Ethernet fiable para teletrabajo y streaming. Trabajamos con canaleta decorativa o aprovechamos la canalización existente para minimizar el impacto en el piso.",
+                ],
+            },
+            {
+                h2: "Precios de instalación de red en L'Hospitalet de Llobregat",
+                paragraphs: [
+                    "Aplicamos los mismos precios que en Barcelona ciudad, sin recargo por desplazamiento a L'Hospitalet. Un punto de red Cat6 instalado con roseta y prueba de certificación parte desde 95€. Cat6A desde 115€ por punto. No cobramos por la visita técnica previa.",
+                    "Para proyectos de oficina en L'Hospitalet de 10-20 puestos, el presupuesto orientativo oscila entre 1.800€ y 3.500€ según la complejidad (cableado Cat6A, rack, patch panel, switch y configuración básica de red). Pide presupuesto online y te respondemos en menos de 24 horas.",
+                ],
+            },
         ],
     },
     {
