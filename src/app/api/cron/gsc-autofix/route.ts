@@ -194,7 +194,8 @@ export async function GET(request: Request) {
 
                 // Find the article
                 const articleIdx = blogData.findIndex(a =>
-                    (a.slug === mapping.slug || a.slugEs === mapping.slug) && a.locale === mapping.locale
+                    (a.slug === mapping.slug || a.slugEs === mapping.slug) &&
+                    (a.locale === mapping.locale || (!a.locale && mapping.locale === 'es'))
                 );
                 if (articleIdx === -1) {
                     errors.push(`${url} — article not found in blog-data.json`);
