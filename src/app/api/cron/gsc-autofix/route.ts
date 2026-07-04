@@ -60,7 +60,7 @@ async function githubUpdateFile(token: string, path: string, content: string, sh
     if (!res.ok) throw new Error(`GitHub PUT error: ${res.status} ${await res.text()}`);
 }
 
-// ── Anthropic API ─────────────────────────────────────────────────────────
+// ── Groq API (Llama 3.3 70B) ─────────────────────────────────────────────
 async function expandArticleWithClaude(apiKey: string, article: Record<string, unknown>, locale: string): Promise<Record<string, unknown> | null> {
     const langLabel = locale === 'es' ? 'Spanish' : locale === 'en' ? 'English' : 'Russian';
     const currentBlocks = JSON.stringify(article.blocks || [], null, 2);
@@ -91,27 +91,26 @@ New blocks format examples:
 {"type":"list","items":["item 1","item 2","item 3"]}
 {"type":"faq","question":"Question?","answer":"Answer text"}`;
 
-    const res = await fetch('https://api.anthropic.com/v1/messages', {
+    const res = await fetch('https://api.groq.com/openai/v1/chat/completions', {
         method: 'POST',
         headers: {
-            'x-api-key': apiKey,
-            'anthropic-version': '2023-06-01',
-            'content-type': 'application/json',
+            'Authorization': `Bearer ${apiKey}`,
+            'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-            model: 'claude-haiku-4-5-20251001',
+            model: 'llama-3.3-70b-versatile',
             max_tokens: 4096,
             messages: [{ role: 'user', content: prompt }],
         }),
     });
 
     if (!res.ok) {
-        console.error('Anthropic API error:', res.status, await res.text());
+        console.error('Groq API error:', res.status, await res.text());
         return null;
     }
 
     const data = await res.json();
-    const text = data.content?.[0]?.text || '';
+    const text = data.choices?.[0]?.message?.content || '';
 
     try {
         const jsonMatch = text.match(/\[[\s\S]*\]/);
@@ -119,7 +118,7 @@ New blocks format examples:
         const newBlocks = JSON.parse(jsonMatch[0]);
         return { ...article, blocks: newBlocks };
     } catch {
-        console.error('Failed to parse Claude response:', text.slice(0, 200));
+        console.error('Failed to parse Groq response:', text.slice(0, 200));
         return null;
     }
 }
@@ -144,7 +143,7 @@ export async function GET(request: Request) {
     const googleClientId = process.env.GOOGLE_CLIENT_ID;
     const googleClientSecret = process.env.GOOGLE_CLIENT_SECRET;
     const googleRefreshToken = process.env.GOOGLE_REFRESH_TOKEN;
-    const anthropicKey = process.env.ANTHROPIC_API_KEY;
+    const anthropicKey = process.env.GROQ_API_KEY;
     const githubToken = process.env.GITHUB_TOKEN;
     const telegramBot = process.env.TELEGRAM_BOT_TOKEN;
     const telegramChat = process.env.TELEGRAM_CHAT_ID;
@@ -153,7 +152,7 @@ export async function GET(request: Request) {
         return NextResponse.json({ error: 'Missing env: GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET, or GOOGLE_REFRESH_TOKEN' }, { status: 500 });
     }
     if (!anthropicKey || !githubToken) {
-        return NextResponse.json({ error: 'Missing env: ANTHROPIC_API_KEY or GITHUB_TOKEN' }, { status: 500 });
+        return NextResponse.json({ error: 'Missing env: GROQ_API_KEY or GITHUB_TOKEN' }, { status: 500 });
     }
 
     const fixed: string[] = [];
