@@ -40,7 +40,9 @@ export default function middleware(req: NextRequest) {
     if (pathname.length > 1 && pathname.endsWith('/')) {
         const url = req.nextUrl.clone();
         url.pathname = pathname.slice(0, -1);
-        return NextResponse.redirect(url, { status: 308 });
+        const r = NextResponse.redirect(url, { status: 308 });
+        r.headers.delete('refresh');
+        return r;
     }
 
     const response = intlMiddleware(req);

@@ -5128,7 +5128,7 @@
     },
     "en": {
       "title": "Cat6 vs Cat6A vs Cat7: which one to choose?",
-      "metaTitle": "Cat6 vs Cat6A vs Cat7: Differences, Prices & Which to Choose (2025)",
+      "metaTitle": "Cat6A vs Cat7: Definitive Comparison 2025 | Cat6 vs Cat6A vs Cat7",
       "metaDescription": "Technical comparison of Cat6 vs Cat6A vs Cat7 cables. Real speeds, prices, pros and cons. Expert network installers answer: which cable do you need? ✓ Updated guide 2025.",
       "excerpt": "Detailed comparison of the three most popular Ethernet cables: speed, price, shielding and what each one is for.",
       "category": "Comparisons",
@@ -5224,6 +5224,49 @@
         },
         {
           "type": "h2",
+          "text": "Cat6A variants: U/UTP, U/FTP and S/FTP explained"
+        },
+        {
+          "type": "p",
+          "text": "Not all Cat6A cables are the same. The shielding type significantly affects price, installation complexity, and suitability for your environment. Here are the three main variants you will encounter:"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Cat6A U/UTP — Unshielded. Cheapest (~0.85€/m). Works in low-interference environments like homes and small offices. Susceptible to alien crosstalk (AXT) in high-density installations.",
+            "Cat6A U/FTP — Overall foil shielded. The industry standard (~1.10€/m). Recommended for offices, commercial spaces, and any installation where multiple cables run in parallel. Best price-to-performance ratio.",
+            "Cat6A S/FTP — Braid + foil per pair (~1.50€/m). Maximum shielding. Used in industrial environments, data centres, and areas with high electromagnetic interference (EMI). Stiffer, harder to terminate."
+          ]
+        },
+        {
+          "type": "p",
+          "text": "For most office and commercial installations, Cat6A U/FTP is the right choice. It handles 10 Gbps, is PoE++ compatible, and is straightforward to install. S/FTP is overkill for standard office use."
+        },
+        {
+          "type": "h2",
+          "text": "Cat6A vs Cat7: the definitive comparison"
+        },
+        {
+          "type": "p",
+          "text": "Cat7 is often marketed as a premium upgrade over Cat6A, but in practice it offers no real advantage for the vast majority of installations. Here is the full picture:"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Speed: Both support 10 Gbps up to 100m — identical in real-world use.",
+            "Bandwidth: Cat7 is rated to 600 MHz vs Cat6A's 500 MHz. This difference has no practical impact on current network equipment.",
+            "Shielding: Cat7 requires S/FTP (fully shielded, every pair individually wrapped + overall braid). Mandatory — no unshielded Cat7 exists. This makes it rigid and difficult to terminate.",
+            "Connectors: Cat7 officially uses GG45 or TERA connectors, NOT standard RJ45. Any Cat7 cable terminated with RJ45 technically performs as Cat6A at best.",
+            "Price: Cat7 cable costs ~2.00€/m vs Cat6A U/FTP at 1.10€/m — nearly double, for no measurable benefit.",
+            "Future-proofing: IEEE 802.3an (10GBase-T) is designed for Cat6A. Cat7 is not referenced in any current or planned Ethernet standard."
+          ]
+        },
+        {
+          "type": "p",
+          "text": "The verdict: Cat7 is a marketing category, not an engineering one. Buy Cat6A U/FTP and invest the difference in a better switch."
+        },
+        {
+          "type": "h2",
           "text": "Frequently asked questions (FAQ)"
         },
         {
@@ -5259,10 +5302,36 @@
           "text": "Yes, Cat6A is the right choice for IP cameras with PoE. It supports up to 90W with PoE++ (802.3bt) standard, sufficient for high-power PTZ cameras. If cameras are more than 55 meters from the switch, Cat6A guarantees proper power delivery; with Cat6 UTP there may be voltage drop on long runs."
         },
         {
+          "type": "h3",
+          "text": "What is the difference between Cat6A U/UTP, U/FTP and S/FTP?"
+        },
+        {
+          "type": "p",
+          "text": "The letters describe the shielding. U/UTP has no shielding — cheapest but only suitable for low-density environments. U/FTP has an overall foil around all pairs — the professional standard for offices. S/FTP adds a braided outer shield plus foil per pair — for industrial environments with high EMI. For most installations, U/FTP is the right choice."
+        },
+        {
+          "type": "h3",
+          "text": "Does Cat6A support 10 Gbps on standard RJ45 sockets?"
+        },
+        {
+          "type": "p",
+          "text": "Yes. Cat6A is designed specifically for 10GBase-T (10 Gbps Ethernet) over standard RJ45 up to 100 metres. Unlike Cat7 which officially uses GG45 or TERA connectors, Cat6A works with all standard network equipment. This is one reason why Cat6A is the preferred choice for professional installations."
+        },
+        {
+          "type": "h3",
+          "text": "Is Cat6A worth the extra cost over Cat6 for a home?"
+        },
+        {
+          "type": "p",
+          "text": "For most homes today, Cat6 is sufficient — it delivers 1 Gbps which exceeds most internet connections and home NAS speeds. However, if you are doing a renovation or new build and plan to use the property for 10+ years, Cat6A adds approximately 15-20€ per point installed and guarantees compatibility with 10 Gbps technology that is becoming mainstream. For future-proofing in a new installation, Cat6A is worth it."
+        },
+        {
           "type": "tip",
           "text": "Not sure what to choose for your project in Barcelona? Call us at +34 605 974 605 or use our online calculator. We'll tell you exactly what cable you need and the precise installation price in 5 minutes."
         }
-      ]
+      ],
+      "h1": "Cat6 vs Cat6A vs Cat7: Which Network Cable Do You Actually Need?",
+      "metaDesc": "Cat6A vs Cat7: the definitive comparison for 2025. Real installation prices, technical specs, and which cable to choose for home, office, or industrial use. From Barcelona network installers."
     },
     "ru": {
       "title": "Cat6 vs Cat6A vs Cat7: что выбрать?",
