@@ -237,17 +237,16 @@ export async function GET(request: Request) {
     try {
         let results: Array<{ keyword: string; position: number | null; clicks: number; impressions: number; ctr: number }>;
         let dataSource: string;
+        let accessToken: string | null = null;
 
         if (GOOGLE_REFRESH_TOKEN && GOOGLE_CLIENT_ID && GOOGLE_CLIENT_SECRET) {
-            // Preferred: OAuth2 refresh token (real user account with GSC access)
-            const accessToken = await getGSCAccessTokenFromRefreshToken(
+            accessToken = await getGSCAccessTokenFromRefreshToken(
                 GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET, GOOGLE_REFRESH_TOKEN
             );
             results = await queryGSC(accessToken);
             dataSource = 'Google Search Console · datos reales (últimos 7 días)';
         } else if (SERVICE_ACCOUNT_KEY) {
-            // Fallback: service account JWT
-            const accessToken = await getGSCAccessToken(SERVICE_ACCOUNT_KEY);
+            accessToken = await getGSCAccessToken(SERVICE_ACCOUNT_KEY);
             results = await queryGSC(accessToken);
             dataSource = 'Google Search Console · service account (últimos 7 días)';
         } else {
