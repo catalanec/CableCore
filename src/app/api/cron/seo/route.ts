@@ -1,6 +1,19 @@
 import { NextResponse } from 'next/server';
 
 const SITE_URL = 'https://cablecore.es/';
+
+// Key pages to check indexing status daily
+const KEY_PAGES = [
+    'https://cablecore.es/es',
+    'https://cablecore.es/es/servicios/instalacion-red-barcelona',
+    'https://cablecore.es/es/servicios/instalacion-cable-red-barcelona',
+    'https://cablecore.es/es/servicios/instalacion-fibra-optica-barcelona',
+    'https://cablecore.es/es/blog/cat6-vs-cat6a-vs-cat7-diferencias',
+    'https://cablecore.es/en/blog/cat6-vs-cat6a-vs-cat7-diferencias',
+    'https://cablecore.es/es/blog/puntos-de-red-precio-guia',
+    'https://cablecore.es/es/calculadora',
+];
+
 const TARGET_KEYWORDS = [
     // Rastreados actualmente en GSC (tienen impresiones)
     'cableado estructurado',
@@ -53,7 +66,7 @@ async function getGSCAccessToken(serviceAccountJson: string): Promise<string> {
     const header = { alg: 'RS256', typ: 'JWT' };
     const payload = {
         iss: sa.client_email,
-        scope: 'https://www.googleapis.com/auth/webmasters.readonly',
+        scope: 'https://www.googleapis.com/auth/webmasters',
         aud: 'https://oauth2.googleapis.com/token',
         iat: now,
         exp: now + 3600,
@@ -162,6 +175,43 @@ async function queryGSC(accessToken: string): Promise<Array<{
     });
 }
 
+// ── Check indexing status of key pages ────────────────────────────────────
+async function checkPageIndexing(accessToken: string): Promise<Array<{
+    url: string;
+    verdict: string;
+    coverageState: string;
+    lastCrawl: string;
+}>> {
+    const results = [];
+    for (const url of KEY_PAGES) {
+        try {
+            const res = await fetch(
+                'https://searchconsole.googleapis.com/v1/urlInspection/index:inspect',
+                {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${accessToken}`,
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ inspectionUrl: url, siteUrl: SITE_URL }),
+                }
+            );
+            if (!res.ok) { results.push({ url, verdict: 'API_ERROR', coverageState: '', lastCrawl: '' }); continue; }
+            const data = await res.json();
+            const r = data.inspectionResult?.indexStatusResult;
+            results.push({
+                url,
+                verdict: r?.verdict || 'UNKNOWN',
+                coverageState: r?.coverageState || '',
+                lastCrawl: r?.lastCrawlTime ? r.lastCrawlTime.split('T')[0] : 'never',
+            });
+        } catch {
+            results.push({ url, verdict: 'ERROR', coverageState: '', lastCrawl: '' });
+        }
+    }
+    return results;
+}
+
 export async function GET(request: Request) {
     const authHeader = request.headers.get('authorization');
     if (!process.env.CRON_SECRET || authHeader !== `Bearer ${process.env.CRON_SECRET}`) {
@@ -205,6 +255,22 @@ export async function GET(request: Request) {
             dataSource = '⚠️ Configura GOOGLE_REFRESH_TOKEN en Vercel';
         }
 
+        // Check indexing status of key pages
+        let indexingRows = '';
+        let hasIndexingErrors = false;
+        try {
+            const pageStatuses = await checkPageIndexing(accessToken);
+            const indexLines = pageStatuses.map(p => {
+                const shortUrl = p.url.replace('https://cablecore.es', '');
+                const emoji = p.verdict === 'PASS' ? '✅' : p.verdict === 'NEUTRAL' ? '⚠️' : '❌';
+                if (p.verdict !== 'PASS') hasIndexingErrors = true;
+                return `${emoji} ${shortUrl} — ${p.coverageState || p.verdict} (${p.lastCrawl})`;
+            });
+            indexingRows = indexLines.join('\n');
+        } catch {
+            indexingRows = '⚠️ No se pudo verificar el estado de indexación';
+        }
+
         const rows = results.map(r => {
             const emoji = positionEmoji(r.position);
             const posText = r.position !== null
@@ -225,6 +291,11 @@ export async function GET(request: Request) {
             `📊 <b>SEO diario CableCore</b> — ${today}`,
             `<i>Fuente: ${dataSource}</i>`,
             '',
+            `${hasIndexingErrors ? '🚨' : '✅'} <b>Estado indexación páginas clave:</b>`,
+            indexingRows,
+            '',
+            '━━━━━━━━━━━━━━',
+            `🔍 <b>Posiciones de keywords:</b>`,
             rows,
             '',
             '━━━━━━━━━━━━━━',
