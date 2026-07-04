@@ -16,27 +16,13 @@ const BLOG_URL_MAP: Record<string, { locale: string; slug: string }> = {
 
 const KEY_PAGES = Object.keys(BLOG_URL_MAP);
 
-// ── Service Account JWT ────────────────────────────────────────────────────
-function pemToArrayBuffer(pem: string): ArrayBuffer {
-    const b64 = pem.replace(/-----BEGIN PRIVATE KEY-----/, '').replace(/-----END PRIVATE KEY-----/, '').replace(/\s+/g, '');
-    const binary = Buffer.from(b64, 'base64');
-    return binary.buffer.slice(binary.byteOffset, binary.byteOffset + binary.byteLength) as ArrayBuffer;
-}
-
-async function getGSCToken(serviceAccountJson: string): Promise<string> {
-    const sa = JSON.parse(serviceAccountJson);
-    const now = Math.floor(Date.now() / 1000);
-    const encode = (obj: object) => Buffer.from(JSON.stringify(obj)).toString('base64url');
-    const signingInput = `${encode({ alg: 'RS256', typ: 'JWT' })}.${encode({
-        iss: sa.client_email,
-        scope: 'https://www.googleapis.com/auth/webmasters',
-        aud: 'https://oauth2.googleapis.com/token',
-        iat: now, exp: now + 3600,
-    })}`;
-    const key = await crypto.subtle.importKey('pkcs8', pemToArrayBuffer(sa.private_key), { name: 'RSASSA-PKCS1-v1_5', hash: 'SHA-256' }, false, ['sign']);
-    const sig = await crypto.subtle.sign('RSASSA-PKCS1-v1_5', key, new TextEncoder().encode(signingInput));
-    const jwt = `${signingInput}.${Buffer.from(sig).toString('base64url')}`;
-    const res = await fetch('https://oauth2.googleapis.com/token', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: new URLSearchParams({ grant_type: 'urn:ietf:params:oauth:grant-type:jwt-bearer', assertion: jwt }) });
+// ── OAuth2 via Refresh Token ───────────────────────────────────────────────
+async function getGSCToken(clientId: string, clientSecret: string, refreshToken: string): Promise<string> {
+    const res = await fetch('https://oauth2.googleapis.com/token', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams({ client_id: clientId, client_secret: clientSecret, refresh_token: refreshToken, grant_type: 'refresh_token' }),
+    });
     const data = await res.json();
     if (!data.access_token) throw new Error(`GSC token error: ${JSON.stringify(data)}`);
     return data.access_token;
@@ -155,14 +141,19 @@ export async function GET(request: Request) {
         return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
     }
 
-    const serviceAccountJson = process.env.GOOGLE_SERVICE_ACCOUNT_JSON;
+    const googleClientId = process.env.GOOGLE_CLIENT_ID;
+    const googleClientSecret = process.env.GOOGLE_CLIENT_SECRET;
+    const googleRefreshToken = process.env.GOOGLE_REFRESH_TOKEN;
     const anthropicKey = process.env.ANTHROPIC_API_KEY;
     const githubToken = process.env.GITHUB_TOKEN;
     const telegramBot = process.env.TELEGRAM_BOT_TOKEN;
     const telegramChat = process.env.TELEGRAM_CHAT_ID;
 
-    if (!serviceAccountJson || !anthropicKey || !githubToken) {
-        return NextResponse.json({ error: 'Missing env: GOOGLE_SERVICE_ACCOUNT_JSON, ANTHROPIC_API_KEY, or GITHUB_TOKEN' }, { status: 500 });
+    if (!googleClientId || !googleClientSecret || !googleRefreshToken) {
+        return NextResponse.json({ error: 'Missing env: GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET, or GOOGLE_REFRESH_TOKEN' }, { status: 500 });
+    }
+    if (!anthropicKey || !githubToken) {
+        return NextResponse.json({ error: 'Missing env: ANTHROPIC_API_KEY or GITHUB_TOKEN' }, { status: 500 });
     }
 
     const fixed: string[] = [];
@@ -170,7 +161,7 @@ export async function GET(request: Request) {
     const errors: string[] = [];
 
     try {
-        const gscToken = await getGSCToken(serviceAccountJson);
+        const gscToken = await getGSCToken(googleClientId, googleClientSecret, googleRefreshToken);
 
         // Read blog-data.json once
         const { content: rawJson, sha: blogSha } = await githubGetFile(githubToken, BLOG_DATA_PATH);
