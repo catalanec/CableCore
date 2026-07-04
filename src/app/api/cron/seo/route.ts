@@ -257,17 +257,19 @@ export async function GET(request: Request) {
         // Check indexing status of key pages
         let indexingRows = '';
         let hasIndexingErrors = false;
-        try {
-            const pageStatuses = await checkPageIndexing(accessToken);
-            const indexLines = pageStatuses.map(p => {
-                const shortUrl = p.url.replace('https://cablecore.es', '');
-                const emoji = p.verdict === 'PASS' ? '✅' : p.verdict === 'NEUTRAL' ? '⚠️' : '❌';
-                if (p.verdict !== 'PASS') hasIndexingErrors = true;
-                return `${emoji} ${shortUrl} — ${p.coverageState || p.verdict} (${p.lastCrawl})`;
-            });
-            indexingRows = indexLines.join('\n');
-        } catch {
-            indexingRows = '⚠️ No se pudo verificar el estado de indexación';
+        if (accessToken) {
+            try {
+                const pageStatuses = await checkPageIndexing(accessToken);
+                const indexLines = pageStatuses.map(p => {
+                    const shortUrl = p.url.replace('https://cablecore.es', '');
+                    const emoji = p.verdict === 'PASS' ? '✅' : p.verdict === 'NEUTRAL' ? '⚠️' : '❌';
+                    if (p.verdict !== 'PASS') hasIndexingErrors = true;
+                    return `${emoji} ${shortUrl} — ${p.coverageState || p.verdict} (${p.lastCrawl})`;
+                });
+                indexingRows = indexLines.join('\n');
+            } catch {
+                // URL Inspection API requires webmasters scope — skip silently
+            }
         }
 
         const rows = results.map(r => {
