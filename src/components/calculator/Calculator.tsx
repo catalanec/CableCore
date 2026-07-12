@@ -36,6 +36,17 @@ const CONFIG = {
 
 const IVA_RATE = 0.21;
 
+/* Custom price fields keep the raw typed string (comma or dot) while the
+   user is editing — a controlled <input type="number"> that eagerly coerces
+   to Number() on every keystroke silently drops a trailing "." or rejects
+   "," before the user can type the fractional part. Parse only when the
+   value is actually used in the calculation. */
+function parsePrice(v: number | string): number {
+    if (typeof v === 'number') return v;
+    const n = parseFloat(v.replace(',', '.'));
+    return isNaN(n) ? 0 : n;
+}
+
 /* ═════════════════════════════════════
    DISPLAY DATA for UI buttons
    ═════════════════════════════════════ */
@@ -447,7 +458,7 @@ export default function Calculator({ locale }: { locale: string }) {
     const [equipment, setEquipment] = useState<Record<string, number>>({
         router: 0, switch: 0, accessPoint: 0, configuration: 0,
     });
-    const [equipmentCustom, setEquipmentCustom] = useState<Record<string, { name: string; price: number }>>(
+    const [equipmentCustom, setEquipmentCustom] = useState<Record<string, { name: string; price: number | string }>>(
         {
             router: { name: '', price: CONFIG.equipment.router },
             switch: { name: '', price: CONFIG.equipment.switch },
@@ -457,13 +468,13 @@ export default function Calculator({ locale }: { locale: string }) {
     );
     const [equipmentEditing, setEquipmentEditing] = useState(false);
     const [materialsEditing, setMaterialsEditing] = useState(false);
-    const [materialsCustom, setMaterialsCustom] = useState<Record<string, { name: string; price: number }>>({
+    const [materialsCustom, setMaterialsCustom] = useState<Record<string, { name: string; price: number | string }>>({
         trunking:  { name: '', price: 4 },
         pvc:       { name: '', price: 2 },
         corrugated:{ name: '', price: 1 },
         laborHour: { name: '', price: 60 },
     });
-    const [rackCustom, setRackCustom] = useState<Record<string, { name: string; price: number }>>(
+    const [rackCustom, setRackCustom] = useState<Record<string, { name: string; price: number | string }>>(
         {
             rack_6u: { name: '', price: 90 },
             rack_9u: { name: '', price: 130 },
@@ -482,12 +493,12 @@ export default function Calculator({ locale }: { locale: string }) {
     const [customItems, setCustomItems] = useState<Array<{ id: string; type: 'unit' | 'fixed'; name: string; qty?: number; price: number | string }>>([]);
 
     // ── Per-point materials (keystone, roseta) — editable ──
-    const [pointMaterials, setPointMaterials] = useState<Record<string, { enabled: boolean; qty: number; price: number; name: string; icon: string }>>({ 
+    const [pointMaterials, setPointMaterials] = useState<Record<string, { enabled: boolean; qty: number; price: number | string; name: string; icon: string }>>({
         keystone: { enabled: true, qty: 2, price: 6, name: 'Keystone', icon: '🔌' },
         socket:   { enabled: true, qty: 1, price: 10, name: 'Roseta', icon: '🔲' },
     });
     const [pointMaterialsEditing, setPointMaterialsEditing] = useState(false);
-    const [pointCustomMats, setPointCustomMats] = useState<Array<{ id: string; name: string; qty: number; price: number; enabled: boolean }>>([]);
+    const [pointCustomMats, setPointCustomMats] = useState<Array<{ id: string; name: string; qty: number; price: number | string; enabled: boolean }>>([]);
     const addPointCustomMat = () => setPointCustomMats(prev => [...prev, { id: crypto.randomUUID(), name: '', qty: 1, price: 0, enabled: true }]);
     const removePointCustomMat = (id: string) => setPointCustomMats(prev => prev.filter(m => m.id !== id));
     const updatePointCustomMat = (id: string, field: string, value: string | number | boolean) =>
@@ -547,12 +558,12 @@ export default function Calculator({ locale }: { locale: string }) {
                 canetaLength = canetaLengthInput || 0;
             }
         }
-        const canetaCost = canetaLength * (materialsCustom.trunking?.price ?? CONFIG.materials.trunking);
+        const canetaCost = canetaLength * (materialsCustom.trunking?.price !== undefined ? parsePrice(materialsCustom.trunking.price) : CONFIG.materials.trunking);
 
         // 5. Материалы на точку (настраиваемые)
         const materialsPerPoint =
-            Object.values(pointMaterials).reduce((s, m) => s + (m.enabled ? m.qty * m.price : 0), 0) +
-            pointCustomMats.filter(m => m.enabled).reduce((s, m) => s + m.qty * m.price, 0);
+            Object.values(pointMaterials).reduce((s, m) => s + (m.enabled ? m.qty * parsePrice(m.price) : 0), 0) +
+            pointCustomMats.filter(m => m.enabled).reduce((s, m) => s + m.qty * parsePrice(m.price), 0);
         const materialsCost = materialsPerPoint * points;
 
         // 6. Доп материалы (ручной ввод количества)
@@ -560,10 +571,10 @@ export default function Calculator({ locale }: { locale: string }) {
         const trunkingQty = additionalMaterials.trunking || 0;
         const pvcQty = additionalMaterials.pvc || 0;
         const corrugatedQty = additionalMaterials.corrugated || 0;
-        additionalMaterialsCost += trunkingQty * (materialsCustom.trunking?.price ?? CONFIG.materials.trunking);
-        additionalMaterialsCost += pvcQty * (materialsCustom.pvc?.price ?? CONFIG.materials.pvc);
-        additionalMaterialsCost += corrugatedQty * (materialsCustom.corrugated?.price ?? CONFIG.materials.corrugated);
-        additionalMaterialsCost += (additionalMaterials.laborHour || 0) * (materialsCustom.laborHour?.price ?? CONFIG.materials.laborHour);
+        additionalMaterialsCost += trunkingQty * (materialsCustom.trunking?.price !== undefined ? parsePrice(materialsCustom.trunking.price) : CONFIG.materials.trunking);
+        additionalMaterialsCost += pvcQty * (materialsCustom.pvc?.price !== undefined ? parsePrice(materialsCustom.pvc.price) : CONFIG.materials.pvc);
+        additionalMaterialsCost += corrugatedQty * (materialsCustom.corrugated?.price !== undefined ? parsePrice(materialsCustom.corrugated.price) : CONFIG.materials.corrugated);
+        additionalMaterialsCost += (additionalMaterials.laborHour || 0) * (materialsCustom.laborHour?.price !== undefined ? parsePrice(materialsCustom.laborHour.price) : CONFIG.materials.laborHour);
         // Patch panels por cantidad de puertos
         additionalMaterialsCost += (patchPanelCounts.pp12 || 0) * CONFIG.materials.patchPanel12;
         additionalMaterialsCost += (patchPanelCounts.pp24 || 0) * CONFIG.materials.patchPanel24;
@@ -574,14 +585,14 @@ export default function Calculator({ locale }: { locale: string }) {
         for (const key in equipment) {
             const qty = equipment[key] || 0;
             if (qty > 0) {
-                const unitPrice = equipmentCustom[key]?.price ?? CONFIG.equipment[key as keyof typeof CONFIG.equipment] ?? 0;
+                const unitPrice = equipmentCustom[key]?.price !== undefined ? parsePrice(equipmentCustom[key].price) : (CONFIG.equipment[key as keyof typeof CONFIG.equipment] ?? 0);
                 equipmentCost += unitPrice * qty;
             }
         }
 
         // 7b. Rack — с учётом кастомных цен
         const rackOption = RACK_OPTIONS.find(r => r.id === rack) || RACK_OPTIONS[0];
-        const rackCost = rack === 'none' ? 0 : (rackCustom[rack]?.price ?? rackOption.price);
+        const rackCost = rack === 'none' ? 0 : (rackCustom[rack]?.price !== undefined ? parsePrice(rackCustom[rack].price) : rackOption.price);
 
         // 8. Upsell
         let upsellCost = 0;
@@ -960,8 +971,11 @@ export default function Calculator({ locale }: { locale: string }) {
                                                 onChange={e => setPointMaterials(prev => ({ ...prev, [key]: { ...prev[key], qty: Number(e.target.value) } }))}
                                                 className="w-12 text-center text-sm bg-brand-dark border border-border-subtle rounded px-1 py-1 text-brand-gold focus:outline-none focus:border-brand-gold/50"
                                             />
-                                            <input type="number" value={mat.price} min={0} step={0.5}
-                                                onChange={e => setPointMaterials(prev => ({ ...prev, [key]: { ...prev[key], price: Number(e.target.value) } }))}
+                                            <input type="text" inputMode="decimal" value={mat.price}
+                                                onChange={e => {
+                                                    const val = e.target.value.replace(',', '.');
+                                                    if (/^\d*\.?\d*$/.test(val)) setPointMaterials(prev => ({ ...prev, [key]: { ...prev[key], price: val } }));
+                                                }}
                                                 className="w-16 text-right text-sm bg-brand-dark border border-border-subtle rounded px-1 py-1 text-brand-gold focus:outline-none focus:border-brand-gold/50"
                                             />
                                             <span className="text-xs text-brand-gold-muted">€</span>
@@ -971,10 +985,10 @@ export default function Calculator({ locale }: { locale: string }) {
                                     <>
                                         <div className="flex-1">
                                             <div className={`text-sm font-medium ${mat.enabled ? 'text-white' : 'text-brand-gold-muted line-through'}`}>{mat.name}</div>
-                                            <div className="text-xs text-brand-gold-muted">{mat.qty} ud × {mat.price}€</div>
+                                            <div className="text-xs text-brand-gold-muted">{mat.qty} ud × {parsePrice(mat.price)}€</div>
                                         </div>
                                         <div className={`text-sm font-bold tabular-nums ${ mat.enabled ? 'text-brand-gold' : 'text-brand-gold-muted'}`}>
-                                            {(mat.qty * mat.price).toFixed(2)}€/pto
+                                            {(mat.qty * parsePrice(mat.price)).toFixed(2)}€/pto
                                         </div>
                                     </>
                                 )}
@@ -1005,8 +1019,11 @@ export default function Calculator({ locale }: { locale: string }) {
                                         onChange={e => updatePointCustomMat(mat.id, 'qty', Number(e.target.value))}
                                         className="w-12 text-center text-sm bg-brand-dark border border-border-subtle rounded px-1 py-1 text-brand-gold focus:outline-none focus:border-brand-gold/50"
                                     />
-                                    <input type="number" value={mat.price} min={0} step={0.5}
-                                        onChange={e => updatePointCustomMat(mat.id, 'price', Number(e.target.value))}
+                                    <input type="text" inputMode="decimal" value={mat.price}
+                                        onChange={e => {
+                                            const val = e.target.value.replace(',', '.');
+                                            if (/^\d*\.?\d*$/.test(val)) updatePointCustomMat(mat.id, 'price', val);
+                                        }}
                                         className="w-16 text-right text-sm bg-brand-dark border border-border-subtle rounded px-1 py-1 text-brand-gold focus:outline-none focus:border-brand-gold/50"
                                     />
                                     <span className="text-xs text-brand-gold-muted">€</span>
@@ -1029,15 +1046,15 @@ export default function Calculator({ locale }: { locale: string }) {
                                 <span className="text-brand-gold-muted">
                                     {locale === 'ru' ? `${points} pts × ` : `${points} pts × `}
                                     {(
-                                        Object.values(pointMaterials).reduce((s, m) => s + (m.enabled ? m.qty * m.price : 0), 0) +
-                                        pointCustomMats.filter(m => m.enabled).reduce((s, m) => s + m.qty * m.price, 0)
+                                        Object.values(pointMaterials).reduce((s, m) => s + (m.enabled ? m.qty * parsePrice(m.price) : 0), 0) +
+                                        pointCustomMats.filter(m => m.enabled).reduce((s, m) => s + m.qty * parsePrice(m.price), 0)
                                     ).toFixed(2)}€/pto
                                 </span>
                                 <span className="text-brand-gold font-bold">
                                     = {(
                                         points * (
-                                            Object.values(pointMaterials).reduce((s, m) => s + (m.enabled ? m.qty * m.price : 0), 0) +
-                                            pointCustomMats.filter(m => m.enabled).reduce((s, m) => s + m.qty * m.price, 0)
+                                            Object.values(pointMaterials).reduce((s, m) => s + (m.enabled ? m.qty * parsePrice(m.price) : 0), 0) +
+                                            pointCustomMats.filter(m => m.enabled).reduce((s, m) => s + m.qty * parsePrice(m.price), 0)
                                         )
                                     ).toFixed(2)}€
                                 </span>
@@ -1073,8 +1090,11 @@ export default function Calculator({ locale }: { locale: string }) {
                                                     onChange={(e) => setMaterialsCustom(prev => ({ ...prev, [mat.id]: { ...prev[mat.id], name: e.target.value } }))}
                                                     className="w-full text-xs bg-brand-dark border border-border-subtle rounded px-2 py-1 text-white placeholder-brand-gold-muted/50 focus:outline-none focus:border-brand-gold/50" />
                                                 <div className="flex items-center gap-1">
-                                                    <input type="number" value={displayPrice} min={0} step={0.5}
-                                                        onChange={(e) => setMaterialsCustom(prev => ({ ...prev, [mat.id]: { ...prev[mat.id], price: Number(e.target.value) } }))}
+                                                    <input type="text" inputMode="decimal" value={displayPrice}
+                                                        onChange={(e) => {
+                                                            const val = e.target.value.replace(',', '.');
+                                                            if (/^\d*\.?\d*$/.test(val)) setMaterialsCustom(prev => ({ ...prev, [mat.id]: { ...prev[mat.id], price: val } }));
+                                                        }}
                                                         className="w-20 text-xs bg-brand-dark border border-border-subtle rounded px-2 py-1 text-brand-gold focus:outline-none focus:border-brand-gold/50" />
                                                     <span className="text-xs text-brand-gold-muted">€/{mat.unit}</span>
                                                 </div>
@@ -1239,8 +1259,11 @@ export default function Calculator({ locale }: { locale: string }) {
                                                     onChange={(e) => setEquipmentCustom(prev => ({ ...prev, [eq.id]: { ...prev[eq.id], name: e.target.value } }))}
                                                     className="w-full text-xs bg-brand-dark border border-border-subtle rounded px-2 py-1 text-white placeholder-brand-gold-muted/50 focus:outline-none focus:border-brand-gold/50" />
                                                 <div className="flex items-center gap-1">
-                                                    <input type="number" value={displayPrice} min={0} step={0.5}
-                                                        onChange={(e) => setEquipmentCustom(prev => ({ ...prev, [eq.id]: { ...prev[eq.id], price: Number(e.target.value) } }))}
+                                                    <input type="text" inputMode="decimal" value={displayPrice}
+                                                        onChange={(e) => {
+                                                            const val = e.target.value.replace(',', '.');
+                                                            if (/^\d*\.?\d*$/.test(val)) setEquipmentCustom(prev => ({ ...prev, [eq.id]: { ...prev[eq.id], price: val } }));
+                                                        }}
                                                         className="w-20 text-xs bg-brand-dark border border-border-subtle rounded px-2 py-1 text-brand-gold focus:outline-none focus:border-brand-gold/50" />
                                                     <span className="text-xs text-brand-gold-muted">€</span>
                                                 </div>
@@ -1296,8 +1319,11 @@ export default function Calculator({ locale }: { locale: string }) {
                                                 onChange={(e) => setRackCustom(prev => ({ ...prev, [r.id]: { ...prev[r.id], name: e.target.value } }))}
                                                 className="w-full text-xs bg-brand-dark border border-border-subtle rounded px-2 py-1 text-white placeholder-brand-gold-muted/50 focus:outline-none focus:border-brand-gold/50" />
                                             <div className="flex items-center gap-1">
-                                                <input type="number" value={displayPrice} min={0} step={0.5}
-                                                    onChange={(e) => setRackCustom(prev => ({ ...prev, [r.id]: { ...prev[r.id], price: Number(e.target.value) } }))}
+                                                <input type="text" inputMode="decimal" value={displayPrice}
+                                                    onChange={(e) => {
+                                                        const val = e.target.value.replace(',', '.');
+                                                        if (/^\d*\.?\d*$/.test(val)) setRackCustom(prev => ({ ...prev, [r.id]: { ...prev[r.id], price: val } }));
+                                                    }}
                                                     className="w-24 text-xs bg-brand-dark border border-border-subtle rounded px-2 py-1 text-brand-gold focus:outline-none focus:border-brand-gold/50" />
                                                 <span className="text-xs text-brand-gold-muted">€</span>
                                             </div>
@@ -1305,7 +1331,7 @@ export default function Calculator({ locale }: { locale: string }) {
                                     ) : (
                                         <button onClick={() => setRack(r.id)} className={`w-full p-4 rounded-lg border text-left transition-all duration-200 ${rack === r.id ? 'bg-[rgba(201,168,76,0.1)] border-brand-gold' : 'bg-surface-card border-border-subtle hover:border-brand-gold/30'}`}>
                                             <div className={`font-semibold ${rack === r.id ? 'text-brand-gold' : 'text-white'}`}>{'icon' in r ? `${r.icon} ` : ''}{displayName}</div>
-                                            <div className="text-sm text-brand-gold-muted mt-1">{displayPrice > 0 ? `${displayPrice}€` : '—'}</div>
+                                            <div className="text-sm text-brand-gold-muted mt-1">{parsePrice(displayPrice) > 0 ? `${displayPrice}€` : '—'}</div>
                                         </button>
                                     )}
                                 </div>
@@ -1547,14 +1573,16 @@ export default function Calculator({ locale }: { locale: string }) {
                                     laborHour:  materialsCustom.laborHour?.name || '',
                                 },
                                 materialsCustomPrices: {
-                                    trunking:   materialsCustom.trunking?.price   ?? 4,
-                                    pvc:        materialsCustom.pvc?.price        ?? 2,
-                                    corrugated: materialsCustom.corrugated?.price ?? 1,
-                                    laborHour:  materialsCustom.laborHour?.price  ?? 60,
+                                    trunking:   materialsCustom.trunking?.price   !== undefined ? parsePrice(materialsCustom.trunking.price)   : 4,
+                                    pvc:        materialsCustom.pvc?.price        !== undefined ? parsePrice(materialsCustom.pvc.price)        : 2,
+                                    corrugated: materialsCustom.corrugated?.price !== undefined ? parsePrice(materialsCustom.corrugated.price) : 1,
+                                    laborHour:  materialsCustom.laborHour?.price  !== undefined ? parsePrice(materialsCustom.laborHour.price)  : 60,
                                 },
                                 rackCustomName: rackCustom[rack]?.name || '',
-                                rackCustomPrice: rackCustom[rack]?.price ?? 0,
-                                equipmentCustom,
+                                rackCustomPrice: rackCustom[rack]?.price !== undefined ? parsePrice(rackCustom[rack].price) : 0,
+                                equipmentCustom: Object.fromEntries(
+                                    Object.entries(equipmentCustom).map(([k, v]) => [k, { name: v.name, price: parsePrice(v.price) }])
+                                ),
                                 customItems,
                                 additionalWork: {
                                     ...Object.fromEntries(Object.entries(equipment).map(([k, v]) => [k, v > 0])),
