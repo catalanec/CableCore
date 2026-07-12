@@ -30,6 +30,9 @@ yarn-error.log*
 # vercel
 .vercel
 
+# claude-flow autonomous worker artifacts
+.claude-flow/
+
 # typescript
 *.tsbuildinfo
 next-env.d.ts

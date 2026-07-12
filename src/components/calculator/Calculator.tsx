@@ -1073,7 +1073,7 @@ export default function Calculator({ locale }: { locale: string }) {
                                                     onChange={(e) => setMaterialsCustom(prev => ({ ...prev, [mat.id]: { ...prev[mat.id], name: e.target.value } }))}
                                                     className="w-full text-xs bg-brand-dark border border-border-subtle rounded px-2 py-1 text-white placeholder-brand-gold-muted/50 focus:outline-none focus:border-brand-gold/50" />
                                                 <div className="flex items-center gap-1">
-                                                    <input type="number" value={displayPrice} min={0}
+                                                    <input type="number" value={displayPrice} min={0} step={0.5}
                                                         onChange={(e) => setMaterialsCustom(prev => ({ ...prev, [mat.id]: { ...prev[mat.id], price: Number(e.target.value) } }))}
                                                         className="w-20 text-xs bg-brand-dark border border-border-subtle rounded px-2 py-1 text-brand-gold focus:outline-none focus:border-brand-gold/50" />
                                                     <span className="text-xs text-brand-gold-muted">€/{mat.unit}</span>
@@ -1239,7 +1239,7 @@ export default function Calculator({ locale }: { locale: string }) {
                                                     onChange={(e) => setEquipmentCustom(prev => ({ ...prev, [eq.id]: { ...prev[eq.id], name: e.target.value } }))}
                                                     className="w-full text-xs bg-brand-dark border border-border-subtle rounded px-2 py-1 text-white placeholder-brand-gold-muted/50 focus:outline-none focus:border-brand-gold/50" />
                                                 <div className="flex items-center gap-1">
-                                                    <input type="number" value={displayPrice} min={0}
+                                                    <input type="number" value={displayPrice} min={0} step={0.5}
                                                         onChange={(e) => setEquipmentCustom(prev => ({ ...prev, [eq.id]: { ...prev[eq.id], price: Number(e.target.value) } }))}
                                                         className="w-20 text-xs bg-brand-dark border border-border-subtle rounded px-2 py-1 text-brand-gold focus:outline-none focus:border-brand-gold/50" />
                                                     <span className="text-xs text-brand-gold-muted">€</span>
@@ -1296,7 +1296,7 @@ export default function Calculator({ locale }: { locale: string }) {
                                                 onChange={(e) => setRackCustom(prev => ({ ...prev, [r.id]: { ...prev[r.id], name: e.target.value } }))}
                                                 className="w-full text-xs bg-brand-dark border border-border-subtle rounded px-2 py-1 text-white placeholder-brand-gold-muted/50 focus:outline-none focus:border-brand-gold/50" />
                                             <div className="flex items-center gap-1">
-                                                <input type="number" value={displayPrice} min={0}
+                                                <input type="number" value={displayPrice} min={0} step={0.5}
                                                     onChange={(e) => setRackCustom(prev => ({ ...prev, [r.id]: { ...prev[r.id], price: Number(e.target.value) } }))}
                                                     className="w-24 text-xs bg-brand-dark border border-border-subtle rounded px-2 py-1 text-brand-gold focus:outline-none focus:border-brand-gold/50" />
                                                 <span className="text-xs text-brand-gold-muted">€</span>
