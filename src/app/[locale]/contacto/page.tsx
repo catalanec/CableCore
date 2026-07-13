@@ -21,6 +21,7 @@ export default function ContactoPage() {
             email: (form.elements.namedItem('email') as HTMLInputElement).value,
             service: (form.elements.namedItem('service') as HTMLSelectElement).value,
             message: (form.elements.namedItem('message') as HTMLTextAreaElement).value,
+            website: (form.elements.namedItem('website') as HTMLInputElement).value,
         };
 
         try {
@@ -153,6 +154,10 @@ export default function ContactoPage() {
                                             {t('contactPage.formTitle')}
                                         </h2>
                                         <form onSubmit={handleSubmit} className="space-y-5">
+                                            {/* Honeypot — hidden from real users via CSS, bots that fill every field trip it */}
+                                            <input type="text" name="website" tabIndex={-1} autoComplete="off"
+                                                style={{ position: 'absolute', left: '-9999px', width: '1px', height: '1px', opacity: 0 }}
+                                                aria-hidden="true" />
                                             <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                                                 <div>
                                                     <label className="block text-sm text-brand-gold-muted mb-1.5">{t('contact.form.name')} *</label>

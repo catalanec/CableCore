@@ -71,6 +71,7 @@ export default function Pipeline({ leads: initialLeads }: PipelineProps) {
         }
 
         // Optimistic update
+        const previous = leads;
         setLeads(leads.map(l => l.id === draggedId
             ? { ...l, pipeline_stage: targetStage, status: targetStage }
             : l
@@ -78,21 +79,41 @@ export default function Pipeline({ leads: initialLeads }: PipelineProps) {
         setDraggedId(null);
         setDragOverStage(null);
 
-        await updateLeadPipelineStage(draggedId, targetStage);
+        try {
+            await updateLeadPipelineStage(draggedId, targetStage);
+        } catch (err) {
+            console.error('[Pipeline] updateLeadPipelineStage failed', err);
+            setLeads(previous);
+            alert('No se pudo mover el lead. Inténtalo de nuevo.');
+        }
     };
 
     const handleMoveNext = async (lead: Lead) => {
         const currentIdx = STAGES.findIndex(s => s.id === (lead.pipeline_stage || lead.status));
         if (currentIdx < STAGES.length - 1) {
             const nextStage = STAGES[currentIdx + 1].id;
+            const previous = leads;
             setLeads(leads.map(l => l.id === lead.id ? { ...l, pipeline_stage: nextStage, status: nextStage } : l));
-            await updateLeadPipelineStage(lead.id, nextStage);
+            try {
+                await updateLeadPipelineStage(lead.id, nextStage);
+            } catch (err) {
+                console.error('[Pipeline] updateLeadPipelineStage failed', err);
+                setLeads(previous);
+                alert('No se pudo mover el lead. Inténtalo de nuevo.');
+            }
         }
     };
 
     const handleMarkLost = async (lead: Lead) => {
+        const previous = leads;
         setLeads(leads.map(l => l.id === lead.id ? { ...l, pipeline_stage: 'lost', status: 'lost' } : l));
-        await updateLeadPipelineStage(lead.id, 'lost');
+        try {
+            await updateLeadPipelineStage(lead.id, 'lost');
+        } catch (err) {
+            console.error('[Pipeline] updateLeadPipelineStage failed', err);
+            setLeads(previous);
+            alert('No se pudo marcar como perdido. Inténtalo de nuevo.');
+        }
     };
 
     const handleQuickCall = async (lead: Lead) => {

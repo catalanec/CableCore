@@ -7,6 +7,7 @@ import { trackCalculatorQuoteRequest, trackLeadSubmit } from '@/lib/analytics';
 interface QuoteFormProps {
     locale: string;
     calculationData: {
+        calculatorType?: 'ethernet' | 'fiber';
         cableType: string;
         cableMeters: number;
         points: number;
@@ -28,6 +29,10 @@ interface QuoteFormProps {
         equipmentCustom: Record<string, { name: string; price: number }>;
         customItems: Array<{ id: string; name: string; qty: number; price: number }>;
         additionalWork: Record<string, boolean>;
+        // Pre-itemized lines for costs that don't fit the generic name/price
+        // shape above (e.g. fiber fusion splices, patch cords, OTDR
+        // certification) — appended as-is to the PDF/CRM item list.
+        fiberItems?: Array<{ description: string; quantity: string; unitPrice: string; total: string }>;
         rack: string;
         urgency: string;
         cablesCost: number;
@@ -38,6 +43,8 @@ interface QuoteFormProps {
         workCost: number;
         rackCost: number;
         subtotal: number;
+        discountPercent?: number;
+        discount?: number;
         urgencyMultiplier: number;
         iva: number;
         total: number;
@@ -122,7 +129,9 @@ export default function QuoteForm({ locale, calculationData }: QuoteFormProps) {
     const [email, setEmail] = useState('');
     const [address, setAddress] = useState('');
     const [notes, setNotes] = useState('');
+    const [website, setWebsite] = useState(''); // honeypot — must stay empty
     const [saved, setSaved] = useState(false);
+    const [saving, setSaving] = useState(false);
 
     const handleDownloadPDF = (e: FormEvent) => {
         e.preventDefault();
@@ -141,7 +150,9 @@ export default function QuoteForm({ locale, calculationData }: QuoteFormProps) {
 
         if (d.pointsCost > 0 || d.points > 0) {
             items.push({
-                description: `Puntos de red — roseta RJ45, keystone, caja, testeo`,
+                description: d.calculatorType === 'fiber'
+                    ? 'Puntos de red — roseta óptica SC/APC, pigtail, testeo'
+                    : 'Puntos de red — roseta RJ45, keystone, caja, testeo',
                 quantity: `${d.points} uds`,
                 unitPrice: `${(d.pointsCost / Math.max(1, d.points)).toFixed(2)}€`,
                 total: `${d.pointsCost.toFixed(2)}€`,
@@ -244,12 +255,19 @@ export default function QuoteForm({ locale, calculationData }: QuoteFormProps) {
             });
         }
 
+        // Fiber-specific costs (fusion splices, patch cords, couplers, splice
+        // tray, OTDR certification) — pre-itemized by the fiber calculator
+        // since they don't fit the generic name/price shape above.
+        (d.fiberItems || []).forEach(item => items.push(item));
+
         const pdfData: QuotePDFData = {
             quoteNumber: generateQuoteNumber(),
             date: new Date().toLocaleDateString('es-ES', { day: '2-digit', month: '2-digit', year: 'numeric' }),
             client: { name, phone, email, address: address || undefined },
             items,
             subtotal: `${d.subtotal.toFixed(2)}€`,
+            discountPercent: d.discountPercent && d.discountPercent > 0 ? d.discountPercent : undefined,
+            discount: d.discount && d.discount > 0 ? `${d.discount.toFixed(2)}€` : undefined,
             urgencyMultiplier: d.urgencyMultiplier > 1 ? `×${d.urgencyMultiplier}` : undefined,
             iva: `${d.iva.toFixed(2)}€`,
             total: `${d.total.toFixed(2)}€`,
@@ -259,16 +277,18 @@ export default function QuoteForm({ locale, calculationData }: QuoteFormProps) {
         downloadQuotePDF(pdfData);
 
         // GA4: track quote download as conversion
-        trackCalculatorQuoteRequest('ethernet', calculationData.total);
+        trackCalculatorQuoteRequest(d.calculatorType || 'ethernet', calculationData.total);
     };
 
     const handleSaveCRM = async () => {
+        if (saving || saved) return;
+        setSaving(true);
         // Build the same items array as the PDF — including all custom lines
         const d = calculationData;
         const quoteItems: Array<{ description: string; quantity: string; unitPrice: string; total: string }> = [];
 
         if (d.cablesCost > 0 || d.cableMeters > 0) quoteItems.push({ description: `Cableado ${d.cableType.toUpperCase()} — suministro de cable`, quantity: `${d.cableMeters}m`, unitPrice: `${(d.cablesCost / Math.max(1, d.cableMeters)).toFixed(2)}€`, total: `${d.cablesCost.toFixed(2)}€` });
-        if (d.pointsCost > 0 || d.points > 0) quoteItems.push({ description: 'Puntos de red — roseta RJ45, keystone, caja, testeo', quantity: `${d.points} uds`, unitPrice: `${(d.pointsCost / Math.max(1, d.points)).toFixed(2)}€`, total: `${d.pointsCost.toFixed(2)}€` });
+        if (d.pointsCost > 0 || d.points > 0) quoteItems.push({ description: d.calculatorType === 'fiber' ? 'Puntos de red — roseta óptica SC/APC, pigtail, testeo' : 'Puntos de red — roseta RJ45, keystone, caja, testeo', quantity: `${d.points} uds`, unitPrice: `${(d.pointsCost / Math.max(1, d.points)).toFixed(2)}€`, total: `${d.pointsCost.toFixed(2)}€` });
         if (d.installCost > 0) quoteItems.push({ description: `Tendido de cable — ${installLabels[d.installationType] || d.installationType}`, quantity: `${d.cableMeters}m`, unitPrice: `${(d.installCost / Math.max(1, d.cableMeters)).toFixed(2)}€`, total: `${d.installCost.toFixed(2)}€` });
         if (d.laborCost > 0) quoteItems.push({ description: 'Mano de obra — operarios, montaje, terminación, verificación', quantity: `${d.points} ptos`, unitPrice: `${(d.laborCost / Math.max(1, d.points)).toFixed(2)}€`, total: `${d.laborCost.toFixed(2)}€` });
         if (d.canaleta > 0) { const p = d.materialsCustomPrices?.trunking ?? 4; quoteItems.push({ description: d.materialsCustomNames?.trunking || 'Canaleta (cable canal)', quantity: `${d.canaleta}m`, unitPrice: `${p.toFixed(2)}€`, total: `${(d.canaleta * p).toFixed(2)}€` }); }
@@ -283,6 +303,7 @@ export default function QuoteForm({ locale, calculationData }: QuoteFormProps) {
         (d.customItems || []).forEach((item: any) => { const pv = typeof item.price === 'string' ? parseFloat(item.price.replace(',', '.')) || 0 : Number(item.price) || 0; if (!item.name || pv <= 0) return; if (item.type === 'fixed') { quoteItems.push({ description: item.name, quantity: '1', unitPrice: `${pv.toFixed(2)}€`, total: `${pv.toFixed(2)}€` }); } else if ((item.qty || 0) > 0) { quoteItems.push({ description: item.name, quantity: `${item.qty} ud`, unitPrice: `${pv.toFixed(2)}€`, total: `${((item.qty || 0) * pv).toFixed(2)}€` }); } });
         Object.entries(d.additionalWork).forEach(([key, val]) => { if (val) { const custom = d.equipmentCustom?.[key]; const nm = custom?.name || workLabels[key] || key; const pr = custom?.price ?? ({ switch: 40, router: 50, accessPoint: 70, configuration: 150, network_config: 120, patch_panel: 80, testing: 50, labeling: 20, cableManagement: 50, extendedWarranty: 30 }[key] || 0); quoteItems.push({ description: nm, quantity: '1', unitPrice: `${pr.toFixed(2)}€`, total: `${pr.toFixed(2)}€` }); } });
         if (d.rack !== 'none') { const fb = rackLabels[d.rack] || d.rack; const fp = ({ rack_6u: 90, rack_9u: 130, rack_12u: 180, rack_18u: 250, rack_22u: 380, rack_42u: 650 }[d.rack] || d.rackCost); const rn = d.rackCustomName || fb; const rp = d.rackCustomPrice > 0 ? d.rackCustomPrice : fp; quoteItems.push({ description: rn, quantity: '1', unitPrice: `${rp.toFixed(2)}€`, total: `${d.rackCost.toFixed(2)}€` }); }
+        (d.fiberItems || []).forEach(item => quoteItems.push(item));
 
         // Save to Supabase
         try {
@@ -294,6 +315,7 @@ export default function QuoteForm({ locale, calculationData }: QuoteFormProps) {
                     client_phone: phone,
                     client_email: email,
                     client_address: address,
+                    website, // honeypot — API silently no-ops if this is filled
                     ...calculationData,
                     notes,
                     quoteItems,
@@ -310,6 +332,8 @@ export default function QuoteForm({ locale, calculationData }: QuoteFormProps) {
         } catch (err) {
             alert('Error de red al guardar en CRM');
             console.error(err);
+        } finally {
+            setSaving(false);
         }
     };
 
@@ -322,6 +346,10 @@ export default function QuoteForm({ locale, calculationData }: QuoteFormProps) {
             </h3>
 
             <form onSubmit={handleDownloadPDF} className="space-y-4">
+                {/* Honeypot — hidden from real users via CSS, bots that fill every field trip it */}
+                <input type="text" name="website" value={website} onChange={(e) => setWebsite(e.target.value)} tabIndex={-1} autoComplete="off"
+                    style={{ position: 'absolute', left: '-9999px', width: '1px', height: '1px', opacity: 0 }}
+                    aria-hidden="true" />
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     <div>
                         <label className="block text-xs text-brand-gold-muted mb-1.5">{l.name}</label>
@@ -355,9 +383,10 @@ export default function QuoteForm({ locale, calculationData }: QuoteFormProps) {
                     <button
                         type="button"
                         onClick={handleSaveCRM}
-                        className="btn-outline w-full justify-center py-3 text-sm"
+                        disabled={saving || saved}
+                        className="btn-outline w-full justify-center py-3 text-sm disabled:opacity-60"
                     >
-                        {saved ? l.saved : l.save}
+                        {saved ? l.saved : saving ? '...' : l.save}
                     </button>
                 </div>
             </form>

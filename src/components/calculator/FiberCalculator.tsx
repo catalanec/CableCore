@@ -746,8 +746,8 @@ export default function FiberCalculator({ locale, onCalcUpdate }: FiberCalculato
 
                         {calc.urgencyOption.multiplier > 1 && (
                             <div className="flex justify-between text-yellow-400">
-                                <span>{l.urgencyLabel}</span>
-                                <span>×{calc.urgencyOption.multiplier}</span>
+                                <span>{l.urgencyLabel} (×{calc.urgencyOption.multiplier})</span>
+                                <span>+{((calc.subtotal - calc.discount) * (calc.urgencyOption.multiplier - 1)).toFixed(2)}€</span>
                             </div>
                         )}
 
@@ -797,6 +797,7 @@ export default function FiberCalculator({ locale, onCalcUpdate }: FiberCalculato
                     <QuoteForm
                         locale={locale}
                         calculationData={{
+                            calculatorType: 'fiber',
                             cableType: `Fibra ${FIBER_CABLE_TYPES.find(c => c.id === cableType)?.name || cableType}`,
                             cableMeters: calc.totalCableLength,
                             points,
@@ -816,21 +817,33 @@ export default function FiberCalculator({ locale, onCalcUpdate }: FiberCalculato
                             rackCustomName: '',
                             rackCustomPrice: 0,
                             equipmentCustom: {},
-                            additionalWork: {
-                                fusion: fusionCount > 0,
-                                otdr: doCertification,
-                            },
+                            additionalWork: {},
+                            // Fusion splices, patch cords, couplers, splice tray and OTDR
+                            // certification are all folded into calc.subtotal/calc.total
+                            // already — these are display-only line items so the fiber
+                            // PDF/CRM record actually shows what's being charged for,
+                            // instead of silently baking them into materialsCost/workCost
+                            // with no matching label in QuoteForm's item-building logic.
+                            fiberItems: [
+                                fusionCount > 0 ? { description: l.fusionLabel, quantity: `${fusionCount} ${l.fusionCount}`, unitPrice: `${FIBER_CONFIG.fusionPerSplice.toFixed(2)}€`, total: `${calc.fusionCost.toFixed(2)}€` } : null,
+                                doCertification && points > 0 ? { description: l.certificationLabel, quantity: `${points} pts`, unitPrice: `${FIBER_CONFIG.certificationPerPoint.toFixed(2)}€`, total: `${calc.certificationCost.toFixed(2)}€` } : null,
+                                patchCordCount > 0 ? { description: l.patchCordLabel, quantity: `${patchCordCount} ud`, unitPrice: `${FIBER_CONFIG.patchCordFibra.toFixed(2)}€`, total: `${calc.patchCordCost.toFixed(2)}€` } : null,
+                                acopladorCount > 0 ? { description: l.acopladorLabel, quantity: `${acopladorCount} ud`, unitPrice: `${FIBER_CONFIG.acopladorScApc.toFixed(2)}€`, total: `${calc.acopladorCost.toFixed(2)}€` } : null,
+                                bandeja !== 'none' ? { description: `${l.bandejaLabel} (${bandeja === 'bandeja12' ? l.bandeja12 : l.bandeja24})`, quantity: '1 ud', unitPrice: `${calc.bandejaCost.toFixed(2)}€`, total: `${calc.bandejaCost.toFixed(2)}€` } : null,
+                            ].filter((i): i is { description: string; quantity: string; unitPrice: string; total: string } => i !== null),
                             rack,
                             urgency,
                             cablesCost: calc.cableCost,
                             pointsCost: calc.rosetaCost,
                             installCost: calc.routingCost,
                             laborCost: calc.laborCost,
-                            materialsCost: calc.fusionCost + calc.patchCordCost + calc.acopladorCost + calc.bandejaCost,
-                            workCost: calc.certificationCost,
+                            materialsCost: 0,
+                            workCost: 0,
                             rackCost: calc.rackCost,
                             customItems,
                             subtotal: calc.subtotal,
+                            discountPercent: calc.discountPercent,
+                            discount: calc.discount,
                             urgencyMultiplier: calc.urgencyOption.multiplier,
                             iva: calc.iva,
                             total: calc.total,

@@ -11,6 +11,23 @@ const routing = defineRouting({
 
 const intlMiddleware = createMiddleware(routing);
 
+// Plain `===` on credentials leaks timing information proportional to how
+// many leading characters match. This runs a fixed number of iterations
+// regardless of input length so comparison time doesn't correlate with
+// where (or whether) the strings differ. Edge middleware can't use Node's
+// `crypto.timingSafeEqual` (Node-only API, unsupported in the Edge runtime),
+// hence the manual constant-time loop.
+function safeCompare(a: string, b: string): boolean {
+    const maxLen = 256;
+    let diff = a.length ^ b.length;
+    for (let i = 0; i < maxLen; i++) {
+        const ca = i < a.length ? a.charCodeAt(i) : 0;
+        const cb = i < b.length ? b.charCodeAt(i) : 0;
+        diff |= ca ^ cb;
+    }
+    return diff === 0;
+}
+
 export default function middleware(req: NextRequest) {
     if (req.nextUrl.pathname.includes('/admin')) {
         const basicAuth = req.headers.get('authorization');
@@ -23,7 +40,7 @@ export default function middleware(req: NextRequest) {
         if (basicAuth) {
             const authValue = basicAuth.split(' ')[1];
             const [user, pwd] = atob(authValue).split(':');
-            if (user === adminUser && pwd === adminPass) {
+            if (safeCompare(user, adminUser) && safeCompare(pwd, adminPass)) {
                 return intlMiddleware(req);
             }
         }

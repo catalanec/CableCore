@@ -93,13 +93,27 @@ export default function TaskManager({ tasks: initialTasks, entityType, entityId,
 
     const handleToggle = async (task: Task) => {
         const newStatus = task.status === 'done' ? 'pending' : 'done';
+        const previous = tasks;
         setTasks(tasks.map(t => t.id === task.id ? { ...t, status: newStatus } : t));
-        await updateTaskStatus(task.id, newStatus);
+        try {
+            await updateTaskStatus(task.id, newStatus);
+        } catch (err) {
+            console.error('[TaskManager] updateTaskStatus failed', err);
+            setTasks(previous);
+            alert('No se pudo actualizar la tarea. Inténtalo de nuevo.');
+        }
     };
 
     const handleDelete = async (id: string) => {
+        const previous = tasks;
         setTasks(tasks.filter(t => t.id !== id));
-        await deleteTask(id);
+        try {
+            await deleteTask(id);
+        } catch (err) {
+            console.error('[TaskManager] deleteTask failed', err);
+            setTasks(previous);
+            alert('No se pudo eliminar la tarea. Inténtalo de nuevo.');
+        }
     };
 
     return (

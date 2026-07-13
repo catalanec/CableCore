@@ -1,4 +1,21 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { timingSafeEqual } from 'crypto';
+
+// Plain `===`/`!==` on credentials leaks timing information proportional to
+// how many leading characters match, letting an attacker recover the
+// password byte-by-byte over many requests. timingSafeEqual compares in
+// constant time regardless of where the strings first differ.
+function safeCompare(a: string, b: string): boolean {
+    const bufA = Buffer.from(a);
+    const bufB = Buffer.from(b);
+    if (bufA.length !== bufB.length) {
+        // Still run a same-length comparison so the early return above
+        // doesn't itself leak length via timing on a cheap short-circuit.
+        timingSafeEqual(bufA, bufA);
+        return false;
+    }
+    return timingSafeEqual(bufA, bufB);
+}
 
 export function requireAdminAuth(req: NextRequest): NextResponse | null {
     const basicAuth = req.headers.get('authorization');
@@ -17,7 +34,7 @@ export function requireAdminAuth(req: NextRequest): NextResponse | null {
     }
 
     const [user, pwd] = atob(basicAuth.split(' ')[1]).split(':');
-    if (user !== adminUser || pwd !== adminPass) {
+    if (!safeCompare(user, adminUser) || !safeCompare(pwd, adminPass)) {
         return new NextResponse('Unauthorized', { status: 401 });
     }
 

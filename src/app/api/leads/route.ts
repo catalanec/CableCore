@@ -6,6 +6,13 @@ export async function POST(request: NextRequest) {
     try {
         const data = await request.json();
 
+        // Honeypot: a hidden field real users never fill in. Bots that
+        // blindly fill every input trip it — pretend success so they don't
+        // learn to skip the field, but never write or notify anything.
+        if (data.website) {
+            return NextResponse.json({ success: true });
+        }
+
         if (!data.name || !data.phone || !data.email) {
             return NextResponse.json({ error: 'Missing required fields' }, { status: 400 });
         }

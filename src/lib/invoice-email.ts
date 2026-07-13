@@ -3,6 +3,8 @@
    Gold/White professional invoice email
    ═══════════════════════════════════════════ */
 
+import { esc } from './email';
+
 export interface InvoiceEmailData {
     clientName: string;
     quoteNumber: string;
@@ -65,7 +67,7 @@ export function generateInvoiceEmailHTML(data: InvoiceEmailData): string {
           <!-- Greeting -->
           <tr>
             <td style="padding: 30px 30px 20px;">
-              <h1 style="color: #222; font-size: 22px; margin: 0 0 8px; font-weight: 700;">Estimado/a ${data.clientName},</h1>
+              <h1 style="color: #222; font-size: 22px; margin: 0 0 8px; font-weight: 700;">Estimado/a ${esc(data.clientName)},</h1>
               <p style="color: #555; font-size: 14px; line-height: 1.7; margin: 0;">
                 ${paymentDescription}
               </p>
@@ -83,7 +85,7 @@ export function generateInvoiceEmailHTML(data: InvoiceEmailData): string {
                 </tr>
                 <tr>
                   <td style="padding: 14px 18px;">
-                    <div style="color: #333; font-size: 14px; line-height: 1.6;">${data.projectSummary}</div>
+                    <div style="color: #333; font-size: 14px; line-height: 1.6;">${esc(data.projectSummary)}</div>
                   </td>
                 </tr>
                 <tr>
@@ -91,7 +93,7 @@ export function generateInvoiceEmailHTML(data: InvoiceEmailData): string {
                     <table width="100%" cellpadding="0" cellspacing="0">
                       <tr>
                         <td style="color: #888; font-size: 13px;">Presupuesto Nº</td>
-                        <td style="color: #333; font-size: 13px; text-align: right; font-weight: 600;">${data.quoteNumber}</td>
+                        <td style="color: #333; font-size: 13px; text-align: right; font-weight: 600;">${esc(data.quoteNumber)}</td>
                       </tr>
                       <tr>
                         <td style="color: #888; font-size: 13px; padding-top: 6px;">Total del Proyecto</td>

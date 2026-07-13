@@ -120,10 +120,16 @@ export default function ProjectDetail({ project: initialProject, activities, tas
 
     const handleSaveInfo = async () => {
         setSaving(true);
-        await updateProjectInfo(project.id, editData);
-        setProject({ ...project, ...editData });
-        setEditMode(false);
-        setSaving(false);
+        try {
+            await updateProjectInfo(project.id, editData);
+            setProject({ ...project, ...editData });
+            setEditMode(false);
+        } catch (err) {
+            console.error('[ProjectDetail] updateProjectInfo failed', err);
+            alert('No se pudo guardar la información. Inténtalo de nuevo.');
+        } finally {
+            setSaving(false);
+        }
     };
 
     const handleSaveCosts = async () => {
@@ -133,28 +139,48 @@ export default function ProjectDetail({ project: initialProject, activities, tas
             actual_labor_cost: Number(costData.actual_labor_cost) || 0,
             actual_other_cost: Number(costData.actual_other_cost) || 0,
         };
-        await updateProjectCosts(project.id, numericData);
-        setProject({ ...project, ...numericData });
-        setSaving(false);
+        try {
+            await updateProjectCosts(project.id, numericData);
+            setProject({ ...project, ...numericData });
+        } catch (err) {
+            console.error('[ProjectDetail] updateProjectCosts failed', err);
+            alert('No se pudieron guardar los costes. Inténtalo de nuevo.');
+        } finally {
+            setSaving(false);
+        }
     };
 
     const handleStatusChange = async (status: string) => {
+        const previous = project;
         setProject({ ...project, status });
-        await updateProjectStatus(project.id, status);
+        try {
+            await updateProjectStatus(project.id, status);
+        } catch (err) {
+            console.error('[ProjectDetail] updateProjectStatus failed', err);
+            setProject(previous);
+            alert('No se pudo actualizar el estado. Inténtalo de nuevo.');
+        }
     };
 
     const handlePaymentChange = async (status: string) => {
+        const previous = project;
         const date = status === 'paid' ? new Date().toISOString().split('T')[0] : null;
         setProject({ ...project, payment_status: status, payment_date: date });
-        await updateProjectPayment(project.id, { payment_status: status, payment_date: date });
+        try {
+            await updateProjectPayment(project.id, { payment_status: status, payment_date: date });
 
-        if (status === 'paid') {
-            await addActivity({
-                type: 'payment',
-                description: `Pago recibido — ${grossRevenue.toLocaleString('es-ES')}€`,
-                entity_type: 'project',
-                entity_id: project.id,
-            });
+            if (status === 'paid') {
+                await addActivity({
+                    type: 'payment',
+                    description: `Pago recibido — ${grossRevenue.toLocaleString('es-ES')}€`,
+                    entity_type: 'project',
+                    entity_id: project.id,
+                });
+            }
+        } catch (err) {
+            console.error('[ProjectDetail] updateProjectPayment failed', err);
+            setProject(previous);
+            alert('No se pudo actualizar el pago. Inténtalo de nuevo.');
         }
     };
 
@@ -589,8 +615,14 @@ export default function ProjectDetail({ project: initialProject, activities, tas
                                 <a href={photo.url} target="_blank" rel="noopener noreferrer"
                                     className="text-xs text-white bg-white/20 px-3 py-1 rounded hover:bg-white/30">Ver</a>
                                 <button onClick={async () => {
-                                    await fetch('/api/photos', { method: 'DELETE', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ path: photo.path, id: photo.id }) });
-                                    setPhotos(prev => prev.filter((_, j) => j !== i));
+                                    try {
+                                        const res = await fetch('/api/photos', { method: 'DELETE', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ path: photo.path, id: photo.id }) });
+                                        if (!res.ok) { alert('No se pudo eliminar la foto. Inténtalo de nuevo.'); return; }
+                                        setPhotos(prev => prev.filter((_, j) => j !== i));
+                                    } catch (err) {
+                                        console.error('[ProjectDetail] photo delete failed', err);
+                                        alert('No se pudo eliminar la foto. Inténtalo de nuevo.');
+                                    }
                                 }} className="text-xs text-red-300 hover:text-red-200">Eliminar</button>
                             </div>
                         </div>

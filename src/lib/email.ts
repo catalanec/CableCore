@@ -1,6 +1,6 @@
 import nodemailer from 'nodemailer';
 
-function esc(s: string | undefined | null): string {
+export function esc(s: string | undefined | null): string {
     if (!s) return '';
     return String(s)
         .replace(/&/g, '&amp;')

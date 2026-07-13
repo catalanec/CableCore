@@ -19,6 +19,8 @@ export interface QuotePDFData {
         total: string;
     }>;
     subtotal: string;
+    discountPercent?: number;
+    discount?: string;
     urgencyMultiplier?: string;
     iva: string;
     total: string;
@@ -111,6 +113,11 @@ export function generateQuoteHTML(data: QuotePDFData): string {
         <div style="display: flex; justify-content: space-between; padding: 8px 12px; font-size: 12px; color: #555; border-bottom: 1px solid #e0dcd4;">
           <span>Subtotal</span> <span style="font-weight: 600; color: #333;">${data.subtotal}</span>
         </div>
+        ${data.discount ? `
+        <div style="display: flex; justify-content: space-between; padding: 8px 12px; font-size: 12px; color: #2E7D32; border-bottom: 1px solid #e0dcd4;">
+          <span style="font-weight: 600;">Descuento${data.discountPercent ? ` (-${data.discountPercent}%)` : ''}</span> <span style="font-weight: 700;">-${data.discount}</span>
+        </div>
+        ` : ''}
         ${data.urgencyMultiplier ? `
         <div style="display: flex; justify-content: space-between; padding: 8px 12px; font-size: 12px; color: #B8860B; background: #FFF8E1; border-bottom: 1px solid #e0dcd4;">
           <span style="font-weight: 600;">Multiplicador urgencia</span> <span style="font-weight: 700;">${data.urgencyMultiplier}</span>

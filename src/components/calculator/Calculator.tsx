@@ -173,7 +173,7 @@ const calcLabels: Record<string, Record<string, string>> = {
         recommended: '★ Recomendado',
         // Tooltips
         tipCable: 'Coste del cable de red según el tipo seleccionado. A mayor categoría (Cat5e→Cat7), mayor velocidad y blindaje, pero mayor coste.',
-        tipLabor: 'Trabajo de los técnicos: instalación de rosetas, conexión de cables (crimpado), montaje y testeo de cada punto. Se calcula por tipo: Básico (30€/pto), Conducto (50€/pto), Avanzado (90€/pto).',
+        tipLabor: 'Trabajo de los técnicos: instalación de rosetas, conexión de cables (crimpado), montaje y testeo de cada punto. Se calcula por tipo: Básico (30€/pto), Conducto (50€/pto), Avanzado (90€/pto) · el precio final se ajusta según el tipo de cable e instalación.',
         tipRouting: 'Tendido físico del cable por la ruta: pasar cables por el techo, canaletas o paredes. El precio varía según el tipo de instalación.',
         tipTrench: 'Apertura de regata (canal en la pared) para empotrar el cable. Incluye corte, colocación del tubo y sellado posterior.',
         tipCanaleta: 'Canal de plástico que se fija a la pared o techo para proteger y ocultar los cables. Precio por metro lineal.',
@@ -277,7 +277,7 @@ const calcLabels: Record<string, Record<string, string>> = {
         recommended: '★ Recommended',
         // Tooltips
         tipCable: 'Network cable cost by selected type. Higher category (Cat5e→Cat7) means faster speeds and better shielding, but higher cost.',
-        tipLabor: 'Technician labor: outlet installation, cable crimping, mounting and testing each point. Calculated by type: Basic (30€/pt), Conduit (50€/pt), Advanced (90€/pt).',
+        tipLabor: 'Technician labor: outlet installation, cable crimping, mounting and testing each point. Calculated by type: Basic (30€/pt), Conduit (50€/pt), Advanced (90€/pt) · final price is further adjusted by cable and installation type.',
         tipRouting: 'Physical cable routing: pulling cables through ceiling, trunking or walls. Price varies by installation type.',
         tipTrench: 'Wall trenching (chase) to embed the cable. Includes cutting, tube placement and sealing.',
         tipCanaleta: 'Plastic trunking fixed to wall or ceiling to protect and conceal cables. Price per linear meter.',
@@ -373,7 +373,7 @@ const calcLabels: Record<string, Record<string, string>> = {
         recommended: '★ Рекомендуется',
         // Tooltips
         tipCable: 'Стоимость сетевого кабеля. Чем выше категория (Cat5e→Cat7), тем выше скорость и экранирование, но дороже.',
-        tipLabor: 'Работа техников: установка розеток, обжим кабеля, монтаж и тестирование каждой точки. По типу: Базовый (30€/тчк), Кондуит (50€/тчк), Сложный (90€/тчк).',
+        tipLabor: 'Работа техников: установка розеток, обжим кабеля, монтаж и тестирование каждой точки. По типу: Базовый (30€/тчк), Кондуит (50€/тчк), Сложный (90€/тчк) · итоговая цена дополнительно корректируется в зависимости от типа кабеля и монтажа.',
         tipRouting: 'Прокладка кабеля: протяжка через потолок, кабель-каналы или стены. Цена зависит от типа установки.',
         tipTrench: 'Штроба (канал в стене) для скрытой прокладки кабеля. Включает нарезку, укладку трубы и заделку.',
         tipCanaleta: 'Пластиковый кабель-канал на стену или потолок для защиты и скрытия проводов. Цена за погонный метр.',
@@ -731,7 +731,7 @@ export default function Calculator({ locale }: { locale: string }) {
                             className="w-12 h-12 rounded-lg bg-surface-card border border-border-subtle text-white hover:border-brand-gold/50 transition-colors text-xl font-bold"
                         >−</button>
                         <div className="flex-1">
-                            <input type="range" min={0} max={100} value={points}
+                            <input type="range" min={0} max={100} value={points} aria-label={l.points}
                                 onChange={(e) => setPoints(Number(e.target.value))}
                                 className="w-full accent-[#c9a84c] h-2 rounded-full appearance-none bg-surface-card cursor-pointer" />
                         </div>
@@ -760,7 +760,7 @@ export default function Calculator({ locale }: { locale: string }) {
                             className="w-12 h-12 rounded-lg bg-surface-card border border-border-subtle text-white hover:border-brand-gold/50 transition-colors text-xl font-bold"
                         >−</button>
                         <div className="flex-1">
-                            <input type="range" min={0} max={100} value={avgLength}
+                            <input type="range" min={0} max={100} value={avgLength} aria-label={l.avgLength}
                                 onChange={(e) => setAvgLength(Number(e.target.value))}
                                 className="w-full accent-[#c9a84c] h-2 rounded-full appearance-none bg-surface-card cursor-pointer" />
                         </div>
@@ -850,7 +850,7 @@ export default function Calculator({ locale }: { locale: string }) {
                                 <button onClick={() => setTrenchLengthInput(Math.max(0, trenchLengthInput - 1))}
                                     className="w-12 h-12 rounded-lg bg-surface-card border border-border-subtle text-white hover:border-brand-gold/50 transition-colors text-xl font-bold">−</button>
                                 <div className="flex-1">
-                                    <input type="range" min={0} max={500} value={trenchLengthInput}
+                                    <input type="range" min={0} max={500} value={trenchLengthInput} aria-label={l.trench}
                                         onChange={(e) => setTrenchLengthInput(Number(e.target.value))}
                                         className="w-full accent-[#c9a84c] h-2 rounded-full appearance-none bg-surface-card cursor-pointer" />
                                 </div>
@@ -900,7 +900,7 @@ export default function Calculator({ locale }: { locale: string }) {
                                 <button onClick={() => setCanetaLengthInput(Math.max(0, canetaLengthInput - 1))}
                                     className="w-12 h-12 rounded-lg bg-surface-card border border-border-subtle text-white hover:border-brand-gold/50 transition-colors text-xl font-bold">−</button>
                                 <div className="flex-1">
-                                    <input type="range" min={0} max={500} value={canetaLengthInput}
+                                    <input type="range" min={0} max={500} value={canetaLengthInput} aria-label={l.canaleta}
                                         onChange={(e) => setCanetaLengthInput(Number(e.target.value))}
                                         className="w-full accent-[#c9a84c] h-2 rounded-full appearance-none bg-surface-card cursor-pointer" />
                                 </div>
@@ -1503,8 +1503,8 @@ export default function Calculator({ locale }: { locale: string }) {
                         {/* Urgency */}
                         {urgency !== 'normal' && (
                             <div className="flex justify-between text-yellow-400">
-                                <span>{l.urgencyLabel}</span>
-                                <span>×{calc.urgencyOption.multiplier}</span>
+                                <span>{l.urgencyLabel} (×{calc.urgencyOption.multiplier})</span>
+                                <span>+{(calc.afterUrgency - (calc.subtotal - calc.discount)).toFixed(2)}€</span>
                             </div>
                         )}
 
@@ -1552,6 +1552,7 @@ export default function Calculator({ locale }: { locale: string }) {
                         <QuoteForm
                             locale={locale}
                             calculationData={{
+                                calculatorType: 'ethernet',
                                 cableType,
                                 cableMeters: calc.totalCableLength,
                                 points,
@@ -1598,6 +1599,8 @@ export default function Calculator({ locale }: { locale: string }) {
                                 workCost: calc.equipmentCost,
                                 rackCost: calc.rackCost,
                                 subtotal: calc.subtotal,
+                                discountPercent: calc.discountPercent,
+                                discount: calc.discount,
                                 urgencyMultiplier: calc.urgencyOption.multiplier,
                                 iva: calc.iva,
                                 total: calc.total,

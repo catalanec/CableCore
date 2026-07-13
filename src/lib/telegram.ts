@@ -6,6 +6,14 @@
 const TELEGRAM_BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
 const TELEGRAM_CHAT_ID = process.env.TELEGRAM_CHAT_ID;
 
+// Telegram's parse_mode:'HTML' supports a small tag allowlist (<b>, <a href>, ...).
+// User-supplied text must be escaped so a crafted "<a href=...>" in a lead's
+// name/message can't render as a disguised clickable link in the owner's chat.
+function escTg(s: string | undefined | null): string {
+    if (!s) return '';
+    return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+
 async function sendTelegramMessage(text: string): Promise<boolean> {
     if (!TELEGRAM_BOT_TOKEN || !TELEGRAM_CHAT_ID) {
         console.warn('Telegram not configured: missing TELEGRAM_BOT_TOKEN or TELEGRAM_CHAT_ID');
@@ -50,12 +58,12 @@ export async function notifyNewLead(data: {
     const text = [
         '🔔 <b>Nueva solicitud — CableCore</b>',
         '',
-        `👤 <b>Nombre:</b> ${data.name}`,
-        `📞 <b>Teléfono:</b> ${data.phone}`,
-        `📧 <b>Email:</b> ${data.email}`,
-        data.service ? `🔧 <b>Servicio:</b> ${data.service}` : '',
-        data.message ? `💬 <b>Mensaje:</b> ${data.message}` : '',
-        `📍 <b>Origen:</b> ${data.source || 'Formulario de contacto'}`,
+        `👤 <b>Nombre:</b> ${escTg(data.name)}`,
+        `📞 <b>Teléfono:</b> ${escTg(data.phone)}`,
+        `📧 <b>Email:</b> ${escTg(data.email)}`,
+        data.service ? `🔧 <b>Servicio:</b> ${escTg(data.service)}` : '',
+        data.message ? `💬 <b>Mensaje:</b> ${escTg(data.message)}` : '',
+        `📍 <b>Origen:</b> ${escTg(data.source || 'Formulario de contacto')}`,
         '',
         `⚡ <b>Responde rápido para ganar el cliente!</b>`,
         `📲 <a href="https://wa.me/34${data.phone.replace(/\D/g, '').replace(/^34/, '')}">Responder por WhatsApp</a>`,
@@ -78,14 +86,14 @@ export async function notifyNewQuote(data: {
     const text = [
         '💰 <b>Nuevo presupuesto — CableCore</b>',
         '',
-        `📋 <b>Nº:</b> ${data.quoteNumber}`,
-        `👤 <b>Cliente:</b> ${data.clientName}`,
-        `📞 <b>Teléfono:</b> ${data.clientPhone}`,
-        `📧 <b>Email:</b> ${data.clientEmail}`,
+        `📋 <b>Nº:</b> ${escTg(data.quoteNumber)}`,
+        `👤 <b>Cliente:</b> ${escTg(data.clientName)}`,
+        `📞 <b>Teléfono:</b> ${escTg(data.clientPhone)}`,
+        `📧 <b>Email:</b> ${escTg(data.clientEmail)}`,
         '',
-        data.cableType ? `🔌 <b>Cable:</b> ${data.cableType.toUpperCase()}` : '',
+        data.cableType ? `🔌 <b>Cable:</b> ${escTg(data.cableType.toUpperCase())}` : '',
         data.networkPoints > 0 ? `📍 <b>Puntos de red:</b> ${data.networkPoints}` : '',
-        data.installationType && data.installationType !== 'external' ? `🏗️ <b>Instalación:</b> ${data.installationType}` : '',
+        data.installationType && data.installationType !== 'external' ? `🏗️ <b>Instalación:</b> ${escTg(data.installationType)}` : '',
         `💶 <b>TOTAL: ${data.total.toFixed(2)}€</b>`,
         '',
         `⚡ <b>¡Llama al cliente ahora!</b>`,
