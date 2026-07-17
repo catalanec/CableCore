@@ -1,5 +1,202 @@
 [
   {
+    "slug": "mejores-practicas-para-cableado-de-red-en-oficinas",
+    "date": "2026-07-17",
+    "readTime": "7 min",
+    "es": {
+      "title": "Mejores Prácticas para Cableado de Red en Oficinas",
+      "metaTitle": "Mejores Prácticas de Cableado de Red en Oficinas | CableCore",
+      "metaDescription": "Descubre las mejores prácticas para el cableado de red en oficinas, optimizando tu infraestructura tecnológica.",
+      "excerpt": "El cableado de red es fundamental para el rendimiento de las oficinas modernas. Aquí te presentamos las mejores prácticas para asegurar una instalación eficiente.",
+      "category": "Guías",
+      "tags": [
+        "redes"
+      ],
+      "content": [
+        {
+          "type": "h2",
+          "text": "Importancia del Cableado de Red en Oficinas"
+        },
+        {
+          "type": "p",
+          "text": "El cableado de red es la columna vertebral de cualquier infraestructura tecnológica en una oficina. Asegura la conectividad y el rendimiento de todos los dispositivos conectados."
+        },
+        {
+          "type": "h2",
+          "text": "Planificación del Cableado"
+        },
+        {
+          "type": "p",
+          "text": "Antes de comenzar la instalación, es crucial realizar una planificación adecuada. Esto incluye evaluar el espacio, el número de dispositivos y las futuras necesidades de expansión."
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Determinar la cantidad de puntos de red necesarios",
+            "Seleccionar la categoría de cable adecuada (Cat 6, Cat 6A, etc.)",
+            "Considerar el uso de rutas de cableado que minimicen la interferencia"
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "Selección de Materiales"
+        },
+        {
+          "type": "p",
+          "text": "Elegir los materiales correctos es esencial para garantizar la durabilidad y el rendimiento del cableado. Utiliza cables de alta calidad y conectores que cumplan con las normativas."
+        },
+        {
+          "type": "tip",
+          "text": "💡 Asegúrate de que los cables estén etiquetados correctamente para una fácil identificación y mantenimiento."
+        },
+        {
+          "type": "h2",
+          "text": "Instalación y Organización"
+        },
+        {
+          "type": "p",
+          "text": "Durante la instalación, sigue las prácticas recomendadas. Mantén los cables organizados y evita enredos que puedan causar interferencias."
+        },
+        {
+          "type": "h2",
+          "text": "Mantenimiento y Verificación"
+        },
+        {
+          "type": "p",
+          "text": "Después de la instalación, es importante realizar verificaciones periódicas para asegurarse de que el rendimiento de la red se mantenga en niveles óptimos."
+        }
+      ]
+    },
+    "en": {
+      "title": "Best Practices for Network Cabling in Offices",
+      "metaTitle": "Best Practices for Network Cabling in Offices | CableCore",
+      "metaDescription": "Discover the best practices for network cabling in offices, optimizing your technological infrastructure.",
+      "excerpt": "Network cabling is essential for the performance of modern offices. Here we present the best practices to ensure efficient installation.",
+      "category": "Guides",
+      "tags": [
+        "network"
+      ],
+      "content": [
+        {
+          "type": "h2",
+          "text": "Importance of Network Cabling in Offices"
+        },
+        {
+          "type": "p",
+          "text": "Network cabling is the backbone of any technological infrastructure in an office. It ensures connectivity and performance for all connected devices."
+        },
+        {
+          "type": "h2",
+          "text": "Cabling Planning"
+        },
+        {
+          "type": "p",
+          "text": "Before starting installation, proper planning is crucial. This includes assessing the space, the number of devices, and future expansion needs."
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Determine the number of network points needed",
+            "Select the appropriate cable category (Cat 6, Cat 6A, etc.)",
+            "Consider using cabling routes that minimize interference"
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "Material Selection"
+        },
+        {
+          "type": "p",
+          "text": "Choosing the right materials is essential for ensuring the durability and performance of the cabling. Use high-quality cables and connectors that meet standards."
+        },
+        {
+          "type": "tip",
+          "text": "💡 Make sure cables are properly labeled for easy identification and maintenance."
+        },
+        {
+          "type": "h2",
+          "text": "Installation and Organization"
+        },
+        {
+          "type": "p",
+          "text": "During installation, follow recommended practices. Keep cables organized and avoid tangles that may cause interference."
+        },
+        {
+          "type": "h2",
+          "text": "Maintenance and Verification"
+        },
+        {
+          "type": "p",
+          "text": "After installation, it's important to conduct periodic checks to ensure that network performance remains at optimal levels."
+        }
+      ]
+    },
+    "ru": {
+      "title": "Лучшие практики прокладки сетевых кабелей в офисах",
+      "metaTitle": "Лучшие практики прокладки сетевых кабелей в офисах | CableCore",
+      "metaDescription": "Узнайте о лучших практиках прокладки сетевых кабелей в офисах, оптимизируя вашу технологическую инфраструктуру.",
+      "excerpt": "Прокладка сетевых кабелей имеет решающее значение для производительности современных офисов. Мы представляем лучшие практики для обеспечения эффективной установки.",
+      "category": "Руководства",
+      "tags": [
+        "сеть"
+      ],
+      "content": [
+        {
+          "type": "h2",
+          "text": "Важность прокладки сетевых кабелей в офисах"
+        },
+        {
+          "type": "p",
+          "text": "Прокладка сетевых кабелей является основой любой технологической инфраструктуры в офисе. Она обеспечивает связь и производительность всех подключенных устройств."
+        },
+        {
+          "type": "h2",
+          "text": "Планирование прокладки"
+        },
+        {
+          "type": "p",
+          "text": "Перед началом установки важно провести правильное планирование. Это включает в себя оценку пространства, количество устройств и будущие потребности в расширении."
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Определите количество необходимых точек сети",
+            "Выберите подходящую категорию кабеля (Cat 6, Cat 6A и т.д.)",
+            "Учитывайте использование маршрутов прокладки, которые минимизируют помехи"
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "Выбор материалов"
+        },
+        {
+          "type": "p",
+          "text": "Выбор правильных материалов необходим для обеспечения долговечности и производительности прокладки. Используйте качественные кабели и разъемы, соответствующие стандартам."
+        },
+        {
+          "type": "tip",
+          "text": "💡 Убедитесь, что кабели правильно помечены для легкой идентификации и обслуживания."
+        },
+        {
+          "type": "h2",
+          "text": "Установка и организация"
+        },
+        {
+          "type": "p",
+          "text": "Во время установки следуйте рекомендуемым практикам. Держите кабели организованными и избегайте запутывания, которое может вызвать помехи."
+        },
+        {
+          "type": "h2",
+          "text": "Обслуживание и проверка"
+        },
+        {
+          "type": "p",
+          "text": "После установки важно периодически проверять, чтобы производительность сети оставалась на оптимальном уровне."
+        }
+      ]
+    }
+  },
+  {
     "slug": "mejores-practicas-installation-cableado-structurado",
     "date": "2026-07-10",
     "readTime": "8 min",
