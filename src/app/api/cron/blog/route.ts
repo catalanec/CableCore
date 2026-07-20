@@ -61,8 +61,14 @@ export async function GET(request: Request) {
         const currentBlogsStr = Buffer.from(ghData.content, 'base64').toString('utf-8');
         const currentBlogs = JSON.parse(currentBlogsStr);
 
-        // Extract existing slugs to avoid duplication
+        // Extract existing slugs AND titles — dedup by exact slug alone let the
+        // same topic get regenerated under a slightly different slug/wording
+        // repeatedly (round 17 audit found 3-5 near-duplicate articles per
+        // topic cluster), which is what drove GSC's "Crawled - currently not
+        // indexed" count up: Google saw a small site publishing many
+        // thin/redundant pages and stopped indexing most of them.
         const existingSlugs = currentBlogs.map((b: any) => b.slug);
+        const existingTitles = currentBlogs.map((b: any) => b.es?.title).filter(Boolean);
 
         // 2. Draft Prompt
         const prompt = `You are an expert SEO content writer for a network cable installation company in Barcelona (CableCore).
@@ -80,14 +86,30 @@ Generate a deep, professional tech blog post translated accurately into 3 langua
   "ru": { ... }
 }
 - For "type": "ul", provide an array in the "items" field. For others (h2, h3, p, tip), provide text in the "text" field.
-- Topics to choose from (pick ONE that is NOT in this list of existing slugs: [${existingSlugs.join(', ')}]):
+- Topics to choose from (pick ONE that is NOT semantically close to any existing slug or title below — a rewording of an already-covered topic is NOT acceptable, pick a genuinely distinct one):
    1. WiFi 6 vs WiFi 6E para oficinas en Barcelona
    2. Cableado estructurado en naves industriales: consideraciones
-   3. PoE+ (Power over Ethernet) para cámaras de seguridad e IP
-   4. Certificación de red con Fluke Networks: por qué es vital
-   5. Rack de servidores doméstico: Guía de inicio
-   6. Diferencia entre UTP, FTP y STP en entornos ruidosos
-- Make the content highly technical, SEO-optimized, engaging. Include around 5-8 content blocks per language.`;
+   3. Certificación de red con Fluke Networks: por qué es vital
+   4. Rack de servidores doméstico: Guía de inicio
+   5. Diferencia entre UTP, FTP y STP en entornos ruidosos
+   6. Fibra óptica monomodo vs multimodo: cuándo usar cada una
+   7. Cómo diseñar un cuarto de telecomunicaciones (MDF/IDF) para una PYME
+   8. Migración de red de Cat5e a Cat6A: cuándo merece la pena
+   9. Redes VLAN para separar invitados, IoT y administración en una oficina
+   10. QoS y priorización de tráfico VoIP en redes corporativas pequeñas
+   11. Cableado de red para coworkings y espacios de oficina compartida
+   12. Puesta a tierra y protección contra sobretensiones en racks de red
+   13. Redundancia de red: switches en anillo vs topología en estrella
+   14. Checklist de mantenimiento anual de una red de cableado estructurado
+   15. Cableado de red para tiendas y comercio minorista (TPV, cámaras, WiFi cliente)
+   16. Cómo elegir un switch PoE: presupuesto de potencia y número de puertos
+   17. Errores comunes al etiquetar cableado estructurado (y cómo evitarlos)
+   18. Diferencias entre fibra FTTH y fibra dedicada para empresas
+   19. Redes para eventos y ferias temporales: cableado desmontable
+   20. Cableado de red para restaurantes y hostelería (TPV, cocina, WiFi cliente)
+- Existing slugs already covered (do not repeat this exact topic): [${existingSlugs.join(', ')}]
+- Existing article titles already covered (do not pick a topic that overlaps with any of these, even under different wording): [${existingTitles.join(' | ')}]
+- Depth requirement: each language version must be substantial and genuinely useful — target 1200-1500+ words per language (NOT a short overview). Structure it as 6-9 distinct H2 sections covering: what the technology/practice is, why it matters, concrete technical specifications or standards involved, a practical how-to or decision-making section, common mistakes, and pricing or real-world context specific to Barcelona/Spain where relevant. Avoid generic filler — every section should contain specific technical facts, numbers, standards, or brand/model examples, not vague marketing language.`;
 
         // 3. Generate article with OpenAI
         const dateNow = new Date().toISOString().split('T')[0];
@@ -106,7 +128,11 @@ Generate a deep, professional tech blog post translated accurately into 3 langua
                     { role: 'user', content: prompt }
                 ],
                 temperature: 0.6,
-                max_tokens: 6000
+                // Bumped from 6000: three languages x 1200-1500+ words each
+                // (the new depth requirement, replacing the old "5-8 content
+                // blocks" target that produced ~250-350 word articles) needs
+                // considerably more headroom, plus JSON structure overhead.
+                max_tokens: 16000
             })
         });
 

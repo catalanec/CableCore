@@ -3,18 +3,28 @@ import { NextResponse } from 'next/server';
 const SITE_URL = 'https://cablecore.es/';
 const GITHUB_REPO = 'catalanec/CableCore';
 const BLOG_DATA_PATH = 'src/lib/blog-data.json';
+const LOCALES = ['es', 'en', 'ru'] as const;
+type Locale = (typeof LOCALES)[number];
 
-// Blog URLs that can be auto-fixed by expanding content
-const BLOG_URL_MAP: Record<string, { locale: string; slug: string }> = {
-    'https://cablecore.es/es/blog/cat6-vs-cat6a-vs-cat7-diferencias': { locale: 'es', slug: 'cat6-vs-cat6a-vs-cat7-diferencias' },
-    'https://cablecore.es/en/blog/cat6-vs-cat6a-vs-cat7-diferencias': { locale: 'en', slug: 'cat6-vs-cat6a-vs-cat7-diferencias' },
-    'https://cablecore.es/es/blog/puntos-de-red-precio-guia': { locale: 'es', slug: 'puntos-de-red-precio-guia' },
-    'https://cablecore.es/es/blog/precio-instalacion-red-casa-oficina': { locale: 'es', slug: 'precio-instalacion-red-casa-oficina' },
-    'https://cablecore.es/es/blog/como-instalar-cable-red-casa': { locale: 'es', slug: 'como-instalar-cable-red-casa' },
-    'https://cablecore.es/es/blog/cuanto-cuesta-instalar-red-oficina': { locale: 'es', slug: 'cuanto-cuesta-instalar-red-oficina' },
-};
+interface ContentBlock {
+    type: string;
+    text?: string;
+    items?: string[];
+}
 
-const KEY_PAGES = Object.keys(BLOG_URL_MAP);
+interface LocaleArticle {
+    title?: string;
+    content?: ContentBlock[];
+    [key: string]: unknown;
+}
+
+interface BlogArticle {
+    slug: string;
+    es?: LocaleArticle;
+    en?: LocaleArticle;
+    ru?: LocaleArticle;
+    [key: string]: unknown;
+}
 
 // ── OAuth2 via Refresh Token ───────────────────────────────────────────────
 async function getGSCToken(clientId: string, clientSecret: string, refreshToken: string): Promise<string> {
@@ -60,36 +70,40 @@ async function githubUpdateFile(token: string, path: string, content: string, sh
     if (!res.ok) throw new Error(`GitHub PUT error: ${res.status} ${await res.text()}`);
 }
 
-// ── Groq API (Llama 3.3 70B) ─────────────────────────────────────────────
-async function expandArticleWithClaude(apiKey: string, article: Record<string, unknown>, locale: string): Promise<Record<string, unknown> | null> {
-    const langLabel = locale === 'es' ? 'Spanish' : locale === 'en' ? 'English' : 'Russian';
-    const currentBlocks = JSON.stringify(article.blocks || [], null, 2);
-    const wordCount = JSON.stringify(article.blocks || []).length / 5;
+// Rough word-count estimate from a locale's content-block array (matches the
+// { type, text, items } shape actually used in blog-data.json — NOT the
+// { type, content } shape a previous version of this cron assumed, which
+// meant it silently never read/expanded real article content).
+function estimateWordCount(content: ContentBlock[] | undefined): number {
+    if (!content || content.length === 0) return 0;
+    const text = content.map(b => b.text || (b.items ? b.items.join(' ') : '')).join(' ');
+    return text.split(/\s+/).filter(Boolean).length;
+}
 
-    const prompt = `You are an SEO content specialist. This article is not indexed by Google because it has thin content (~${Math.round(wordCount)} words).
+// ── Groq API (Llama 3.3 70B) ─────────────────────────────────────────────
+async function expandArticleWithGroq(apiKey: string, localeArticle: LocaleArticle, locale: Locale, slug: string): Promise<ContentBlock[] | null> {
+    const langLabel = locale === 'es' ? 'Spanish' : locale === 'en' ? 'English' : 'Russian';
+    const currentContent = JSON.stringify(localeArticle.content || [], null, 2);
+    const wordCount = estimateWordCount(localeArticle.content);
+
+    const prompt = `You are an SEO content specialist. This article is not indexed by Google because it has thin content (~${wordCount} words).
 
 Article metadata:
-- Title: ${article.title || ''}
+- Title: ${localeArticle.title || ''}
 - Locale: ${langLabel}
-- Slug: ${article.slug || ''}
+- Slug: ${slug}
 
-Current blocks array:
-${currentBlocks}
+Current content blocks array:
+${currentContent}
 
-Task: Expand this article by adding new content blocks to reach 2000+ words total.
+Task: Expand this article by adding new content blocks to reach 1200-1500+ words total.
 Rules:
 1. Keep ALL existing blocks exactly as they are (do not modify them)
 2. Add new blocks after the existing ones
-3. Add h2 sections, paragraphs, FAQ items, lists — whatever improves the article
-4. Write in ${langLabel}, professional and SEO-friendly tone
-5. Topics should be relevant to network cable installation in Barcelona, Spain
-6. Return ONLY a valid JSON array of the complete blocks (existing + new), no markdown, no explanation
-
-New blocks format examples:
-{"type":"h2","content":"Title here"}
-{"type":"p","content":"Paragraph text here"}
-{"type":"list","items":["item 1","item 2","item 3"]}
-{"type":"faq","question":"Question?","answer":"Answer text"}`;
+3. Add "h2" sections, "p" paragraphs, "ul" lists (with an "items" string array) — whatever improves the article
+4. Write in ${langLabel}, professional and SEO-friendly tone, with concrete technical facts/numbers, not generic filler
+5. Topics should stay relevant to network cable installation in Barcelona, Spain
+6. Return ONLY a valid JSON array of the complete content blocks (existing + new), using this exact shape for each block: {"type":"h2","text":"..."} or {"type":"p","text":"..."} or {"type":"ul","items":["...","..."]}. No markdown, no explanation.`;
 
     const res = await fetch('https://api.groq.com/openai/v1/chat/completions', {
         method: 'POST',
@@ -115,8 +129,7 @@ New blocks format examples:
     try {
         const jsonMatch = text.match(/\[[\s\S]*\]/);
         if (!jsonMatch) return null;
-        const newBlocks = JSON.parse(jsonMatch[0]);
-        return { ...article, blocks: newBlocks };
+        return JSON.parse(jsonMatch[0]) as ContentBlock[];
     } catch {
         console.error('Failed to parse Groq response:', text.slice(0, 200));
         return null;
@@ -143,7 +156,7 @@ export async function GET(request: Request) {
     const googleClientId = process.env.GOOGLE_CLIENT_ID;
     const googleClientSecret = process.env.GOOGLE_CLIENT_SECRET;
     const googleRefreshToken = process.env.GOOGLE_REFRESH_TOKEN;
-    const anthropicKey = process.env.GROQ_API_KEY;
+    const groqKey = process.env.GROQ_API_KEY;
     const githubToken = process.env.GITHUB_TOKEN;
     const telegramBot = process.env.TELEGRAM_BOT_TOKEN;
     const telegramChat = process.env.TELEGRAM_CHAT_ID;
@@ -151,7 +164,7 @@ export async function GET(request: Request) {
     if (!googleClientId || !googleClientSecret || !googleRefreshToken) {
         return NextResponse.json({ error: 'Missing env: GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET, or GOOGLE_REFRESH_TOKEN' }, { status: 500 });
     }
-    if (!anthropicKey || !githubToken) {
+    if (!groqKey || !githubToken) {
         return NextResponse.json({ error: 'Missing env: GROQ_API_KEY or GITHUB_TOKEN' }, { status: 500 });
     }
 
@@ -164,13 +177,25 @@ export async function GET(request: Request) {
 
         // Read blog-data.json once
         const { content: rawJson, sha: blogSha } = await githubGetFile(githubToken, BLOG_DATA_PATH);
-        const blogData: Array<Record<string, unknown>> = JSON.parse(rawJson);
+        const blogData: BlogArticle[] = JSON.parse(rawJson);
+
+        // Build the list of URLs to check dynamically from the CURRENT article
+        // set (every slug x every locale) instead of a hardcoded map — a
+        // previous version only monitored 6 legacy URLs, so newly-published
+        // thin articles were never picked up for expansion at all.
+        const keyPages = blogData.flatMap(article =>
+            LOCALES.filter(locale => article[locale]).map(locale => ({
+                url: `https://cablecore.es/${locale}/blog/${article.slug}`,
+                slug: article.slug,
+                locale,
+            }))
+        );
 
         let blogDataModified = false;
 
-        for (const url of KEY_PAGES) {
+        for (const page of keyPages) {
             try {
-                const { verdict, coverageState } = await inspectUrl(gscToken, url);
+                const { verdict, coverageState } = await inspectUrl(gscToken, page.url);
 
                 // Only attempt fix if page is not indexed
                 const needsFix = verdict !== 'PASS' && (
@@ -181,48 +206,46 @@ export async function GET(request: Request) {
                 );
 
                 if (!needsFix) {
-                    skipped.push(`${url} (${verdict})`);
+                    skipped.push(`${page.url} (${verdict})`);
                     continue;
                 }
 
-                const mapping = BLOG_URL_MAP[url];
-                if (!mapping) {
-                    errors.push(`${url} — no mapping (manual fix needed)`);
-                    continue;
-                }
-
-                // Find the article
-                const articleIdx = blogData.findIndex(a =>
-                    (a.slug === mapping.slug || a.slugEs === mapping.slug) &&
-                    (a.locale === mapping.locale || (!a.locale && mapping.locale === 'es'))
-                );
+                const articleIdx = blogData.findIndex(a => a.slug === page.slug);
                 if (articleIdx === -1) {
-                    errors.push(`${url} — article not found in blog-data.json`);
+                    errors.push(`${page.url} — article not found in blog-data.json`);
                     continue;
                 }
 
                 const article = blogData[articleIdx];
-                const currentBlocks = Array.isArray(article.blocks) ? article.blocks : [];
-                const estimatedWords = JSON.stringify(currentBlocks).length / 5;
-
-                if (estimatedWords > 1500) {
-                    skipped.push(`${url} (content ok, ~${Math.round(estimatedWords)}w, verdict=${verdict})`);
+                const localeArticle = article[page.locale];
+                if (!localeArticle) {
+                    errors.push(`${page.url} — no ${page.locale} content on this article`);
                     continue;
                 }
 
-                // Expand with Claude
-                const expanded = await expandArticleWithClaude(anthropicKey, article, mapping.locale);
-                if (!expanded) {
-                    errors.push(`${url} — Claude failed to generate content`);
+                const estimatedWords = estimateWordCount(localeArticle.content);
+
+                if (estimatedWords > 1200) {
+                    skipped.push(`${page.url} (content ok, ~${estimatedWords}w, verdict=${verdict})`);
                     continue;
                 }
 
-                blogData[articleIdx] = expanded;
+                // Expand with Groq
+                const expandedContent = await expandArticleWithGroq(groqKey, localeArticle, page.locale, page.slug);
+                if (!expandedContent) {
+                    errors.push(`${page.url} — Groq failed to generate content`);
+                    continue;
+                }
+
+                blogData[articleIdx] = {
+                    ...article,
+                    [page.locale]: { ...localeArticle, content: expandedContent },
+                };
                 blogDataModified = true;
-                fixed.push(`${url} (${Math.round(estimatedWords)}w → 2000+w)`);
+                fixed.push(`${page.url} (${estimatedWords}w → 1200+w)`);
 
             } catch (err) {
-                errors.push(`${url} — ${err instanceof Error ? err.message : String(err)}`);
+                errors.push(`${page.url} — ${err instanceof Error ? err.message : String(err)}`);
             }
         }
 
@@ -231,7 +254,7 @@ export async function GET(request: Request) {
             await githubUpdateFile(
                 githubToken,
                 BLOG_DATA_PATH,
-                JSON.stringify(blogData, null, 2),
+                JSON.stringify(blogData, null, 2) + '\n',
                 blogSha,
                 `seo: auto-expand thin articles (${fixed.length} fixed by gsc-autofix cron)`
             );
