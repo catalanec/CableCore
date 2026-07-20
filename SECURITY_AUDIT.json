@@ -1,0 +1,127 @@
+{
+  "vulnerabilities": [
+    {
+      "severity": "high",
+      "file": "src/app/actions/crm.ts",
+      "line": 7,
+      "category": "authentication",
+      "description": "Fallback to anonymous Supabase key in server action that creates/modifies data. If SUPABASE_SERVICE_ROLE_KEY is missing, code uses NEXT_PUBLIC_SUPABASE_ANON_KEY which has limited permissions via RLS.",
+      "failure_scenario": "SUPABASE_SERVICE_ROLE_KEY env var not set → anonymous key used → sensitive operations may fail or have wrong permissions → data integrity issues",
+      "impact": "Data integrity violation, unexpected behavior in critical server actions"
+    },
+    {
+      "severity": "high",
+      "file": "src/app/api/invoice/create/route.ts",
+      "line": 20,
+      "category": "authentication",
+      "description": "Same credential fallback issue - uses anonymous key if service role key missing when creating invoices (financial transaction).",
+      "failure_scenario": "Missing SUPABASE_SERVICE_ROLE_KEY → invoice creation uses limited anonymous key permissions → potential data loss or write failures on financial records",
+      "impact": "Financial data integrity compromise"
+    },
+    {
+      "severity": "high",
+      "file": "src/app/api/cron/blog/route.ts",
+      "line": 38,
+      "category": "timing-attack",
+      "description": "CRON_SECRET uses simple string equality comparison instead of constant-time comparison. Vulnerable to timing attacks that could reveal the secret byte-by-byte.",
+      "failure_scenario": "Attacker makes many requests with gradually increasing CRON_SECRET guesses → timing differences between early vs late rejections → secret recoverable via statistical analysis",
+      "impact": "Authentication bypass of cron endpoints"
+    },
+    {
+      "severity": "high",
+      "file": "src/app/api/cron/leads-followup/route.ts",
+      "line": 8,
+      "category": "timing-attack",
+      "description": "Same timing attack vulnerability as blog route - CRON_SECRET comparison lacks constant-time protection.",
+      "failure_scenario": "Attacker exploits timing differences to recover CRON_SECRET → unauthorized access to leads follow-up automation",
+      "impact": "Authentication bypass for critical automation endpoints"
+    },
+    {
+      "severity": "high",
+      "file": "src/app/api/cron/seo/route.ts",
+      "line": 1,
+      "category": "timing-attack",
+      "description": "CRON_SECRET comparison uses direct string equality, vulnerable to timing attacks across all cron endpoints.",
+      "failure_scenario": "Attacker performs timing analysis on multiple cron endpoints → derives CRON_SECRET → full control over automated tasks",
+      "impact": "Complete compromise of all cron-based automations"
+    },
+    {
+      "severity": "medium",
+      "file": "src/app/api/invoice/create/route.ts",
+      "line": 15,
+      "category": "input-validation",
+      "description": "Invoice endpoint only validates presence of razon_social and cif, but doesn't validate their format. CIF should have specific format validation.",
+      "failure_scenario": "User sends invoice with invalid CIF format → accepted and stored → downstream processing fails",
+      "impact": "Data quality issues in financial processing"
+    },
+    {
+      "severity": "medium",
+      "file": "src/app/actions/crm.ts",
+      "line": 60,
+      "category": "csv-injection",
+      "description": "CSV export in exportMaterialsCSV() doesn't sanitize formula injection characters (=, +, -, @). Excel/Sheets will interpret as formula.",
+      "failure_scenario": "Admin creates material named '=1+1' → exported CSV → Excel interprets as formula → potential code execution",
+      "impact": "CSV formula injection allowing arbitrary command execution in spreadsheet applications"
+    },
+    {
+      "severity": "medium",
+      "file": "src/app/actions/crm.ts",
+      "line": 75,
+      "category": "csv-injection",
+      "description": "Same CSV formula injection in exportProjectsCSV() - client names not sanitized.",
+      "failure_scenario": "Project with client name starting with '=cmd|' → exported CSV → formula injection when opened in Excel",
+      "impact": "CSV formula injection in project export"
+    },
+    {
+      "severity": "medium",
+      "file": "src/app/actions/crm.ts",
+      "line": 50,
+      "category": "information-disclosure",
+      "description": "Multiple console.error() calls log raw error objects which may contain sensitive database information and stack traces.",
+      "failure_scenario": "Database error → console.error logs full error object → stack trace and database URLs visible in server logs → information disclosure",
+      "impact": "Information disclosure through server logs"
+    },
+    {
+      "severity": "medium",
+      "file": "src/app/api/invoice/create/route.ts",
+      "line": 1,
+      "category": "rate-limiting",
+      "description": "Invoice creation endpoint lacks rate limiting. Financial transactions should be protected against abuse.",
+      "failure_scenario": "Attacker sends 1000 invoice creation requests → spam invoices created → database DoS / financial record corruption",
+      "impact": "Denial of service, financial record tampering"
+    },
+    {
+      "severity": "medium",
+      "file": "src/app/api/cron/blog/route.ts",
+      "line": 1,
+      "category": "rate-limiting",
+      "description": "Blog generation endpoint lacks rate limiting. Could be exploited for resource exhaustion (OpenAI API calls are expensive).",
+      "failure_scenario": "Attacker derives cron token via timing attack → calls blog endpoint repeatedly → massive OpenAI charges",
+      "impact": "Resource exhaustion, financial damage from API overuse"
+    },
+    {
+      "severity": "low",
+      "file": "src/lib/api-auth.ts",
+      "line": 36,
+      "category": "weak-authentication",
+      "description": "Basic Authentication transmits credentials in base64 (not encrypted). Should use bearer tokens instead.",
+      "failure_scenario": "If HTTPS is downgraded or proxy intercepts → credentials exposed in base64 encoding",
+      "impact": "Weaker authentication method compared to bearer tokens/API keys"
+    }
+  ],
+  "riskScore": 72,
+  "riskLevel": "HIGH",
+  "summary": "High-severity security issues found related to authentication and credential management. Most critical: (1) timing attacks on CRON_SECRET due to missing constant-time comparison, (2) unsafe fallback to anonymous Supabase keys in server actions, and (3) CSV formula injection in export functions. Medium-severity issues include missing input validation, lack of rate limiting, and error logging exposure.",
+  "recommendations": [
+    "CRITICAL: Fix timing attacks on CRON_SECRET by replacing string comparison with crypto.timingSafeEqual across all cron endpoints",
+    "CRITICAL: Remove fallback to anonymous Supabase key - throw error if SUPABASE_SERVICE_ROLE_KEY is missing in server actions",
+    "HIGH: Implement CSV formula injection prevention by prefixing values starting with =, +, -, @ with single quote",
+    "HIGH: Add rate limiting on all API endpoints using @vercel/speakeasy or similar",
+    "MEDIUM: Fix error logging to not expose raw error objects or database information",
+    "MEDIUM: Add CIF format validation and email format validation in invoice creation",
+    "MEDIUM: Verify CSRF tokens are configured for all state-changing endpoints",
+    "LOW: Consider migrating from HTTP Basic Auth to bearer token authentication",
+    "LOW: Add startup validation for all required environment variables before accepting requests"
+  ],
+  "audit_date": "2026-07-13"
+}
