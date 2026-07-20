@@ -8,9 +8,18 @@ import { getBlogArticles, BLOG_ARTICLES } from '@/lib/blog-data';
 import Breadcrumbs from '@/components/seo/Breadcrumbs';
 import type { Metadata } from 'next';
 
-// Slugs with typos that should 308-redirect to the canonical slug
+// Slugs with typos, or slugs merged into a canonical article during the
+// round-17 thin-content/duplicate-cluster cleanup, that should 308-redirect
+// to the canonical slug.
 const SLUG_REDIRECTS: Record<string, string> = {
     'mejores-practicas-cableado-structurado': 'mejores-practicas-cableado-estructurado',
+    'mejores-practicas-installation-cableado-structurado': 'mejores-practicas-cableado-estructurado',
+    'poe-plus-para-camaras-de-seguridad': 'poe-para-camaras-seguridad-ip',
+    'ventajas-poe-para-camaras-ip': 'poe-para-camaras-seguridad-ip',
+    'cableado-camaras-seguridad-ip': 'poe-para-camaras-seguridad-ip',
+    'puntos-de-red-precio-guia': 'cuanto-cuesta-instalar-red-oficina-barcelona',
+    'precio-instalacion-cable-red-barcelona': 'cuanto-cuesta-instalar-red-oficina-barcelona',
+    'instalar-red-oficina-barcelona': 'cuanto-cuesta-instalar-red-oficina-barcelona',
 };
 
 export function generateStaticParams() {

@@ -60,8 +60,18 @@ export default function sitemap(): MetadataRoute.Sitemap {
         }))
     );
 
-    // Slugs with known typos that redirect to canonical — exclude from sitemap
-    const TYPO_SLUGS = new Set(['mejores-practicas-cableado-structurado']);
+    // Slugs with known typos, or merged into a canonical article during the
+    // round-17 duplicate-cluster cleanup, that redirect to canonical — exclude from sitemap
+    const TYPO_SLUGS = new Set([
+        'mejores-practicas-cableado-structurado',
+        'mejores-practicas-installation-cableado-structurado',
+        'poe-plus-para-camaras-de-seguridad',
+        'ventajas-poe-para-camaras-ip',
+        'cableado-camaras-seguridad-ip',
+        'puntos-de-red-precio-guia',
+        'precio-instalacion-cable-red-barcelona',
+        'instalar-red-oficina-barcelona',
+    ]);
 
     // Blog articles — sorted by date, primary locale prioritized
     const sortedArticles = [...BLOG_ARTICLES]
