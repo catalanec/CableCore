@@ -1,13 +1,11 @@
 import createMiddleware from 'next-intl/middleware';
-import { defineRouting } from 'next-intl/routing';
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
-
-const routing = defineRouting({
-    locales: ['es', 'en', 'ru'],
-    defaultLocale: 'es',
-    localePrefix: 'always',
-});
+// Single shared routing config (locales/localePrefix/localeDetection) — this
+// file used to define its own separate defineRouting() call with identical
+// settings, which risked drifting out of sync with src/i18n/routing.ts (used
+// by generateMetadata/sitemap/Link) if either was ever edited alone.
+import { routing } from './i18n/routing';
 
 const intlMiddleware = createMiddleware(routing);
 
