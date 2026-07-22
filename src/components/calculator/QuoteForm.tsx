@@ -29,6 +29,17 @@ interface QuoteFormProps {
         equipmentCustom: Record<string, { name: string; price: number }>;
         customItems: Array<{ id: string; name: string; qty: number; price: number }>;
         additionalWork: Record<string, boolean>;
+        // Real per-item count for equipment with a +/- quantity stepper
+        // (switch, accessPoint) — additionalWork above only carries a
+        // true/false flag (kept that way since src/app/api/quotes/route.ts
+        // stores it straight into boolean DB columns), so a quantity > 1
+        // toggled in the calculator was previously invisible to the PDF/CRM
+        // item list: the printed subtotal correctly multiplied by quantity,
+        // but every equipment row always rendered "1 ud" at the single-unit
+        // price — e.g. 2 access points priced into the total but the PDF
+        // showing only one, making the subtotal look unexplained/wrong to
+        // the client (round 19 audit, reported by a real client).
+        equipmentQty?: Record<string, number>;
         // Pre-itemized lines for costs that don't fit the generic name/price
         // shape above (e.g. fiber fusion splices, patch cords, OTDR
         // certification) — appended as-is to the PDF/CRM item list.
@@ -148,7 +159,14 @@ export default function QuoteForm({ locale, calculationData }: QuoteFormProps) {
             });
         }
 
-        if (d.pointsCost > 0 || d.points > 0) {
+        // Was `|| d.points > 0` — showed a "Puntos de red ... 0.00€" ghost row
+        // whenever points was set but its per-point material cost wasn't
+        // (or was zeroed), with no visible justification on the PDF. A
+        // priced-at-zero line only ever confuses a client reading the
+        // breakdown, so only render this row when there's real cost behind
+        // it (round 19 audit, reported by a real client who couldn't
+        // reconcile the line items with the printed subtotal).
+        if (d.pointsCost > 0) {
             items.push({
                 description: d.calculatorType === 'fiber'
                     ? 'Puntos de red — roseta óptica SC/APC, pigtail, testeo'
@@ -233,11 +251,12 @@ export default function QuoteForm({ locale, calculationData }: QuoteFormProps) {
                 const custom = d.equipmentCustom?.[key];
                 const name = custom?.name || workLabels[key] || key;
                 const price = custom?.price ?? ({ switch: 40, router: 50, accessPoint: 70, configuration: 150, network_config: 120, patch_panel: 80, testing: 50, labeling: 20, cableManagement: 50, extendedWarranty: 30 }[key] || 0);
+                const qty = d.equipmentQty?.[key] || 1;
                 items.push({
                     description: name,
-                    quantity: '1',
+                    quantity: qty > 1 ? `${qty} ud` : '1',
                     unitPrice: `${price.toFixed(2)}€`,
-                    total: `${price.toFixed(2)}€`,
+                    total: `${(price * qty).toFixed(2)}€`,
                 });
             }
         });
@@ -288,7 +307,7 @@ export default function QuoteForm({ locale, calculationData }: QuoteFormProps) {
         const quoteItems: Array<{ description: string; quantity: string; unitPrice: string; total: string }> = [];
 
         if (d.cablesCost > 0 || d.cableMeters > 0) quoteItems.push({ description: `Cableado ${d.cableType.toUpperCase()} — suministro de cable`, quantity: `${d.cableMeters}m`, unitPrice: `${(d.cablesCost / Math.max(1, d.cableMeters)).toFixed(2)}€`, total: `${d.cablesCost.toFixed(2)}€` });
-        if (d.pointsCost > 0 || d.points > 0) quoteItems.push({ description: d.calculatorType === 'fiber' ? 'Puntos de red — roseta óptica SC/APC, pigtail, testeo' : 'Puntos de red — roseta RJ45, keystone, caja, testeo', quantity: `${d.points} uds`, unitPrice: `${(d.pointsCost / Math.max(1, d.points)).toFixed(2)}€`, total: `${d.pointsCost.toFixed(2)}€` });
+        if (d.pointsCost > 0) quoteItems.push({ description: d.calculatorType === 'fiber' ? 'Puntos de red — roseta óptica SC/APC, pigtail, testeo' : 'Puntos de red — roseta RJ45, keystone, caja, testeo', quantity: `${d.points} uds`, unitPrice: `${(d.pointsCost / Math.max(1, d.points)).toFixed(2)}€`, total: `${d.pointsCost.toFixed(2)}€` });
         if (d.installCost > 0) quoteItems.push({ description: `Tendido de cable — ${installLabels[d.installationType] || d.installationType}`, quantity: `${d.cableMeters}m`, unitPrice: `${(d.installCost / Math.max(1, d.cableMeters)).toFixed(2)}€`, total: `${d.installCost.toFixed(2)}€` });
         if (d.laborCost > 0) quoteItems.push({ description: 'Mano de obra — operarios, montaje, terminación, verificación', quantity: `${d.points} ptos`, unitPrice: `${(d.laborCost / Math.max(1, d.points)).toFixed(2)}€`, total: `${d.laborCost.toFixed(2)}€` });
         if (d.canaleta > 0) { const p = d.materialsCustomPrices?.trunking ?? 4; quoteItems.push({ description: d.materialsCustomNames?.trunking || 'Canaleta (cable canal)', quantity: `${d.canaleta}m`, unitPrice: `${p.toFixed(2)}€`, total: `${(d.canaleta * p).toFixed(2)}€` }); }
@@ -301,7 +320,7 @@ export default function QuoteForm({ locale, calculationData }: QuoteFormProps) {
         if ((d.patchPanel24 || 0) > 0) quoteItems.push({ description: 'Patch Panel 24p', quantity: `${d.patchPanel24} ud`, unitPrice: '65.00€', total: `${(d.patchPanel24 * 65).toFixed(2)}€` });
         if ((d.patchPanel48 || 0) > 0) quoteItems.push({ description: 'Patch Panel 48p', quantity: `${d.patchPanel48} ud`, unitPrice: '100.00€', total: `${(d.patchPanel48 * 100).toFixed(2)}€` });
         (d.customItems || []).forEach((item: any) => { const pv = typeof item.price === 'string' ? parseFloat(item.price.replace(',', '.')) || 0 : Number(item.price) || 0; if (!item.name || pv <= 0) return; if (item.type === 'fixed') { quoteItems.push({ description: item.name, quantity: '1', unitPrice: `${pv.toFixed(2)}€`, total: `${pv.toFixed(2)}€` }); } else if ((item.qty || 0) > 0) { quoteItems.push({ description: item.name, quantity: `${item.qty} ud`, unitPrice: `${pv.toFixed(2)}€`, total: `${((item.qty || 0) * pv).toFixed(2)}€` }); } });
-        Object.entries(d.additionalWork).forEach(([key, val]) => { if (val) { const custom = d.equipmentCustom?.[key]; const nm = custom?.name || workLabels[key] || key; const pr = custom?.price ?? ({ switch: 40, router: 50, accessPoint: 70, configuration: 150, network_config: 120, patch_panel: 80, testing: 50, labeling: 20, cableManagement: 50, extendedWarranty: 30 }[key] || 0); quoteItems.push({ description: nm, quantity: '1', unitPrice: `${pr.toFixed(2)}€`, total: `${pr.toFixed(2)}€` }); } });
+        Object.entries(d.additionalWork).forEach(([key, val]) => { if (val) { const custom = d.equipmentCustom?.[key]; const nm = custom?.name || workLabels[key] || key; const pr = custom?.price ?? ({ switch: 40, router: 50, accessPoint: 70, configuration: 150, network_config: 120, patch_panel: 80, testing: 50, labeling: 20, cableManagement: 50, extendedWarranty: 30 }[key] || 0); const qty = d.equipmentQty?.[key] || 1; quoteItems.push({ description: nm, quantity: qty > 1 ? `${qty} ud` : '1', unitPrice: `${pr.toFixed(2)}€`, total: `${(pr * qty).toFixed(2)}€` }); } });
         if (d.rack !== 'none') { const fb = rackLabels[d.rack] || d.rack; const fp = ({ rack_6u: 90, rack_9u: 130, rack_12u: 180, rack_18u: 250, rack_22u: 380, rack_42u: 650 }[d.rack] || d.rackCost); const rn = d.rackCustomName || fb; const rp = d.rackCustomPrice > 0 ? d.rackCustomPrice : fp; quoteItems.push({ description: rn, quantity: '1', unitPrice: `${rp.toFixed(2)}€`, total: `${d.rackCost.toFixed(2)}€` }); }
         (d.fiberItems || []).forEach(item => quoteItems.push(item));
 

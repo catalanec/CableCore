@@ -1589,6 +1589,12 @@ export default function Calculator({ locale }: { locale: string }) {
                                     ...Object.fromEntries(Object.entries(equipment).map(([k, v]) => [k, v > 0])),
                                     ...upsellOptions,
                                 },
+                                // Real per-item counts (round 19 audit) — additionalWork above
+                                // collapses equipment quantity into a true/false flag, which
+                                // previously meant a quantity > 1 (e.g. 2 access points, set via
+                                // the +/- stepper below) was priced correctly into the subtotal
+                                // but always rendered as "1 ud" on the PDF/CRM item list.
+                                equipmentQty: equipment,
                                 rack,
                                 urgency,
                                 cablesCost: calc.cableCost,
