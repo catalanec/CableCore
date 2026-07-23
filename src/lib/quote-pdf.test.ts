@@ -58,6 +58,14 @@ describe('generateQuoteHTML', () => {
         expect(html).toContain('Multiplicador urgencia');
     });
 
+    // Previously the printed quote had no warranty terms at all — a client
+    // reading only the PDF (not the marketing site's FAQ) had no way to know
+    // one applied, which is exactly what a real client asked about (round 19).
+    it('states the 5-year labor warranty in the conditions block', () => {
+        const html = generateQuoteHTML(baseData);
+        expect(html).toContain('5 años en mano de obra');
+    });
+
     it('sanitizes the client name for the PDF title by replacing whitespace with underscores', () => {
         const html = generateQuoteHTML({ ...baseData, client: { ...baseData.client, name: 'Alice Wonderland' } });
         expect(html).toContain('Presupuesto_CableCore_Alice_Wonderland');

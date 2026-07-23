@@ -137,6 +137,7 @@ export function generateQuoteHTML(data: QuotePDFData): string {
       ${data.notes ? `<p style="color: #555; font-size: 11px; line-height: 1.5; margin-bottom: 8px; white-space: pre-wrap;">${data.notes}</p>` : ''}
       <p style="color: #333; font-size: 11px; line-height: 1.5;">Condiciones: <strong>50% del total por adelantado</strong> en concepto de reserva y materiales para iniciar el proyecto.</p>
       <p style="color: #333; font-size: 11px; margin-top: 4px;">Cuenta bancaria (IBAN): <strong style="pointer-events: none; text-decoration: none; color: inherit;">ES91 2103<span></span> 7379<span></span> 4000<span></span> 3001<span></span> 0959</strong></p>
+      <p style="color: #333; font-size: 11px; margin-top: 4px;">Garantía: <strong>5 años en mano de obra</strong> en todas nuestras instalaciones. Todos los puntos de red se verifican con equipos profesionales.</p>
     </div>
 
     <!-- Signatures -->
