@@ -1,5 +1,208 @@
 [
   {
+    "slug": "redes-vlan-para-separar-invitados-iot-y-administracion-en-una-oficina",
+    "date": "2026-07-31",
+    "readTime": "12 min",
+    "es": {
+      "title": "Redes VLAN para Separar Invitados, IoT y Administración en una Oficina",
+      "metaTitle": "Implementación de VLANs en Oficinas: Mejora la Seguridad y Eficiencia",
+      "metaDescription": "Descubre cómo implementar redes VLAN en tu oficina para separar el tráfico de invitados, IoT y administración. Mejora la seguridad y la eficiencia de tu red.",
+      "excerpt": "Las VLAN son una herramienta poderosa para gestionar el tráfico de red en oficinas modernas. Este artículo explora su implementación y beneficios.",
+      "category": "Guías",
+      "tags": [
+        "redes",
+        "VLAN",
+        "seguridad"
+      ],
+      "content": [
+        {
+          "type": "h2",
+          "text": "¿Qué son las VLAN?"
+        },
+        {
+          "type": "p",
+          "text": "Las VLAN (Redes de Área Local Virtuales) son una tecnología que permite dividir una red física en múltiples redes lógicas. Esto permite gestionar el tráfico de manera más eficiente y mejorar la seguridad al aislar diferentes tipos de tráfico."
+        },
+        {
+          "type": "h2",
+          "text": "¿Por qué son importantes las VLAN en una oficina?"
+        },
+        {
+          "type": "p",
+          "text": "Las VLAN son críticas para mantener la seguridad y eficiencia en un entorno de oficina. Separar el tráfico de invitados, dispositivos IoT y la administración ayuda a prevenir accesos no autorizados y a optimizar el rendimiento de la red."
+        },
+        {
+          "type": "h2",
+          "text": "Especificaciones técnicas de las VLAN"
+        },
+        {
+          "type": "p",
+          "text": "Las VLAN se gestionan a través de switches que soportan el protocolo IEEE 802.1Q. Este protocolo permite la etiquetación de tramas Ethernet, lo que facilita la identificación de las VLAN en la red."
+        },
+        {
+          "type": "h2",
+          "text": "Cómo implementar VLAN en tu oficina"
+        },
+        {
+          "type": "p",
+          "text": "Para implementar VLAN en tu oficina, sigue estos pasos:\n1. **Evaluación de la red existente**: Revisa la infraestructura de red actual para determinar la necesidad de VLAN.\n2. **Definición de las VLAN**: Decide cuántas VLAN necesitas y qué tráfico debe ir en cada una (invitados, IoT, administración).\n3. **Configuración de switches**: Accede a la configuración de los switches y define las VLAN según el protocolo IEEE 802.1Q.\n4. **Pruebas y ajustes**: Realiza pruebas para asegurarte de que el tráfico se está dirigiendo correctamente y ajusta según sea necesario."
+        },
+        {
+          "type": "h2",
+          "text": "Errores comunes al implementar VLAN"
+        },
+        {
+          "type": "p",
+          "text": "Algunos errores comunes incluyen:\n- No planificar adecuadamente el diseño de las VLAN.\n- Ignorar la configuración de seguridad en las VLAN.\n- No realizar pruebas adecuadas después de la implementación."
+        },
+        {
+          "type": "h2",
+          "text": "Contexto de precios en Barcelona"
+        },
+        {
+          "type": "p",
+          "text": "El costo de implementar VLAN puede variar dependiendo de la infraestructura existente. En Barcelona, el precio de switches que soportan VLAN comienza en torno a 150€ por unidad, y la instalación profesional puede costar entre 300€ y 600€, dependiendo de la complejidad del trabajo."
+        },
+        {
+          "type": "tip",
+          "text": "💡 Considera trabajar con un profesional en redes para asegurar una correcta implementación y configuración de las VLAN."
+        }
+      ]
+    },
+    "en": {
+      "title": "VLAN Networks to Separate Guests, IoT, and Administration in an Office",
+      "metaTitle": "Implementing VLANs in Offices: Enhance Security and Efficiency",
+      "metaDescription": "Learn how to implement VLAN networks in your office to separate guest, IoT, and administration traffic. Improve your network's security and efficiency.",
+      "excerpt": "VLANs are a powerful tool for managing network traffic in modern offices. This article explores their implementation and benefits.",
+      "category": "Guides",
+      "tags": [
+        "networks",
+        "VLAN",
+        "security"
+      ],
+      "content": [
+        {
+          "type": "h2",
+          "text": "What are VLANs?"
+        },
+        {
+          "type": "p",
+          "text": "VLANs (Virtual Local Area Networks) are a technology that allows you to divide a physical network into multiple logical networks. This enables more efficient traffic management and enhances security by isolating different types of traffic."
+        },
+        {
+          "type": "h2",
+          "text": "Why are VLANs important in an office?"
+        },
+        {
+          "type": "p",
+          "text": "VLANs are critical for maintaining security and efficiency in an office environment. Separating guest traffic, IoT devices, and administration helps prevent unauthorized access and optimizes network performance."
+        },
+        {
+          "type": "h2",
+          "text": "Technical specifications of VLANs"
+        },
+        {
+          "type": "p",
+          "text": "VLANs are managed through switches that support the IEEE 802.1Q protocol. This protocol allows for the tagging of Ethernet frames, facilitating the identification of VLANs within the network."
+        },
+        {
+          "type": "h2",
+          "text": "How to implement VLANs in your office"
+        },
+        {
+          "type": "p",
+          "text": "To implement VLANs in your office, follow these steps:\n1. **Evaluate existing network**: Review the current network infrastructure to determine the need for VLANs.\n2. **Define VLANs**: Decide how many VLANs you need and what traffic should go into each (guests, IoT, administration).\n3. **Configure switches**: Access switch configurations and define VLANs according to the IEEE 802.1Q protocol.\n4. **Testing and adjustments**: Conduct tests to ensure traffic is being directed correctly and adjust as necessary."
+        },
+        {
+          "type": "h2",
+          "text": "Common mistakes when implementing VLANs"
+        },
+        {
+          "type": "p",
+          "text": "Common mistakes include:\n- Failing to adequately plan the VLAN design.\n- Ignoring security configurations on VLANs.\n- Not conducting proper testing after implementation."
+        },
+        {
+          "type": "h2",
+          "text": "Pricing context in Barcelona"
+        },
+        {
+          "type": "p",
+          "text": "The cost of implementing VLANs can vary depending on the existing infrastructure. In Barcelona, the price of switches that support VLANs starts around €150 per unit, and professional installation can range from €300 to €600, depending on the complexity of the job."
+        },
+        {
+          "type": "tip",
+          "text": "💡 Consider working with a networking professional to ensure proper VLAN implementation and configuration."
+        }
+      ]
+    },
+    "ru": {
+      "title": "Сети VLAN для разделения гостей, IoT и управления в офисе",
+      "metaTitle": "Внедрение VLAN в офисах: Повышение безопасности и эффективности",
+      "metaDescription": "Узнайте, как внедрить сети VLAN в вашем офисе для разделения трафика гостей, IoT и управления. Улучшите безопасность и эффективность вашей сети.",
+      "excerpt": "VLAN - мощный инструмент для управления сетевым трафиком в современных офисах. Эта статья рассматривает их внедрение и преимущества.",
+      "category": "Руководства",
+      "tags": [
+        "сети",
+        "VLAN",
+        "безопасность"
+      ],
+      "content": [
+        {
+          "type": "h2",
+          "text": "Что такое VLAN?"
+        },
+        {
+          "type": "p",
+          "text": "VLAN (Виртуальные локальные сети) - это технология, которая позволяет разделить физическую сеть на несколько логических сетей. Это позволяет более эффективно управлять трафиком и повышает безопасность, изолируя разные виды трафика."
+        },
+        {
+          "type": "h2",
+          "text": "Почему VLAN важны в офисе?"
+        },
+        {
+          "type": "p",
+          "text": "VLAN критически важны для поддержания безопасности и эффективности в офисной среде. Разделение трафика гостей, IoT-устройств и управления помогает предотвратить несанкционированный доступ и оптимизирует производительность сети."
+        },
+        {
+          "type": "h2",
+          "text": "Технические характеристики VLAN"
+        },
+        {
+          "type": "p",
+          "text": "VLAN управляются через коммутаторы, поддерживающие протокол IEEE 802.1Q. Этот протокол позволяет маркировать Ethernet-кадры, что облегчает идентификацию VLAN в сети."
+        },
+        {
+          "type": "h2",
+          "text": "Как внедрить VLAN в вашем офисе"
+        },
+        {
+          "type": "p",
+          "text": "Чтобы внедрить VLAN в вашем офисе, выполните следующие шаги:\n1. **Оценка существующей сети**: Проверьте текущую сетевую инфраструктуру, чтобы определить необходимость VLAN.\n2. **Определение VLAN**: Решите, сколько VLAN вам нужно и какой трафик должен идти в каждую из них (гости, IoT, управление).\n3. **Настройка коммутаторов**: Получите доступ к настройкам коммутаторов и определите VLAN в соответствии с протоколом IEEE 802.1Q.\n4. **Тестирование и корректировка**: Проведите тестирование, чтобы убедиться, что трафик направляется правильно, и при необходимости внесите коррективы."
+        },
+        {
+          "type": "h2",
+          "text": "Типичные ошибки при внедрении VLAN"
+        },
+        {
+          "type": "p",
+          "text": "К распространенным ошибкам относятся:\n- Неправильное планирование дизайна VLAN.\n- Игнорирование настроек безопасности на VLAN.\n- Отсутствие должного тестирования после внедрения."
+        },
+        {
+          "type": "h2",
+          "text": "Ценовой контекст в Барселоне"
+        },
+        {
+          "type": "p",
+          "text": "Стоимость внедрения VLAN может варьироваться в зависимости от существующей инфраструктуры. В Барселоне цена коммутаторов, поддерживающих VLAN, начинается от 150 € за единицу, а профессиональная установка может стоить от 300 € до 600 €, в зависимости от сложности работы."
+        },
+        {
+          "type": "tip",
+          "text": "💡 Рассмотрите возможность работы с профессионалом в области сетей для обеспечения правильного внедрения и настройки VLAN."
+        }
+      ]
+    }
+  },
+  {
     "slug": "cableado-de-red-para-coworkings-y-espacios-de-oficina-compartida",
     "date": "2026-07-24",
     "readTime": "10 min",
