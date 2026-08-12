@@ -8,7 +8,7 @@ import { SEOPageConfig } from "./types";
 export const SEO_PAGES_ES: SEOPageConfig[] = [
     {
         slug: 'instalacion-cable-red-barcelona',
-        title: 'Instalación Cable de Red Barcelona | CableCore',
+        title: 'Instalación Cable de Red Barcelona',
         h1: 'Instalación profesional de cable de red en Barcelona',
         h2s: ['Proceso de instalación paso a paso', 'Materiales y herramientas profesionales', 'Preguntas frecuentes'],
         intro: 'Instalamos cable de red Ethernet en Barcelona con proceso totalmente controlado: visita técnica, trazado de recorridos, tendido de cable, crimpado RJ45, etiquetado y testeo con certificadora. Cat5e, Cat6, Cat6A y Cat7. Sin sorpresas en el presupuesto.',
@@ -34,7 +34,7 @@ export const SEO_PAGES_ES: SEOPageConfig[] = [
     },
     {
         slug: 'cableado-estructurado-barcelona',
-        title: 'Cableado Estructurado Barcelona | CableCore',
+        title: 'Cableado Estructurado Barcelona',
         h1: 'Cableado estructurado profesional en Barcelona',
         h2s: ['¿Qué incluye un proyecto de cableado estructurado?', 'Normativa y estándares', 'Preguntas frecuentes'],
         intro: 'Diseño e instalación de infraestructuras de cableado estructurado para empresas en Barcelona. Cumplimos la normativa ISO/IEC 11801 y ANSI/TIA-568. Entregamos proyecto técnico completo, etiquetado y documentación AS-BUILT. Garantía extendida de 5 años en materiales y mano de obra.',
@@ -58,7 +58,7 @@ export const SEO_PAGES_ES: SEOPageConfig[] = [
     },
     {
         slug: 'instalacion-cat6-barcelona',
-        title: 'Instalación Cat6 Barcelona | CableCore',
+        title: 'Instalación Cat6 Barcelona',
         h1: 'Instalación de cable Cat6 en Barcelona',
         h2s: ['Ventajas del Cat6', 'Proceso de instalación', 'Preguntas frecuentes'],
         intro: 'Instalación profesional de cableado Cat6 en Barcelona. Velocidad hasta 1 Gbps, ideal para hogares y oficinas. Presupuesto gratis y sin compromiso.',
@@ -79,7 +79,7 @@ export const SEO_PAGES_ES: SEOPageConfig[] = [
     },
     {
         slug: 'instalacion-cat6a-barcelona',
-        title: 'Instalación Cat6A Barcelona | CableCore',
+        title: 'Instalación Cat6A Barcelona',
         h1: 'Instalación de cable Cat6A en Barcelona',
         h2s: ['Ventajas del Cat6A', 'Proceso de instalación', 'Preguntas frecuentes'],
         intro: 'Instalación profesional de cableado Cat6A en Barcelona. Velocidad de 10 Gbps, apantallado, ideal para empresas que exigen alto rendimiento de red.',
@@ -100,7 +100,7 @@ export const SEO_PAGES_ES: SEOPageConfig[] = [
     },
     {
         slug: 'instalacion-cat7-barcelona',
-        title: 'Instalación Cat7 Barcelona | CableCore',
+        title: 'Instalación Cat7 Barcelona',
         h1: 'Instalación de cable Cat7 en Barcelona',
         h2s: ['Ventajas del Cat7', 'Proceso de instalación', 'Preguntas frecuentes'],
         intro: 'Instalación de cableado Cat7 en Barcelona para los entornos más exigentes. Blindaje S/FTP, hasta 10 Gbps y frecuencia de 600 MHz.',
@@ -121,7 +121,7 @@ export const SEO_PAGES_ES: SEOPageConfig[] = [
     },
     {
         slug: 'instalador-rj45-barcelona',
-        title: 'Instalador RJ45 Barcelona | CableCore',
+        title: 'Instalador RJ45 Barcelona',
         h1: 'Instalador de conectores RJ45 en Barcelona',
         h2s: ['Servicio profesional RJ45', 'Proceso', 'FAQ'],
         intro: 'Instalación y comprobación de conectores RJ45 en Barcelona. Crimpado profesional, colocación de rosetas y testeo de cada punto de red.',
@@ -141,7 +141,7 @@ export const SEO_PAGES_ES: SEOPageConfig[] = [
     },
     {
         slug: 'instalacion-rack-red-barcelona',
-        title: 'Instalación Rack de Red Barcelona | CableCore',
+        title: 'Instalación Rack de Red Barcelona',
         h1: 'Instalación de rack de red en Barcelona',
         h2s: ['Tipos de rack que instalamos', 'Proceso', 'FAQ'],
         intro: 'Instalación profesional de racks de red en Barcelona. Racks de pared, de suelo y armarios de telecomunicaciones con patch panel y organización de cableado.',
@@ -162,7 +162,7 @@ export const SEO_PAGES_ES: SEOPageConfig[] = [
     },
     {
         slug: 'instalacion-red-oficina-barcelona',
-        title: 'Instalación Red Oficina Barcelona | CableCore',
+        title: 'Instalación Red Oficina Barcelona',
         h1: 'Instalación de red para oficinas en Barcelona',
         h2s: ['Soluciones para oficinas', 'Proceso', 'FAQ'],
         intro: 'Instalación completa de red para oficinas en Barcelona. Diseño, cableado estructurado, rack, WiFi empresarial y configuración de red. Todo llave en mano.',
@@ -183,7 +183,7 @@ export const SEO_PAGES_ES: SEOPageConfig[] = [
     },
     {
         slug: 'instalacion-red-casa-barcelona',
-        title: 'Instalación Red Casa Barcelona | CableCore',
+        title: 'Instalación Red Casa Barcelona',
         h1: 'Instalación de red doméstica en Barcelona',
         h2s: ['Ventajas del cable en casa', 'Proceso', 'FAQ'],
         intro: 'Instalación de red Ethernet en casa en Barcelona. Mejora tu WiFi, elimina zonas muertas y disfruta de conexión estable en cada habitación.',
@@ -204,7 +204,7 @@ export const SEO_PAGES_ES: SEOPageConfig[] = [
     },
     {
         slug: 'instalacion-patch-panel-barcelona',
-        title: 'Instalación Patch Panel Barcelona | CableCore',
+        title: 'Instalación Patch Panel Barcelona',
         h1: 'Instalación de patch panel en Barcelona',
         h2s: ['Por qué necesitas un patch panel', 'Tipos y configuraciones', 'Preguntas frecuentes'],
         intro: 'Instalación y configuración de patch panels en Barcelona para empresas que necesitan gestionar su red de forma profesional. Reducimos el tiempo de reconfiguración de horas a minutos y evitamos errores en la sala de servidores. Panel Cat6, Cat6A o Cat7 de 12, 24 y 48 puertos.',
@@ -232,7 +232,7 @@ export const SEO_PAGES_ES: SEOPageConfig[] = [
 
     {
         slug: 'instalacion-red-barcelona',
-        title: 'Instalación de Red en Barcelona | CableCore — Expertos en Redes',
+        title: 'Instalación de Red en Barcelona — Expertos en Redes',
         h1: 'Instalación de red en Barcelona',
         h2s: ['Todos nuestros servicios de red en Barcelona', 'Zonas y barrios que cubrimos', 'Preguntas frecuentes'],
         intro: 'CableCore es tu empresa de instalación de redes en Barcelona con sede en Badalona. Más de 500 instalaciones completadas en Barcelona ciudad y área metropolitana. Cableado estructurado Cat6/Cat6A/Cat7, fibra óptica, racks, WiFi empresarial y redes domésticas. Técnicos propios, sin subcontratas. Presupuesto en 24h.',
@@ -336,7 +336,7 @@ export const SEO_PAGES_ES: SEOPageConfig[] = [
     },
     {
         slug: 'instalacion-red-badalona',
-        title: 'Instalación Red Badalona | CableCore — Tu Empresa Local',
+        title: 'Instalación Red Badalona — Tu Empresa Local',
         h1: 'Instalación de red en Badalona',
         h2s: ['CableCore: empresa local de Badalona', 'Barrios y zonas que cubrimos', 'Preguntas frecuentes'],
         intro: 'CableCore tiene su sede en Carrer Vitor Balaguer 33, Badalona. Somos tu empresa de instalación de redes en Badalona: conocemos la ciudad, sus polígonos industriales (Badalona Sud, Mas Rampinyo) y sus barrios. Tiempo de respuesta mínimo — llegamos a cualquier punto de Badalona en menos de 20 minutos.',
@@ -359,7 +359,7 @@ export const SEO_PAGES_ES: SEOPageConfig[] = [
     },
     {
         slug: 'instalacion-red-sabadell',
-        title: 'Instalación Red Sabadell | CableCore',
+        title: 'Instalación Red Sabadell',
         h1: 'Instalación de red en Sabadell',
         h2s: ['Servicios en Sabadell y el Vallès Occidental', 'Zonas empresariales y residenciales', 'Preguntas frecuentes'],
         intro: 'Instalación de redes en Sabadell para empresas del Vallès Occidental. Cubrimos los polígonos industriales de Can Roqueta, Can Llong, Polígon Nord y la zona empresarial del Eix Macià. Cableado estructurado Cat6, Cat6A y Cat7 para fábricas, oficinas y hogares en Sabadell.',
@@ -381,7 +381,7 @@ export const SEO_PAGES_ES: SEOPageConfig[] = [
     },
     {
         slug: 'instalacion-red-terrassa',
-        title: 'Instalación Red Terrassa | CableCore',
+        title: 'Instalación Red Terrassa',
         h1: 'Instalación de red en Terrassa',
         h2s: ['Servicios en Terrassa', 'Zonas industriales y empresariales', 'Preguntas frecuentes'],
         intro: 'Instalación de redes en Terrassa para empresas y hogares del Vallès Occidental. Experiencia en los polígonos industriales de Ca n\'Aurell, Can Parellada y Vallès Parc Empresarial. Cableado Cat6A y Cat7 para el sector textil e industrial de Terrassa, así como instalaciones domésticas en el centro y zona residencial.',
@@ -403,7 +403,7 @@ export const SEO_PAGES_ES: SEOPageConfig[] = [
     },
     {
         slug: 'instalacion-red-sant-cugat',
-        title: 'Instalación Red Sant Cugat del Vallès | CableCore',
+        title: 'Instalación Red Sant Cugat del Vallès',
         h1: 'Instalación de red en Sant Cugat del Vallès',
         h2s: ['Servicios en Sant Cugat', 'Parques empresariales y urbanizaciones', 'Preguntas frecuentes'],
         intro: 'Instalación de red profesional en Sant Cugat del Vallès para empresas y viviendas de alto standing. Cubrimos el Parc Empresarial Can Sant Joan, el Polígon Industrial Les Planes y las urbanizaciones de Can Baró, Volpelleres y La Floresta. Instalaciones premium con materiales de primera calidad y acabados discretos.',
@@ -426,7 +426,7 @@ export const SEO_PAGES_ES: SEOPageConfig[] = [
     },
     {
         slug: 'instalacion-red-cornella',
-        title: 'Instalación Red Cornellà de Llobregat | CableCore',
+        title: 'Instalación Red Cornellà de Llobregat',
         h1: 'Instalación de red en Cornellà de Llobregat',
         h2s: ['Servicios en Cornellà y el Baix Llobregat', 'Polígonos y zonas empresariales', 'Preguntas frecuentes'],
         intro: 'Instalación de redes en Cornellà de Llobregat y el Baix Llobregat. Cubrimos el Polígon Industrial Gran Via Sud, la Zona Industrial de la Almeda y el Parc Empresarial de Cornellà. También instalamos en los barrios residenciales de Sant Ildefons, Gavarra y Almeda. Empresa de confianza en el Baix Llobregat.',
@@ -448,7 +448,7 @@ export const SEO_PAGES_ES: SEOPageConfig[] = [
     },
     {
         slug: 'instalacion-red-sant-boi',
-        title: 'Instalación Red Sant Boi de Llobregat | CableCore',
+        title: 'Instalación Red Sant Boi de Llobregat',
         h1: 'Instalación de red en Sant Boi de Llobregat',
         h2s: ['Servicios en Sant Boi', 'Zonas y barrios', 'Preguntas frecuentes'],
         intro: 'Instalación de redes en Sant Boi de Llobregat. Cubrimos el Polígon Industrial Fontsanta, el Parc Industrial de Can Gambús y los barrios residenciales de Marianao, Camps Blancs y Vinyets. Cableado Ethernet para hogares, comercios y empresas en Sant Boi y municipios del Baix Llobregat sur.',
@@ -470,7 +470,7 @@ export const SEO_PAGES_ES: SEOPageConfig[] = [
     },
     {
         slug: 'instalacion-red-castelldefels',
-        title: 'Instalación Red Castelldefels | CableCore',
+        title: 'Instalación Red Castelldefels',
         h1: 'Instalación de red en Castelldefels',
         h2s: ['Red para viviendas de Castelldefels', 'WiFi en exteriores y jardines', 'Preguntas frecuentes'],
         intro: 'Instalación de redes en Castelldefels para chalets, apartamentos y empresas de la zona costera del Garraf. Especialistas en viviendas unifamiliares con jardín y segunda residencia: instalamos cable en todas las plantas y puntos de acceso WiFi exterior para terrazas y piscinas. También cubrimos el Parc Empresarial de Castelldefels y la zona de Gavà Mar.',
@@ -493,7 +493,7 @@ export const SEO_PAGES_ES: SEOPageConfig[] = [
     },
     {
         slug: 'instalacion-red-mataro',
-        title: 'Instalación Red Mataró | CableCore',
+        title: 'Instalación Red Mataró',
         h1: 'Instalación de red en Mataró',
         h2s: ['Servicios en Mataró y el Maresme', 'Zonas industriales y empresariales', 'Preguntas frecuentes'],
         intro: 'Instalación de redes en Mataró para empresas y hogares del Maresme. Cubrimos el Polígono Industrial Pla d\'en Boet, el Parc Empresarial de la Mata y el Centro Comercial Mataró Park. Cableado Cat6, Cat6A y Cat7 para la industria mataronina, despachos del centro y viviendas en Els Molins, Cirera y Rocafonda.',
@@ -515,7 +515,7 @@ export const SEO_PAGES_ES: SEOPageConfig[] = [
     },
     {
         slug: 'instalacion-red-granollers',
-        title: 'Instalación Red Granollers | CableCore',
+        title: 'Instalación Red Granollers',
         h1: 'Instalación de red en Granollers',
         h2s: ['Servicios en Granollers y el Vallès Oriental', 'Polígonos y zonas empresariales', 'Preguntas frecuentes'],
         intro: 'Instalación de redes en Granollers para empresas del Vallès Oriental. Cubrimos el Polígono Industrial Les Franqueses, Can Prat, el Parque Industrial de Granollers y la zona del Mercado Central. Cableado Cat6, Cat6A y Cat7 para la industria del Vallès Oriental, oficinas del centro de Granollers y viviendas en La Garriga, Mollet y Canovelles.',
@@ -542,7 +542,7 @@ export const SEO_PAGES_ES: SEOPageConfig[] = [
 
     {
         slug: 'instalacion-fibra-optica-barcelona',
-        title: 'Instalación de Fibra Óptica Barcelona | CableCore',
+        title: 'Instalación de Fibra Óptica Barcelona',
         h1: 'Instalación de fibra óptica en Barcelona',
         h2s: ['Servicios de fibra óptica en Barcelona', 'Equipamiento y tecnología que usamos', 'Preguntas frecuentes'],
         intro: 'Instalación de fibra óptica en Barcelona por técnicos certificados. Realizamos fusiones por arco eléctrico, tendido de fibra monomodo (SM) y multimodo (OM3/OM4), instalación de racks y bandejas de empalme, y testeo OTDR de cada hilo. Especialistas en FTTH para comunidades de vecinos y enlaces de backbone empresarial en Barcelona y área metropolitana.',
@@ -585,7 +585,7 @@ export const SEO_PAGES_ES: SEOPageConfig[] = [
     },
     {
         slug: 'instalacion-fibra-optica-empresas-barcelona',
-        title: 'Fibra Óptica para Empresas Barcelona | CableCore',
+        title: 'Fibra Óptica para Empresas Barcelona',
         h1: 'Instalación de fibra óptica para empresas en Barcelona',
         h2s: ['Soluciones de fibra empresarial', 'Tecnología y equipamiento', 'Preguntas frecuentes'],
         intro: 'Fibra óptica para empresas en Barcelona. Interconexión de sedes, backbone de red, enlaces de alta velocidad y redes de campus con fibra monomodo y multimodo. Comprobación profesional.',
@@ -606,7 +606,7 @@ export const SEO_PAGES_ES: SEOPageConfig[] = [
     },
     {
         slug: 'cableado-fibra-optica-interior-barcelona',
-        title: 'Cableado de Fibra Óptica Interior Barcelona | CableCore',
+        title: 'Cableado de Fibra Óptica Interior Barcelona',
         h1: 'Cableado de fibra óptica interior en Barcelona',
         h2s: ['Tipos de cableado interior', 'Materiales y acabados', 'Preguntas frecuentes'],
         intro: 'Instalación de cableado de fibra óptica en interiores en Barcelona. Fibra tight-buffer para distribución interior, con canaleta, falso techo o conductos existentes. Acabados profesionales y discretos.',
@@ -627,7 +627,7 @@ export const SEO_PAGES_ES: SEOPageConfig[] = [
     },
     {
         slug: 'fusion-fibra-optica-barcelona',
-        title: 'Fusión de Fibra Óptica Barcelona | Empalme Profesional | CableCore',
+        title: 'Fusión de Fibra Óptica Barcelona | Empalme Profesional',
         h1: 'Servicio de fusión de fibra óptica en Barcelona',
         h2s: ['Proceso de fusión', 'Equipamiento profesional', 'Preguntas frecuentes'],
         intro: 'Servicio profesional de fusión (empalme) de fibra óptica en Barcelona. Fusionadora de arco de última generación, pigtails SC/APC, bandejas de empalme y testeo OTDR de cada fusión.',
@@ -649,7 +649,7 @@ export const SEO_PAGES_ES: SEOPageConfig[] = [
     },
     {
         slug: 'cableado-estructurado-empresas',
-        title: 'Cableado Estructurado para Empresas | CableCore Barcelona',
+        title: 'Cableado Estructurado para Empresas Barcelona',
         h1: 'Cableado estructurado para empresas en Barcelona',
         h2s: ['¿Por qué las empresas necesitan cableado estructurado?', 'Nuestro proceso para proyectos empresariales', 'Preguntas frecuentes'],
         intro: 'Diseñamos e instalamos infraestructuras de cableado estructurado para empresas de todos los tamaños en Barcelona y área metropolitana. Desde despachos de 5 puestos hasta edificios corporativos de 200 puntos de red. Cumplimos la normativa ISO/IEC 11801, entregamos documentación AS-BUILT completa y ofrecemos garantía extendida de 5 años. Técnicos propios, sin subcontratas, sin sorpresas en el presupuesto.',
@@ -674,7 +674,7 @@ export const SEO_PAGES_ES: SEOPageConfig[] = [
     },
     {
         slug: 'instalador-red-barcelona',
-        title: 'Instalador de Red Barcelona | CableCore — Técnicos Certificados',
+        title: 'Instalador de Red Barcelona — Técnicos Certificados',
         h1: 'Instalador de red profesional en Barcelona',
         h2s: ['Por qué elegir un instalador de red profesional', 'Qué incluye nuestro servicio', 'Preguntas frecuentes'],
         intro: 'CableCore es tu instalador de red en Barcelona con más de 10 años de experiencia y más de 500 proyectos completados. Instalamos redes Ethernet, fibra óptica, WiFi empresarial y cableado estructurado en hogares, oficinas y naves industriales. Técnicos propios certificados, presupuesto en 24 horas y garantía de 5 años en todos los trabajos.',
@@ -699,7 +699,7 @@ export const SEO_PAGES_ES: SEOPageConfig[] = [
     },
     {
         slug: 'instalacion-ftth-edificios-barcelona',
-        title: 'Instalación FTTH Edificios Barcelona | CableCore',
+        title: 'Instalación FTTH Edificios Barcelona',
         h1: 'Instalación FTTH para edificios en Barcelona',
         h2s: ['¿Qué es FTTH?', 'Proceso de instalación', 'Preguntas frecuentes'],
         intro: 'Instalación FTTH (Fiber To The Home) en edificios de Barcelona. Cableado vertical de fibra óptica desde el rack comunitario hasta cada vivienda. Rosetas SC/APC de 2 puertos en cada piso. Ideal para comunidades de vecinos.',

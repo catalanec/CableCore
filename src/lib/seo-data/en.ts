@@ -3,7 +3,7 @@ import { SEOPageConfig } from "./types";
 export const SEO_PAGES_EN: SEOPageConfig[] = [
     {
         slug: 'instalacion-cable-red-barcelona',
-        title: 'Network Cable Installation Barcelona | CableCore',
+        title: 'Network Cable Installation Barcelona',
         h1: 'Professional network cable installation in Barcelona',
         h2s: ['Why choose CableCore?', 'Installation process', 'Frequently asked questions'],
         intro: 'Professional Ethernet network cable installation service in Barcelona and surrounding areas. Cat5e, Cat6, Cat6A, and Cat7 cabling for homes, offices, and industrial warehouses.',
@@ -25,7 +25,7 @@ export const SEO_PAGES_EN: SEOPageConfig[] = [
     },
     {
         slug: 'cableado-estructurado-barcelona',
-        title: 'Structured Cabling Barcelona | CableCore',
+        title: 'Structured Cabling Barcelona',
         h1: 'Professional structured cabling in Barcelona',
         h2s: ['Advantages of structured cabling', 'Our process', 'Frequently asked questions'],
         intro: 'Design and installation of structured cabling for companies in Barcelona. Organized, scalable, and tested network for offices, retail stores, and industrial warehouses.',
@@ -47,7 +47,7 @@ export const SEO_PAGES_EN: SEOPageConfig[] = [
     },
     {
         slug: 'instalacion-cat6-barcelona',
-        title: 'Cat6 Installation Barcelona | CableCore',
+        title: 'Cat6 Installation Barcelona',
         h1: 'Cat6 cable installation in Barcelona',
         h2s: ['Advantages of Cat6', 'Installation process', 'Frequently asked questions'],
         intro: 'Professional Cat6 network cabling installation in Barcelona. Speeds up to 1 Gbps, ideal for homes and offices. Free, no-obligation quote.',
@@ -68,7 +68,7 @@ export const SEO_PAGES_EN: SEOPageConfig[] = [
     },
     {
         slug: 'instalacion-cat6a-barcelona',
-        title: 'Cat6A Installation Barcelona | CableCore',
+        title: 'Cat6A Installation Barcelona',
         h1: 'Cat6A cable installation in Barcelona',
         h2s: ['Advantages of Cat6A', 'Installation process', 'Frequently asked questions'],
         intro: 'Professional Cat6A network cabling installation in Barcelona. 10 Gbps speeds, shielded, ideal for companies demanding high-performance networking.',
@@ -89,7 +89,7 @@ export const SEO_PAGES_EN: SEOPageConfig[] = [
     },
     {
         slug: 'instalacion-cat7-barcelona',
-        title: 'Cat7 Installation Barcelona | CableCore',
+        title: 'Cat7 Installation Barcelona',
         h1: 'Cat7 cable installation in Barcelona',
         h2s: ['Advantages of Cat7', 'Installation process', 'Frequently asked questions'],
         intro: 'Cat7 cabling installation in Barcelona for the most demanding environments. S/FTP shielding, speeds up to 10 Gbps, and a frequency of 600 MHz.',
@@ -110,7 +110,7 @@ export const SEO_PAGES_EN: SEOPageConfig[] = [
     },
     {
         slug: 'instalador-rj45-barcelona',
-        title: 'RJ45 Installer Barcelona | CableCore',
+        title: 'RJ45 Installer Barcelona',
         h1: 'RJ45 connector installer in Barcelona',
         h2s: ['Professional RJ45 service', 'Process', 'FAQ'],
         intro: 'RJ45 connector installation and testing in Barcelona. Professional crimping, faceplate installation, and thorough testing of every network endpoint.',
@@ -130,7 +130,7 @@ export const SEO_PAGES_EN: SEOPageConfig[] = [
     },
     {
         slug: 'instalacion-rack-red-barcelona',
-        title: 'Network Rack Installation Barcelona | CableCore',
+        title: 'Network Rack Installation Barcelona',
         h1: 'Network rack installation in Barcelona',
         h2s: ['Types of racks we install', 'Process', 'FAQ'],
         intro: 'Professional network rack installation in Barcelona. Wall-mounted racks, floor-standing units, and telecom cabinets complete with patch panels and neat cable management.',
@@ -151,7 +151,7 @@ export const SEO_PAGES_EN: SEOPageConfig[] = [
     },
     {
         slug: 'instalacion-red-oficina-barcelona',
-        title: 'Office Network Installation Barcelona | CableCore',
+        title: 'Office Network Installation Barcelona',
         h1: 'Office network installation in Barcelona',
         h2s: ['Office solutions', 'Process', 'FAQ'],
         intro: 'Complete network installation for offices in Barcelona. Network engineering, structured cabling, rack setups, enterprise WiFi, and switch configuration. Turnkey solutions.',
@@ -172,7 +172,7 @@ export const SEO_PAGES_EN: SEOPageConfig[] = [
     },
     {
         slug: 'instalacion-red-casa-barcelona',
-        title: 'Home Network Installation Barcelona | CableCore', // Translation up to item 9
+        title: 'Home Network Installation Barcelona', // Translation up to item 9
         h1: 'Domestic network installation in Barcelona',
         h2s: ['Advantages of a wired home', 'Process', 'FAQ'],
         intro: 'Ethernet network installation at home in Barcelona. Drastically improve your WiFi, eliminate dead zones, and enjoy an ultra-stable connection in every room.',
@@ -193,7 +193,7 @@ export const SEO_PAGES_EN: SEOPageConfig[] = [
     },
     {
         slug: 'instalacion-patch-panel-barcelona',
-        title: 'Patch Panel Installation Barcelona | CableCore',
+        title: 'Patch Panel Installation Barcelona',
         h1: 'Patch panel installation in Barcelona',
         h2s: ['Advantages of a patch panel', 'Process', 'FAQ'],
         intro: 'Professional patch panel installation in Barcelona. Organize your network, simplify changes, and dramatically reduce connection errors with a Cat6/Cat6A/Cat7 patch system.',
@@ -213,7 +213,7 @@ export const SEO_PAGES_EN: SEOPageConfig[] = [
     },
     {
         slug: 'instalacion-red-barcelona',
-        title: 'Network Installation in Barcelona | CableCore — Network Experts',
+        title: 'Network Installation in Barcelona — Network Experts',
         h1: 'Network installation in Barcelona',
         h2s: ['All our network services in Barcelona', 'Neighborhoods and areas we cover', 'Frequently asked questions'],
         intro: "CableCore is your network installation company in Barcelona, headquartered in Badalona. We've completed over 500 installations across Barcelona city and its metropolitan area: structured cabling in Cat6/Cat6A/Cat7, fiber optics, racks, business WiFi, and home networks. In-house technicians, no subcontractors. Quote within 24 hours.",
@@ -316,7 +316,7 @@ export const SEO_PAGES_EN: SEOPageConfig[] = [
     },
     {
         slug: 'instalacion-red-badalona',
-        title: 'Network Installation Badalona | CableCore — Your Local Company',
+        title: 'Network Installation Badalona — Your Local Company',
         h1: 'Network installation in Badalona',
         h2s: ['CableCore: your local company in Badalona', 'Neighborhoods and areas we cover', 'Frequently asked questions'],
         intro: 'CableCore is headquartered at Carrer Vitor Balaguer 33, Badalona. We are your network installation company in Badalona: we know the city, its industrial estates (Badalona Sud, Mas Rampinyo) and its neighborhoods inside out. Minimal response time — we reach anywhere in Badalona in under 20 minutes.',
@@ -339,7 +339,7 @@ export const SEO_PAGES_EN: SEOPageConfig[] = [
     },
     {
         slug: 'instalacion-red-sabadell',
-        title: 'Network Installation Sabadell | CableCore',
+        title: 'Network Installation Sabadell',
         h1: 'Network installation in Sabadell',
         h2s: ['Services in Sabadell and Vallès Occidental', 'Business and residential areas', 'Frequently asked questions'],
         intro: 'Network installation in Sabadell for companies across Vallès Occidental. We cover the Can Roqueta, Can Llong and Polígon Nord industrial estates, and the Eix Macià business district. Structured Cat6, Cat6A and Cat7 cabling for factories, offices and homes in Sabadell.',
@@ -361,7 +361,7 @@ export const SEO_PAGES_EN: SEOPageConfig[] = [
     },
     {
         slug: 'instalacion-red-terrassa',
-        title: 'Network Installation Terrassa | CableCore',
+        title: 'Network Installation Terrassa',
         h1: 'Network installation in Terrassa',
         h2s: ['Services in Terrassa', 'Industrial and business areas', 'Frequently asked questions'],
         intro: "Network installation in Terrassa for businesses and homes in Vallès Occidental. We have experience in the Ca n'Aurell, Can Parellada and Vallès Parc Empresarial industrial estates. Cat6A and Cat7 cabling for Terrassa's textile and industrial sector, plus home installations in the city centre and residential areas.",
@@ -383,7 +383,7 @@ export const SEO_PAGES_EN: SEOPageConfig[] = [
     },
     {
         slug: 'instalacion-red-sant-cugat',
-        title: 'Network Installation Sant Cugat del Vallès | CableCore',
+        title: 'Network Installation Sant Cugat del Vallès',
         h1: 'Network installation in Sant Cugat del Vallès',
         h2s: ['Services in Sant Cugat', 'Business parks and residential estates', 'Frequently asked questions'],
         intro: 'Professional network installation in Sant Cugat del Vallès for businesses and high-end homes. We cover the Parc Empresarial Can Sant Joan, the Polígon Industrial Les Planes, and the residential estates of Can Baró, Volpelleres and La Floresta. Premium installations using top-quality materials with discreet finishes.',
@@ -406,7 +406,7 @@ export const SEO_PAGES_EN: SEOPageConfig[] = [
     },
     {
         slug: 'instalacion-red-cornella',
-        title: 'Network Installation Cornellà de Llobregat | CableCore',
+        title: 'Network Installation Cornellà de Llobregat',
         h1: 'Network installation in Cornellà de Llobregat',
         h2s: ['Services in Cornellà and Baix Llobregat', 'Industrial estates and business areas', 'Frequently asked questions'],
         intro: 'Network installation in Cornellà de Llobregat and Baix Llobregat. We cover the Polígon Industrial Gran Via Sud, the Almeda industrial zone and the Parc Empresarial de Cornellà. We also install in the residential neighborhoods of Sant Ildefons, Gavarra and Almeda. A trusted company across Baix Llobregat.',
@@ -428,7 +428,7 @@ export const SEO_PAGES_EN: SEOPageConfig[] = [
     },
     {
         slug: 'instalacion-red-sant-boi',
-        title: 'Network Installation Sant Boi de Llobregat | CableCore',
+        title: 'Network Installation Sant Boi de Llobregat',
         h1: 'Network installation in Sant Boi de Llobregat',
         h2s: ['Services in Sant Boi', 'Areas and neighborhoods', 'Frequently asked questions'],
         intro: 'Network installation in Sant Boi de Llobregat. We cover the Polígon Industrial Fontsanta, the Parc Industrial de Can Gambús, and the residential neighborhoods of Marianao, Camps Blancs and Vinyets. Ethernet cabling for homes, shops and businesses in Sant Boi and the southern Baix Llobregat municipalities.',
@@ -450,7 +450,7 @@ export const SEO_PAGES_EN: SEOPageConfig[] = [
     },
     {
         slug: 'instalacion-red-castelldefels',
-        title: 'Network Installation Castelldefels | CableCore',
+        title: 'Network Installation Castelldefels',
         h1: 'Network installation in Castelldefels',
         h2s: ['Networks for homes in Castelldefels', 'Outdoor and garden WiFi', 'Frequently asked questions'],
         intro: 'Network installation in Castelldefels for houses, apartments and businesses along the Garraf coast. We specialize in single-family homes with gardens and second residences: we run cabling across every floor and install outdoor WiFi access points for terraces and pools. We also cover the Parc Empresarial de Castelldefels and the Gavà Mar area.',
@@ -473,7 +473,7 @@ export const SEO_PAGES_EN: SEOPageConfig[] = [
     },
     {
         slug: 'instalacion-red-mataro',
-        title: 'Network Installation Mataró | CableCore',
+        title: 'Network Installation Mataró',
         h1: 'Network installation in Mataró',
         h2s: ['Services in Mataró and Maresme', 'Industrial and business areas', 'Frequently asked questions'],
         intro: "Network installation in Mataró for businesses and homes across Maresme. We cover the Pla d'en Boet industrial estate, the Parc Empresarial de la Mata, and the Mataró Park shopping centre. Cat6, Cat6A and Cat7 cabling for Mataró's industry, offices in the city centre, and homes in Els Molins, Cirera and Rocafonda.",
@@ -495,7 +495,7 @@ export const SEO_PAGES_EN: SEOPageConfig[] = [
     },
     {
         slug: 'instalacion-red-granollers',
-        title: 'Network Installation Granollers | CableCore',
+        title: 'Network Installation Granollers',
         h1: 'Network installation in Granollers',
         h2s: ['Services in Granollers and Vallès Oriental', 'Industrial estates and business areas', 'Frequently asked questions'],
         intro: 'Network installation in Granollers for businesses across Vallès Oriental. We cover the Les Franqueses and Can Prat industrial estates, the Parque Industrial de Granollers, and the area around the Mercado Central. Cat6, Cat6A and Cat7 cabling for Vallès Oriental industry, offices in Granollers city centre, and homes in La Garriga, Mollet and Canovelles.',
@@ -517,7 +517,7 @@ export const SEO_PAGES_EN: SEOPageConfig[] = [
     },
     {
         slug: 'instalacion-fibra-optica-barcelona',
-        title: 'Fiber Optic Installation Barcelona | CableCore',
+        title: 'Fiber Optic Installation Barcelona',
         h1: 'Fiber optic installation in Barcelona',
         h2s: ['Why install fiber optics?', 'Types of installation', 'Frequently asked questions'],
         intro: 'Highly specialized professional fiber optic installation engineering servicing Barcelona. Mastering precision arc fusion splicing, rigid single-mode or adaptable multimode backbone threading, immaculate SC/APC endpoint distribution, alongside rigorous strict OTDR empirical testing. Optimizing intense corporations, sprawling vertical housing complexes, and broad neighborhood estates.',
@@ -540,7 +540,7 @@ export const SEO_PAGES_EN: SEOPageConfig[] = [
     },
     {
         slug: 'instalacion-fibra-optica-empresas-barcelona',
-        title: 'Corporate Fiber Optics Barcelona | CableCore',
+        title: 'Corporate Fiber Optics Barcelona',
         h1: 'Enterprise fiber optic installation in Barcelona',
         h2s: ['Advanced Enterprise Solutions', 'Underlying Equipment & Logistics', 'Frequently asked questions'],
         intro: 'Heavy-duty enterprise fiber optic routing fundamentally commanding intense commercial data loads operating inside Barcelona. Actively fusing deeply critical multi-campus interconnects reliably constructing permanent massive organizational backbones capable of continuously handling relentless hyper-speed transmissions integrating tightly braided single and multimode core lines generating ironclad operational networking.',
@@ -561,7 +561,7 @@ export const SEO_PAGES_EN: SEOPageConfig[] = [
     },
     {
         slug: 'cableado-fibra-optica-interior-barcelona',
-        title: 'Indoor Fiber Optic Cabling Barcelona | CableCore',
+        title: 'Indoor Fiber Optic Cabling Barcelona',
         h1: 'Indoor fiber optic cabling installations in Barcelona',
         h2s: ['Interior Cabling Variations', 'Material Compliance & Aesthetics', 'Frequently asked questions'],
         intro: 'Extremely intricate indoor fiber optic routing implementations carefully staging strictly discreet interior layouts stretching natively inside Barcelona. Strategically deploying tight-buffer optical protective sheathing specifically chosen guaranteeing highly reliable internal structural transmission cleanly riding neatly positioned decorative trunking channels or carefully exploiting pre-existing empty wall conduit plumbing preserving complete structural elegance.',
@@ -582,7 +582,7 @@ export const SEO_PAGES_EN: SEOPageConfig[] = [
     },
     {
         slug: 'fusion-fibra-optica-barcelona',
-        title: 'Fiber Optic Fusion Splicing Barcelona | CableCore',
+        title: 'Fiber Optic Fusion Splicing Barcelona',
         h1: 'Professional fiber optic fusion splicing in Barcelona',
         h2s: ['The Fusion Process', 'Technological Equipment', 'Frequently asked questions'],
         intro: 'Meticulously sophisticated professional optical execution specifically addressing complex fiber optic fusion splicing mandates requested actively across Barcelona. Leveraging severely advanced precise electrical arc welding systems securely merging distinct pigtail nodes definitively housed cleanly neatly resting safely inside specialized isolation splice trays comprehensively checked strictly relying executing comprehensive OTDR testing matrices.',
@@ -604,7 +604,7 @@ export const SEO_PAGES_EN: SEOPageConfig[] = [
     },
     {
         slug: 'instalacion-ftth-edificios-barcelona',
-        title: 'Building FTTH Installation Barcelona | CableCore',
+        title: 'Building FTTH Installation Barcelona',
         h1: 'FTTH installations for building complexes in Barcelona',
         h2s: ['Understanding FTTH Architecture', 'Installation Implementation', 'Frequently asked questions'],
         intro: 'Comprehensive profound dense vertical FTTH (Fiber To The Home) physical matrix deployments effectively dominating towering residential multi-tenant architectures proudly spanning Barcelona. Severely complex exactingly routed optical heavy backbone trunks rapidly escalating progressively advancing directly linking heavily protected subterranean centralized telecom vaults deliberately seamlessly connecting terminating directly forcefully pushing twin SC/APC delivery points establishing profound isolated internal dedicated residential apartment staging drops.',
@@ -626,7 +626,7 @@ export const SEO_PAGES_EN: SEOPageConfig[] = [
     },
     {
         slug: 'cableado-estructurado-empresas',
-        title: 'Structured Cabling for Businesses Barcelona | CableCore',
+        title: 'Structured Cabling for Businesses Barcelona',
         h1: 'Structured cabling for businesses in Barcelona',
         h2s: ['Why businesses need structured cabling', 'Our process for business projects', 'Frequently asked questions'],
         intro: 'We design and install structured cabling infrastructure for businesses of all sizes in Barcelona and the metropolitan area. From 5-desk offices to 200+ point corporate buildings. ISO/IEC 11801 compliant, full AS-BUILT documentation, and 5-year extended warranty. Our own certified technicians — no subcontractors.',
@@ -649,7 +649,7 @@ export const SEO_PAGES_EN: SEOPageConfig[] = [
     },
     {
         slug: 'instalador-red-barcelona',
-        title: 'Network Installer Barcelona | CableCore — Certified Technicians',
+        title: 'Network Installer Barcelona — Certified Technicians',
         h1: 'Professional network installer in Barcelona',
         h2s: ['Why choose a professional network installer', 'What our service includes', 'Frequently asked questions'],
         intro: 'CableCore is your network installer in Barcelona with over 10 years of experience and 500+ completed projects. We install Ethernet networks, fiber optics, enterprise Wi-Fi, and structured cabling in homes, offices, and industrial warehouses. Certified in-house technicians, quotes within 24 hours, and a 5-year warranty on all work.',

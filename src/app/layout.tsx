@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { Inter, Outfit } from 'next/font/google';
 import Script from 'next/script';
+import { getLocale } from 'next-intl/server';
 import { getWebSiteJsonLd } from '@/lib/seo-metadata';
 import WhatsAppButton from '@/components/layout/WhatsAppButton';
 import './globals.css';
@@ -83,15 +84,28 @@ export const metadata: Metadata = {
     },
 };
 
-export default function RootLayout({
+export default async function RootLayout({
     children,
 }: {
     children: React.ReactNode;
 }) {
     const webSiteJsonLd = getWebSiteJsonLd();
+    // Every page declared itself Spanish, including the English and Russian
+    // ones. Google Search Console showed the consequence: 46 pages "Crawled —
+    // currently not indexed", almost all of them /en/ and /ru/. Those pages
+    // send hreflang saying en-US or ru-RU, sit on a Spanish-looking URL, and
+    // then declared lang="es" — so the strongest signal on the page said they
+    // were another copy of the Spanish version that Google had already
+    // indexed. /en/blog/cat6-vs-cat6a-vs-cat7-diferencias carries 1570
+    // impressions and zero clicks, which is what being shown to the wrong
+    // audience looks like.
+    //
+    // The root layout owns <html> and sits above [locale], so the locale comes
+    // from next-intl's middleware rather than from params.
+    const locale = await getLocale();
 
     return (
-        <html lang="es" className={`${inter.variable} ${outfit.variable}`} suppressHydrationWarning>
+        <html lang={locale} className={`${inter.variable} ${outfit.variable}`} suppressHydrationWarning>
             <head>
                 <link rel="icon" type="image/png" href="/favicon.png" />
                 <link rel="apple-touch-icon" href="/favicon.png" />
