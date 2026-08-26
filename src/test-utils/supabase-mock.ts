@@ -30,6 +30,17 @@ export interface SupabaseMockOptions {
     rpc?: SupabaseResult;
 }
 
+/** What a mocked Storage bucket may answer — both the success and the failure
+ *  shape, so a test can override either one. */
+export type StorageResult = { error: { message: string } | null };
+export type StorageList = { data: Array<{ name: string }>; error?: { message: string } | null };
+export type StorageBucket = {
+    upload: (...args: never[]) => Promise<StorageResult>;
+    remove: (...args: never[]) => Promise<StorageResult>;
+    list: (...args: never[]) => Promise<StorageList>;
+    getPublicUrl: (path: string) => { data: { publicUrl: string } };
+};
+
 export function createSupabaseMock({ tables = {}, rpc = { data: null, error: null } }: SupabaseMockOptions = {}) {
     const queues: Record<string, SupabaseResult[]> = Object.fromEntries(
         Object.entries(tables).map(([k, v]) => [k, [...v]])
@@ -43,16 +54,21 @@ export function createSupabaseMock({ tables = {}, rpc = { data: null, error: nul
         return makeBuilder(result);
     });
 
-    const storageUpload = vi.fn(() => Promise.resolve({ error: null }));
-    const storageRemove = vi.fn(() => Promise.resolve({ error: null }));
-    const storageList = vi.fn(() => Promise.resolve({ data: [] }));
+    // Typed rather than inferred from these happy-path defaults. Inference made
+    // `error: null` and `data: never[]` the only shapes the bucket could ever
+    // return, so a test that replaced storage.from to exercise a failing upload
+    // or a non-empty listing — which is exactly what these mocks are for — did
+    // not type-check against the object it was replacing.
+    const storageUpload = vi.fn((): Promise<StorageResult> => Promise.resolve({ error: null }));
+    const storageRemove = vi.fn((): Promise<StorageResult> => Promise.resolve({ error: null }));
+    const storageList = vi.fn((): Promise<StorageList> => Promise.resolve({ data: [] }));
     const storageGetPublicUrl = vi.fn((path: string) => ({ data: { publicUrl: `https://mock.supabase.co/${path}` } }));
 
     return {
         from,
         rpc: vi.fn(() => Promise.resolve(rpc)),
         storage: {
-            from: vi.fn(() => ({
+            from: vi.fn((): StorageBucket => ({
                 upload: storageUpload,
                 remove: storageRemove,
                 list: storageList,

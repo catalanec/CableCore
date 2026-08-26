@@ -2,14 +2,23 @@ import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { NextRequest } from 'next/server';
 import { createSupabaseMock } from '@/test-utils/supabase-mock';
 
-const createSessionMock = vi.fn((..._args: unknown[]) => Promise.resolve({ url: 'https://checkout.stripe.com/session', id: 'cs_123' }));
+// The return type is declared, not inferred from the happy-path default:
+// Stripe can hand back a session with no url, and Resend answers with either
+// data or error. Inferring from the default made those the ONLY allowed
+// shapes, so every failure-path override below was a type error — in tests
+// whose whole purpose is the failure path.
+type StripeSession = { url: string | null; id: string };
+const createSessionMock = vi.fn((..._args: unknown[]): Promise<StripeSession> =>
+    Promise.resolve({ url: 'https://checkout.stripe.com/session', id: 'cs_123' }));
 vi.mock('stripe', () => ({
     default: class StripeMock {
         checkout = { sessions: { create: createSessionMock } };
     },
 }));
 
-const sendEmailMock = vi.fn((..._args: unknown[]) => Promise.resolve({ data: { id: 'email_1' }, error: null }));
+type ResendResult = { data: { id: string } | null; error: { message: string } | null };
+const sendEmailMock = vi.fn((..._args: unknown[]): Promise<ResendResult> =>
+    Promise.resolve({ data: { id: 'email_1' }, error: null }));
 vi.mock('resend', () => ({
     Resend: class ResendMock {
         emails = { send: sendEmailMock };

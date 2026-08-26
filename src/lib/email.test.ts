@@ -1,6 +1,11 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 
-const sendMailMock = vi.fn((..._args: unknown[]) => Promise.resolve({ messageId: 'msg-1' }));
+// Typed to the options email.ts actually sends (from/to/subject/html), rather
+// than unknown[]. With unknown the assertions below could not read `.to` or
+// `.html` at all — every one of them was a type error, and the escaping test
+// needed an `as string` cast to say anything about the HTML it guards.
+type SentMail = { from: string; to: string; subject: string; html: string };
+const sendMailMock = vi.fn((_options: SentMail) => Promise.resolve({ messageId: 'msg-1' }));
 vi.mock('nodemailer', () => ({
     default: {
         createTransport: vi.fn(() => ({ sendMail: sendMailMock })),
@@ -67,7 +72,7 @@ describe('lib/email', () => {
         it('escapes user-supplied fields in the generated HTML', async () => {
             const { sendLeadNotification } = await loadEmail();
             await sendLeadNotification({ ...leadData, name: '<img src=x onerror=alert(1)>' });
-            const html = sendMailMock.mock.calls[0][0].html as string;
+            const html = sendMailMock.mock.calls[0][0].html;
             expect(html).not.toContain('<img src=x onerror=alert(1)>');
         });
     });
@@ -83,7 +88,7 @@ describe('lib/email', () => {
             const { sendQuoteNotification } = await loadEmail();
             await sendQuoteNotification(quoteData);
             expect(sendMailMock).toHaveBeenCalledTimes(2);
-            const adminHtml = sendMailMock.mock.calls[0][0].html as string;
+            const adminHtml = sendMailMock.mock.calls[0][0].html;
             expect(adminHtml).toContain('1234.57€');
             expect(adminHtml).toContain('CC-1');
         });

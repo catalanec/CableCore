@@ -1502,7 +1502,14 @@ export default function AdminDashboard({ initialQuotes, initialLeads, initialMat
                                     email: selectedQuote.client_email || '',
                                     phone: selectedQuote.client_phone || '',
                                     signatureEmisor: 'Anton Shapoval',
-                                    signatureClient: selectedQuote.client_name || ''
+                                    signatureClient: selectedQuote.client_name || '',
+                                    // Was omitted, which is why this call failed to type-check.
+                                    // Leaving it out would have made the field undefined and
+                                    // flipped its input (line ~1868) from controlled to
+                                    // uncontrolled; blanking it is also right on its own —
+                                    // a purchase-order reference belongs to one invoice and
+                                    // must not carry over to the next one.
+                                    refAdicional: ''
                                 });
                                 // Pre-populate items from quote data
                                 const hasCosts = Number(selectedQuote.cable_cost) > 0 || Number(selectedQuote.points_cost) > 0 || Number(selectedQuote.work_cost) > 0;
