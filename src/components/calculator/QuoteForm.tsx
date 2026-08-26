@@ -27,7 +27,13 @@ interface QuoteFormProps {
         rackCustomName: string;
         rackCustomPrice: number;
         equipmentCustom: Record<string, { name: string; price: number }>;
-        customItems: Array<{ id: string; name: string; qty: number; price: number }>;
+        // Declared shape must match what the calculators actually hold
+        // (Calculator.tsx:508, FiberCalculator.tsx:370). It previously claimed
+        // `qty: number; price: number` and omitted `type` entirely, while the
+        // code below already handled a string price, an absent qty and the
+        // fixed/unit split — so the annotation was the only thing that was
+        // wrong, and it made every call site a type error.
+        customItems: Array<{ id: string; type: 'unit' | 'fixed'; name: string; qty?: number; price: number | string }>;
         additionalWork: Record<string, boolean>;
         // Real per-item count for equipment with a +/- quantity stepper
         // (switch, accessPoint) — additionalWork above only carries a

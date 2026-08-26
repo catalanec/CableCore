@@ -156,6 +156,10 @@ const calcLabels: Record<string, Record<string, string>> = {
         subtotal: 'Subtotal',
         iva: 'IVA (21%)',
         discount: 'Descuento',
+        discountApply: 'Aplicar descuento por volumen',
+        discountAvailable: 'disponible',
+        discountPoints: 'puntos',
+        discountFrom: 'El descuento por volumen se ofrece a partir de 4 puntos',
         urgencyLabel: 'Recargo urgencia',
         total: 'Total estimado',
         routingCost: 'Tendido de cable',
@@ -260,6 +264,10 @@ const calcLabels: Record<string, Record<string, string>> = {
         subtotal: 'Subtotal',
         iva: 'VAT (21%)',
         discount: 'Discount',
+        discountApply: 'Apply volume discount',
+        discountAvailable: 'available',
+        discountPoints: 'points',
+        discountFrom: 'Volume discount becomes available from 4 points',
         urgencyLabel: 'Urgency surcharge',
         total: 'Estimated total',
         routingCost: 'Cable routing',
@@ -356,6 +364,10 @@ const calcLabels: Record<string, Record<string, string>> = {
         subtotal: 'Подитог',
         iva: 'НДС (21%)',
         discount: 'Скидка',
+        discountApply: 'Применить скидку за объём',
+        discountAvailable: 'доступно',
+        discountPoints: 'точек',
+        discountFrom: 'Скидка за объём предлагается от 4 точек',
         urgencyLabel: 'Наценка за срочность',
         total: 'Итого (ориентировочно)',
         routingCost: 'Прокладка кабеля',
@@ -485,6 +497,9 @@ export default function Calculator({ locale }: { locale: string }) {
         }
     );
     const [rackEditing, setRackEditing] = useState(false);
+    // Скидка за объём больше не начисляется сама. Она предлагается, когда
+    // точек хватает, но применяется только если её включили здесь.
+    const [discountEnabled, setDiscountEnabled] = useState(false);
     const [upsellOptions, setUpsellOptions] = useState<Record<string, boolean>>({
         testing: true, labeling: true, cableManagement: false, extendedWarranty: false,
     });
@@ -610,10 +625,12 @@ export default function Calculator({ locale }: { locale: string }) {
         // 9. СУММА до скидки и срочности
         const subtotal = cableCost + routingCost + laborCost + trenchCost + canetaCost + materialsCost + additionalMaterialsCost + equipmentCost + rackCost + upsellCost + customItemsCost;
 
-        // 10. Скидка
-        let discountPercent = 0;
-        if (points >= 10) discountPercent = 10;
-        else if (points >= 4) discountPercent = 5;
+        // 10. Скидка. Порог по точкам решает, какая скидка ДОСТУПНА;
+        // применяется она только по явному включению (discountEnabled).
+        let eligibleDiscountPercent = 0;
+        if (points >= 10) eligibleDiscountPercent = 10;
+        else if (points >= 4) eligibleDiscountPercent = 5;
+        const discountPercent = discountEnabled ? eligibleDiscountPercent : 0;
         const discount = subtotal * (discountPercent / 100);
 
         // 11. Срочность
@@ -628,10 +645,11 @@ export default function Calculator({ locale }: { locale: string }) {
             totalCableLength, cableCost, routingCost, routingPrice, laborCost,
             trenchLength, trenchCost, canetaLength, canetaCost,
             materialsCost, materialsPerPoint, additionalMaterialsCost,
-            equipmentCost, rackCost, upsellCost, customItemsCost, subtotal, discountPercent, discount,
+            equipmentCost, rackCost, upsellCost, customItemsCost, subtotal,
+            eligibleDiscountPercent, discountPercent, discount,
             urgencyOption, afterUrgency, iva, total,
         };
-    }, [cableType, points, avgLength, installType, trenchMode, trenchLengthInput, canetaMode, canetaLengthInput, additionalMaterials, materialsCustom, patchPanelCounts, equipment, equipmentCustom, rack, rackCustom, upsellOptions, urgency, customItems, pointMaterials, pointCustomMats]);
+    }, [cableType, points, discountEnabled, avgLength, installType, trenchMode, trenchLengthInput, canetaMode, canetaLengthInput, additionalMaterials, materialsCustom, patchPanelCounts, equipment, equipmentCustom, rack, rackCustom, upsellOptions, urgency, customItems, pointMaterials, pointCustomMats]);
 
     const installationDisabled = points === 0 && avgLength === 0;
 
@@ -743,8 +761,36 @@ export default function Calculator({ locale }: { locale: string }) {
                             <span className="font-heading text-2xl font-bold text-gradient-gold">{points}</span>
                         </div>
                     </div>
-                    {calc.discountPercent > 0 && (
-                        <div className="mt-2 text-xs text-green-400">🎉 {l.discount}: -{calc.discountPercent}% ({points >= 10 ? '10+ puntos' : '4+ puntos'})</div>
+                    {/* Скидка за объём: раньше начислялась молча, как только точек
+                        набиралось 4 или 10. Клиент видел её в смете, не выбрав.
+                        Теперь порог лишь ОТКРЫВАЕТ скидку, а решает человек. */}
+                    {calc.eligibleDiscountPercent > 0 ? (
+                        <label
+                            className={`mt-3 flex items-center gap-3 p-3 rounded-lg border cursor-pointer transition-all duration-200 ${discountEnabled
+                                ? 'bg-[rgba(74,222,128,0.1)] border-green-400'
+                                : 'bg-surface-card border-border-subtle hover:border-green-400/40'}`}
+                        >
+                            <input
+                                type="checkbox"
+                                checked={discountEnabled}
+                                onChange={(e) => setDiscountEnabled(e.target.checked)}
+                                className="sr-only"
+                            />
+                            <span className="text-lg">🎉</span>
+                            <div className="flex-1">
+                                <div className={`text-sm font-medium ${discountEnabled ? 'text-green-400' : 'text-white'}`}>
+                                    {l.discountApply}
+                                </div>
+                                <div className="text-xs text-brand-gold-muted">
+                                    −{calc.eligibleDiscountPercent}% {l.discountAvailable} ({points >= 10 ? '10+' : '4+'} {l.discountPoints})
+                                </div>
+                            </div>
+                            <div className={`w-5 h-5 rounded border flex items-center justify-center transition-colors ${discountEnabled ? 'bg-green-400 border-green-400 text-black' : 'border-border-subtle'}`}>
+                                {discountEnabled && <span className="text-xs font-bold">✓</span>}
+                            </div>
+                        </label>
+                    ) : (
+                        <div className="mt-2 text-xs text-brand-gold-muted/70">{l.discountFrom}</div>
                     )}
                 </div>
 
