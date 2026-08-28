@@ -10,8 +10,14 @@ const KEY_PAGES = [
     'https://cablecore.es/es/servicios/instalacion-fibra-optica-barcelona',
     'https://cablecore.es/es/blog/cat6-vs-cat6a-vs-cat7-diferencias',
     'https://cablecore.es/en/blog/cat6-vs-cat6a-vs-cat7-diferencias',
-    'https://cablecore.es/es/blog/puntos-de-red-precio-guia',
-    'https://cablecore.es/es/calculadora',
+    // Was /es/blog/puntos-de-red-precio-guia — that slug redirects to this one
+    // (round-17 duplicate consolidation), so it reported "Page with redirect"
+    // every single day and could never come back green. /es/calculadora was
+    // here too: also a permanent redirect, and the calculator behind it is
+    // PIN-locked, so it has no business being in the index at all.
+    //
+    // A daily alert that is always red is a daily alert nobody reads.
+    'https://cablecore.es/es/blog/cuanto-cuesta-instalar-red-oficina-barcelona',
 ];
 
 const TARGET_KEYWORDS = [
@@ -120,6 +126,56 @@ function pemToArrayBuffer(pem: string): ArrayBuffer {
 }
 
 // ── Query GSC Search Analytics ─────────────────────────────────────────────
+/**
+ * Search Console publishes with a two-to-three day lag, so a window ending
+ * today always has empty tail days. Comparing such a window against an older,
+ * complete one shows a decline that is pure artefact — which is exactly how
+ * this report came to read as "losing positions" during a month when clicks
+ * grew 72%.
+ */
+const GSC_LAG_DAYS = 3;
+const KEYWORD_WINDOW_DAYS = 28;
+const TREND_WINDOW_DAYS = 7;
+
+function dayOffset(days: number): string {
+    return new Date(Date.now() - days * 86400000).toISOString().split('T')[0];
+}
+
+type SiteTotals = { clicks: number; impressions: number; ctr: number; position: number | null };
+
+/**
+ * Site-wide totals, with no query dimension.
+ *
+ * The keyword table below covers ten hard commercial terms the site does not
+ * rank for yet, and its totals were being printed as "Clics totales" — so the
+ * report announced 0 clicks on weeks the site actually earned 17. That single
+ * number is what made a growing site look dead.
+ */
+async function fetchSiteTotals(accessToken: string, startDate: string, endDate: string): Promise<SiteTotals> {
+    const res = await fetch(
+        `https://searchconsole.googleapis.com/webmasters/v3/sites/${encodeURIComponent(SITE_URL)}/searchAnalytics/query`,
+        {
+            method: 'POST',
+            headers: { 'Authorization': `Bearer ${accessToken}`, 'Content-Type': 'application/json' },
+            body: JSON.stringify({ startDate, endDate, rowLimit: 1, dataState: 'all' }),
+        }
+    );
+    if (!res.ok) throw new Error(`GSC totals error: ${await res.text()}`);
+    const json = await res.json();
+    const row = json.rows?.[0];
+    return row
+        ? { clicks: row.clicks, impressions: row.impressions, ctr: row.ctr, position: row.position }
+        : { clicks: 0, impressions: 0, ctr: 0, position: null };
+}
+
+/** "+72%" / "−9%" / "=" — a bare number cannot say whether things are improving. */
+function delta(now: number, before: number): string {
+    if (before === 0) return now > 0 ? '(nuevo)' : '';
+    const pct = Math.round(((now - before) / before) * 100);
+    if (pct === 0) return '(=)';
+    return pct > 0 ? `(+${pct}%)` : `(${pct}%)`;
+}
+
 async function queryGSC(accessToken: string): Promise<Array<{
     keyword: string;
     position: number | null;
@@ -127,8 +183,8 @@ async function queryGSC(accessToken: string): Promise<Array<{
     impressions: number;
     ctr: number;
 }>> {
-    const endDate = new Date().toISOString().split('T')[0];
-    const startDate = new Date(Date.now() - 28 * 86400000).toISOString().split('T')[0];
+    const endDate = dayOffset(GSC_LAG_DAYS);
+    const startDate = dayOffset(GSC_LAG_DAYS + KEYWORD_WINDOW_DAYS);
 
     const res = await fetch(
         `https://searchconsole.googleapis.com/webmasters/v3/sites/${encodeURIComponent(SITE_URL)}/searchAnalytics/query`,
@@ -244,11 +300,11 @@ export async function GET(request: Request) {
                 GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET, GOOGLE_REFRESH_TOKEN
             );
             results = await queryGSC(accessToken);
-            dataSource = 'Google Search Console · datos reales (últimos 7 días)';
+            dataSource = `Google Search Console · datos reales (${KEYWORD_WINDOW_DAYS} días, hasta ${dayOffset(GSC_LAG_DAYS)})`;
         } else if (SERVICE_ACCOUNT_KEY) {
             accessToken = await getGSCAccessToken(SERVICE_ACCOUNT_KEY);
             results = await queryGSC(accessToken);
-            dataSource = 'Google Search Console · service account (últimos 7 días)';
+            dataSource = `Google Search Console · service account (${KEYWORD_WINDOW_DAYS} días, hasta ${dayOffset(GSC_LAG_DAYS)})`;
         } else {
             results = TARGET_KEYWORDS.map(kw => ({ keyword: kw, position: null, clicks: 0, impressions: 0, ctr: 0 }));
             dataSource = '⚠️ Configura GOOGLE_REFRESH_TOKEN en Vercel';
@@ -276,7 +332,11 @@ export async function GET(request: Request) {
             const emoji = positionEmoji(r.position);
             const posText = r.position !== null
                 ? `pos. <b>${r.position}</b> · ${r.clicks} clics · ${r.impressions} imp.`
-                : 'sin datos (no indexado aún)';
+                // NOT "no indexado aún". This only means the term drew no
+                // impressions in the window; the pages themselves are indexed
+                // and ranking for other queries. Saying otherwise turned a
+                // keyword gap into a false indexing alarm.
+                : `sin impresiones (${KEYWORD_WINDOW_DAYS} días)`;
             return `${emoji} ${r.keyword}: ${posText}`;
         }).join('\n');
 
@@ -287,6 +347,33 @@ export async function GET(request: Request) {
         const best = sorted[0];
         const totalClicks = results.reduce((s, r) => s + r.clicks, 0);
         const totalImpressions = results.reduce((s, r) => s + r.impressions, 0);
+
+        // Site-wide reality, next to the keyword table rather than instead of it:
+        // the ten tracked terms are targets the site is still climbing towards,
+        // and their totals say nothing about how the site is actually doing.
+        let siteBlock: string[] = [];
+        if (accessToken) {
+            try {
+                const [now, prev] = await Promise.all([
+                    fetchSiteTotals(accessToken, dayOffset(GSC_LAG_DAYS + TREND_WINDOW_DAYS), dayOffset(GSC_LAG_DAYS)),
+                    fetchSiteTotals(accessToken, dayOffset(GSC_LAG_DAYS + TREND_WINDOW_DAYS * 2), dayOffset(GSC_LAG_DAYS + TREND_WINDOW_DAYS + 1)),
+                ]);
+                siteBlock = [
+                    '━━━━━━━━━━━━━━',
+                    `🌐 <b>Todo el sitio (${TREND_WINDOW_DAYS} días vs. anteriores):</b>`,
+                    `• Clics: <b>${now.clicks}</b> ${delta(now.clicks, prev.clicks)} · antes ${prev.clicks}`,
+                    `• Impresiones: <b>${now.impressions}</b> ${delta(now.impressions, prev.impressions)} · antes ${prev.impressions}`,
+                    `• CTR: <b>${(now.ctr * 100).toFixed(2)}%</b> · antes ${(prev.ctr * 100).toFixed(2)}%`,
+                    now.position !== null && prev.position !== null
+                        ? `• Posición media: <b>${now.position.toFixed(1)}</b> · antes ${prev.position.toFixed(1)}`
+                        : '',
+                    '<i>Una posición media que empeora mientras suben las impresiones suele significar páginas nuevas entrando en el índice, no posiciones perdidas.</i>',
+                    '',
+                ].filter(Boolean);
+            } catch (e) {
+                console.error('[SEO cron] site totals failed', e);
+            }
+        }
 
         const reportText = [
             `📊 <b>SEO diario CableCore</b> — ${today}`,
@@ -299,13 +386,15 @@ export async function GET(request: Request) {
             `🔍 <b>Posiciones de keywords:</b>`,
             rows,
             '',
+            ...siteBlock,
             '━━━━━━━━━━━━━━',
-            `📈 <b>Resumen semana:</b>`,
-            `• TOP 10: <b>${top10}</b> · TOP 20: <b>${top20}</b> · Con datos: <b>${ranked.length}/${results.length}</b>`,
-            `• Clics totales: <b>${totalClicks}</b> · Impresiones: <b>${totalImpressions}</b>`,
+            `📈 <b>Resumen de las ${results.length} keywords objetivo:</b>`,
+            `• TOP 10: <b>${top10}</b> · TOP 20: <b>${top20}</b> · Con impresiones: <b>${ranked.length}/${results.length}</b>`,
+            // Explicitly scoped: these are the tracked terms only, not the site.
+            `• Clics de estas keywords: <b>${totalClicks}</b> · Impresiones: <b>${totalImpressions}</b>`,
             best ? `• 🏆 Mejor posición: "<i>${best.keyword}</i>" — pos. ${best.position}` : '',
             '',
-            '🏆 TOP 3 · 🟢 TOP 10 · 🟡 TOP 20 · 🔴 >20 · ⚪ sin datos',
+            '🏆 TOP 3 · 🟢 TOP 10 · 🟡 TOP 20 · 🔴 >20 · ⚪ sin impresiones',
             `🔗 <a href="https://search.google.com/search-console/performance/search-analytics?resource_id=https%3A%2F%2Fcablecore.es%2F">Abrir Google Search Console</a>`,
         ].filter(Boolean).join('\n');
 
