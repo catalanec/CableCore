@@ -120,3 +120,14 @@ describe('generateInvoiceHTML — items table split across the page break', () =
         expect(html.slice(0, groupStart)).toContain('Concepto numero 3');
     });
 });
+
+// Same reasoning as the quote: a margin expressed as body padding reaches
+// only the first page.
+describe('generateInvoiceHTML — page margins apply to every page', () => {
+    it('states the margin on @page, not as body padding', () => {
+        const html = generateInvoiceHTML(baseData);
+
+        expect(html).toMatch(/@page\s*\{\s*margin:\s*15mm\s+14mm;\s*\}/);
+        expect(html).not.toMatch(/body\s*\{[^}]*padding:\s*10mm/);
+    });
+});

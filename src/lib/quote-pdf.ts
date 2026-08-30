@@ -134,8 +134,15 @@ export function generateQuoteHTML(data: QuotePDFData): string {
   <title>Presupuesto_CableCore_${data.client.name ? data.client.name.replace(/\s+/g, '_') : data.quoteNumber}</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { font-family: 'Helvetica Neue', Arial, sans-serif; background: #fff; color: #222; padding: 10mm; }
-    @page { margin: 0; }
+    body { font-family: 'Helvetica Neue', Arial, sans-serif; background: #fff; color: #222; padding: 0; }
+    /* Page margins belong to @page, not to body padding.
+       body padding applies ONCE to the whole flow, so it indented page one and
+       left every later page starting hard against the paper edge — reported on
+       a two-page quote where the continuation rows touched the top trim.
+       15mm/14mm reproduces exactly what page one had before (10mm body padding
+       plus the 20px/15px inner padding, both now zero), so page one is
+       unchanged and every following page finally matches it. */
+    @page { margin: 15mm 14mm; }
     @media print {
       body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
       .no-break { page-break-inside: avoid; }
@@ -143,7 +150,7 @@ export function generateQuoteHTML(data: QuotePDFData): string {
   </style>
 </head>
 <body>
-  <div style="max-width: 800px; margin: 0 auto; padding: 20px 15px; background: #fff;">
+  <div style="max-width: 800px; margin: 0 auto; padding: 0; background: #fff;">
 
     <!-- Header -->
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; border-bottom: 3px solid #C9A84C; padding-bottom: 8px;">

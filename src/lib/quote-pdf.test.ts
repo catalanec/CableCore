@@ -137,3 +137,15 @@ describe('generateQuoteHTML — items table split across the page break', () => 
         expect(row18).toContain('#f8f6f1');
     });
 });
+
+// The margin has to live in @page. body padding applies once to the whole
+// flow, so it indents the first page and leaves every later one starting
+// against the paper edge — which is exactly what a two-page quote showed.
+describe('generateQuoteHTML — page margins apply to every page', () => {
+    it('states the margin on @page, not as body padding', () => {
+        const html = generateQuoteHTML(baseData);
+
+        expect(html).toMatch(/@page\s*\{\s*margin:\s*15mm\s+14mm;\s*\}/);
+        expect(html).not.toMatch(/body\s*\{[^}]*padding:\s*10mm/);
+    });
+});
