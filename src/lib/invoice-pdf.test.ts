@@ -81,3 +81,42 @@ describe('generateInvoiceHTML', () => {
         expect(html).toContain('PO-9981');
     });
 });
+
+// Same guard as the quote: the split rebuilds the items table out of two
+// tables, and a row lost between the halves would remove a priced line from a
+// legally binding invoice.
+describe('generateInvoiceHTML — items table split across the page break', () => {
+    const manyItems = (n: number) =>
+        Array.from({ length: n }, (_, i) => ({
+            description: `Concepto numero ${i + 1}`,
+            quantity: '1',
+            unitPrice: '10.00€',
+            total: '10.00€',
+        }));
+
+    it('renders every item exactly once on a long invoice', () => {
+        const html = generateInvoiceHTML({ ...baseData, items: manyItems(20) });
+
+        for (let i = 1; i <= 20; i++) {
+            expect(html.split(`Concepto numero ${i}<`).length - 1).toBe(1);
+        }
+    });
+
+    it('puts the last rows inside the unbreakable group, with the totals', () => {
+        const html = generateInvoiceHTML({ ...baseData, items: manyItems(20) });
+        const groupStart = html.indexOf('page-break-inside:avoid;break-inside:avoid');
+
+        expect(groupStart).toBeGreaterThan(-1);
+        const group = html.slice(groupStart);
+        expect(group).toContain('Concepto numero 18');
+        expect(group).toContain('Concepto numero 20');
+        expect(html.slice(0, groupStart)).toContain('Concepto numero 1<');
+    });
+
+    it('leaves a short invoice as a single table', () => {
+        const html = generateInvoiceHTML({ ...baseData, items: manyItems(3) });
+        const groupStart = html.indexOf('page-break-inside:avoid;break-inside:avoid');
+
+        expect(html.slice(0, groupStart)).toContain('Concepto numero 3');
+    });
+});

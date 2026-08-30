@@ -82,3 +82,58 @@ describe('generateQuoteHTML', () => {
         expect(html).toContain('Alice'); // client signature falls back to client name
     });
 });
+
+// The tail-group split (pdf-tail-group.ts) rebuilds the items table out of two
+// tables. The failure that would matter is not a cosmetic one: a row lost
+// between the halves would silently remove a priced line from a quote a client
+// signs. These guard that.
+describe('generateQuoteHTML — items table split across the page break', () => {
+    const manyItems = (n: number) =>
+        Array.from({ length: n }, (_, i) => ({
+            description: `Partida numero ${i + 1}`,
+            quantity: '1',
+            unitPrice: '10.00€',
+            total: '10.00€',
+        }));
+
+    it('renders every item exactly once on a long quote', () => {
+        const html = generateQuoteHTML({ ...baseData, items: manyItems(20) });
+
+        for (let i = 1; i <= 20; i++) {
+            const occurrences = html.split(`Partida numero ${i}<`).length - 1;
+            expect(occurrences).toBe(1);
+        }
+    });
+
+    it('puts the last rows inside the unbreakable group, with the totals', () => {
+        const html = generateQuoteHTML({ ...baseData, items: manyItems(20) });
+        const groupStart = html.indexOf('page-break-inside:avoid;break-inside:avoid');
+
+        expect(groupStart).toBeGreaterThan(-1);
+        const group = html.slice(groupStart);
+        // The final three rows travel with the totals rather than being left
+        // at the bottom of page one.
+        expect(group).toContain('Partida numero 18');
+        expect(group).toContain('Partida numero 20');
+        expect(group).toContain('TOTAL');
+        // …and the earlier ones stay in the main table above it.
+        expect(html.slice(0, groupStart)).toContain('Partida numero 1<');
+        expect(group).not.toContain('Partida numero 1<');
+    });
+
+    it('leaves a short quote as a single table', () => {
+        const html = generateQuoteHTML({ ...baseData, items: manyItems(3) });
+        const groupStart = html.indexOf('page-break-inside:avoid;break-inside:avoid');
+
+        expect(html.slice(0, groupStart)).toContain('Partida numero 3');
+    });
+
+    it('keeps the zebra striping continuous across the two tables', () => {
+        const html = generateQuoteHTML({ ...baseData, items: manyItems(20) });
+        // Row 18 is index 17 — odd, so it must carry the shaded background,
+        // which only holds if the tail rows keep counting from where the head
+        // left off instead of restarting at zero.
+        const row18 = html.slice(html.indexOf('Partida numero 18') - 200, html.indexOf('Partida numero 18'));
+        expect(row18).toContain('#f8f6f1');
+    });
+});

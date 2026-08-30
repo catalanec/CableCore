@@ -3,6 +3,13 @@
    White background with dark text for clean printing
    ═══════════════════════════════════════════ */
 
+import {
+    splitItemsForTail,
+    buildTailTableHtml,
+    buildColGroup,
+    wrapTailGroup,
+} from './pdf-tail-group';
+
 export interface QuotePDFData {
     quoteNumber: string;
     date: string;
@@ -39,74 +46,29 @@ export function generateQuoteNumber(): string {
 }
 
 export function generateQuoteHTML(data: QuotePDFData): string {
-    const itemRows = data.items.map((item, i) => `
+    // The last rows travel with the totals and signatures so a break near the
+    // bottom of page one cannot leave page two holding a total and two
+    // signature lines with no items above them — see pdf-tail-group.ts.
+    const { head: headItems, tail: tailItems } = splitItemsForTail(data.items);
+    const renderRows = (list: QuotePDFData['items'], offset: number) => list.map((item, idx) => {
+        const i = idx + offset;
+        return `
     <tr style="background: ${i % 2 === 0 ? '#fff' : '#f8f6f1'};">
       <td style="padding: 10px 14px; border-bottom: 1px solid #e0dcd4; color: #333; font-size: 12px;">${item.description}</td>
       <td style="padding: 10px 14px; border-bottom: 1px solid #e0dcd4; color: #333; text-align: center; font-size: 12px;">${item.quantity}</td>
       <td style="padding: 10px 14px; border-bottom: 1px solid #e0dcd4; color: #333; text-align: right; font-size: 12px;">${item.unitPrice}</td>
       <td style="padding: 10px 14px; border-bottom: 1px solid #e0dcd4; color: #8B6914; text-align: right; font-weight: 700; font-size: 12px;">${item.total}</td>
     </tr>
-  `).join('');
+  `;
+    }).join('');
 
-    return `
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="utf-8">
-  <meta name="format-detection" content="telephone=no, date=no, address=no, email=no">
-  <title>Presupuesto_CableCore_${data.client.name ? data.client.name.replace(/\s+/g, '_') : data.quoteNumber}</title>
-  <style>
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { font-family: 'Helvetica Neue', Arial, sans-serif; background: #fff; color: #222; padding: 10mm; }
-    @page { margin: 0; }
-    @media print {
-      body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-      .no-break { page-break-inside: avoid; }
-    }
-  </style>
-</head>
-<body>
-  <div style="max-width: 800px; margin: 0 auto; padding: 20px 15px; background: #fff;">
+    const headRows = renderRows(headItems, 0);
+    const tailRows = renderRows(tailItems, headItems.length);
 
-    <!-- Header -->
-    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; border-bottom: 3px solid #C9A84C; padding-bottom: 8px;">
-      <div>
-        <img src="https://cablecore.es/logocablecore.png" alt="CableCore" style="height: 80px; width: auto; display: block;" crossorigin="anonymous" />
-        <p style="color: #8B6914; font-size: 8px; font-style: italic; margin-top: 1px; font-weight: 500; text-align: center;">Conectamos tu negocio</p>
-      </div>
-      <div style="text-align: right; font-size: 11px; color: #555; line-height: 1.6;">
-        <div style="color: #8B6914; font-size: 17px; font-weight: 700; margin-bottom: 4px;">PRESUPUESTO</div>
-        <div>Nº ${data.quoteNumber}</div>
-        <div>Fecha: ${data.date}</div>
-      </div>
-    </div>
-
-    <!-- Client info -->
-    <div style="background: #f8f6f1; border: 2px solid #e0dcd4; border-radius: 6px; padding: 10px; margin-bottom: 10px;">
-      <h3 style="color: #8B6914; font-size: 10px; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 6px; font-weight: 700;">Datos del cliente</h3>
-      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 6px; font-size: 12px;">
-        <div><span style="color: #888; font-weight: 600;">Nombre:</span> <span style="color: #222; font-weight: 500;">${data.client.name}</span></div>
-        <div><span style="color: #888; font-weight: 600;">Teléfono:</span> <span style="color: #222; font-weight: 500;">${data.client.phone}</span></div>
-        <div><span style="color: #888; font-weight: 600;">Email:</span> <span style="color: #222; font-weight: 500;">${data.client.email}</span></div>
-        ${data.client.address ? `<div><span style="color: #888; font-weight: 600;">Dirección:</span> <span style="color: #222; font-weight: 500;">${data.client.address}</span></div>` : ''}
-      </div>
-    </div>
-
-    <!-- Items table -->
-    <table style="width: 100%; border-collapse: collapse; margin-bottom: 15px;">
-      <thead>
-        <tr>
-          <th style="padding: 12px 14px; text-align: left; color: #fff; background: #8B6914; font-size: 10px; text-transform: uppercase; letter-spacing: 1px;">Descripción</th>
-          <th style="padding: 12px 14px; text-align: center; color: #fff; background: #8B6914; font-size: 10px; text-transform: uppercase; letter-spacing: 1px;">Cantidad</th>
-          <th style="padding: 12px 14px; text-align: right; color: #fff; background: #8B6914; font-size: 10px; text-transform: uppercase; letter-spacing: 1px;">Precio/ud.</th>
-          <th style="padding: 12px 14px; text-align: right; color: #fff; background: #8B6914; font-size: 10px; text-transform: uppercase; letter-spacing: 1px;">Total</th>
-        </tr>
-      </thead>
-      <tbody>
-        ${itemRows}
-      </tbody>
-    </table>
-
+    // Totals, payment conditions and signatures: one piece, and the tail rows
+    // are glued to its front. Either the whole thing fits on page one or it
+    // moves together, opening page two with real items.
+    const tailBlock = `
     <!-- Totals -->
     <div style="display: flex; justify-content: flex-end;">
       <div style="width: 300px;">
@@ -160,6 +122,70 @@ export function generateQuoteHTML(data: QuotePDFData): string {
         </div>
       </div>
     </div>
+
+`;
+
+    return `
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="format-detection" content="telephone=no, date=no, address=no, email=no">
+  <title>Presupuesto_CableCore_${data.client.name ? data.client.name.replace(/\s+/g, '_') : data.quoteNumber}</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Helvetica Neue', Arial, sans-serif; background: #fff; color: #222; padding: 10mm; }
+    @page { margin: 0; }
+    @media print {
+      body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+      .no-break { page-break-inside: avoid; }
+    }
+  </style>
+</head>
+<body>
+  <div style="max-width: 800px; margin: 0 auto; padding: 20px 15px; background: #fff;">
+
+    <!-- Header -->
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; border-bottom: 3px solid #C9A84C; padding-bottom: 8px;">
+      <div>
+        <img src="https://cablecore.es/logocablecore.png" alt="CableCore" style="height: 80px; width: auto; display: block;" crossorigin="anonymous" />
+        <p style="color: #8B6914; font-size: 8px; font-style: italic; margin-top: 1px; font-weight: 500; text-align: center;">Conectamos tu negocio</p>
+      </div>
+      <div style="text-align: right; font-size: 11px; color: #555; line-height: 1.6;">
+        <div style="color: #8B6914; font-size: 17px; font-weight: 700; margin-bottom: 4px;">PRESUPUESTO</div>
+        <div>Nº ${data.quoteNumber}</div>
+        <div>Fecha: ${data.date}</div>
+      </div>
+    </div>
+
+    <!-- Client info -->
+    <div style="background: #f8f6f1; border: 2px solid #e0dcd4; border-radius: 6px; padding: 10px; margin-bottom: 10px;">
+      <h3 style="color: #8B6914; font-size: 10px; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 6px; font-weight: 700;">Datos del cliente</h3>
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 6px; font-size: 12px;">
+        <div><span style="color: #888; font-weight: 600;">Nombre:</span> <span style="color: #222; font-weight: 500;">${data.client.name}</span></div>
+        <div><span style="color: #888; font-weight: 600;">Teléfono:</span> <span style="color: #222; font-weight: 500;">${data.client.phone}</span></div>
+        <div><span style="color: #888; font-weight: 600;">Email:</span> <span style="color: #222; font-weight: 500;">${data.client.email}</span></div>
+        ${data.client.address ? `<div><span style="color: #888; font-weight: 600;">Dirección:</span> <span style="color: #222; font-weight: 500;">${data.client.address}</span></div>` : ''}
+      </div>
+    </div>
+
+    <!-- Items table -->
+    <table style="width: 100%; border-collapse: collapse; margin-bottom: 15px;">
+      ${buildColGroup()}
+      <thead>
+        <tr>
+          <th style="padding: 12px 14px; text-align: left; color: #fff; background: #8B6914; font-size: 10px; text-transform: uppercase; letter-spacing: 1px;">Descripción</th>
+          <th style="padding: 12px 14px; text-align: center; color: #fff; background: #8B6914; font-size: 10px; text-transform: uppercase; letter-spacing: 1px;">Cantidad</th>
+          <th style="padding: 12px 14px; text-align: right; color: #fff; background: #8B6914; font-size: 10px; text-transform: uppercase; letter-spacing: 1px;">Precio/ud.</th>
+          <th style="padding: 12px 14px; text-align: right; color: #fff; background: #8B6914; font-size: 10px; text-transform: uppercase; letter-spacing: 1px;">Total</th>
+        </tr>
+      </thead>
+      <tbody>
+        ${headRows}
+      </tbody>
+    </table>
+
+    ${wrapTailGroup(buildTailTableHtml(tailRows) + tailBlock)}
 
     <!-- Footer -->
     <div style="margin-top: 20px; padding-top: 15px; border-top: 2px solid #C9A84C; font-size: 10px; color: #666; text-align: center; line-height: 1.8;">

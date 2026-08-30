@@ -3,6 +3,13 @@
    White background with dark text for clean printing
    ═══════════════════════════════════════════ */
 
+import {
+    splitItemsForTail,
+    buildTailTableHtml,
+    buildColGroup,
+    wrapTailGroup,
+} from './pdf-tail-group';
+
 export interface InvoicePDFData {
     invoiceNumber: string | number;
     date: string;
@@ -35,14 +42,24 @@ export function formatInvoiceNumber(num: string | number): string {
 }
 
 export function generateInvoiceHTML(data: InvoicePDFData): string {
-    const itemRows = data.items.map((item, i) => `
+    // Same page-break problem as the quote, same fix: the closing rows travel
+    // with the totals and signatures instead of leaving page two holding only
+    // an amount due — see pdf-tail-group.ts.
+    const { head: headItems, tail: tailItems } = splitItemsForTail(data.items);
+    const renderRows = (list: InvoicePDFData['items'], offset: number) => list.map((item, idx) => {
+        const i = idx + offset;
+        return `
     <tr style="background: ${i % 2 === 0 ? '#fff' : '#f8f6f1'};">
       <td style="padding: 10px 14px; border-bottom: 1px solid #e0dcd4; color: #333; font-size: 10px;">${item.description}</td>
       <td style="padding: 10px 14px; border-bottom: 1px solid #e0dcd4; color: #333; text-align: center; font-size: 10px;">${item.quantity}</td>
       <td style="padding: 10px 14px; border-bottom: 1px solid #e0dcd4; color: #333; text-align: right; font-size: 10px;">${item.unitPrice}</td>
       <td style="padding: 10px 14px; border-bottom: 1px solid #e0dcd4; color: #8B6914; text-align: right; font-weight: 700; font-size: 10px;">${item.total}</td>
     </tr>
-  `).join('');
+  `;
+    }).join('');
+
+    const headRows = renderRows(headItems, 0);
+    const tailRows = renderRows(tailItems, headItems.length);
 
     const formattedInvoiceNum = formatInvoiceNumber(data.invoiceNumber);
 
@@ -58,6 +75,60 @@ export function generateInvoiceHTML(data: InvoicePDFData): string {
     const dueDate = new Date(invoiceDate);
     dueDate.setDate(dueDate.getDate() + 70);
     const dueDateStr = dueDate.toLocaleDateString('es-ES', { day: '2-digit', month: '2-digit', year: 'numeric' });
+
+    // Totals, tax breakdown and signatures as one piece, with the tail rows
+    // glued to its front.
+    const tailBlock = `
+    <!-- Totals -->
+    <div style="display: flex; justify-content: flex-end;">
+      <div style="width: 260px;">
+        <div style="display: flex; justify-content: space-between; padding: 6px 10px; font-size: 10px; color: #555; border-bottom: 1px solid #e0dcd4;">
+          <span>Base Imponible</span> <span style="font-weight: 600; color: #333;">${data.subtotal}</span>
+        </div>
+        ${data.urgencyMultiplier ? `
+        <div style="display: flex; justify-content: space-between; padding: 6px 10px; font-size: 10px; color: #B8860B; background: #FFF8E1; border-bottom: 1px solid #e0dcd4;">
+          <span style="font-weight: 600;">Multiplicador urgencia</span> <span style="font-weight: 700;">${data.urgencyMultiplier}</span>
+        </div>
+        ` : ''}
+        <div style="display: flex; justify-content: space-between; padding: 6px 10px; font-size: 10px; color: #555; border-bottom: 1px solid #e0dcd4;">
+          <span>IVA (21%)</span> <span style="font-weight: 600; color: #333;">${data.iva}</span>
+        </div>
+        <div style="display: flex; justify-content: space-between; padding: 8px 10px; font-size: 14px; font-weight: 800; color: #8B6914; background: #f8f6f1; border: 1.5px solid #C9A84C; border-radius: 4px; margin-top: 6px; margin-bottom: 6px;">
+          <span>TOTAL</span> <span>${data.total}</span>
+        </div>
+      </div>
+    </div>
+
+    ${data.notes ? `
+    <div style="margin-top: 10px; background: #f8f6f1; border: 1px solid #e0dcd4; border-radius: 6px; padding: 10px;">
+      <h4 style="color: #8B6914; font-size: 10px; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 4px; font-weight: 700;">Método de Pago</h4>
+      <p style="color: #555; font-size: 10px; line-height: 1.6; white-space: pre-wrap;">${data.notes}</p>
+      <p style="color: #333; font-size: 10px; margin-top: 8px;">Cuenta bancaria (IBAN): <strong style="pointer-events: none; text-decoration: none; color: inherit;">ES91 2103<span></span> 7379<span></span> 4000<span></span> 3001<span></span> 0959</strong></p>
+    </div>
+    ` : ''}
+
+    <!-- Signatures -->
+    <div class="no-break" style="margin-top: 15px; display: grid; grid-template-columns: 1fr 1fr; gap: 40px;">
+      <div style="text-align: center;">
+        <div style="height: 80px; display: flex; align-items: flex-end; justify-content: center; margin-bottom: 10px;">
+          <p style="font-size: 8px; color: #bbb; text-transform: uppercase;">Sello o Firma del Prestador</p>
+        </div>
+        <div style="border-top: 1.5px solid #C9A84C; padding-top: 10px;">
+          <p style="font-size: 11px; font-weight: 700; color: #222;">${data.signatureEmisor || 'Anton Shapoval'}</p>
+          <p style="font-size: 9px; color: #8B6914; font-weight: 500; text-transform: uppercase; letter-spacing: 1px;">CableCore</p>
+        </div>
+      </div>
+      <div style="text-align: center;">
+        <div style="height: 80px; display: flex; align-items: flex-end; justify-content: center; margin-bottom: 10px;">
+          <p style="font-size: 8px; color: #bbb; text-transform: uppercase;">Sello o Firma del Cliente</p>
+        </div>
+        <div style="border-top: 1.5px solid #C9A84C; padding-top: 10px;">
+          <p style="font-size: 11px; font-weight: 700; color: #222;">${data.signatureClient || data.client.razonSocial}</p>
+        </div>
+      </div>
+    </div>
+
+`;
 
     return `
 <!DOCTYPE html>
@@ -125,6 +196,7 @@ export function generateInvoiceHTML(data: InvoicePDFData): string {
 
     <!-- Items table -->
     <table style="width: 100%; border-collapse: collapse; margin-bottom: 15px;">
+      ${buildColGroup()}
       <thead>
         <tr>
           <th style="padding: 12px 14px; text-align: left; color: #fff; background: #8B6914; font-size: 10px; text-transform: uppercase; letter-spacing: 1px;">Descripción de servicios</th>
@@ -134,58 +206,11 @@ export function generateInvoiceHTML(data: InvoicePDFData): string {
         </tr>
       </thead>
       <tbody>
-        ${itemRows}
+        ${headRows}
       </tbody>
     </table>
 
-    <!-- Totals -->
-    <div style="display: flex; justify-content: flex-end;">
-      <div style="width: 260px;">
-        <div style="display: flex; justify-content: space-between; padding: 6px 10px; font-size: 10px; color: #555; border-bottom: 1px solid #e0dcd4;">
-          <span>Base Imponible</span> <span style="font-weight: 600; color: #333;">${data.subtotal}</span>
-        </div>
-        ${data.urgencyMultiplier ? `
-        <div style="display: flex; justify-content: space-between; padding: 6px 10px; font-size: 10px; color: #B8860B; background: #FFF8E1; border-bottom: 1px solid #e0dcd4;">
-          <span style="font-weight: 600;">Multiplicador urgencia</span> <span style="font-weight: 700;">${data.urgencyMultiplier}</span>
-        </div>
-        ` : ''}
-        <div style="display: flex; justify-content: space-between; padding: 6px 10px; font-size: 10px; color: #555; border-bottom: 1px solid #e0dcd4;">
-          <span>IVA (21%)</span> <span style="font-weight: 600; color: #333;">${data.iva}</span>
-        </div>
-        <div style="display: flex; justify-content: space-between; padding: 8px 10px; font-size: 14px; font-weight: 800; color: #8B6914; background: #f8f6f1; border: 1.5px solid #C9A84C; border-radius: 4px; margin-top: 6px; margin-bottom: 6px;">
-          <span>TOTAL</span> <span>${data.total}</span>
-        </div>
-      </div>
-    </div>
-
-    ${data.notes ? `
-    <div style="margin-top: 10px; background: #f8f6f1; border: 1px solid #e0dcd4; border-radius: 6px; padding: 10px;">
-      <h4 style="color: #8B6914; font-size: 10px; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 4px; font-weight: 700;">Método de Pago</h4>
-      <p style="color: #555; font-size: 10px; line-height: 1.6; white-space: pre-wrap;">${data.notes}</p>
-      <p style="color: #333; font-size: 10px; margin-top: 8px;">Cuenta bancaria (IBAN): <strong style="pointer-events: none; text-decoration: none; color: inherit;">ES91 2103<span></span> 7379<span></span> 4000<span></span> 3001<span></span> 0959</strong></p>
-    </div>
-    ` : ''}
-
-    <!-- Signatures -->
-    <div class="no-break" style="margin-top: 15px; display: grid; grid-template-columns: 1fr 1fr; gap: 40px;">
-      <div style="text-align: center;">
-        <div style="height: 80px; display: flex; align-items: flex-end; justify-content: center; margin-bottom: 10px;">
-          <p style="font-size: 8px; color: #bbb; text-transform: uppercase;">Sello o Firma del Prestador</p>
-        </div>
-        <div style="border-top: 1.5px solid #C9A84C; padding-top: 10px;">
-          <p style="font-size: 11px; font-weight: 700; color: #222;">${data.signatureEmisor || 'Anton Shapoval'}</p>
-          <p style="font-size: 9px; color: #8B6914; font-weight: 500; text-transform: uppercase; letter-spacing: 1px;">CableCore</p>
-        </div>
-      </div>
-      <div style="text-align: center;">
-        <div style="height: 80px; display: flex; align-items: flex-end; justify-content: center; margin-bottom: 10px;">
-          <p style="font-size: 8px; color: #bbb; text-transform: uppercase;">Sello o Firma del Cliente</p>
-        </div>
-        <div style="border-top: 1.5px solid #C9A84C; padding-top: 10px;">
-          <p style="font-size: 11px; font-weight: 700; color: #222;">${data.signatureClient || data.client.razonSocial}</p>
-        </div>
-      </div>
-    </div>
+    ${wrapTailGroup(buildTailTableHtml(tailRows) + tailBlock)}
 
     <!-- Footer -->
     <div style="margin-top: 25px; padding-top: 15px; border-top: 2px solid #C9A84C; font-size: 10px; color: #666; text-align: center; line-height: 1.8;">
