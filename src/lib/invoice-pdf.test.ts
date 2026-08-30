@@ -121,13 +121,18 @@ describe('generateInvoiceHTML — items table split across the page break', () =
     });
 });
 
-// Same reasoning as the quote: a margin expressed as body padding reaches
-// only the first page.
+// Same reasoning as the quote, and the same trap: a real @page margin brings
+// the print dialog's header and footer back onto the document.
 describe('generateInvoiceHTML — page margins apply to every page', () => {
-    it('states the margin on @page, not as body padding', () => {
+    it('keeps @page at zero so the print dialog draws no header or footer', () => {
+        expect(generateInvoiceHTML(baseData)).toMatch(/@page\s*\{\s*margin:\s*0;\s*\}/);
+    });
+
+    it('builds the margins from body padding and repeating spacer rows', () => {
         const html = generateInvoiceHTML(baseData);
 
-        expect(html).toMatch(/@page\s*\{\s*margin:\s*15mm\s+14mm;\s*\}/);
-        expect(html).not.toMatch(/body\s*\{[^}]*padding:\s*10mm/);
+        expect(html).toMatch(/body\s*\{[^}]*padding:\s*0\s+14mm/);
+        expect(html).toContain('class="page-frame"');
+        expect(html).toContain('<thead><tr><td></td></tr></thead>');
     });
 });

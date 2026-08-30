@@ -134,15 +134,24 @@ export function generateQuoteHTML(data: QuotePDFData): string {
   <title>Presupuesto_CableCore_${data.client.name ? data.client.name.replace(/\s+/g, '_') : data.quoteNumber}</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { font-family: 'Helvetica Neue', Arial, sans-serif; background: #fff; color: #222; padding: 0; }
-    /* Page margins belong to @page, not to body padding.
-       body padding applies ONCE to the whole flow, so it indented page one and
-       left every later page starting hard against the paper edge — reported on
-       a two-page quote where the continuation rows touched the top trim.
-       15mm/14mm reproduces exactly what page one had before (10mm body padding
-       plus the 20px/15px inner padding, both now zero), so page one is
-       unchanged and every following page finally matches it. */
-    @page { margin: 15mm 14mm; }
+    body { font-family: 'Helvetica Neue', Arial, sans-serif; background: #fff; color: #222; padding: 0 14mm; }
+    /* @page MUST stay at margin:0. The print dialog draws its own header and
+       footer — document title, date, url, "page 1 of 2" — and Chrome only
+       suppresses them when the page margin is zero. Setting a real margin here
+       fixed the blank edge on page two and brought all four of those back onto
+       a document a client receives.
+
+       So the margins are built instead, in the two places that survive
+       pagination:
+         · sides — horizontal padding on body, which applies on every page
+           (unlike vertical padding, which the flow consumes once);
+         · top and bottom — the spacer rows of .page-frame below, since a
+           thead/tfoot repeats on each printed page by definition. */
+    @page { margin: 0; }
+    .page-frame { width: 100%; border-collapse: collapse; }
+    .page-frame > thead > tr > td { height: 15mm; padding: 0; border: 0; }
+    .page-frame > tfoot > tr > td { height: 12mm; padding: 0; border: 0; }
+    .page-frame > tbody > tr > td { padding: 0; border: 0; vertical-align: top; }
     @media print {
       body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
       .no-break { page-break-inside: avoid; }
@@ -150,7 +159,8 @@ export function generateQuoteHTML(data: QuotePDFData): string {
   </style>
 </head>
 <body>
-  <div style="max-width: 800px; margin: 0 auto; padding: 0; background: #fff;">
+  <table class="page-frame"><thead><tr><td></td></tr></thead><tfoot><tr><td></td></tr></tfoot><tbody><tr><td>
+    <div style="max-width: 800px; margin: 0 auto; padding: 0; background: #fff;">
 
     <!-- Header -->
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; border-bottom: 3px solid #C9A84C; padding-bottom: 8px;">
@@ -203,6 +213,7 @@ export function generateQuoteHTML(data: QuotePDFData): string {
     </div>
 
   </div>
+    </td></tr></tbody></table>
 </body>
 </html>`;
 }

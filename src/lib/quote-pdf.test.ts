@@ -138,14 +138,32 @@ describe('generateQuoteHTML — items table split across the page break', () => 
     });
 });
 
-// The margin has to live in @page. body padding applies once to the whole
-// flow, so it indents the first page and leaves every later one starting
-// against the paper edge — which is exactly what a two-page quote showed.
+// Margins have to survive pagination without waking the print dialog's own
+// header and footer. @page must stay at 0 — Chrome only hides those when the
+// page margin is zero, and giving it a real margin printed the document title,
+// the date, the file url and "page 1 of 2" onto a client's quote. So the sides
+// come from horizontal body padding (which does apply per page) and the top
+// and bottom from spacer rows that repeat with the thead/tfoot.
 describe('generateQuoteHTML — page margins apply to every page', () => {
-    it('states the margin on @page, not as body padding', () => {
+    it('keeps @page at zero so the print dialog draws no header or footer', () => {
+        expect(generateQuoteHTML(baseData)).toMatch(/@page\s*\{\s*margin:\s*0;\s*\}/);
+    });
+
+    it('takes the side margins from horizontal body padding', () => {
         const html = generateQuoteHTML(baseData);
 
-        expect(html).toMatch(/@page\s*\{\s*margin:\s*15mm\s+14mm;\s*\}/);
-        expect(html).not.toMatch(/body\s*\{[^}]*padding:\s*10mm/);
+        expect(html).toMatch(/body\s*\{[^}]*padding:\s*0\s+14mm/);
+        // Vertical body padding would reach only the first page.
+        expect(html).not.toMatch(/body\s*\{[^}]*padding:\s*1?\d+mm;/);
+    });
+
+    it('takes the top and bottom margins from repeating spacer rows', () => {
+        const html = generateQuoteHTML(baseData);
+
+        expect(html).toContain('class="page-frame"');
+        expect(html).toMatch(/\.page-frame > thead > tr > td \{ height: 15mm/);
+        expect(html).toMatch(/\.page-frame > tfoot > tr > td \{ height: 12mm/);
+        expect(html).toContain('<thead><tr><td></td></tr></thead>');
+        expect(html).toContain('<tfoot><tr><td></td></tr></tfoot>');
     });
 });
