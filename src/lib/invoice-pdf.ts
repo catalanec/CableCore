@@ -139,24 +139,24 @@ export function generateInvoiceHTML(data: InvoicePDFData): string {
   <title>Factura_CableCore_${formattedInvoiceNum}</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { font-family: 'Helvetica Neue', Arial, sans-serif; background: #fff; color: #222; padding: 0 14mm; font-size: 10px; }
-    /* @page MUST stay at margin:0. The print dialog draws its own header and
-       footer — document title, date, url, "page 1 of 2" — and Chrome only
-       suppresses them when the page margin is zero. Setting a real margin here
-       fixed the blank edge on page two and brought all four of those back onto
-       a document a client receives.
+    body { font-family: 'Helvetica Neue', Arial, sans-serif; background: #fff; color: #222; padding: 0 6mm; font-size: 10px; }
+    /* Margins live in @page — the only mechanism both engines apply to EVERY
+       printed page. The previous attempt reserved the top margin with a
+       repeating <thead> spacer, which works in Chrome and does nothing in
+       WebKit: measured on a real Safari print, page one had 21.4mm of top
+       margin and page two 3.8mm.
 
-       So the margins are built instead, in the two places that survive
-       pagination:
-         · sides — horizontal padding on body, which applies on every page
-           (unlike vertical padding, which the flow consumes once);
-         · top and bottom — the spacer rows of .page-frame below, since a
-           thead/tfoot repeats on each printed page by definition. */
-    @page { margin: 0; }
-    .page-frame { width: 100%; border-collapse: collapse; }
-    .page-frame > thead > tr > td { height: 15mm; padding: 0; border: 0; }
-    .page-frame > tfoot > tr > td { height: 12mm; padding: 0; border: 0; }
-    .page-frame > tbody > tr > td { padding: 0; border: 0; vertical-align: top; }
+       8mm is not arbitrary. Chrome draws the print dialog's own header and
+       footer — document title, timestamp, url, "page 1 of 2" — whenever the
+       page margin is large enough to hold them, and measured on this machine
+       that threshold sits between 8mm and 10mm: 5mm and 8mm print clean, 10mm
+       and above stamp the document. Staying at 8mm keeps those off a quote a
+       client receives without depending on anyone remembering a checkbox.
+
+       The remaining 6mm at the sides comes from horizontal body padding, which
+       (unlike vertical padding, spent once by the flow) narrows the content box
+       on every page. */
+    @page { margin: 8mm; }
     @media print {
       body { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
       .no-break { page-break-inside: avoid; }
@@ -164,8 +164,7 @@ export function generateInvoiceHTML(data: InvoicePDFData): string {
   </style>
 </head>
 <body>
-  <table class="page-frame"><thead><tr><td></td></tr></thead><tfoot><tr><td></td></tr></tfoot><tbody><tr><td>
-    <div style="max-width: 800px; margin: 0 auto; padding: 0; background: #fff;">
+  <div style="max-width: 800px; margin: 0 auto; padding: 0; background: #fff;">
 
     <!-- Header -->
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; border-bottom: 3px solid #C9A84C; padding-bottom: 8px;">
@@ -235,7 +234,6 @@ export function generateInvoiceHTML(data: InvoicePDFData): string {
     </div>
 
   </div>
-    </td></tr></tbody></table>
 </body>
 </html>`;
 }

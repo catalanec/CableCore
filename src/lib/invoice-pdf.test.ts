@@ -121,18 +121,18 @@ describe('generateInvoiceHTML — items table split across the page break', () =
     });
 });
 
-// Same reasoning as the quote, and the same trap: a real @page margin brings
-// the print dialog's header and footer back onto the document.
+// Same reasoning as the quote: 8mm reaches every page in both engines and
+// stays under the margin at which Chrome stamps its own header and footer.
 describe('generateInvoiceHTML — page margins apply to every page', () => {
-    it('keeps @page at zero so the print dialog draws no header or footer', () => {
-        expect(generateInvoiceHTML(baseData)).toMatch(/@page\s*\{\s*margin:\s*0;\s*\}/);
+    it('keeps @page at 8mm', () => {
+        expect(generateInvoiceHTML(baseData)).toMatch(/@page\s*\{\s*margin:\s*8mm;\s*\}/);
     });
 
-    it('builds the margins from body padding and repeating spacer rows', () => {
-        const html = generateInvoiceHTML(baseData);
+    it('adds the rest of the side margin as horizontal body padding', () => {
+        expect(generateInvoiceHTML(baseData)).toMatch(/body\s*\{[^}]*padding:\s*0\s+6mm/);
+    });
 
-        expect(html).toMatch(/body\s*\{[^}]*padding:\s*0\s+14mm/);
-        expect(html).toContain('class="page-frame"');
-        expect(html).toContain('<thead><tr><td></td></tr></thead>');
+    it('does not reserve the margin with a browser-specific spacer', () => {
+        expect(generateInvoiceHTML(baseData)).not.toContain('page-frame');
     });
 });

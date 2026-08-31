@@ -138,32 +138,30 @@ describe('generateQuoteHTML — items table split across the page break', () => 
     });
 });
 
-// Margins have to survive pagination without waking the print dialog's own
-// header and footer. @page must stay at 0 — Chrome only hides those when the
-// page margin is zero, and giving it a real margin printed the document title,
-// the date, the file url and "page 1 of 2" onto a client's quote. So the sides
-// come from horizontal body padding (which does apply per page) and the top
-// and bottom from spacer rows that repeat with the thead/tfoot.
+// Two constraints at once, and they pull against each other. The margin has
+// to reach every page, which rules out vertical body padding (spent once by
+// the flow) and the repeating <thead> spacer tried before it (Chrome honours
+// it, WebKit ignores it — a real Safari print came out 21.4mm on page one and
+// 3.8mm on page two). And it has to stay small enough that Chrome does not
+// stamp the print dialog's header and footer onto a client's quote; measured,
+// that line sits between 8mm and 10mm.
 describe('generateQuoteHTML — page margins apply to every page', () => {
-    it('keeps @page at zero so the print dialog draws no header or footer', () => {
-        expect(generateQuoteHTML(baseData)).toMatch(/@page\s*\{\s*margin:\s*0;\s*\}/);
+    it('keeps @page at 8mm — every page, and below Chrome\'s header threshold', () => {
+        expect(generateQuoteHTML(baseData)).toMatch(/@page\s*\{\s*margin:\s*8mm;\s*\}/);
     });
 
-    it('takes the side margins from horizontal body padding', () => {
+    it('adds the rest of the side margin as horizontal body padding', () => {
         const html = generateQuoteHTML(baseData);
 
-        expect(html).toMatch(/body\s*\{[^}]*padding:\s*0\s+14mm/);
+        expect(html).toMatch(/body\s*\{[^}]*padding:\s*0\s+6mm/);
         // Vertical body padding would reach only the first page.
-        expect(html).not.toMatch(/body\s*\{[^}]*padding:\s*1?\d+mm;/);
+        expect(html).not.toMatch(/body\s*\{[^}]*padding:\s*\d+mm\s/);
     });
 
-    it('takes the top and bottom margins from repeating spacer rows', () => {
-        const html = generateQuoteHTML(baseData);
-
-        expect(html).toContain('class="page-frame"');
-        expect(html).toMatch(/\.page-frame > thead > tr > td \{ height: 15mm/);
-        expect(html).toMatch(/\.page-frame > tfoot > tr > td \{ height: 12mm/);
-        expect(html).toContain('<thead><tr><td></td></tr></thead>');
-        expect(html).toContain('<tfoot><tr><td></td></tr></tfoot>');
+    // The spacer table is gone on purpose: it produced a margin in Chrome and
+    // none in Safari, which is worse than a smaller margin that is the same
+    // everywhere.
+    it('does not reserve the margin with a browser-specific spacer', () => {
+        expect(generateQuoteHTML(baseData)).not.toContain('page-frame');
     });
 });
