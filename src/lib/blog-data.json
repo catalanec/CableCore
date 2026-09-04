@@ -1,5 +1,226 @@
 [
   {
+    "slug": "cableado-de-red-para-coworkings-y-espacios-de-oficina-compartida",
+    "date": "2026-09-04",
+    "readTime": "10 min",
+    "es": {
+      "title": "Cableado de Red para Coworkings y Espacios de Oficina Compartida",
+      "metaTitle": "Guía de Cableado de Red para Coworkings en Barcelona | CableCore",
+      "metaDescription": "Descubre cómo implementar un cableado de red eficiente para coworkings y espacios de oficina compartida en Barcelona, asegurando conectividad y rendimiento.",
+      "excerpt": "Esta guía técnica explora las mejores prácticas y consideraciones para el cableado de red en coworkings y espacios de oficina compartida en Barcelona.",
+      "category": "Guías",
+      "tags": [
+        "redes"
+      ],
+      "content": [
+        {
+          "type": "h2",
+          "text": "Introducción al Cableado de Red en Coworkings"
+        },
+        {
+          "type": "p",
+          "text": "El crecimiento de los espacios de coworking en Barcelona ha llevado a una mayor demanda de soluciones de cableado de red eficientes y escalables. Estos espacios requieren una infraestructura que soporte múltiples conexiones simultáneas, garantizando un rendimiento óptimo para todos los usuarios."
+        },
+        {
+          "type": "h2",
+          "text": "Importancia del Cableado Estructurado"
+        },
+        {
+          "type": "p",
+          "text": "El cableado estructurado es fundamental para cualquier instalación de red moderna. Permite una gestión organizada de los cables y facilita la expansión futura. Además, asegura que la red sea flexible y capaz de adaptarse a las necesidades cambiantes de los usuarios en un coworking."
+        },
+        {
+          "type": "h2",
+          "text": "Especificaciones Técnicas y Normativas"
+        },
+        {
+          "type": "p",
+          "text": "Para un cableado eficaz, es crucial seguir las normativas internacionales como la ISO/IEC 11801 y las especificaciones TIA/EIA-568. Estas normas establecen los requisitos para el cableado de telecomunicaciones, incluyendo los tipos de cables a utilizar y las distancias máximas de instalación."
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Cable de par trenzado (Cat5e, Cat6, Cat6A)",
+            "Cables de fibra óptica (monomodo y multimodo)",
+            "Conectores RJ45 y paneles de parcheo"
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "Cómo Planificar el Cableado en un Coworking"
+        },
+        {
+          "type": "p",
+          "text": "La planificación del cableado debe comenzar con un análisis de las necesidades de conectividad de los usuarios. Considera la cantidad de dispositivos que se conectarán y el tipo de servicios que se ofrecerán, como VoIP o transmisión de datos de alta velocidad."
+        },
+        {
+          "type": "h2",
+          "text": "Errores Comunes en la Instalación"
+        },
+        {
+          "type": "p",
+          "text": "Uno de los errores más comunes es no considerar la ubicación de los puntos de acceso y las estaciones de trabajo. Asegúrate de que el cableado no esté expuesto a interferencias electromagnéticas y que se utilicen los materiales adecuados para la instalación."
+        },
+        {
+          "type": "h2",
+          "text": "Costos y Consideraciones Prácticas"
+        },
+        {
+          "type": "p",
+          "text": "Los costos de instalación de un sistema de cableado de red en un coworking pueden variar significativamente según la complejidad del diseño y los materiales utilizados. En Barcelona, el presupuesto puede oscilar entre 15 y 30 euros por metro de cableado, dependiendo de la calidad y el tipo de tecnología elegida."
+        },
+        {
+          "type": "tip",
+          "text": "💡 Asegúrate de incluir un margen en tu presupuesto para futuras expansiones o mejoras en la infraestructura."
+        }
+      ]
+    },
+    "en": {
+      "title": "Network Cabling for Coworking Spaces",
+      "metaTitle": "Guide to Network Cabling for Coworking Spaces in Barcelona | CableCore",
+      "metaDescription": "Discover how to implement efficient network cabling for coworking spaces in Barcelona, ensuring connectivity and performance.",
+      "excerpt": "This technical guide explores best practices and considerations for network cabling in coworking spaces in Barcelona.",
+      "category": "Guides",
+      "tags": [
+        "networks"
+      ],
+      "content": [
+        {
+          "type": "h2",
+          "text": "Introduction to Network Cabling in Coworking Spaces"
+        },
+        {
+          "type": "p",
+          "text": "The rise of coworking spaces in Barcelona has led to an increased demand for efficient and scalable network cabling solutions. These spaces require an infrastructure that can support multiple simultaneous connections, ensuring optimal performance for all users."
+        },
+        {
+          "type": "h2",
+          "text": "Importance of Structured Cabling"
+        },
+        {
+          "type": "p",
+          "text": "Structured cabling is essential for any modern network installation. It allows for organized cable management and facilitates future expansion. Additionally, it ensures that the network remains flexible and can adapt to the changing needs of users in a coworking environment."
+        },
+        {
+          "type": "h2",
+          "text": "Technical Specifications and Standards"
+        },
+        {
+          "type": "p",
+          "text": "For effective cabling, it is crucial to follow international standards such as ISO/IEC 11801 and TIA/EIA-568 specifications. These standards outline the requirements for telecommunications cabling, including the types of cables to be used and the maximum installation distances."
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Twisted pair cable (Cat5e, Cat6, Cat6A)",
+            "Fiber optic cables (single-mode and multi-mode)",
+            "RJ45 connectors and patch panels"
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "How to Plan Cabling in a Coworking Space"
+        },
+        {
+          "type": "p",
+          "text": "Planning the cabling should start with an analysis of the connectivity needs of users. Consider the number of devices that will connect and the types of services that will be offered, such as VoIP or high-speed data transmission."
+        },
+        {
+          "type": "h2",
+          "text": "Common Installation Mistakes"
+        },
+        {
+          "type": "p",
+          "text": "One of the most common mistakes is not considering the placement of access points and workstations. Ensure that the cabling is not exposed to electromagnetic interference and that appropriate materials are used for the installation."
+        },
+        {
+          "type": "h2",
+          "text": "Costs and Practical Considerations"
+        },
+        {
+          "type": "p",
+          "text": "The installation costs for a network cabling system in a coworking space can vary significantly depending on the complexity of the design and the materials used. In Barcelona, the budget can range from €15 to €30 per meter of cabling, depending on the quality and type of technology chosen."
+        },
+        {
+          "type": "tip",
+          "text": "💡 Be sure to include a margin in your budget for future expansions or upgrades to the infrastructure."
+        }
+      ]
+    },
+    "ru": {
+      "title": "Кабельная Сеть для Коворкингов",
+      "metaTitle": "Руководство по Кабельной Сети для Коворкингов в Барселоне | CableCore",
+      "metaDescription": "Узнайте, как реализовать эффективное кабельное соединение для коворкингов в Барселоне, обеспечивая соединение и производительность.",
+      "excerpt": "Это техническое руководство исследует лучшие практики и соображения по кабельной сети в коворкингах в Барселоне.",
+      "category": "Руководства",
+      "tags": [
+        "сети"
+      ],
+      "content": [
+        {
+          "type": "h2",
+          "text": "Введение в Кабельную Сеть в Коворкингах"
+        },
+        {
+          "type": "p",
+          "text": "Рост коворкингов в Барселоне привел к увеличению спроса на эффективные и масштабируемые решения для кабельной сети. Эти пространства требуют инфраструктуры, способной поддерживать несколько одновременных соединений, обеспечивая оптимальную производительность для всех пользователей."
+        },
+        {
+          "type": "h2",
+          "text": "Важность Структурированного Кабелирования"
+        },
+        {
+          "type": "p",
+          "text": "Структурированное кабелирование является важным для любой современной установки сети. Оно позволяет организовать управление кабелями и облегчает будущую экспансию. Кроме того, оно гарантирует, что сеть останется гибкой и сможет адаптироваться к изменяющимся потребностям пользователей в коворкинге."
+        },
+        {
+          "type": "h2",
+          "text": "Технические Спецификации и Нормы"
+        },
+        {
+          "type": "p",
+          "text": "Для эффективного кабелирования крайне важно следовать международным стандартам, таким как ISO/IEC 11801 и спецификациям TIA/EIA-568. Эти нормы описывают требования к кабелям телекоммуникаций, включая виды используемых кабелей и максимальные расстояния установки."
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Кабель витая пара (Cat5e, Cat6, Cat6A)",
+            "Оптоволоконные кабели (одномодовые и многомодовые)",
+            "Разъемы RJ45 и патч-панели"
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "Как Планировать Кабелирование в Коворкинге"
+        },
+        {
+          "type": "p",
+          "text": "Планирование кабелирования должно начинаться с анализа потребностей пользователей в подключении. Учитывайте количество устройств, которые будут подключены, и типы услуг, которые будут предложены, такие как VoIP или высокоскоростная передача данных."
+        },
+        {
+          "type": "h2",
+          "text": "Распространенные Ошибки При Установке"
+        },
+        {
+          "type": "p",
+          "text": "Одна из самых распространенных ошибок - это не учитывать расположение точек доступа и рабочих мест. Убедитесь, что кабелирование не подвержено электромагнитным помехам и что для установки используются соответствующие материалы."
+        },
+        {
+          "type": "h2",
+          "text": "Стоимость и Практические Соображения"
+        },
+        {
+          "type": "p",
+          "text": "Затраты на установку системы кабельной сети в коворкинге могут существенно варьироваться в зависимости от сложности дизайна и используемых материалов. В Барселоне бюджет может составлять от 15 до 30 евро за метр кабелирования, в зависимости от качества и типа выбранной технологии."
+        },
+        {
+          "type": "tip",
+          "text": "💡 Обязательно закладывайте запас в своем бюджете для будущих расширений или обновлений инфраструктуры."
+        }
+      ]
+    }
+  },
+  {
     "slug": "cableado-de-red-para-eventos-y-ferias-temporales-cableado-desmontable",
     "date": "2026-08-28",
     "readTime": "12 min",
