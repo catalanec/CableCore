@@ -272,11 +272,39 @@ export function downloadInvoicePDF(data: InvoicePDFData): void {
     printWindow.document.write(html);
     printWindow.document.close();
 
-    // Auto-trigger print dialog after content loads
-    printWindow.addEventListener('load', () => {
-        setTimeout(() => {
-            printWindow.focus();
-            printWindow.print();
-        }, 300);
-    });
+    openPrintDialog(printWindow);
+}
+
+/**
+ * Raise the print dialog on a window whose document was just written.
+ *
+ * Listening for `load` alone is a race: `document.close()` can finish parsing
+ * before the next line runs, and a listener attached after the event has
+ * already fired never hears it — the window opens showing the invoice, and no
+ * print dialog appears. Small documents lose that race most often, which is
+ * why a few extra rows of markup were enough to start triggering it.
+ *
+ * So: print immediately when the document is already complete, otherwise wait
+ * for `load`, and keep a timer as a backstop in case neither arrives.
+ */
+export function openPrintDialog(win: Pick<Window, 'print' | 'focus' | 'document' | 'addEventListener'>): void {
+    let printed = false;
+    const print = () => {
+        if (printed) return;
+        printed = true;
+        try {
+            win.focus();
+            win.print();
+        } catch {
+            // a window closed by the user before the timer fired
+        }
+    };
+
+    if (win.document.readyState === 'complete') {
+        setTimeout(print, 300);
+        return;
+    }
+
+    win.addEventListener('load', () => setTimeout(print, 300), { once: true });
+    setTimeout(print, 1500);
 }

@@ -1,5 +1,5 @@
-import { describe, it, expect } from 'vitest';
-import { formatInvoiceNumber, generateInvoiceHTML, type InvoicePDFData } from './invoice-pdf';
+import { describe, it, expect, vi } from 'vitest';
+import { formatInvoiceNumber, generateInvoiceHTML, openPrintDialog, type InvoicePDFData } from './invoice-pdf';
 
 describe('formatInvoiceNumber', () => {
     it('pads a numeric invoice number to 5 digits', () => {
@@ -165,5 +165,69 @@ describe('generateInvoiceHTML — descuento', () => {
         const html = generateInvoiceHTML({ ...baseData, discount: '10.00€' });
         expect(html).toContain('Descuento');
         expect(html).toContain('127.50€');
+    });
+});
+
+describe('openPrintDialog', () => {
+    function fakeWindow(readyState: DocumentReadyState) {
+        const listeners: Record<string, Array<() => void>> = {};
+        return {
+            printed: 0,
+            focused: 0,
+            document: { readyState },
+            print() { this.printed++; },
+            focus() { this.focused++; },
+            addEventListener(type: string, fn: () => void) {
+                (listeners[type] ??= []).push(fn);
+            },
+            fire(type: string) { (listeners[type] ?? []).forEach(fn => fn()); },
+        };
+    }
+
+    it('prints when the document finished parsing before the listener could attach', () => {
+        vi.useFakeTimers();
+        const win = fakeWindow('complete');
+        openPrintDialog(win as never);
+        vi.advanceTimersByTime(400);
+        expect(win.printed).toBe(1);
+        vi.useRealTimers();
+    });
+
+    it('prints on load when the document is still parsing', () => {
+        vi.useFakeTimers();
+        const win = fakeWindow('loading');
+        openPrintDialog(win as never);
+        expect(win.printed).toBe(0);
+        win.fire('load');
+        vi.advanceTimersByTime(400);
+        expect(win.printed).toBe(1);
+        vi.useRealTimers();
+    });
+
+    it('still prints when load never arrives at all', () => {
+        vi.useFakeTimers();
+        const win = fakeWindow('loading');
+        openPrintDialog(win as never);
+        vi.advanceTimersByTime(2000);
+        expect(win.printed).toBe(1);
+        vi.useRealTimers();
+    });
+
+    it('never raises the dialog twice when load and the backstop both fire', () => {
+        vi.useFakeTimers();
+        const win = fakeWindow('loading');
+        openPrintDialog(win as never);
+        win.fire('load');
+        vi.advanceTimersByTime(3000);
+        expect(win.printed).toBe(1);
+        vi.useRealTimers();
+    });
+
+    it('swallows the error from a window the user already closed', () => {
+        vi.useFakeTimers();
+        const win = fakeWindow('complete');
+        win.print = () => { throw new Error('window closed'); };
+        expect(() => { openPrintDialog(win as never); vi.advanceTimersByTime(400); }).not.toThrow();
+        vi.useRealTimers();
     });
 });
