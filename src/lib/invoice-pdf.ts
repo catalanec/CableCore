@@ -27,6 +27,14 @@ export interface InvoicePDFData {
         total: string;
     }>;
     subtotal: string;
+    /**
+     * Set together when the invoice carries the quote's discount. `subtotal`
+     * then means the pre-discount sum and `base` the taxable base IVA is
+     * charged on; without them `subtotal` is itself the base, as before.
+     */
+    discount?: string;
+    discountPercent?: number;
+    base?: string;
     urgencyMultiplier?: string;
     iva: string;
     total: string;
@@ -82,9 +90,21 @@ export function generateInvoiceHTML(data: InvoicePDFData): string {
     <!-- Totals -->
     <div style="display: flex; justify-content: flex-end;">
       <div style="width: 260px;">
+        ${data.discount ? `
+        <div style="display: flex; justify-content: space-between; padding: 6px 10px; font-size: 10px; color: #555; border-bottom: 1px solid #e0dcd4;">
+          <span>Subtotal</span> <span style="font-weight: 600; color: #333;">${data.subtotal}</span>
+        </div>
+        <div style="display: flex; justify-content: space-between; padding: 6px 10px; font-size: 10px; color: #2E7D32; background: #F1F8E9; border-bottom: 1px solid #e0dcd4;">
+          <span style="font-weight: 600;">Descuento${data.discountPercent ? ` (-${data.discountPercent}%)` : ''}</span> <span style="font-weight: 700;">-${data.discount}</span>
+        </div>
+        <div style="display: flex; justify-content: space-between; padding: 6px 10px; font-size: 10px; color: #555; border-bottom: 1px solid #e0dcd4;">
+          <span>Base Imponible</span> <span style="font-weight: 600; color: #333;">${data.base ?? data.subtotal}</span>
+        </div>
+        ` : `
         <div style="display: flex; justify-content: space-between; padding: 6px 10px; font-size: 10px; color: #555; border-bottom: 1px solid #e0dcd4;">
           <span>Base Imponible</span> <span style="font-weight: 600; color: #333;">${data.subtotal}</span>
         </div>
+        `}
         ${data.urgencyMultiplier ? `
         <div style="display: flex; justify-content: space-between; padding: 6px 10px; font-size: 10px; color: #B8860B; background: #FFF8E1; border-bottom: 1px solid #e0dcd4;">
           <span style="font-weight: 600;">Multiplicador urgencia</span> <span style="font-weight: 700;">${data.urgencyMultiplier}</span>

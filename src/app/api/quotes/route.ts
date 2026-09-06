@@ -57,6 +57,12 @@ export async function POST(request: NextRequest) {
                 work_cost: data.workCost,
                 rack_cost: data.rackCost,
                 subtotal: data.subtotal,
+                // The calculator has always sent these, but there were no
+                // columns for them: the discount was dropped on save, and the
+                // invoice later rebuilt its totals from the line items and
+                // charged IVA on the pre-discount base.
+                discount: data.discount || 0,
+                discount_percent: data.discountPercent || 0,
                 urgency_multiplier: data.urgencyMultiplier,
                 iva: data.iva,
                 total: data.total,

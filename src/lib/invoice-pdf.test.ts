@@ -136,3 +136,34 @@ describe('generateInvoiceHTML — page margins apply to every page', () => {
         expect(generateInvoiceHTML(baseData)).not.toContain('page-frame');
     });
 });
+
+describe('generateInvoiceHTML — descuento', () => {
+    it('labels the sum "Base Imponible" when there is no discount', () => {
+        const html = generateInvoiceHTML(baseData);
+        expect(html).toContain('Base Imponible');
+        expect(html).not.toContain('Descuento');
+    });
+
+    it('shows subtotal, discount and the reduced base when a discount is carried over', () => {
+        const html = generateInvoiceHTML({
+            ...baseData,
+            subtotal: '3152.90€',
+            discount: '157.65€',
+            discountPercent: 5,
+            base: '2995.25€',
+            iva: '629.00€',
+            total: '3624.25€',
+        });
+        expect(html).toContain('Subtotal');
+        expect(html).toContain('Descuento (-5%)');
+        expect(html).toContain('-157.65€');
+        // the taxable base must be the reduced one, not the raw sum
+        expect(html).toContain('2995.25€');
+    });
+
+    it('falls back to subtotal as the base when base is omitted', () => {
+        const html = generateInvoiceHTML({ ...baseData, discount: '10.00€' });
+        expect(html).toContain('Descuento');
+        expect(html).toContain('127.50€');
+    });
+});

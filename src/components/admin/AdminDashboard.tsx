@@ -5,6 +5,7 @@ import { useLocale } from 'next-intl';
 import { updateLeadStatus, updateQuoteStatus, updateMaterialStock, deleteLead, deleteQuote, updateLeadNotes, updateQuoteNotes, addMaterial, deleteMaterial, updateMaterial, updateProjectCosts, updateProjectPayment, seedMaterials, sendLowStockAlerts, exportMaterialsCSV, exportProjectsCSV, getAllTasks, addExpense, getExpenses, deleteExpense, notifyStaleLeads, deleteProject } from '@/app/actions/crm';
 import { downloadQuotePDF, type QuotePDFData } from '@/lib/quote-pdf';
 import { downloadInvoicePDF, type InvoicePDFData } from '@/lib/invoice-pdf';
+import { quoteDiscount, quoteDiscountPercent } from '@/lib/quote-discount';
 import Pipeline from './Pipeline';
 import TaskManager from './TaskManager';
 
@@ -48,6 +49,10 @@ export default function AdminDashboard({ initialQuotes, initialLeads, initialMat
     const [isFacturando, setIsFacturando] = useState(false);
     const [invoiceData, setInvoiceData] = useState({ razonSocial: '', cif: '', address: '', email: '', phone: '', signatureEmisor: 'Anton Shapoval', signatureClient: '', refAdicional: '' });
     const [invoiceItems, setInvoiceItems] = useState<Array<{description: string; quantity: string; unitPrice: string}>>([]);
+    // Carried over from the quote so the invoice charges IVA on the same base
+    // the client already signed off on. Editable: the discount can be dropped
+    // or changed at invoicing time, but it is never silently lost.
+    const [invoiceDiscountPercent, setInvoiceDiscountPercent] = useState('0');
     const [currentQuoteId, setCurrentQuoteId] = useState<string | null>(null);
 
     const [invoices, setInvoices] = useState<any[]>(initialInvoices);
@@ -1483,6 +1488,13 @@ export default function AdminDashboard({ initialQuotes, initialLeads, initialMat
                                             { description: 'Mano de obra (operarios y técnicos)', quantity: 'Global', unitPrice: '-', total: Number(selectedQuote.work_cost).toFixed(2) + '€' }
                                         ],
                                     subtotal: Number(selectedQuote.subtotal).toFixed(2) + '€',
+                                    // Without these the admin PDF silently differed from the
+                                    // one the client already had from the calculator, which
+                                    // does show the discount.
+                                    discount: quoteDiscount(selectedQuote) > 0
+                                        ? quoteDiscount(selectedQuote).toFixed(2) + '€' : undefined,
+                                    discountPercent: quoteDiscountPercent(selectedQuote) > 0
+                                        ? quoteDiscountPercent(selectedQuote) : undefined,
                                     iva: Number(selectedQuote.iva).toFixed(2) + '€',
                                     total: Number(selectedQuote.total).toFixed(2) + '€',
                                     signatureEmisor: selectedQuote.signature_emisor || 'Anton Shapoval',
@@ -1511,6 +1523,10 @@ export default function AdminDashboard({ initialQuotes, initialLeads, initialMat
                                     // must not carry over to the next one.
                                     refAdicional: ''
                                 });
+                                // The quote's discount has to travel with it, otherwise the
+                                // invoice charges IVA on the pre-discount base and comes out
+                                // higher than the offer the client accepted.
+                                setInvoiceDiscountPercent(String(quoteDiscountPercent(selectedQuote) || 0));
                                 // Pre-populate items from quote data
                                 const hasCosts = Number(selectedQuote.cable_cost) > 0 || Number(selectedQuote.points_cost) > 0 || Number(selectedQuote.work_cost) > 0;
                                 const instName = selectedQuote.installation_type || 'ceiling';
@@ -1832,8 +1848,14 @@ export default function AdminDashboard({ initialQuotes, initialLeads, initialMat
                     const price = parseFloat(it.unitPrice) || 0;
                     return sum + qty * price;
                 }, 0);
-                const computedIva = computedSubtotal * ivaPct;
-                const computedTotal = computedSubtotal + computedIva;
+                // IVA is charged on the discounted base, exactly as the quote did.
+                // Charging it on computedSubtotal was the bug: a 5% discount came
+                // out ~190€ too high on a 3.100€ job.
+                const discPct = Math.min(Math.max(parseFloat(invoiceDiscountPercent) || 0, 0), 100);
+                const computedDiscount = computedSubtotal * (discPct / 100);
+                const computedBase = computedSubtotal - computedDiscount;
+                const computedIva = computedBase * ivaPct;
+                const computedTotal = computedBase + computedIva;
 
                 return (
                 <div className="fixed inset-0 z-50 flex items-start justify-center p-4 bg-black/80 backdrop-blur-sm overflow-y-auto">
@@ -1942,8 +1964,31 @@ export default function AdminDashboard({ initialQuotes, initialLeads, initialMat
                         <div className="flex justify-end mb-6">
                             <div className="w-64 text-sm space-y-1">
                                 <div className="flex justify-between text-brand-gold-muted">
-                                    <span>Base Imponible</span>
+                                    <span>Subtotal</span>
                                     <span className="text-white font-medium">{computedSubtotal.toFixed(2)}€</span>
+                                </div>
+                                <div className="flex justify-between items-center text-brand-gold-muted">
+                                    <span className="flex items-center gap-1.5">
+                                        Descuento
+                                        <input
+                                            type="number"
+                                            min="0"
+                                            max="100"
+                                            step="0.5"
+                                            value={invoiceDiscountPercent}
+                                            onChange={e => setInvoiceDiscountPercent(e.target.value)}
+                                            aria-label="Descuento en porcentaje"
+                                            className="w-14 px-1.5 py-0.5 bg-surface-dark border border-border-subtle rounded text-white text-xs text-right outline-none focus:border-brand-gold/50"
+                                        />
+                                        %
+                                    </span>
+                                    <span className={computedDiscount > 0 ? 'text-emerald-400 font-medium' : 'text-white font-medium'}>
+                                        -{computedDiscount.toFixed(2)}€
+                                    </span>
+                                </div>
+                                <div className="flex justify-between text-brand-gold-muted">
+                                    <span>Base Imponible</span>
+                                    <span className="text-white font-medium">{computedBase.toFixed(2)}€</span>
                                 </div>
                                 <div className="flex justify-between text-brand-gold-muted">
                                     <span>IVA (21%)</span>
@@ -1982,6 +2027,9 @@ export default function AdminDashboard({ initialQuotes, initialLeads, initialMat
                                             phone: invoiceData.phone,
                                             total_data: { 
                                                 subtotal: computedSubtotal.toFixed(2), 
+                                                discount: computedDiscount.toFixed(2),
+                                                discountPercent: discPct,
+                                                base: computedBase.toFixed(2),
                                                 iva: computedIva.toFixed(2), 
                                                 total: computedTotal.toFixed(2), 
                                                 items: finalItems,
@@ -1999,6 +2047,9 @@ export default function AdminDashboard({ initialQuotes, initialLeads, initialMat
                                             client: { razonSocial: invoiceData.razonSocial, cif: invoiceData.cif, address: invoiceData.address, email: invoiceData.email, phone: invoiceData.phone },
                                             items: finalItems,
                                             subtotal: computedSubtotal.toFixed(2) + '€',
+                                            discount: computedDiscount > 0 ? computedDiscount.toFixed(2) + '€' : undefined,
+                                            discountPercent: discPct > 0 ? discPct : undefined,
+                                            base: computedBase.toFixed(2) + '€',
                                             iva: computedIva.toFixed(2) + '€',
                                             total: computedTotal.toFixed(2) + '€',
                                             notes: 'Pago realizable mediante transferencia bancaria.\nGracias por su confianza.',
@@ -2017,6 +2068,9 @@ export default function AdminDashboard({ initialQuotes, initialLeads, initialMat
                                             phone: invoiceData.phone,
                                             total_data: { 
                                                 subtotal: computedSubtotal.toFixed(2), 
+                                                discount: computedDiscount.toFixed(2),
+                                                discountPercent: discPct,
+                                                base: computedBase.toFixed(2),
                                                 iva: computedIva.toFixed(2), 
                                                 total: computedTotal.toFixed(2), 
                                                 items: finalItems,
