@@ -3,6 +3,21 @@ import { NextResponse } from 'next/server';
 const SITE_URL = 'https://cablecore.es/';
 const GITHUB_REPO = 'catalanec/CableCore';
 const BLOG_DATA_PATH = 'src/lib/blog-data.json';
+
+// Vercel kills a serverless function at its maxDuration. This route used to
+// declare none, so it ran under the 60s default while sequentially inspecting
+// every slug x locale (105 URLs at the time of writing) and then calling Groq
+// inline for each thin one. It was killed mid-loop — and since the commit sat
+// AFTER the loop, every fix that run had made was thrown away. It last managed
+// to commit on 2026-07-12 and produced nothing for the eight weeks after.
+export const maxDuration = 300;
+
+// Work is bounded per run instead: the thinnest articles are expanded first, so
+// each run advances the queue without needing a stored cursor — once an article
+// is expanded it is no longer among the thinnest. The deadline leaves room to
+// commit whatever the run finished.
+const BATCH_SIZE = 5;
+const DEADLINE_MS = 240_000;
 const LOCALES = ['es', 'en', 'ru'] as const;
 type Locale = (typeof LOCALES)[number];
 
@@ -183,17 +198,31 @@ export async function GET(request: Request) {
         // set (every slug x every locale) instead of a hardcoded map — a
         // previous version only monitored 6 legacy URLs, so newly-published
         // thin articles were never picked up for expansion at all.
-        const keyPages = blogData.flatMap(article =>
-            LOCALES.filter(locale => article[locale]).map(locale => ({
-                url: `https://cablecore.es/${locale}/blog/${article.slug}`,
-                slug: article.slug,
-                locale,
-            }))
-        );
+        // Thinness is knowable from the data — asking Google 105 times to learn
+        // it is what exhausted the budget before any work got done. Inspect only
+        // the handful this run intends to touch.
+        const keyPages = blogData
+            .flatMap(article =>
+                LOCALES.filter(locale => article[locale]).map(locale => ({
+                    url: `https://cablecore.es/${locale}/blog/${article.slug}`,
+                    slug: article.slug,
+                    locale,
+                    words: estimateWordCount(article[locale]?.content),
+                }))
+            )
+            .filter(p => p.words <= 1200)
+            .sort((a, b) => a.words - b.words)
+            .slice(0, BATCH_SIZE);
 
         let blogDataModified = false;
 
+        const startedAt = Date.now();
+
         for (const page of keyPages) {
+            if (Date.now() - startedAt > DEADLINE_MS) {
+                skipped.push(`${page.url} (out of time this run)`);
+                continue;
+            }
             try {
                 const { verdict, coverageState } = await inspectUrl(gscToken, page.url);
 
