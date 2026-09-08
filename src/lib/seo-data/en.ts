@@ -336,6 +336,24 @@ export const SEO_PAGES_EN: SEOPageConfig[] = [
             { q: "Do you do installations in Badalona's industrial estates?", a: 'Yes, we have extensive experience in the Badalona Sud and Mas Rampinyo estates. We install Cat6A and Cat7 industrial networks with IP-rated conduit.' },
             { q: 'How much does network installation cost in Badalona?', a: 'An installed Cat6 point starts at €110 including VAT, with absolutely no surcharge for being in Badalona. As a local company, our internal travel is free.' },
         ],
+        richSections: [
+            {
+                h2: "Badalona: from the Les Guixeres estate to the old town",
+                paragraphs: [
+                    "Our workshop is at Carrer Vitor Balaguer 33, so Badalona is not just another town on a coverage map — it is where we pick up material in the morning. That changes what we can take on here: same-day callouts for faults, a second visit to finish one detail, or pulling a run today and coming back tomorrow without adding it to the quote.",
+                    "In Les Guixeres and Badalona Sud the work is mostly high-roof industrial units, where the difficulty is not the cable but the tray route: you have to clear overhead cranes, light fittings and steelwork without leaving twisted pair running alongside power lines. We use shielded Cat6A on mesh tray there and always keep data and power routes physically apart.",
+                    "The old town, Dalt de la Vila and Casagemes are the opposite case: older buildings, Catalan vault ceilings and telephone blocks nobody has touched in thirty years. Chasing walls is rarely an option, so we work with low-profile trunking along skirting and door frames, and where the owner wants no visible cable we propose thin fibre down the inner light well.",
+                ],
+            },
+            {
+                h2: "The Can Ruti health cluster and the Montigalà area",
+                paragraphs: [
+                    "The Can Ruti hillside concentrates healthcare and research activity around Hospital Germans Trias i Pujol. What clients ask for in this kind of installation is not raw speed but traceability: every outlet certified with calibrated equipment, labelled by room, and an as-built drawing handed over — because in a clinical setting an unlabelled port is a port nobody dares use.",
+                    "In Montigalà, around the retail centre and the office buildings near it, the typical job is a refit over an existing network: the client already has Cat5e from years back and wants Cat6A without closing the premises. We usually phase this over nights, keeping the old network live while the new rack goes up alongside it and migrating desk by desk.",
+                ],
+            },
+        ],
+        updated: '2026-09-08T00:00:00.000Z',
     },
     {
         slug: 'instalacion-red-sabadell',
@@ -358,6 +376,24 @@ export const SEO_PAGES_EN: SEOPageConfig[] = [
             { q: 'How long does it take you to reach Sabadell?', a: 'From our headquarters in Badalona, we reach Sabadell in 30-40 minutes via the B-23. We can arrange a same-day site visit if you contact us before midday.' },
             { q: 'Do you install networks in detached houses in Sabadell?', a: "Yes, we install in single-family homes. We use decorative trunking or embedded cabling depending on the type of construction and the client's preference." },
         ],
+        richSections: [
+            {
+                h2: "Sabadell: industrial units in the Vallès and offices on Eix Macià",
+                paragraphs: [
+                    "Sabadell runs two different networks inside the same city. On one side the industrial estates — Can Roqueta, Sant Pau de Riu-sec, Els Sagraments — dominated by metalwork, logistics and workshops, with machinery that injects electrical noise into any unshielded pair. On the other, Eix Macià and the financial district, with banking and service offices that need dense, quiet desk layouts.",
+                    "On an industrial estate the technical call is almost always the same, and we explain it before quoting: Cat6A S/FTP with the screen bonded at both ends. It costs more than Cat6 U/UTP and some clients decide it is not worth it, but in a unit with variable-frequency drives and welding, unshielded cable ends up producing CRC errors nobody manages to attribute.",
+                    "In the centre the problem is different: 1960s and 1970s buildings with service shafts packed with old installations. Before quoting we go up and open the riser, because the gap between pulling through a free duct and having to form a new route is several hundred euros we would rather mention on day one.",
+                ],
+            },
+            {
+                h2: "Textile heritage: refitting a vapor without damaging it",
+                paragraphs: [
+                    "A good share of Sabadell's office space is converted textile mills. They are rewarding buildings for a network — open floors, generous height, few partitions — but with two constraints: joist floors that will not always take a fixing where we would like one, and heritage protection on facades and structural elements.",
+                    "Our approach in these spaces is to touch the building as little as possible: exposed tray aligned with the existing structure, drops down technical columns, and closed wall-mounted racks instead of floor cabinets where the slab cannot be loaded. The result is visible, but visibly tidy, which is usually what the refurbishment architect is asking for.",
+                ],
+            },
+        ],
+        updated: '2026-09-08T00:00:00.000Z',
     },
     {
         slug: 'instalacion-red-terrassa',
@@ -380,6 +416,23 @@ export const SEO_PAGES_EN: SEOPageConfig[] = [
             { q: 'Do you have experience with factories in Terrassa?', a: "Yes, we've installed networks in industrial warehouses in the textile and metalworking sector. We use shielded Cat7 S/FTP for environments with electromagnetic interference." },
             { q: 'What cable do you recommend for an office in Terrassa?', a: 'For offices in Terrassa we recommend Cat6A (10 Gbps). It is the current standard for new business installations and the best mid-term investment.' },
         ],
+        richSections: [
+            {
+                h2: "Terrassa: technology park, university and industrial estates",
+                paragraphs: [
+                    "Terrassa attracts a client type that appears less often elsewhere in the Vallès: engineering firms and technical companies linked to ESEIAAT and the university environment. These clients arrive with the drawing already done and a clear idea of what they want, and what they expect from us is clean execution and certification delivered digitally, not a design proposal.",
+                    "On the estates — Can Petit, Els Bellots, Santa Margarida, Can Parellada — the work resembles Sabadell: industrial units, electrical noise and a need to segment. Where the approach does change is in companies with a laboratory or test bench, because sensitive measurement equipment sits alongside power machinery and the routes have to be separated physically, not only by VLAN.",
+                ],
+            },
+            {
+                h2: "When fibre works out cheaper than copper",
+                paragraphs: [
+                    "In Terrassa we often find separate structures: a unit and an office on different plots, or one building with two wings across a courtyard. As soon as the distance between racks passes 90 metres copper stops being an option and it has to be fibre — and that is worth knowing before signing, not once the installer is already on site.",
+                    "For these links we install OM4 multimode where the run is indoor and short, or G.652D singlemode where it crosses outdoors or needs headroom to grow. We fusion splice, measure with an OTDR and hand over the loss report for every splice. A link done properly this way lasts the useful life of the building and avoids repeating the work in five years.",
+                ],
+            },
+        ],
+        updated: '2026-09-08T00:00:00.000Z',
     },
     {
         slug: 'instalacion-red-sant-cugat',
@@ -403,6 +456,24 @@ export const SEO_PAGES_EN: SEOPageConfig[] = [
             { q: 'Do you install networks in the companies at Parc Empresarial Can Sant Joan?', a: 'Yes, we have experience in the business park. We install outside business hours to avoid disrupting operations and provide full documentation.' },
             { q: 'Can embedded cabling be installed without major building work?', a: 'Yes, we use suspended-ceiling routing or minimal wall chasing techniques. In new-build homes we always recommend fully embedded cabling.' },
         ],
+        richSections: [
+            {
+                h2: "Sant Cugat: corporate headquarters and large houses",
+                paragraphs: [
+                    "Sant Cugat del Vallès brings together two jobs that rarely coincide elsewhere. In Can Sant Joan and the business park we work with corporate headquarters that have their own systems department: there we do not decide the architecture, we execute a specification, and what counts is meeting the construction programme and handing over complete certification with nothing outstanding.",
+                    "In Mira-sol, Valldoreix and La Floresta the client is a detached house over two or three floors with a garden, and the technical problem is distance. A 400 m² house spread over several levels is not solved by a router in the living room: it needs an access point per floor, PoE-powered from a small rack in the basement or garage, with Cat6A pulled before the suspended ceilings close if the build allows it.",
+                    "When the house is already finished and walls cannot be opened, the route usually goes outside. We use UV-resistant sheathed cable clipped under the eaves and enter each room at the least visible point. It is not the most elegant solution, but it is reversible and avoids hacking out plasterwork.",
+                ],
+            },
+            {
+                h2: "Covering gardens, pools and outbuildings",
+                paragraphs: [
+                    "A frequent request in Sant Cugat is getting the network to an outbuilding: a garden studio, guest house, pool room or detached garage. Under 90 metres of real route, including what climbs and drops down walls, copper goes direct in buried conduit. Beyond that, or where the run crosses a zone with its own electrical supply, we move to fibre to avoid potential differences between buildings.",
+                    "The detail most often forgotten in these installations is protection: a data cable that leaves one building and enters another needs surge protection at both ends. It is an inexpensive part that saves losing an entire switch in the first serious autumn storm.",
+                ],
+            },
+        ],
+        updated: '2026-09-08T00:00:00.000Z',
     },
     {
         slug: 'instalacion-red-cornella',
@@ -425,6 +496,24 @@ export const SEO_PAGES_EN: SEOPageConfig[] = [
             { q: "Do you install in Cornellà's industrial estates?", a: 'Yes, we have experience in the Polígon Gran Via Sud and the Almeda industrial zone. We install Cat6A and Cat7 for industrial environments.' },
             { q: 'How much does network installation cost in Cornellà?', a: 'We apply the same prices as Barcelona city. An installed Cat6 point starts at €110 including VAT, with no travel surcharge.' },
         ],
+        richSections: [
+            {
+                h2: "Cornellà: Almeda, an office park with its own rules",
+                paragraphs: [
+                    "Almeda Park and the World Trade Center area account for most of our work in Cornellà, and it is an environment with constraints worth knowing before quoting. These are leased office buildings with internal works regulations, restricted access hours and, almost always, an obligation to work outside the other tenants' business hours.",
+                    "That means the price of an installation here does not depend only on metres of cable: it depends on whether we can start at nine in the morning or have to install overnight, and on whether the building requires specific liability insurance and accredited personnel. We ask on the first visit because it changes the quote substantially.",
+                    "Technically they are comfortable installations: accessible raised floor, reachable suspended ceiling and properly sized vertical risers. A whole floor can be planned at high desk density without fighting the building fabric, which is the opposite of what we find in the old town.",
+                ],
+            },
+            {
+                h2: "Sant Ildefons, Gavarra and home networks in apartment blocks",
+                paragraphs: [
+                    "Cornellà's residential districts are mostly 1960s and 1970s apartment blocks. In a flat like this the job almost always consists of running two or three outlets from the hallway, where the operator's fibre arrives, through to the study and living room, working around a layout with a long corridor and rooms in line.",
+                    "We use low-profile white trunking along the skirting, which in these flats looks far cleaner than people expect, and fit a flush outlet in each room rather than leaving loose cable. Where the building management allows it and there is a free duct from the landing, we use the existing route and nothing is visible at all.",
+                ],
+            },
+        ],
+        updated: '2026-09-08T00:00:00.000Z',
     },
     {
         slug: 'instalacion-red-sant-boi',
@@ -447,6 +536,24 @@ export const SEO_PAGES_EN: SEOPageConfig[] = [
             { q: "Do you install in Sant Boi's industrial estates?", a: 'Yes, we install in the Polígon Fontsanta and Can Gambús. For industrial environments we recommend Cat6A or Cat7 depending on the level of interference.' },
             { q: 'How much does network installation cost in Sant Boi?', a: 'Same prices as Barcelona. An installed Cat6 point starts at €110 including VAT. No travel surcharge for Baix Llobregat.' },
         ],
+        richSections: [
+            {
+                h2: "Sant Boi: greenhouses, industry and the Parc Agrari",
+                paragraphs: [
+                    "Sant Boi has a profile not repeated elsewhere in the Baix Llobregat: alongside the conventional Salinas and Sant Boi Nord estates sits the Parc Agrari, with growers who have progressively digitised. Installing a network in a greenhouse is nothing like installing in a warehouse: there is permanent humidity, condensation, overhead irrigation and steelwork that complicates every route.",
+                    "Indoor-grade material is not an option there. We use cable rated for outdoor use, enclosures with an appropriate IP rating and access points built for humid environments. Active equipment always goes in a sealed cabinet in a plant room, never hung inside the greenhouse itself, however much closer that would be to the point of service.",
+                    "On holdings with irrigation sensors and climate control the real requirement is not bandwidth but continuity: a network down for half an hour breaks nothing in an office, but it does in an automated irrigation cycle. That is why we specify protected power for the rack and, where budget allows, a backup link.",
+                ],
+            },
+            {
+                h2: "Near the airport: environments crowded with radio traffic",
+                paragraphs: [
+                    "Proximity to the airport and the major road corridors means that in parts of Sant Boi the 2.4 GHz band is unusually congested. It is one of those things that goes undetected until the WiFi performs badly for no obvious reason and the client has spent months blaming the internet provider.",
+                    "When this happens we survey the channels before touching anything and, where the environment justifies it, plan coverage on 5 GHz with more access points at lower power rather than a few powerful ones. Almost always the real answer is cable: run Ethernet to where the user actually is and leave WiFi only for what genuinely has to be wireless.",
+                ],
+            },
+        ],
+        updated: '2026-09-08T00:00:00.000Z',
     },
     {
         slug: 'instalacion-red-castelldefels',
@@ -470,6 +577,24 @@ export const SEO_PAGES_EN: SEOPageConfig[] = [
             { q: 'Do you install in second residences?', a: 'Yes, we work on second homes. We can coordinate access with a cleaner or caretaker and send you the installation report by email.' },
             { q: 'How much does it cost to wire a house in Castelldefels?', a: 'A two-storey house with 6-10 network points and outdoor WiFi costs between €1,800 and €3,200 including VAT, depending on size and finish. Request a no-obligation quote.' },
         ],
+        richSections: [
+            {
+                h2: "Castelldefels: hillside houses and the Mediterrani campus",
+                paragraphs: [
+                    "In Castelldefels the typical job is a detached house in Bellamar, Montemar or Vista Alegre, and the difficulty lies in the terrain rather than the cable. These are sloping plots, with the house on several levels and often an annexe or garage part-way down. A single router on the main floor always leaves some room without usable coverage.",
+                    "Our usual approach is a small rack on the lower level, Cat6A to every floor and PoE-powered access points in the hallway ceiling of each level, which is where they distribute best. Where there is a pool or a terrace in real use, we run an outdoor point with weather-rated equipment, not a domestic unit stuffed into a box.",
+                    "Being close to the sea adds a factor that does not exist inland: salt. On outdoor installations we use corrosion-resistant fixings and enclosures, because standard hardware on the seafront degrades within a couple of seasons and the fault then shows up in the most awkward place.",
+                ],
+            },
+            {
+                h2: "Seafront hotels and the UPC technology environment",
+                paragraphs: [
+                    "The Parc Mediterrani de la Tecnologia and the UPC campus have brought telecoms and aerospace companies to Castelldefels with above-average requirements: high outlet density, full documentation and, in some cases, physical separation between management and user networks.",
+                    "On the hotel seafront the challenge is different and very concrete: install floor by floor without closing the hotel. We work wing by wing, always leaving half the building operational, with horizontal cabling from the floor cabinet and access points in the corridor — which distributes better than equipment inside each room and simplifies later maintenance.",
+                ],
+            },
+        ],
+        updated: '2026-09-08T00:00:00.000Z',
     },
     {
         slug: 'instalacion-red-mataro',
@@ -492,6 +617,23 @@ export const SEO_PAGES_EN: SEOPageConfig[] = [
             { q: 'Are prices the same as in Barcelona?', a: 'Yes, our prices are identical across the whole metropolitan area and Maresme. No distance surcharges.' },
             { q: "Do you install in Mataró's industrial estates?", a: "Yes, we have experience in the Pla d'en Boet estate and the Parc Empresarial La Mata. We install Cat6A for offices and Cat7 for industrial warehouses." },
         ],
+        richSections: [
+            {
+                h2: "Mataró: TecnoCampus, Pla d'en Boet and the textile city",
+                paragraphs: [
+                    "Mataró works as the capital of the Maresme and it shows in the kind of enquiry we get: not branches of Barcelona companies, but companies headquartered here that want their network solved once and properly. Around TecnoCampus and El Rengle the tenants are younger firms with open-plan offices and planned growth, so what matters is leaving containment with room for double the desks in place today.",
+                    "In Pla d'en Boet and Mata-Rocafonda the fabric is classic industrial, with knitwear and garment production still active in part. These are units where older machinery coexists with new management systems, and the most frequent job is getting a reliable network onto the shop floor without depending on WiFi bouncing between steel shelving.",
+                ],
+            },
+            {
+                h2: "Installing in a warehouse with high steel racking",
+                paragraphs: [
+                    "High-bay racking is probably the worst possible setting for a wireless network: metal reflects, aisles act as waveguides, and coverage changes completely depending on how full the warehouse is. A coverage map measured in January with empty racking is worthless in peak season.",
+                    "The answer we give in Mataró and across the Maresme is cable to the extremes and access points along the aisle centreline, not on the walls, with antennas aimed downward. It costs more to install than hanging two powerful units in the corners, but it is the difference between an RF handheld that always reads and one that fails exactly when there is work on.",
+                ],
+            },
+        ],
+        updated: '2026-09-08T00:00:00.000Z',
     },
     {
         slug: 'instalacion-red-granollers',
@@ -514,6 +656,23 @@ export const SEO_PAGES_EN: SEOPageConfig[] = [
             { q: "Do you install in Granollers' industrial estates?", a: 'Yes, we work in the Les Franqueses estate, Can Prat and the Parc Industrial de Granollers. For industrial warehouses we recommend Cat6A or Cat7 depending on interference.' },
             { q: 'Are prices the same as in Barcelona?', a: 'Yes, the same prices apply across Vallès Oriental. No travel surcharge for Granollers.' },
         ],
+        richSections: [
+            {
+                h2: "Granollers: logistics on the AP-7 and C-17",
+                paragraphs: [
+                    "The business fabric of Granollers is shaped by its position at the junction of the AP-7 and C-17, which has concentrated logistics and distribution in Font del Ràdium, Congost and Coll de la Manya. These are large-footprint units where cabling has to reach the loading dock, the traffic office and the picking area — three environments with different requirements inside one building.",
+                    "At the dock we install with reinforced mechanical protection, because that is where something will eventually strike the installation. In the traffic office what matters is desk density and continuity, since it is the point where the whole operation stops if the network drops. And in picking there are almost always RF handhelds, which depend on coverage quality far more than on bandwidth.",
+                ],
+            },
+            {
+                h2: "Food industry: cleaning with pressurised water",
+                paragraphs: [
+                    "Meat and food processing carry real weight in the Vallès Oriental and impose a requirement no other client raises: the installation has to survive daily cleaning with pressurised water and chemicals. Standard indoor material does not last in a cutting room.",
+                    "In these environments we work with industrial-grade enclosures and connectivity, rigid conduit instead of trunking, and sealing at every wall penetration so water finds no path into the containment. Active equipment always sits outside the process area in a plant room, with only pass-through cabling entering the wet zone.",
+                ],
+            },
+        ],
+        updated: '2026-09-08T00:00:00.000Z',
     },
     {
         slug: 'instalacion-fibra-optica-barcelona',

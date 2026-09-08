@@ -356,6 +356,24 @@ export const SEO_PAGES_ES: SEOPageConfig[] = [
             { q: '¿Hacéis instalaciones en los polígonos de Badalona?', a: 'Sí, tenemos amplia experiencia en los polígonos Badalona Sud y Mas Rampinyo. Instalamos redes industriales Cat6A y Cat7 con canalización IP.' },
             { q: '¿Cuánto cuesta instalar red en Badalona?', a: 'Un punto Cat6 instalado desde 110€ IVA incluido, sin ningún recargo por estar en Badalona. Al ser empresa local, nuestros desplazamientos internos son gratuitos.' },
         ],
+        richSections: [
+            {
+                h2: "Badalona: del polígono de Les Guixeres al casco antiguo",
+                paragraphs: [
+                    "Tenemos la sede en Carrer Vitor Balaguer 33, así que Badalona no es para nosotros una zona de cobertura más: es el sitio donde recogemos el material por la mañana. Eso cambia el tipo de trabajo que podemos aceptar aquí — averías con desplazamiento en el mismo día, segundas visitas para rematar un detalle, o dejar un tramo tirado y volver al día siguiente sin cargar el presupuesto.",
+                    "En Les Guixeres y Badalona Sud trabajamos sobre todo con naves de techo alto, donde el problema no es el cable sino la bandeja: hay que salvar puentes grúa, luminarias y estructura metálica sin dejar el par trenzado pegado a las líneas de fuerza. Ahí tiramos Cat6A apantallado en bandeja de rejilla y separamos siempre la canalización de datos de la de potencia.",
+                    "El casco antiguo, Dalt de la Vila y Casagemes son el caso contrario: fincas antiguas, techos de bóveda catalana y regletas de teléfono que nadie ha tocado en treinta años. Aquí casi nunca se puede empotrar, así que trabajamos con canaleta de perfil bajo siguiendo rodapié y marcos de puerta, y cuando el propietario no quiere ver cable proponemos fibra fina por la fachada interior del patio de luces.",
+                ],
+            },
+            {
+                h2: "El eje sanitario de Can Ruti y la zona de Montigalà",
+                paragraphs: [
+                    "La ladera de Can Ruti concentra actividad sanitaria y de investigación alrededor del Hospital Germans Trias i Pujol. En este tipo de instalación lo que nos piden no es velocidad bruta sino trazabilidad: certificación de cada punto con equipo homologado, etiquetado por sala y plano final actualizado, porque un punto sin identificar en un entorno clínico es un punto que nadie se atreve a usar.",
+                    "En Montigalà, entre el centro comercial y los edificios de oficinas que lo rodean, la instalación típica es reforma sobre red existente: el cliente ya tiene cableado Cat5e de hace años y quiere subir a Cat6A sin cerrar el local. Solemos hacerlo por fases nocturnas, dejando la red antigua viva mientras montamos el rack nuevo en paralelo y migrando puesto a puesto.",
+                ],
+            },
+        ],
+        updated: '2026-09-08T00:00:00.000Z',
     },
     {
         slug: 'instalacion-red-sabadell',
@@ -378,6 +396,24 @@ export const SEO_PAGES_ES: SEOPageConfig[] = [
             { q: '¿Cuánto tardáis en llegar a Sabadell?', a: 'Desde nuestra sede en Badalona, llegamos a Sabadell en 30-40 minutos por la B-23. Podemos hacer visita técnica en el mismo día si contactas antes del mediodía.' },
             { q: '¿Instaláis en chalets de Sabadell?', a: 'Sí, hacemos instalaciones en viviendas unifamiliares. Usamos canaleta decorativa o empotrado según el tipo de construcción y la preferencia del cliente.' },
         ],
+        richSections: [
+            {
+                h2: "Sabadell: naves del Vallès y oficinas del Eix Macià",
+                paragraphs: [
+                    "Sabadell tiene dos redes distintas conviviendo en la misma ciudad. Por un lado los polígonos — Can Roqueta, Sant Pau de Riu-sec, Els Sagraments — donde predominan la metalurgia, la logística y los talleres, con maquinaria que mete ruido eléctrico en cualquier par sin apantallar. Por otro, el Eix Macià y el centro financiero, con oficinas de banca y servicios que necesitan puestos densos y silenciosos.",
+                    "En polígono la decisión técnica casi siempre es la misma y la explicamos antes de presupuestar: Cat6A S/FTP con drenaje de pantalla en ambos extremos. Cuesta más que un Cat6 U/UTP y hay clientes a los que no les compensa, pero en una nave con variadores de frecuencia y soldadura el cable sin pantalla acaba dando errores de CRC que nadie sabe atribuir.",
+                    "En el centro el problema es otro: fincas de los años sesenta y setenta con patinillos saturados de instalaciones antiguas. Antes de dar precio subimos a mirar el registro, porque la diferencia entre pasar por un tubo libre y tener que abrir una canalización nueva son varios cientos de euros que preferimos decir el primer día.",
+                ],
+            },
+            {
+                h2: "Herencia textil: rehabilitar un vapor sin romperlo",
+                paragraphs: [
+                    "Buena parte del suelo terciario de Sabadell son antiguas fábricas textiles rehabilitadas. Son edificios agradecidos para una red — naves diáfanas, mucha altura, pocas particiones — pero con dos condicionantes: forjados de vigueta que no siempre admiten taladro donde nos conviene, y protección patrimonial en fachadas y elementos estructurales.",
+                    "Nuestra forma de trabajar en estos espacios es no tocar el edificio más de lo imprescindible: bandeja vista bien alineada con la estructura existente, bajadas por columnas técnicas y racks murales cerrados en lugar de armarios de pie cuando el suelo no puede cargarse. El resultado se ve, pero se ve ordenado, que es lo que suele pedir el arquitecto de la reforma.",
+                ],
+            },
+        ],
+        updated: '2026-09-08T00:00:00.000Z',
     },
     {
         slug: 'instalacion-red-terrassa',
@@ -400,6 +436,23 @@ export const SEO_PAGES_ES: SEOPageConfig[] = [
             { q: '¿Tenéis experiencia en fábricas de Terrassa?', a: 'Sí, hemos instalado redes en naves industriales del sector textil y metalúrgico. Usamos Cat7 S/FTP para entornos con interferencias electromagnéticas.' },
             { q: '¿Qué tipo de cable recomendáis para una oficina en Terrassa?', a: 'Para oficinas en Terrassa recomendamos Cat6A (10 Gbps). Es el estándar actual para nuevas instalaciones empresariales y la mejor inversión a medio plazo.' },
         ],
+        richSections: [
+            {
+                h2: "Terrassa: parque tecnológico, universidad y polígonos",
+                paragraphs: [
+                    "Terrassa concentra un tipo de cliente que en otras ciudades del Vallès aparece menos: ingeniería y empresa técnica ligada a la ESEIAAT y al entorno universitario. Son clientes que llegan con el plano hecho y una idea clara de lo que quieren, y lo que esperan de nosotros es ejecución limpia y certificación entregada en formato digital, no una propuesta de diseño.",
+                    "En los polígonos — Can Petit, Els Bellots, Santa Margarida, Can Parellada — el trabajo se parece más al de Sabadell: naves, ruido eléctrico y necesidad de segmentar. Donde sí cambia el planteamiento es en las empresas con laboratorio o banco de pruebas, porque conviven equipos de medida sensibles con maquinaria de potencia y hay que separar físicamente los recorridos, no solo por VLAN.",
+                ],
+            },
+            {
+                h2: "Cuándo la fibra sale más barata que el cobre",
+                paragraphs: [
+                    "En Terrassa nos encontramos a menudo con recintos separados: nave y oficina en parcelas distintas, o un edificio con dos alas unidas por un patio. En cuanto la distancia entre racks supera los 90 metros el cobre deja de ser una opción y hay que ir a fibra, y conviene saberlo antes de firmar, no cuando el instalador ya está en obra.",
+                    "Para estos enlaces montamos fibra multimodo OM4 si el tramo es interior y corto, o monomodo G.652D si hay que cruzar exterior o dejar margen para crecer. Fusionamos con arco, medimos con OTDR y entregamos el informe de pérdidas de cada empalme. Un enlace bien hecho de este tipo dura toda la vida útil del edificio y evita repetir la obra dentro de cinco años.",
+                ],
+            },
+        ],
+        updated: '2026-09-08T00:00:00.000Z',
     },
     {
         slug: 'instalacion-red-sant-cugat',
@@ -423,6 +476,24 @@ export const SEO_PAGES_ES: SEOPageConfig[] = [
             { q: '¿Instaláis en las empresas del Parc Empresarial Can Sant Joan?', a: 'Sí, tenemos experiencia en el parque empresarial. Instalamos fuera de horario laboral para no interrumpir la actividad y entregamos documentación completa.' },
             { q: '¿Podéis hacer la instalación empotrada sin hacer mucha obra?', a: 'Sí, usamos técnicas de canalización por falso techo técnico o empotrado mínimo por las tabiques. En viviendas de nueva construcción siempre recomendamos empotrado completo.' },
         ],
+        richSections: [
+            {
+                h2: "Sant Cugat: sedes corporativas y casas de gran superficie",
+                paragraphs: [
+                    "Sant Cugat del Vallès reúne dos encargos que en otras ciudades rara vez coinciden. En Can Sant Joan y el parque empresarial trabajamos con sedes corporativas que traen su propio departamento de sistemas: allí no decidimos la arquitectura, ejecutamos un pliego y lo que se valora es cumplir plazos de obra y entregar certificación completa sin una sola incidencia pendiente.",
+                    "En Mira-sol, Valldoreix y La Floresta el cliente es una vivienda unifamiliar de dos o tres plantas con jardín, y el problema técnico es la distancia. Una casa de 400 m² repartida en altura no se resuelve con un router en el salón: hace falta un punto de acceso por planta, alimentado por PoE desde un pequeño rack en el sótano o el garaje, con cableado Cat6A tirado antes de cerrar los falsos techos si la obra lo permite.",
+                    "Cuando la casa ya está acabada y no se puede abrir pared, el recorrido suele ir por el exterior. Usamos cable con cubierta resistente a UV grapado bajo el alero y entramos por el punto más discreto de cada estancia. No es la solución más elegante, pero es reversible y no obliga a repicar tabiques.",
+                ],
+            },
+            {
+                h2: "Cobertura de jardín, piscina y edificaciones anexas",
+                paragraphs: [
+                    "Una petición habitual en Sant Cugat es llevar red a un anexo: estudio en el jardín, casa de invitados, caseta de piscina o garaje separado. Si hay menos de 90 metros de recorrido real, incluido lo que sube y baja por muros, va cobre directo enterrado en tubo corrugado. Por encima de esa distancia, o si hay que cruzar una zona con acometida eléctrica, pasamos a fibra para evitar diferencias de potencial entre edificios.",
+                    "El punto que más se olvida en estas instalaciones es la protección: un cable de datos que sale al exterior y entra en otro edificio necesita protector de sobretensiones en ambos extremos. Es una pieza barata que evita perder un switch entero en la primera tormenta seria del otoño.",
+                ],
+            },
+        ],
+        updated: '2026-09-08T00:00:00.000Z',
     },
     {
         slug: 'instalacion-red-cornella',
@@ -445,6 +516,24 @@ export const SEO_PAGES_ES: SEOPageConfig[] = [
             { q: '¿Instaláis en los polígonos industriales de Cornellà?', a: 'Sí, tenemos experiencia en el Polígon Gran Via Sud y la zona industrial de la Almeda. Instalamos Cat6A y Cat7 para entornos industriales.' },
             { q: '¿Cuánto cuesta instalar red en Cornellà?', a: 'Aplicamos los mismos precios que en Barcelona ciudad. Punto Cat6 desde 110€ IVA incluido, sin recargo por desplazamiento.' },
         ],
+        richSections: [
+            {
+                h2: "Cornellà: Almeda, un parque de oficinas con reglas propias",
+                paragraphs: [
+                    "Almeda Park y el entorno del World Trade Center concentran la mayor parte de nuestro trabajo en Cornellà, y es un entorno con condicionantes que conviene conocer antes de presupuestar. Son edificios de oficinas en alquiler, con normativa interna de obra, horarios de acceso restringidos y, casi siempre, obligación de trabajar fuera del horario laboral del resto de inquilinos.",
+                    "Eso significa que el precio de una instalación aquí no depende solo de los metros de cable: depende de si podemos entrar a las nueve de la mañana o hay que montar de noche, y de si el edificio exige seguro de responsabilidad civil específico y personal acreditado. Lo preguntamos en la primera visita porque cambia el presupuesto de forma sustancial.",
+                    "Técnicamente son instalaciones cómodas: suelo técnico registrable, falso techo accesible y patinillos verticales dimensionados. Se puede planificar una planta entera con densidad alta de puestos sin pelearse con la obra civil, que es lo contrario de lo que nos encontramos en el casco urbano.",
+                ],
+            },
+            {
+                h2: "Sant Ildefons, Gavarra y la red doméstica en bloque",
+                paragraphs: [
+                    "Los barrios residenciales de Cornellà son mayoritariamente bloques de vivienda de los años sesenta y setenta. En un piso de estas características el trabajo consiste casi siempre en llevar dos o tres puntos desde el recibidor, donde entra la fibra del operador, hasta el despacho y el salón, sorteando una distribución con pasillo largo y estancias en línea.",
+                    "Trabajamos con canaleta blanca de perfil bajo por rodapié, que en estas viviendas queda mucho más limpia de lo que la gente espera, y dejamos roseta empotrada en cada estancia en lugar de cable suelto. Cuando la comunidad lo permite y hay tubo libre desde el rellano, aprovechamos la canalización existente y no se ve nada.",
+                ],
+            },
+        ],
+        updated: '2026-09-08T00:00:00.000Z',
     },
     {
         slug: 'instalacion-red-sant-boi',
@@ -467,6 +556,24 @@ export const SEO_PAGES_ES: SEOPageConfig[] = [
             { q: '¿Hacéis instalaciones en los polígonos de Sant Boi?', a: 'Sí, instalamos en el Polígon Fontsanta y Can Gambús. Para entornos industriales recomendamos Cat6A o Cat7 según el nivel de interferencias.' },
             { q: '¿Cuánto cuesta instalar red en Sant Boi?', a: 'Mismos precios que en Barcelona. Punto Cat6 desde 110€ IVA incluido. Sin recargo por desplazamiento al Baix Llobregat.' },
         ],
+        richSections: [
+            {
+                h2: "Sant Boi: invernadero, industria y el Parc Agrari",
+                paragraphs: [
+                    "Sant Boi tiene un perfil que no se repite en el resto del Baix Llobregat: junto a los polígonos convencionales de Salinas y Sant Boi Nord está el Parc Agrari, con explotaciones que se han ido digitalizando. Instalar red en un invernadero no se parece a instalar en una nave: hay humedad permanente, condensación, riego por aspersión y estructura metálica que lo complica todo.",
+                    "Ahí no vale material de interior. Usamos cable con cubierta apta para exterior, cajas con grado de protección IP adecuado y puntos de acceso preparados para ambiente húmedo. Los equipos activos van siempre en un armario estanco en zona técnica, nunca colgados en el propio invernadero, por mucho que quede más cerca del punto de servicio.",
+                    "En las explotaciones con sensórica de riego y control de clima el requisito real no es el ancho de banda sino la continuidad: una red que se cae media hora no rompe nada en una oficina, pero en un ciclo de riego automatizado sí. Por eso planteamos alimentación protegida para el rack y, cuando el presupuesto lo permite, un enlace de respaldo.",
+                ],
+            },
+            {
+                h2: "Cercanía al aeropuerto y entornos con mucha radiofrecuencia",
+                paragraphs: [
+                    "La proximidad al aeropuerto y a los grandes ejes viarios hace que en algunas zonas de Sant Boi el espectro de 2,4 GHz esté especialmente cargado. Es una de esas cosas que no se detectan hasta que el WiFi va mal sin motivo aparente y el cliente lleva meses culpando al operador.",
+                    "Cuando pasa esto hacemos un estudio de canales antes de tocar nada y, si el entorno lo justifica, planteamos la cobertura en 5 GHz con más puntos de acceso de menor potencia en lugar de pocos y muy potentes. Casi siempre la solución real es cable: llevar Ethernet hasta donde está el usuario y dejar el WiFi solo para lo que de verdad tiene que ser inalámbrico.",
+                ],
+            },
+        ],
+        updated: '2026-09-08T00:00:00.000Z',
     },
     {
         slug: 'instalacion-red-castelldefels',
@@ -490,6 +597,24 @@ export const SEO_PAGES_ES: SEOPageConfig[] = [
             { q: '¿Instaláis en segunda residencia?', a: 'Sí, hacemos instalaciones en segunda residencia. Podemos coordinar el acceso con el servicio de limpieza o conserje y enviarte el informe de la instalación por email.' },
             { q: '¿Cuánto cuesta cablear un chalet en Castelldefels?', a: 'Un chalet de 2 plantas con 6-10 puntos de red y WiFi exterior cuesta entre 1.800€ y 3.200€ IVA incluido, según el tamaño y acabados. Pide presupuesto sin compromiso.' },
         ],
+        richSections: [
+            {
+                h2: "Castelldefels: chalets en ladera y el campus del Mediterrani",
+                paragraphs: [
+                    "En Castelldefels la instalación tipo es una vivienda unifamiliar en Bellamar, Montemar o Vista Alegre, y la dificultad no está en el cable sino en el terreno. Son parcelas en pendiente, con la casa en varios niveles y a menudo un anexo o un garaje a media ladera. Un único router en la planta principal deja siempre alguna estancia sin cobertura utilizable.",
+                    "Nuestro planteamiento habitual es un rack pequeño en el nivel inferior, cableado Cat6A a cada planta y puntos de acceso alimentados por PoE en el techo del pasillo de cada nivel, que es donde mejor reparten. Si hay piscina o porche con uso real, se lleva un punto exterior con equipo preparado para intemperie, no un doméstico metido en una caja.",
+                    "La cercanía al mar añade un factor que en el interior no existe: salinidad. En instalaciones exteriores usamos herrajes y cajas resistentes a la corrosión, porque el material estándar en primera línea se degrada en un par de temporadas y luego la avería aparece en el sitio más incómodo.",
+                ],
+            },
+            {
+                h2: "Hoteles del paseo marítimo y el entorno tecnológico de la UPC",
+                paragraphs: [
+                    "El Parc Mediterrani de la Tecnologia y el campus de la UPC han traído a Castelldefels empresas de telecomunicaciones y aeronáutica con exigencias por encima de la media: densidad alta de puntos, documentación completa y, en algunos casos, separación física entre red de gestión y red de usuario.",
+                    "En el frente hotelero del paseo marítimo el reto es distinto y muy concreto: instalar por plantas sin cerrar el hotel. Trabajamos por alas, dejando siempre la mitad del edificio operativa, con cableado horizontal desde el armario de planta y puntos de acceso en pasillo, que da mejor reparto que el equipo dentro de cada habitación y simplifica el mantenimiento posterior.",
+                ],
+            },
+        ],
+        updated: '2026-09-08T00:00:00.000Z',
     },
     {
         slug: 'instalacion-red-mataro',
@@ -512,6 +637,23 @@ export const SEO_PAGES_ES: SEOPageConfig[] = [
             { q: '¿Los precios son iguales que en Barcelona?', a: 'Sí, nuestros precios son los mismos en toda el área metropolitana y el Maresme. Sin recargos por distancia.' },
             { q: '¿Instaláis en los polígonos de Mataró?', a: 'Sí, tenemos experiencia en el Polígon Pla d\'en Boet y el Parc Empresarial La Mata. Instalamos Cat6A para oficinas y Cat7 para naves industriales.' },
         ],
+        richSections: [
+            {
+                h2: "Mataró: TecnoCampus, Pla d'en Boet y la ciudad textil",
+                paragraphs: [
+                    "Mataró funciona como capital del Maresme y eso se nota en el tipo de encargo: no son sucursales de empresas de Barcelona, son empresas con sede aquí que quieren resolver su red de una vez. En el entorno del TecnoCampus y El Rengle predominan las empresas jóvenes, con oficina diáfana y crecimiento previsto, y ahí lo importante es dejar canalización con margen para el doble de puestos de los que hay hoy.",
+                    "En Pla d'en Boet y Mata-Rocafonda el tejido es industrial clásico, con parte de género de punto y confección todavía activo. Son naves donde conviven máquinas antiguas y sistemas de gestión nuevos, y el trabajo más frecuente es llevar red fiable hasta el taller sin depender del WiFi que rebota entre estanterías metálicas.",
+                ],
+            },
+            {
+                h2: "Instalar en una nave con estanterías metálicas altas",
+                paragraphs: [
+                    "El almacén con racking alto es probablemente el peor escenario posible para una red inalámbrica: el metal refleja, los pasillos actúan como guías de onda y la cobertura cambia por completo según lo lleno que esté el almacén. Un mapa de cobertura medido en enero con las estanterías vacías no sirve en temporada alta.",
+                    "La solución que damos en Mataró y en todo el Maresme es cableado hasta los extremos y puntos de acceso en el eje de los pasillos, no en las paredes, con antenas orientadas hacia abajo. Sale más caro en instalación que colgar dos equipos potentes en las esquinas, pero es la diferencia entre un terminal de radiofrecuencia que lee siempre y uno que falla justo cuando hay trabajo.",
+                ],
+            },
+        ],
+        updated: '2026-09-08T00:00:00.000Z',
     },
     {
         slug: 'instalacion-red-granollers',
@@ -534,6 +676,23 @@ export const SEO_PAGES_ES: SEOPageConfig[] = [
             { q: '¿Instaláis en los polígonos de Granollers?', a: 'Sí, trabajamos en el Polígon Les Franqueses, Can Prat y el Parc Industrial de Granollers. Para naves industriales recomendamos Cat6A o Cat7 según las interferencias.' },
             { q: '¿Los precios son los mismos que en Barcelona?', a: 'Sí, mismos precios en todo el Vallès Oriental. Sin recargo por desplazamiento a Granollers.' },
         ],
+        richSections: [
+            {
+                h2: "Granollers: logística sobre la AP-7 y la C-17",
+                paragraphs: [
+                    "El tejido empresarial de Granollers está marcado por su posición en el cruce de la AP-7 y la C-17, lo que ha concentrado logística y distribución en Font del Ràdium, Congost y Coll de la Manya. Son naves de gran superficie donde el cableado tiene que llegar a muelle de carga, oficina de tráfico y zona de picking, tres entornos con requisitos distintos dentro del mismo edificio.",
+                    "En muelle instalamos con protección mecánica reforzada, porque es la zona donde antes o después algo golpea la instalación. En la oficina de tráfico prima la densidad de puestos y la continuidad, ya que es el punto donde se para toda la operación si cae la red. Y en picking casi siempre hay terminales de radiofrecuencia, que dependen más de la calidad de la cobertura que del ancho de banda.",
+                ],
+            },
+            {
+                h2: "Industria alimentaria: limpieza con agua a presión",
+                paragraphs: [
+                    "El sector cárnico y alimentario tiene un peso importante en el Vallès Oriental y plantea una exigencia que no aparece en ningún otro cliente: la instalación tiene que aguantar limpiezas diarias con agua a presión y productos químicos. El material de interior estándar no dura en una sala de despiece.",
+                    "En estos entornos trabajamos con cajas y conectividad de grado industrial, tubo rígido en lugar de canaleta y sellado en cada paso de tabique, para que el agua no encuentre camino hacia el interior de la canalización. El equipamiento activo va siempre fuera de la sala de proceso, en un local técnico, con solo el cableado pasante entrando en zona húmeda.",
+                ],
+            },
+        ],
+        updated: '2026-09-08T00:00:00.000Z',
     },
 
     /* ═══════════════════════════════════════════

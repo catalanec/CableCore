@@ -49,11 +49,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
         }))
     );
 
-    // SEO landing pages — high priority for primary locale
+    // SEO landing pages — high priority for primary locale.
+    // Each page reports its own `updated` date: a shared constant told Google
+    // nothing had changed since July and it stopped re-crawling the section.
     const seoUrls = SEO_PAGES.flatMap(page =>
         ALL_LOCALES.map(locale => ({
             url: `${BASE_URL}/${locale}/servicios/${page.slug}`,
-            lastModified: STATIC_LAST_MODIFIED,
+            lastModified: page.updated ?? STATIC_LAST_MODIFIED,
             changeFrequency: 'weekly' as const,
             priority: locale === PRIMARY_LOCALE ? 0.9 : 0.4,
             alternates: generateAlternates(`/servicios/${page.slug}`),
