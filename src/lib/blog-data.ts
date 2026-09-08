@@ -25,8 +25,13 @@ interface MultiLangArticle {
 }
 
 import blogData from './blog-data.json';
+import { dedupeBySlug } from './blog-dedup';
 
-const MULTILANG_ARTICLES: MultiLangArticle[] = blogData as MultiLangArticle[];;
+// Defence in depth: the publisher now refuses a duplicate slug, but a
+// repeat that lands here anyway would reach the sitemap and the blog
+// index — which is exactly where the 2026-09-04 duplicate did its damage,
+// since route lookup uses find() and hides it.
+const MULTILANG_ARTICLES: MultiLangArticle[] = dedupeBySlug(blogData as MultiLangArticle[]);
 
 /** Get blog articles for a specific locale */
 export function getBlogArticles(locale: string): BlogArticle[] {

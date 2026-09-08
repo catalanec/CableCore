@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import { isDuplicateSlug } from '@/lib/blog-dedup';
 
 export const maxDuration = 60; // Allow function to run up to 60 seconds (critical for LLM generation)
 export const dynamic = 'force-dynamic';
@@ -146,6 +147,21 @@ Generate a deep, professional tech blog post translated accurately into 3 langua
         
         const newArticle = JSON.parse(articleJsonStr);
         newArticle.date = dateNow; // Ensure absolute current date format
+
+        // The prompt above lists every published slug and asks the model not
+        // to repeat one. On 2026-09-04 it repeated
+        // 'cableado-de-red-para-coworkings-y-espacios-de-oficina-compartida',
+        // already published on 2026-07-24, and this route appended it without
+        // looking — putting all three of its locale URLs in the sitemap twice
+        // and rendering the article twice on the blog index. A prompt is a
+        // request; this is the constraint.
+        if (isDuplicateSlug(currentBlogs, newArticle.slug ?? '')) {
+            console.warn(`[cron/blog] refusing duplicate slug: ${newArticle.slug}`);
+            return NextResponse.json(
+                { success: false, reason: 'duplicate-slug', slug: newArticle.slug },
+                { status: 200 },
+            );
+        }
 
         // 4. Prepend to current blogs
         currentBlogs.unshift(newArticle);
