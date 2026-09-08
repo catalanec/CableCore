@@ -5,6 +5,7 @@ import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
 import { Link } from '@/i18n/routing';
 import { getBlogArticles, BLOG_ARTICLES } from '@/lib/blog-data';
+import { pickRelatedArticles } from '@/lib/related-articles';
 import Breadcrumbs from '@/components/seo/Breadcrumbs';
 import type { Metadata } from 'next';
 
@@ -74,6 +75,8 @@ export default function BlogArticlePage({ params }: { params: { slug: string } }
     const p = useTranslations('pages.blog');
 
     if (!article) notFound();
+
+    const related = pickRelatedArticles(articles, article, 4);
 
     const BASE_URL = 'https://cablecore.es';
     const articleUrl = `${BASE_URL}/${locale}/blog/${article.slug}`;
@@ -248,8 +251,32 @@ export default function BlogArticlePage({ params }: { params: { slug: string } }
                 {/* ═══════════════ INTERNAL LINKS ═══════════════ */}
                 <section className="py-16 lg:py-24">
                     <div className="container-custom max-w-3xl mx-auto">
+                        {/* Real sibling articles. Until these existed every post had a
+                            single inbound link — the blog index — so a crawler that
+                            reached one found no way onward. */}
+                        {related.length > 0 && (
+                            <>
+                                <h2 className="font-heading text-2xl font-bold text-white mb-6">
+                                    {p('relatedArticles')}
+                                </h2>
+                                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-14">
+                                    {related.map((r) => (
+                                        <Link
+                                            key={r.slug}
+                                            href={`/blog/${r.slug}`}
+                                            className="card p-5 hover:border-brand-gold/30 transition-all block"
+                                        >
+                                            <p className="text-xs text-brand-gold-muted mb-2">{r.category} · {r.readTime}</p>
+                                            <h3 className="font-heading text-base font-bold text-white mb-2 leading-snug">{r.title}</h3>
+                                            <p className="text-sm text-brand-gold-muted line-clamp-3">{r.excerpt}</p>
+                                        </Link>
+                                    ))}
+                                </div>
+                            </>
+                        )}
+
                         <h2 className="font-heading text-2xl font-bold text-white mb-6">
-                            {p('relatedArticles')}
+                            {p('servicesAndTools')}
                         </h2>
                         <div className="grid grid-cols-1 sm:grid-cols-4 gap-4">
                             <Link href="/servicios/instalacion-cable-red-barcelona" className="card p-5 text-center hover:border-brand-gold/30 transition-all">
