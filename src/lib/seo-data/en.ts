@@ -65,6 +65,23 @@ export const SEO_PAGES_EN: SEOPageConfig[] = [
             { q: 'What is the difference between Cat5e and Cat6?', a: 'Cat6 supports speeds up to 1 Gbps over 100 meters, while Cat5e supports up to 100 Mbps, with better shielding against interference.' },
             { q: 'Is Cat6 sufficient for my office?', a: 'For small offices with up to 10 employees, Cat6 is an excellent choice. If you need more than 1 Gbps, consider Cat6A.' },
         ],
+        richSections: [
+            {
+                h2: "How far Cat6 actually reaches",
+                paragraphs: [
+                    "Cat6 carries 1 Gbps over 100 metres without argument, and 10 Gbps only up to 37-55 metres depending on how much interference the environment carries. That distinction decides most installations: if the rack sits in the middle of the floor and no desk is more than 40 metres of real cable away, Cat6 delivers 10 Gbps and there is no need to pay for Cat6A.",
+                    "The common mistake is measuring the distance in a straight line on the drawing. The cable climbs into the ceiling void, runs the corridor, drops down the partition and still needs a metre and a half of slack at each end. A desk 25 metres away on paper usually consumes 40 metres of cable. That is why we measure the real route before choosing a category.",
+                ],
+            },
+            {
+                h2: "When Cat6 is the right call and when it is not",
+                paragraphs: [
+                    "Cat6 is the sensible option for medium-sized offices, retail, homes and any installation where the real traffic is desk work, video calls and access to a local server. It costs less than Cat6A, is thinner, handles better in tight containment and tolerates a smaller bend radius.",
+                    "We do not recommend it in units with heavy machinery, or where the client already knows they will be moving uncompressed video, bulk backups or 10 Gbps network storage over long runs. There the initial saving gets paid twice over, because the upgrade means opening the same containment all over again.",
+                ],
+            },
+        ],
+        updated: '2026-09-09T00:00:00.000Z',
     },
     {
         slug: 'instalacion-cat6a-barcelona',
@@ -86,6 +103,23 @@ export const SEO_PAGES_EN: SEOPageConfig[] = [
             { q: 'Is Cat6A worth it over Cat6?', a: 'If your company handles large volumes of data or you plan to grow in the next 5-10 years, Cat6A is a smart investment.' },
             { q: 'Will Cat6A work with my current devices?', a: 'Yes, Cat6A is backward compatible with Cat6 and Cat5e. You can upgrade without changing your standard switches or routers.' },
         ],
+        richSections: [
+            {
+                h2: "What Cat6A solves that Cat6 does not",
+                paragraphs: [
+                    "The real difference with Cat6A is not 10 Gbps at 100 metres but alien crosstalk: interference between separate cables bundled along the same route. In a run of thirty cables on one tray, that is what degrades the link when everything transmits at once, and it is precisely the scenario Cat6 was never designed to cover.",
+                    "So Cat6A earns its place in dense installations: office floors with many desks, small data rooms, buildings where the backbone shares a route with dozens of links. In a house with six scattered outlets the advantage is marginal and the extra cost is not justified.",
+                ],
+            },
+            {
+                h2: "It is thicker, and that changes the build",
+                paragraphs: [
+                    "Cat6A U/FTP has a noticeably larger diameter than Cat6 and tolerates a much larger bend radius. That governs conduit fill, bends and draw boxes: containment that swallows six Cat6 runs may take only three or four in Cat6A, and forcing it deforms the cable and destroys the very performance that was paid for.",
+                    "We check this before quoting, because it is the difference between reusing existing containment and having to form a new route. It also matters in the rack: Cat6A patch leads take more space and demand more cabinet depth and stricter cable management for the doors to close.",
+                ],
+            },
+        ],
+        updated: '2026-09-09T00:00:00.000Z',
     },
     {
         slug: 'instalacion-cat7-barcelona',
@@ -107,6 +141,23 @@ export const SEO_PAGES_EN: SEOPageConfig[] = [
             { q: 'When do I need Cat7?', a: 'When the environment has significant electromagnetic interference (factories, server rooms) or you need maximum signal quality.' },
             { q: 'Is Cat7 compatible with my equipment?', a: 'Yes, Cat7 featuring RJ45 connectors is fully compatible with all standard networking hardware.' },
         ],
+        richSections: [
+            {
+                h2: "Cat7 and the connector problem",
+                paragraphs: [
+                    "Cat7 is a cable standard, not a connector standard. Its specifications are defined with GG45 or TERA connectors, which almost nobody installs: network equipment on the market takes RJ45. In practice the vast majority of installations described as Cat7 terminate in an RJ45, and at that moment the link no longer meets Cat7 in the strict sense.",
+                    "We say this plainly because it is where clients are most often misinformed. If the goal is certified 10 Gbps over standard connectivity, the correct answer today is Cat6A. If the goal is maximum shielding against interference, Cat7 S/FTP does deliver real value: every pair shielded individually plus an overall screen.",
+                ],
+            },
+            {
+                h2: "Where Cat7 shielding pays for itself",
+                paragraphs: [
+                    "Individual pair shielding earns its cost in electromagnetically hostile settings: rooms with variable-frequency drives, production lines, forced proximity to power containment, lift shafts, welding equipment. There the immunity of Cat7 is not marketing — it is measured in errors that stop appearing.",
+                    "Shielding only works if it is properly bonded to earth. An S/FTP cable with a broken screen, or one bonded at a single end, can behave worse than good unshielded cable, because the screen then acts as an aerial. It is the part most often neglected in cheap installations, and the first thing we check when called to diagnose a shielded network that misbehaves.",
+                ],
+            },
+        ],
+        updated: '2026-09-09T00:00:00.000Z',
     },
     {
         slug: 'instalador-rj45-barcelona',
@@ -127,6 +178,23 @@ export const SEO_PAGES_EN: SEOPageConfig[] = [
         faq: [
             { q: 'How much does it cost to install an RJ45 port?', a: 'An installed and tested RJ45 port ranges from €15 (connector only) to €45-85 (full point with cabling and faceplate).' },
         ],
+        richSections: [
+            {
+                h2: "Plug or outlet: they are not interchangeable",
+                paragraphs: [
+                    "The structured cabling standard does not provide for terminating solid cable in a male plug inside the wall. Installation cable is solid core and is meant to be punched down into an outlet or patch panel; patch leads are the ones carrying RJ45 plugs, because their stranded conductors tolerate being moved.",
+                    "When someone crimps an RJ45 straight onto solid cable and leaves it hanging out of the wall, the link works on day one and fails months later, when somebody tugs it while moving a desk. Repair means redoing the whole outlet. So we always fit an outlet or patch panel and leave the patch lead as the sacrificial part.",
+                ],
+            },
+            {
+                h2: "T568A or T568B: pick one and do not mix",
+                paragraphs: [
+                    "Both colour sequences work equally well and neither is technically superior. What causes faults is mixing them within one installation: terminate one end to A and the other to B and you have a crossover that, at gigabit, may even link thanks to auto-MDIX and leave a latent fault that is very hard to trace.",
+                    "When we come in to extend an existing network, the first thing we do is open an outlet and see which scheme was used, so we can continue with it. And on completion we certify every outlet with test equipment: wire map, length, attenuation and crosstalk, with a report handed over. An uncertified outlet is a deferred fault.",
+                ],
+            },
+        ],
+        updated: '2026-09-09T00:00:00.000Z',
     },
     {
         slug: 'instalacion-rack-red-barcelona',
@@ -148,6 +216,23 @@ export const SEO_PAGES_EN: SEOPageConfig[] = [
             { q: 'What size rack do I need?', a: 'For a small office, a 12U wall rack is usually enough. For more than 20 points, we recommend a floor rack starting at 22U.' },
             { q: 'Is the patch panel included?', a: 'We offer rack installation with and without patch panels. The integrated rack + patch panel bundle includes complete cable organization.' },
         ],
+        richSections: [
+            {
+                h2: "Size the rack by depth, not by rack units",
+                paragraphs: [
+                    "Almost everyone sizes a rack by counting heights and forgets depth, which is what actually ruins an installation. A modern switch with redundant power supplies can exceed 40 cm, and behind it there must be room for patch leads without forcing the bend radius. A wall cabinet 45 cm deep leaves the cable pressed against the door.",
+                    "As a practical guide: 60 cm wall cabinet for a comms cabinet holding a switch and patch panel; a floor cabinet of 80 cm or more if it will house a UPS, a server or rear-exit equipment. And always two free rack units above active kit, because hot air leaves upwards.",
+                ],
+            },
+            {
+                h2: "Ventilation, power and mounting order",
+                paragraphs: [
+                    "The order inside the cabinet is not cosmetic, it is thermal and operational. Patch panels at the top, active equipment below with a cable management panel between them, and the UPS at the very bottom because of its weight. If the cabinet sits in a closed room with no air change, it needs forced ventilation on a thermostat, not a permanently running fan that only draws in dust.",
+                    "For power we always fit a protected power strip and, where the client approves it, a UPS sized to hold up the switch and router long enough to ride out a short outage. A rack with no backup leaves the network dead through a brownout that does not even shut down the laptops.",
+                ],
+            },
+        ],
+        updated: '2026-09-09T00:00:00.000Z',
     },
     {
         slug: 'instalacion-red-oficina-barcelona',
@@ -169,6 +254,23 @@ export const SEO_PAGES_EN: SEOPageConfig[] = [
             { q: 'How much does it cost to set up an office network?', a: 'It depends on the scale: a 10-workstation setup starts around €1,500; a 20-workstation setup from €3,000; and 50 workstations from €6,000.' },
             { q: 'Can you work outside of business hours?', a: 'Yes, we conduct installations during night shifts or weekends to avoid halting your daily operations.' },
         ],
+        richSections: [
+            {
+                h2: "How many outlets per desk, and why two",
+                paragraphs: [
+                    "The rule we apply is two network outlets per workstation, not one. The second is not a luxury: it absorbs the IP phone, the shared printer, the docking station or a second machine, and it prevents the five-port consumer switch appearing under the desk, which is the origin of a good share of the faults we get called out to fix.",
+                    "On top of that come the outlets that serve no desk and are always missed on the drawing: ceiling WiFi access points, cameras, door entry, the meeting room display, the floor printer. Counting them at the start costs a conversation; adding them later costs opening the ceiling void again.",
+                ],
+            },
+            {
+                h2: "Installing without stopping the office",
+                paragraphs: [
+                    "Most of our office installations in Barcelona happen in a working business, not an empty shell. Cable pulling and rack build can be done in working hours with moderate disruption; what needs an out-of-hours window is swapping the active equipment and migrating desks.",
+                    "We work with the old network live while the new one is built alongside it, and migrate zone by zone. That way, if something does not behave as expected, it rolls back in minutes instead of leaving the whole company without a network at nine in the morning.",
+                ],
+            },
+        ],
+        updated: '2026-09-09T00:00:00.000Z',
     },
     {
         slug: 'instalacion-red-casa-barcelona',
@@ -190,6 +292,23 @@ export const SEO_PAGES_EN: SEOPageConfig[] = [
             { q: 'Can Ethernet be installed in an already built apartment?', a: 'Yes, we utilize decorative trunking or leverage existing empty telecommunications tubes. For renovations, we can seamlessly embed the cables.' },
             { q: 'How many network points do I need at home?', a: 'We recommend at least 2 points (living room and office). An ideal setup includes 4 points, covering bedrooms.' },
         ],
+        richSections: [
+            {
+                h2: "The Eixample flat and its conduits",
+                paragraphs: [
+                    "In Barcelona housing the variable that decides the budget is whether usable containment exists. In recent construction there is almost always conduit from the hallway to the rooms and the work is clean. In older Eixample or Gràcia buildings, with high ceilings and mouldings, often there is none, and the choice is between surface trunking and routing through the light well.",
+                    "Before quoting we open a box and check whether the existing conduit is free or already occupied by the electrical installation. Sharing conduit with power is not merely bad practice: it is the most frequent cause of a home network that behaves well by day and badly once the air conditioning starts.",
+                ],
+            },
+            {
+                h2: "WiFi that works across the whole home",
+                paragraphs: [
+                    "A long flat with a corridor and solid brick walls is not covered by a router in the hallway, however powerful it is. What we install instead is a wired access point at the centre of the home, and in large flats or duplexes, two PoE-powered units working under the same network name.",
+                    "The difference from a shop-bought repeater is that each access point has its own data cable back to the router, rather than relaying the signal over the air. A repeater halves the available bandwidth; a wired access point does not.",
+                ],
+            },
+        ],
+        updated: '2026-09-09T00:00:00.000Z',
     },
     {
         slug: 'instalacion-patch-panel-barcelona',
@@ -210,6 +329,23 @@ export const SEO_PAGES_EN: SEOPageConfig[] = [
         faq: [
             { q: 'What exactly is a patch panel?', a: 'A patch panel is a centralized hardware hub where building cables terminate. Short patch cords simply link these ports to your network switch.' },
         ],
+        richSections: [
+            {
+                h2: "The patch panel is what makes a network maintainable",
+                paragraphs: [
+                    "Without a patch panel, every installed cable lands directly on the switch. That means moving a desk, replacing a switch or tracing a fault involves handling the solid installation cable, which is not built for it and degrades with every tug. With a panel, everything touched day to day is a replaceable patch lead.",
+                    "We mount the panel with a management bar in front and the installation cable entering from behind with a service loop, so a port can be re-terminated in future without running short of cable. A panel fitted without that slack condemns every later repair.",
+                ],
+            },
+            {
+                h2: "Labelling: half the value of the job",
+                paragraphs: [
+                    "An unlabelled patch panel is worth exactly as much as no panel at all on the day something breaks. We label per port with the room reference and outlet number, the same reference is printed on the outlet at the far end, and we hand over a drawing and a cross-reference table.",
+                    "This is the part cut first when a price is being squeezed, and the part that costs most later: working out blind which port belongs to which room across a forty-outlet installation takes hours that exceed what proper labelling would have cost in the first place.",
+                ],
+            },
+        ],
+        updated: '2026-09-09T00:00:00.000Z',
     },
     {
         slug: 'instalacion-red-barcelona',

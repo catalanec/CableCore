@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import { buildSiteBlock, delta, TREND_WINDOW_DAYS } from './report';
 
 const SITE_URL = 'https://cablecore.es/';
 
@@ -135,7 +136,6 @@ function pemToArrayBuffer(pem: string): ArrayBuffer {
  */
 const GSC_LAG_DAYS = 3;
 const KEYWORD_WINDOW_DAYS = 28;
-const TREND_WINDOW_DAYS = 7;
 
 function dayOffset(days: number): string {
     return new Date(Date.now() - days * 86400000).toISOString().split('T')[0];
@@ -169,13 +169,6 @@ async function fetchSiteTotals(accessToken: string, startDate: string, endDate: 
 }
 
 /** "+72%" / "−9%" / "=" — a bare number cannot say whether things are improving. */
-function delta(now: number, before: number): string {
-    if (before === 0) return now > 0 ? '(nuevo)' : '';
-    const pct = Math.round(((now - before) / before) * 100);
-    if (pct === 0) return '(=)';
-    return pct > 0 ? `(+${pct}%)` : `(${pct}%)`;
-}
-
 async function queryGSC(accessToken: string): Promise<Array<{
     keyword: string;
     position: number | null;
@@ -358,18 +351,7 @@ export async function GET(request: Request) {
                     fetchSiteTotals(accessToken, dayOffset(GSC_LAG_DAYS + TREND_WINDOW_DAYS), dayOffset(GSC_LAG_DAYS)),
                     fetchSiteTotals(accessToken, dayOffset(GSC_LAG_DAYS + TREND_WINDOW_DAYS * 2), dayOffset(GSC_LAG_DAYS + TREND_WINDOW_DAYS + 1)),
                 ]);
-                siteBlock = [
-                    '━━━━━━━━━━━━━━',
-                    `🌐 <b>Todo el sitio (${TREND_WINDOW_DAYS} días vs. anteriores):</b>`,
-                    `• Clics: <b>${now.clicks}</b> ${delta(now.clicks, prev.clicks)} · antes ${prev.clicks}`,
-                    `• Impresiones: <b>${now.impressions}</b> ${delta(now.impressions, prev.impressions)} · antes ${prev.impressions}`,
-                    `• CTR: <b>${(now.ctr * 100).toFixed(2)}%</b> · antes ${(prev.ctr * 100).toFixed(2)}%`,
-                    now.position !== null && prev.position !== null
-                        ? `• Posición media: <b>${now.position.toFixed(1)}</b> · antes ${prev.position.toFixed(1)}`
-                        : '',
-                    '<i>Una posición media que empeora mientras suben las impresiones suele significar páginas nuevas entrando en el índice, no posiciones perdidas.</i>',
-                    '',
-                ].filter(Boolean);
+                siteBlock = buildSiteBlock(now, prev);
             } catch (e) {
                 console.error('[SEO cron] site totals failed', e);
             }

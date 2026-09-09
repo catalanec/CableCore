@@ -1,4 +1,5 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
+import { buildSiteBlock } from './report';
 
 function cronRequest(authed = true) {
     const headers: Record<string, string> = {};
@@ -136,5 +137,37 @@ describe('GET /api/cron/seo', () => {
         const telegramCall = fetchMock.mock.calls.find(([u]) => (u as string).includes('api.telegram.org'));
         expect(telegramCall).toBeDefined();
         expect(JSON.parse(telegramCall![1].body).text).toContain('SEO cron error');
+    });
+});
+
+describe('buildSiteBlock', () => {
+    const totals = (clicks: number, impressions: number, position: number) => ({
+        clicks,
+        impressions,
+        ctr: impressions === 0 ? 0 : clicks / impressions,
+        position,
+    });
+
+    it('does not claim the position is worsening when it actually improved', () => {
+        // The 8 Sept report read "una posición media que empeora" while position
+        // went 34.5 -> 34.1, which is an improvement.
+        const lines = buildSiteBlock(totals(9, 1526, 34.1), totals(16, 1417, 34.5));
+        expect(lines.join(' ')).not.toContain('empeora');
+    });
+
+    it('explains a genuinely worsening position when impressions rise', () => {
+        const lines = buildSiteBlock(totals(9, 1526, 36.0), totals(16, 1417, 34.5));
+        expect(lines.join(' ')).toContain('empeora');
+    });
+
+    it('flags that a swing on a handful of clicks is noise, not a trend', () => {
+        const lines = buildSiteBlock(totals(9, 1526, 34.1), totals(16, 1417, 34.5)).join(' ');
+        expect(lines).toContain('9');
+        expect(lines.toLowerCase()).toMatch(/ruido|variaci/);
+    });
+
+    it('does not call the change noise once clicks are numerous enough to mean something', () => {
+        const lines = buildSiteBlock(totals(120, 9000, 20.0), totals(200, 8000, 21.0)).join(' ');
+        expect(lines.toLowerCase()).not.toMatch(/ruido/);
     });
 });

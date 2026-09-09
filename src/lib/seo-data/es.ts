@@ -76,6 +76,23 @@ export const SEO_PAGES_ES: SEOPageConfig[] = [
             { q: '¿Cuál es la diferencia entre Cat5e y Cat6?', a: 'Cat6 soporta velocidades de hasta 1 Gbps a 100m vs 100 Mbps del Cat5e, con mejor blindaje contra interferencias.' },
             { q: '¿Cat6 es suficiente para mi oficina?', a: 'Para oficinas pequeñas con hasta 10 empleados, Cat6 es una excelente opción. Si necesitas más de 1 Gbps, considera Cat6A.' },
         ],
+        richSections: [
+            {
+                h2: "Hasta dónde llega Cat6 de verdad",
+                paragraphs: [
+                    "Cat6 transporta 1 Gbps a 100 metros sin discusión, y 10 Gbps solo hasta 37-55 metros según el nivel de interferencia del entorno. Ese matiz es el que decide la mayoría de instalaciones: si el rack está en el centro de la planta y ningún puesto queda a más de 40 metros de cable real, Cat6 da 10 Gbps y no hace falta pagar Cat6A.",
+                    "El error habitual es medir la distancia en línea recta sobre el plano. El cable sube al falso techo, recorre el pasillo, baja por el tabique y todavía necesita metro y medio de holgura en cada extremo. Un puesto que en plano está a 25 metros suele consumir 40 de cable. Por eso medimos el recorrido real antes de decidir la categoría.",
+                ],
+            },
+            {
+                h2: "Cuándo Cat6 es la elección correcta y cuándo no",
+                paragraphs: [
+                    "Cat6 es la opción sensata para oficinas de tamaño medio, comercio, vivienda y cualquier instalación donde el tráfico real sea trabajo de despacho, videollamada y acceso a servidor local. Sale más barato que Cat6A, es más delgado, se maneja mejor en canalizaciones estrechas y admite radios de curvatura más cerrados.",
+                    "No lo recomendamos en naves con maquinaria pesada ni donde el cliente ya sabe que va a mover vídeo sin comprimir, copias masivas o almacenamiento en red a 10 Gbps sobre distancias largas. Ahí el ahorro inicial se paga dos veces, porque la reforma implica volver a abrir las mismas canalizaciones.",
+                ],
+            },
+        ],
+        updated: '2026-09-09T00:00:00.000Z',
     },
     {
         slug: 'instalacion-cat6a-barcelona',
@@ -97,6 +114,23 @@ export const SEO_PAGES_ES: SEOPageConfig[] = [
             { q: '¿Merece la pena Cat6A frente a Cat6?', a: 'Si tu empresa maneja grandes volúmenes de datos o planeas crecer en los próximos 5-10 años, Cat6A es una inversión inteligente.' },
             { q: '¿Cat6A funciona con mis equipos actuales?', a: 'Sí, Cat6A es retrocompatible con Cat6 y Cat5e. Puedes actualizarte sin cambiar switches ni routers.' },
         ],
+        richSections: [
+            {
+                h2: "Lo que Cat6A resuelve y Cat6 no",
+                paragraphs: [
+                    "La diferencia real de Cat6A no son los 10 Gbps a 100 metros, sino el alien crosstalk: la diafonía entre cables distintos que van juntos en el mismo mazo. En un tendido de treinta cables por bandeja, es lo que degrada el enlace cuando todos transmiten a la vez, y es exactamente el escenario que Cat6 no está diseñado para cubrir.",
+                    "Por eso Cat6A tiene sentido en instalaciones densas: plantas de oficinas con muchos puestos, centros de datos pequeños, edificios donde el backbone comparte recorrido con decenas de enlaces. En un chalet con seis puntos repartidos, la ventaja es marginal y el sobrecoste no se justifica.",
+                ],
+            },
+            {
+                h2: "Es más grueso, y eso cambia la obra",
+                paragraphs: [
+                    "Un Cat6A U/FTP tiene bastante más diámetro que un Cat6 y admite mucho menos radio de curvatura. Eso condiciona el llenado de tubo, los codos y las cajas de registro: una canalización que traga seis Cat6 puede aceptar solo tres o cuatro Cat6A, y forzarlo deforma el cable y arruina las prestaciones por las que se pagó.",
+                    "Lo comprobamos antes de presupuestar, porque es la diferencia entre pasar por la canalización existente y tener que abrir una nueva. También pesa en el rack: los latiguillos Cat6A ocupan más y exigen más profundidad en el armario y una gestión de cable más disciplinada para que las puertas cierren.",
+                ],
+            },
+        ],
+        updated: '2026-09-09T00:00:00.000Z',
     },
     {
         slug: 'instalacion-cat7-barcelona',
@@ -118,6 +152,23 @@ export const SEO_PAGES_ES: SEOPageConfig[] = [
             { q: '¿Cuándo necesito Cat7?', a: 'Cuando el entorno tiene muchas interferencias electromagnéticas (fábricas, CPDs) o necesitas la máxima calidad de señal.' },
             { q: '¿Es compatible Cat7 con mis equipos?', a: 'Sí, Cat7 con conectores RJ45 es compatible con todo el equipo estándar.' },
         ],
+        richSections: [
+            {
+                h2: "Cat7 y el problema del conector",
+                paragraphs: [
+                    "Cat7 es una norma de cable, no de conector. Sus especificaciones se definen con conectores GG45 o TERA, que casi nadie instala: el equipamiento de red del mercado lleva RJ45. En la práctica, la inmensa mayoría de instalaciones llamadas Cat7 terminan en un RJ45, y en ese momento el enlace ya no cumple Cat7 en sentido estricto.",
+                    "Lo decimos abiertamente porque es donde el cliente suele estar mal informado. Si lo que se busca es 10 Gbps certificados con conectividad estándar, la respuesta correcta hoy es Cat6A. Si lo que se busca es blindaje máximo frente a interferencia, Cat7 S/FTP aporta valor real: cada par apantallado individualmente más pantalla general.",
+                ],
+            },
+            {
+                h2: "Dónde el blindaje de Cat7 se paga solo",
+                paragraphs: [
+                    "El apantallamiento individual por par tiene sentido en entornos electromagnéticamente hostiles: salas con variadores de frecuencia, líneas de producción, proximidad forzada a canalizaciones de potencia, ascensores, equipos de soldadura. Ahí la inmunidad de Cat7 no es marketing, se mide en errores que dejan de aparecer.",
+                    "El blindaje solo funciona si está bien puesto a tierra. Un cable S/FTP con la pantalla sin continuidad o conectada en un solo extremo puede comportarse peor que un buen cable sin pantalla, porque la pantalla actúa como antena. Es la parte que más se descuida en instalaciones baratas y la que revisamos primero cuando nos llaman a diagnosticar una red apantallada que falla.",
+                ],
+            },
+        ],
+        updated: '2026-09-09T00:00:00.000Z',
     },
     {
         slug: 'instalador-rj45-barcelona',
@@ -138,6 +189,23 @@ export const SEO_PAGES_ES: SEOPageConfig[] = [
         faq: [
             { q: '¿Cuánto cuesta instalar un punto RJ45?', a: 'Un punto RJ45 instalado y comprobado cuesta desde 15€ (solo conector) hasta 45-85€ (punto completo con cable y roseta).' },
         ],
+        richSections: [
+            {
+                h2: "Conector macho o roseta: no son intercambiables",
+                paragraphs: [
+                    "La norma de cableado estructurado no contempla terminar un cable rígido en un conector macho dentro de la pared. El cable de instalación es de hilo rígido y está pensado para conectarse por desplazamiento de aislante en una roseta o un patch panel; los latiguillos flexibles son los que llevan RJ45 macho, porque su hilo multifilar aguanta ser movido.",
+                    "Cuando alguien crimpa un RJ45 directamente en un cable rígido y lo deja colgando de la pared, el enlace funciona el primer día y falla meses después, cuando alguien tira del cable al mover una mesa. La reparación exige rehacer el punto entero. Por eso instalamos siempre roseta o patch panel y dejamos el latiguillo como pieza sacrificable.",
+                ],
+            },
+            {
+                h2: "T568A o T568B: elegir uno y no mezclarlo",
+                paragraphs: [
+                    "Las dos secuencias de colores funcionan igual de bien y ninguna es técnicamente superior. Lo que provoca averías es mezclarlas dentro de la misma instalación: si un extremo se remata en A y el otro en B, sale un cable cruzado que en gigabit puede incluso enlazar gracias al auto-MDIX y dejar un fallo latente muy difícil de localizar.",
+                    "Cuando entramos a ampliar una red existente, lo primero que hacemos es abrir una roseta y ver qué norma se usó, para continuar con la misma. Y al terminar certificamos cada punto con equipo de medida: mapa de hilos, longitud, atenuación y diafonía, con informe entregado. Un punto sin certificar es una avería aplazada.",
+                ],
+            },
+        ],
+        updated: '2026-09-09T00:00:00.000Z',
     },
     {
         slug: 'instalacion-rack-red-barcelona',
@@ -159,6 +227,23 @@ export const SEO_PAGES_ES: SEOPageConfig[] = [
             { q: '¿Qué tamaño de rack necesito?', a: 'Para una oficina pequeña, un rack de pared 12U es suficiente. Para más de 20 puntos, recomendamos rack de suelo desde 22U.' },
             { q: '¿Incluye el patch panel?', a: 'Ofrecemos instalación de rack con y sin patch panel. El rack con patch panel integrado incluye organización completa.' },
         ],
+        richSections: [
+            {
+                h2: "Elegir el rack por la profundidad, no por las U",
+                paragraphs: [
+                    "Casi todo el mundo dimensiona un rack contando alturas y se olvida de la profundidad, que es lo que de verdad arruina una instalación. Un switch moderno con fuente redundante puede pasar de 40 cm, y detrás necesita espacio para los latiguillos sin forzar el radio de curvatura. Un armario mural de 45 cm de fondo obliga a doblar el cable contra la puerta.",
+                    "Como referencia práctica: mural de 60 cm para un armario de comunicaciones con switch y patch panel; armario de pie de 80 cm o más si va a albergar SAI, servidor o equipamiento con salida trasera. Y siempre dos U libres por encima del equipo activo, porque el aire caliente sale por arriba.",
+                ],
+            },
+            {
+                h2: "Ventilación, alimentación y orden de montaje",
+                paragraphs: [
+                    "El orden dentro del armario no es estético, es térmico y operativo. Patch panels arriba, equipo activo debajo con su panel pasahilos entre medias, y el SAI abajo del todo por peso. Si el armario está en un cuarto cerrado sin renovación de aire, hace falta ventilación forzada con termostato, no un ventilador permanente que solo mete polvo.",
+                    "En alimentación entregamos siempre regleta con protección y, cuando el cliente lo aprueba, SAI dimensionado para sostener el switch y el router el tiempo suficiente para un corte breve. Un rack sin respaldo deja la red muerta ante un microcorte que ni siquiera apaga los ordenadores portátiles.",
+                ],
+            },
+        ],
+        updated: '2026-09-09T00:00:00.000Z',
     },
     {
         slug: 'instalacion-red-oficina-barcelona',
@@ -180,6 +265,23 @@ export const SEO_PAGES_ES: SEOPageConfig[] = [
             { q: '¿Cuánto cuesta montar la red de una oficina?', a: 'Depende del tamaño: una oficina de 10 puestos desde 2.200€ IVA incluido, de 20 puestos desde 3.500€ IVA incluido, y de 50 puestos desde 7.000€ IVA incluido. Incluye cableado Cat6A, rack, patch panel y switch.' },
             { q: '¿Podéis trabajar fuera de horario?', a: 'Sí, instalamos en horario nocturno o fines de semana para no interrumpir tu actividad.' },
         ],
+        richSections: [
+            {
+                h2: "Cuántos puntos por puesto, y por qué dos",
+                paragraphs: [
+                    "La regla que aplicamos es dos puntos de red por puesto de trabajo, no uno. El segundo no es lujo: absorbe el teléfono IP, la impresora compartida, la dockstation o el segundo equipo, y evita que aparezca un switch doméstico de cinco puertos debajo de la mesa, que es el origen de una parte importante de las averías que nos llaman a resolver.",
+                    "A eso se suman los puntos que no van a ningún puesto y siempre se olvidan en el plano: puntos de acceso WiFi en techo, cámaras, control de accesos, pantalla de sala de reuniones, impresora de planta. Contarlos al principio cuesta una conversación; añadirlos después cuesta abrir el falso techo otra vez.",
+                ],
+            },
+            {
+                h2: "Instalar sin parar la oficina",
+                paragraphs: [
+                    "La mayoría de nuestras instalaciones de oficina en Barcelona se hacen sobre una empresa en funcionamiento, no sobre un local vacío. El tendido y el montaje del rack se pueden hacer en horario laboral con molestia moderada; lo que exige ventana fuera de horario es el cambio de electrónica y la migración de puestos.",
+                    "Trabajamos dejando la red antigua operativa mientras se monta la nueva en paralelo, y migramos por zonas. Así, si algo no responde como se esperaba, se vuelve atrás en minutos en lugar de dejar a toda la plantilla sin red a las nueve de la mañana.",
+                ],
+            },
+        ],
+        updated: '2026-09-09T00:00:00.000Z',
     },
     {
         slug: 'instalacion-red-casa-barcelona',
@@ -201,6 +303,23 @@ export const SEO_PAGES_ES: SEOPageConfig[] = [
             { q: '¿Se puede instalar red Ethernet en un piso ya construido?', a: 'Sí, usamos canaleta decorativa o aprovechamos tubos existentes. En reformas, podemos empotrar el cable.' },
             { q: '¿Cuántos puntos de red necesito en casa?', a: 'Recomendamos mínimo 2 puntos (salón y despacho). Ideal: 4 puntos (añadiendo dormitorios).' },
         ],
+        richSections: [
+            {
+                h2: "El piso del Eixample y sus tubos",
+                paragraphs: [
+                    "En vivienda de Barcelona la variable que decide el presupuesto es si existe canalización utilizable. En obra reciente casi siempre hay tubo desde el recibidor a las estancias y el trabajo es limpio. En finca antigua del Eixample o Gràcia, con techos altos y molduras, muchas veces no lo hay, y la elección es entre canaleta vista o pasar por el patio de luces.",
+                    "Antes de dar precio abrimos una caja y comprobamos si el tubo existente está libre o lo ocupa ya la instalación eléctrica. Compartir tubo con potencia no es solo mala práctica: es la causa más frecuente de una red doméstica que va bien de día y mal cuando arranca el aire acondicionado.",
+                ],
+            },
+            {
+                h2: "WiFi que funciona en toda la casa",
+                paragraphs: [
+                    "Un piso alargado con pasillo largo y paredes de ladrillo macizo no se cubre con un router en el recibidor, por potente que sea. La solución que damos es un punto de acceso cableado en el centro de la vivienda, y en pisos grandes o dúplex, dos unidades alimentadas por PoE trabajando con el mismo nombre de red.",
+                    "La diferencia con un repetidor comprado en una tienda es que cada punto de acceso tiene su propio cable de datos hasta el router, sin repetir la señal por el aire. Un repetidor divide el ancho de banda disponible; un punto de acceso cableado no.",
+                ],
+            },
+        ],
+        updated: '2026-09-09T00:00:00.000Z',
     },
     {
         slug: 'instalacion-patch-panel-barcelona',
@@ -224,6 +343,23 @@ export const SEO_PAGES_ES: SEOPageConfig[] = [
             { q: '¿Cuánto cuesta instalar un patch panel en Barcelona?', a: 'Un patch panel de 24 puertos instalado y etiquetado cuesta desde 180€ (sin rack). Con rack de pared 12U incluye desde 350€. Pide presupuesto según tus necesidades.' },
             { q: '¿Puedo añadir un patch panel a una instalación existente?', a: 'Sí, siempre que los cables existentes lleguen al punto donde instalar el rack. Si los cables ya están en un armario, añadir el patch panel es una instalación de medio día.' },
         ],
+        richSections: [
+            {
+                h2: "El patch panel es lo que hace mantenible la red",
+                paragraphs: [
+                    "Sin patch panel, cada cable de la instalación llega directo al switch. Eso significa que mover un puesto, sustituir un switch o diagnosticar un fallo implica manipular el cable rígido de la instalación, que no está hecho para eso y se degrada con cada tirón. Con panel, todo lo que se toca a diario son latiguillos sustituibles.",
+                    "Instalamos el panel con peine ordenador delante y el cable de instalación entrando por detrás con su holgura de servicio, de modo que se pueda reterminar un puerto en el futuro sin quedarse corto de cable. Un panel montado sin esa holgura condena cualquier reparación posterior.",
+                ],
+            },
+            {
+                h2: "Etiquetado: la mitad del valor del trabajo",
+                paragraphs: [
+                    "Un patch panel sin etiquetar sirve exactamente igual que no tenerlo el día que hay una avería. Etiquetamos por puerto con la referencia de la sala y el número de punto, la misma referencia va impresa en la roseta del otro extremo, y entregamos plano y tabla de correspondencias.",
+                    "Esta es la parte que se recorta primero cuando se busca precio, y la que más cuesta después: identificar a ciegas qué puerto corresponde a qué sala en una instalación de cuarenta puntos son horas de trabajo que superan lo que costaba etiquetar bien desde el principio.",
+                ],
+            },
+        ],
+        updated: '2026-09-09T00:00:00.000Z',
     },
 
     /* ═══════════════════════════════════════════
