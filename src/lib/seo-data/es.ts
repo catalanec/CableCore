@@ -31,6 +31,23 @@ export const SEO_PAGES_ES: SEOPageConfig[] = [
             { q: '¿Ofrecéis garantía en la instalación?', a: 'Sí. Todas nuestras instalaciones tienen 5 años de garantía en materiales y mano de obra. Si un punto falla en ese periodo, lo reparamos sin coste.' },
             { q: '¿Podéis instalar cable de red en un piso de alquiler?', a: 'Sí, usando canaleta adhesiva que no daña paredes ni requiere permiso del propietario. Al finalizar el contrato, la canaleta se retira sin dejar rastro.' },
         ],
+        richSections: [
+            {
+                h2: "Qué determina el precio de un punto de red",
+                paragraphs: [
+                    "El precio por punto no depende del cable, que es la parte barata. Depende del recorrido: si hay canalización libre, si hay que abrir regata, si el falso techo es registrable, cuántos codos hay que salvar y a qué altura se trabaja. Un mismo punto puede variar al doble entre una oficina moderna y una finca antigua.",
+                    "Por eso no damos precio por teléfono sin ver el sitio. La visita técnica es gratuita y sirve exactamente para esto: medir recorridos reales, comprobar registros y decir un número que se va a sostener, en lugar de un precio orientativo que después sube durante la obra.",
+                ],
+            },
+            {
+                h2: "Cómo tendemos sin destrozar el acabado",
+                paragraphs: [
+                    "En vivienda y oficina acabada el objetivo es que la instalación se note lo menos posible. El orden que seguimos es: aprovechar canalización existente si está libre, después falso techo y suelo técnico, después canaleta de perfil bajo siguiendo líneas de la carpintería, y solo como última opción abrir regata.",
+                    "Cuando hay que pasar por zonas comunes o fachada, lo consultamos antes con la propiedad, porque es donde más problemas surgen después. Y dejamos siempre hilo guía en la canalización que usamos, para que la siguiente ampliación no obligue a repetir el trabajo de acceso.",
+                ],
+            },
+        ],
+        updated: '2026-09-09T00:00:00.000Z',
     },
     {
         slug: 'cableado-estructurado-barcelona',
@@ -55,6 +72,23 @@ export const SEO_PAGES_ES: SEOPageConfig[] = [
             { q: '¿Se puede hacer en un local ya construido?', a: 'Sí, trabajamos con canaleta cable, falso techo técnico y empotrado para adaptar la instalación a cualquier espacio. Previo a la instalación hacemos una visita técnica para evaluar las posibilidades.' },
             { q: '¿Qué diferencia hay entre Cat6 y Cat6A en cableado estructurado?', a: 'Cat6A soporta 10 Gbps hasta 100m y es el estándar recomendado para nuevas instalaciones empresariales. Cat6 soporta 1 Gbps y es suficiente para oficinas pequeñas con menos de 20 puestos.' },
         ],
+        richSections: [
+            {
+                h2: "Qué convierte un cableado en estructurado",
+                paragraphs: [
+                    "Cableado estructurado no significa cable ordenado. Es un sistema definido por la norma ISO/IEC 11801 y su equivalente europea EN 50173, que fija los subsistemas, las distancias máximas y los parámetros que cada enlace debe cumplir. Si una instalación no se puede certificar contra esos valores, no es cableado estructurado por mucho que esté bien peinado.",
+                    "En la práctica eso significa tres cosas concretas: topología en estrella desde un repartidor, 90 metros máximos de cable horizontal más 10 de latiguillos, y componentes de la misma categoría en todo el enlace. Un solo latiguillo Cat5e en un enlace Cat6A degrada el conjunto a Cat5e, y es el fallo más común que encontramos.",
+                ],
+            },
+            {
+                h2: "La certificación es lo que distingue el trabajo",
+                paragraphs: [
+                    "Certificar no es comprobar que el cable da enlace. Es medir con equipo homologado el mapa de hilos, la longitud, la atenuación, la diafonía en ambos extremos, la pérdida de retorno y el retardo, y contrastar cada valor contra el límite normativo de la categoría instalada.",
+                    "El informe resultante es lo que permite reclamar la garantía extendida del fabricante del sistema, y lo que demuestra ante un tercero que la instalación cumple. Sin él, el día que la red falle no hay forma de distinguir entre un problema de cableado y un problema de electrónica, y se acaba sustituyendo equipo que estaba sano.",
+                ],
+            },
+        ],
+        updated: '2026-09-09T00:00:00.000Z',
     },
     {
         slug: 'instalacion-cat6-barcelona',
@@ -898,6 +932,23 @@ export const SEO_PAGES_ES: SEOPageConfig[] = [
             { q: '¿Merece la pena fibra óptica para mi empresa?', a: 'Si manejas grandes volúmenes de datos, tienes varias sedes o necesitas enlaces superiores a 1 Gbps, la fibra óptica es la opción más rentable a largo plazo.' },
             { q: '¿Se puede usar fibra óptica junto con cable Ethernet?', a: 'Sí, es lo más habitual. La fibra se usa como backbone entre plantas o edificios, y el Ethernet Cat6A para la distribución a los puestos de trabajo.' },
         ],
+        richSections: [
+            {
+                h2: "Cuándo una empresa necesita fibra de verdad",
+                paragraphs: [
+                    "Muchas empresas piden fibra cuando lo que tienen es un problema de red local, no de acceso. Si el cuello de botella está entre el puesto y el servidor, una línea de fibra del operador no cambia nada: el tráfico ni siquiera sale del edificio. Lo miramos antes de proponer nada, porque la solución puede ser mucho más barata de lo que el cliente espera.",
+                    "La fibra propia sí es la respuesta en tres casos concretos: enlazar edificios o naves separadas, subir el backbone entre plantas por encima de lo que el cobre permite, y aislar eléctricamente dos zonas de la instalación. En esos tres, el cobre no es una alternativa peor sino directamente inviable.",
+                ],
+            },
+            {
+                h2: "Lo que entregamos al terminar",
+                paragraphs: [
+                    "Un enlace de fibra empresarial se entrega con documentación o no se ha entregado. Damos informe OTDR de cada hilo con la traza gráfica, tabla de pérdidas por empalme y conector, esquema del recorrido con ubicación de cajas de empalme, y etiquetado físico en ambos extremos.",
+                    "Esto no es burocracia: el día que el enlace falle, esa traza es lo que permite saber en qué metro está el problema en lugar de abrir el edificio entero. Sin línea base medida el día de la instalación, no hay con qué comparar y el diagnóstico empieza de cero.",
+                ],
+            },
+        ],
+        updated: '2026-09-09T00:00:00.000Z',
     },
     {
         slug: 'cableado-fibra-optica-interior-barcelona',
@@ -919,6 +970,23 @@ export const SEO_PAGES_ES: SEOPageConfig[] = [
             { q: '¿Se nota la instalación de fibra interior?', a: 'No si se hace bien. Usamos canaleta mini decorativa o falso techo para que la instalación sea prácticamente invisible.' },
             { q: '¿Qué tipo de cable se usa en interior?', a: 'Usamos cable tight-buffer monomodo con cubierta LSZH (baja emisión de humos), cumpliendo la normativa CPR de seguridad contra incendios.' },
         ],
+        richSections: [
+            {
+                h2: "Fibra dentro del edificio: qué tipo y por qué",
+                paragraphs: [
+                    "Para vertical de edificio y backbone entre plantas usamos monomodo G.657.A2, que tolera radios de curvatura muy cerrados sin penalización apreciable. Es la diferencia entre poder subir por un patinillo estrecho con codos reales y tener que buscar un recorrido más largo por falta de holgura.",
+                    "Cuando el enlace es corto y ya existe electrónica multimodo, OM4 sigue siendo válido y más barato en transceptores. Pero para obra nueva planteamos monomodo casi siempre: el coste del cable es similar y no impone un techo de distancia ni de velocidad al edificio dentro de diez años.",
+                ],
+            },
+            {
+                h2: "Cable interior no es cable exterior",
+                paragraphs: [
+                    "El cable de interior lleva cubierta libre de halógenos y baja emisión de humos, y eso no es un detalle de catálogo: en caso de incendio un cable con cubierta convencional dentro de un patinillo llena de humo tóxico las vías de evacuación del edificio. Es requisito normativo, y lo verificamos antes de tirar un metro.",
+                    "Al revés también importa: el cable de interior no está preparado para humedad ni radiación solar. En tramos que salen a patio, cubierta o fachada, aunque sean dos metros, cambiamos a cable con protección para exterior y hacemos la transición en caja, no a mitad de recorrido.",
+                ],
+            },
+        ],
+        updated: '2026-09-09T00:00:00.000Z',
     },
     {
         slug: 'fusion-fibra-optica-barcelona',
@@ -941,6 +1009,23 @@ export const SEO_PAGES_ES: SEOPageConfig[] = [
             { q: '¿Cuánto tarda una fusión?', a: 'Una fusión individual tarda menos de 2 minutos. Un proyecto de 12-24 fusiones se completa en 2-3 horas incluyendo testeo.' },
             { q: '¿Qué atenuación tiene una fusión?', a: 'Con nuestro equipo profesional, las fusiones tienen una atenuación típica inferior a 0.02 dB, muy por debajo del máximo aceptable de 0.1 dB.' },
         ],
+        richSections: [
+            {
+                h2: "Qué mide realmente una fusión bien hecha",
+                paragraphs: [
+                    "Una fusión por arco correcta queda por debajo de 0,05 dB de pérdida, y en condiciones normales alcanzamos 0,02 dB o menos. Ese número no se estima a ojo: la fusionadora lo calcula por análisis de imagen del empalme, y el OTDR lo confirma después midiendo la línea completa desde un extremo.",
+                    "La diferencia entre 0,02 y 0,3 dB por empalme parece pequeña hasta que se acumulan seis empalmes y dos conectores en un enlace largo. Entonces el presupuesto óptico se agota, el transceptor trabaja al límite y aparecen errores intermitentes que nadie relaciona con el empalme hecho meses antes.",
+                ],
+            },
+            {
+                h2: "Preparación: donde se gana o se pierde el empalme",
+                paragraphs: [
+                    "El arco eléctrico es la parte fácil y automática. Lo que decide el resultado es lo anterior: pelado limpio, limpieza del revestimiento con alcohol isopropílico y una corte perpendicular con cortadora de precisión. Un corte con ángulo de dos grados ya arruina el empalme, por perfecta que sea la máquina.",
+                    "Por eso trabajamos con cortadora calibrada y sustituimos la cuchilla según su contador de cortes, no cuando empieza a fallar. Y protegemos cada empalme con manguito termorretráctil dentro de bandeja, nunca al aire: una fibra empalmada sin protección mecánica se rompe en la primera manipulación de la caja.",
+                ],
+            },
+        ],
+        updated: '2026-09-09T00:00:00.000Z',
     },
     {
         slug: 'cableado-estructurado-empresas',
@@ -966,6 +1051,23 @@ export const SEO_PAGES_ES: SEOPageConfig[] = [
             { q: '¿Instaláis el rack y el patch panel también?', a: 'Sí, el proyecto completo incluye armario de telecomunicaciones, patch panel etiquetado, organizadores de cables y regleta de alimentación con protección. Todo incluido en el presupuesto.' },
             { q: '¿Tenéis experiencia en empresas del 22@ de Barcelona?', a: 'Sí, hemos completado proyectos en el Distrito 22@ de Barcelona, incluyendo edificios de oficinas con plantas diáfanas y coworking. Conocemos los requisitos de instalación de estos edificios.' },
         ],
+        richSections: [
+            {
+                h2: "Cómo se organiza un proyecto de empresa por fases",
+                paragraphs: [
+                    "Un proyecto empresarial rara vez se ejecuta de una vez. Lo dividimos en fases con entregable propio: primero la infraestructura pasiva completa (canalización, tendido, rack, paneles, certificación), después la electrónica, y por último la configuración y la migración de puestos. Cada fase se cierra funcionando antes de empezar la siguiente.",
+                    "El motivo es económico además de técnico. La obra pasiva es la parte cara de deshacer y la que hay que dimensionar con reserva; la electrónica se puede escalar después según crezca la plantilla. Un cliente que reparte así el gasto llega al mismo resultado sin bloquear presupuesto de golpe.",
+                ],
+            },
+            {
+                h2: "Coordinación con obra, arquitecto y otros gremios",
+                paragraphs: [
+                    "Cuando el cableado entra dentro de una reforma, el orden con los demás gremios decide el coste. Las canalizaciones se dejan antes de cerrar techos y tabiques; entrar después significa abrir lo que ya está pintado. Por eso pedimos participar en la planificación, no recibir una llamada cuando la obra está acabada.",
+                    "También coordinamos con el electricista la separación entre canalización de datos y de potencia, que es requisito normativo y no una preferencia nuestra. Acordar los recorridos entre ambos al principio evita el escenario habitual: llegar y encontrar que el único tubo libre va paralelo a la línea de fuerza.",
+                ],
+            },
+        ],
+        updated: '2026-09-09T00:00:00.000Z',
     },
     {
         slug: 'instalador-red-barcelona',
@@ -991,6 +1093,23 @@ export const SEO_PAGES_ES: SEOPageConfig[] = [
             { q: '¿Podéis dar presupuesto sin visita?', a: 'Para instalaciones estándar (1-4 puntos en piso o oficina pequeña) podemos dar un presupuesto orientativo por WhatsApp o email con fotos. Para proyectos de más de 8 puntos recomendamos una visita técnica gratuita.' },
             { q: '¿Hacéis instalaciones de red urgentes?', a: 'Sí, ofrecemos servicio urgente para empresas con avería de red. Contacta al +34 605 974 605 y enviamos técnico en el menor tiempo posible dentro de Barcelona.' },
         ],
+        richSections: [
+            {
+                h2: "Qué pedir antes de contratar a nadie",
+                paragraphs: [
+                    "Hay tres cosas que conviene exigir a cualquier instalador, incluidos nosotros. La primera, que el presupuesto diga la categoría exacta del cable y de la conectividad, no solo la del cable: es donde se recorta sin que se note. La segunda, que incluya certificación con informe entregado. La tercera, que detalle qué pasa si aparece una canalización impracticable a mitad de obra.",
+                    "Un presupuesto que dice solo cantidad de puntos y precio total deja fuera precisamente lo que diferencia una instalación de otra. Y un instalador que se incomoda al detallar esos tres puntos está diciendo algo útil sobre cómo va a trabajar.",
+                ],
+            },
+            {
+                h2: "Señales de que una instalación se hizo mal",
+                paragraphs: [
+                    "Hay síntomas que reconocemos al entrar. Cable de instalación terminado en conector macho colgando de la pared. Latiguillos de categoría inferior a la del cableado. Switch doméstico bajo una mesa alimentando media oficina. Rosetas sin etiquetar. Cable de datos grapado junto a la línea eléctrica en el mismo tubo.",
+                    "Ninguno de estos impide que la red funcione el primer día, y esa es la razón por la que se cometen. Todos aparecen meses después como cortes intermitentes que se achacan al operador. Cuando nos llaman a diagnosticar una red lenta, empezamos por revisar estos cinco puntos antes de tocar la configuración.",
+                ],
+            },
+        ],
+        updated: '2026-09-09T00:00:00.000Z',
     },
     {
         slug: 'instalacion-ftth-edificios-barcelona',
@@ -1013,5 +1132,22 @@ export const SEO_PAGES_ES: SEOPageConfig[] = [
             { q: '¿Cuánto cuesta instalar FTTH en un edificio?', a: 'Depende del número de plantas y viviendas. Un edificio de 10 viviendas está en torno a 2.000-4.000€ con rack, fusiones y rosetas incluidas.' },
             { q: '¿Los vecinos pueden contratar operadores diferentes?', a: 'Sí, la instalación FTTH es neutra. Cada operador puede conectar su fibra al rack comunitario y dar servicio a los vecinos que contraten.' },
         ],
+        richSections: [
+            {
+                h2: "FTTH en comunidad: la parte que no es técnica",
+                paragraphs: [
+                    "En una finca de vecinos, el trabajo técnico suele ser lo más sencillo. Lo que decide los plazos es el acuerdo: la instalación afecta a zonas comunes, necesita autorización de la comunidad y, en fincas con protección patrimonial, condiciona por dónde puede pasar el cable en fachada o escalera.",
+                    "Por eso presentamos siempre propuesta con recorrido dibujado antes de la junta, para que los vecinos vean exactamente qué se toca. Un proyecto rechazado en junta por falta de información cuesta meses más que hacer bien esa documentación previa.",
+                ],
+            },
+            {
+                h2: "Registro principal, vertical y acometida a vivienda",
+                paragraphs: [
+                    "La instalación se divide en tres tramos con lógica propia. El registro principal, donde entran los operadores, requiere espacio para que convivan varios sin invadirse. La vertical sube por el patinillo con holgura para futuras altas. Y la acometida a cada vivienda se deja tirada hasta el registro de terminación de red del piso.",
+                    "El error más caro es dimensionar la vertical justo para los vecinos que dicen sí hoy. Las altas llegan durante años, y volver a subir por el patinillo con la obra cerrada cuesta mucho más que dejar reserva desde el principio. Calculamos siempre con margen sobre el número de viviendas, no sobre el número de interesados.",
+                ],
+            },
+        ],
+        updated: '2026-09-09T00:00:00.000Z',
     },
 ];

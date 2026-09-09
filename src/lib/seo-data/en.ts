@@ -22,6 +22,23 @@ export const SEO_PAGES_EN: SEOPageConfig[] = [
             { q: 'How long does the installation take?', a: 'A domestic installation of 4-8 points is done in 1 day. Enterprise projects can take 2-5 days.' },
             { q: 'What cable category do I need?', a: 'For domestic use, Cat6 is sufficient. For offices, we recommend Cat6A. For industrial or high-speed setups, Cat7.' },
         ],
+        richSections: [
+            {
+                h2: "What sets the price of a network outlet",
+                paragraphs: [
+                    "The price per outlet does not depend on the cable, which is the cheap part. It depends on the route: whether free containment exists, whether a chase has to be cut, whether the ceiling is accessible, how many bends must be cleared and at what height the work happens. The same outlet can differ twofold between a modern office and an older building.",
+                    "That is why we do not quote over the phone without seeing the site. The survey is free and exists precisely for this: to measure real routes, check draw points and give a number that will hold, instead of an indicative price that climbs once work starts.",
+                ],
+            },
+            {
+                h2: "Pulling cable without wrecking the finish",
+                paragraphs: [
+                    "In a finished home or office the aim is for the installation to show as little as possible. The order we follow is: use existing containment if it is free, then ceiling voids and raised floors, then low-profile trunking following the lines of the joinery, and only as a last resort cutting a chase.",
+                    "Where the route must cross common areas or a facade, we clear it with the owner beforehand, because that is where problems surface later. And we always leave a draw cord in the containment we use, so the next extension does not mean repeating the access work.",
+                ],
+            },
+        ],
+        updated: '2026-09-09T00:00:00.000Z',
     },
     {
         slug: 'cableado-estructurado-barcelona',
@@ -44,6 +61,23 @@ export const SEO_PAGES_EN: SEOPageConfig[] = [
             { q: 'How much does structured cabling cost?', a: 'It depends on the number of points and complexity. A rough estimate for a 20-point office is between €2,000 and €4,000.' },
             { q: 'Can it be installed in an already built venue?', a: 'Yes, we work with conduits, dropped ceilings, and embedded walls to adapt the installation to any existing space.' },
         ],
+        richSections: [
+            {
+                h2: "What makes cabling structured",
+                paragraphs: [
+                    "Structured cabling does not mean tidy cable. It is a system defined by ISO/IEC 11801 and its European equivalent EN 50173, which set out the subsystems, the maximum distances and the parameters every link must meet. If an installation cannot be certified against those values, it is not structured cabling however neatly it is dressed.",
+                    "In practice that means three concrete things: a star topology from a distributor, a maximum of 90 metres of horizontal cable plus 10 of patch leads, and components of the same category throughout the link. A single Cat5e patch lead in a Cat6A link drags the whole thing down to Cat5e, and it is the most common fault we find.",
+                ],
+            },
+            {
+                h2: "Certification is what separates the work",
+                paragraphs: [
+                    "Certifying is not checking that the cable gives a link. It is measuring, with calibrated equipment, the wire map, length, attenuation, crosstalk at both ends, return loss and delay, and comparing every value against the standard's limit for the category installed.",
+                    "The resulting report is what allows the system manufacturer's extended warranty to be claimed, and what proves compliance to a third party. Without it, on the day the network fails there is no way to separate a cabling problem from an electronics problem, and healthy equipment ends up being replaced.",
+                ],
+            },
+        ],
+        updated: '2026-09-09T00:00:00.000Z',
     },
     {
         slug: 'instalacion-cat6-barcelona',
@@ -832,6 +866,24 @@ export const SEO_PAGES_EN: SEOPageConfig[] = [
             { q: 'Are dedicated arc fusion services handled internally?', a: 'Without exception. Micro-splicing protocols definitively function utilizing heavy dedicated continuous-arc processing mechanics. Crucially furthermore, successive subsequent junctions strictly face uncompromising OTDR probing guaranteeing flawless microscopic operational efficacy.' },
             { q: 'Do deployment vectors comprehensively accommodate sprawling multi-tenant vertical housing constructs?', a: 'Absolutely. Formidable dedicated FTTH trunk distributions systematically navigate existing internal vertical riser shafts initiating physically deep inside underlying structural concrete basements successively segregating singular dedicated single-mode lifelines penetrating precisely terminating delivering discrete distinct SC/APC rosettes internally powering individually occupied residences.' },
         ],
+        richSections: [
+            {
+                h2: "Types of fibre optic installation we carry out in Barcelona",
+                paragraphs: [
+                    "At CableCore we specialise in three main types of fibre installation in Barcelona. FTTH for residential blocks: we install the vertical fibre network from the operator's interconnection point through to each dwelling, with fusion splicing and full OTDR testing. It is the most common project we take on in buildings across the Eixample, Gràcia and Sarrià.",
+                    "Corporate building backbone: we link the telecommunications cabinets on each floor with OM4 multimode fibre for 10 to 100 Gbps between distribution switches. Suited to office buildings in 22@, four-star hotels and hospitals.",
+                    "Building-to-building interconnection: where two industrial units or buildings belonging to the same company sit within 500 metres, we install singlemode fibre direct buried or in containment for a private link with no recurring operator cost. This service is particularly in demand in Polígon Pratenc and Zona Franca.",
+                ],
+            },
+            {
+                h2: "Fibre optic in Barcelona: which type to choose",
+                paragraphs: [
+                    "The choice of fibre depends on distance and the speed required. For FTTH in residential buildings we use G.657.A2 singlemode, which withstands tight bends and makes pulling through small-diameter conduit straightforward. For building backbone up to 300 metres we use OM4 multimode with LC-LC patch leads and SFP+ transceivers for 10 Gbps. Beyond 300 metres, or between buildings, G.652D singlemode is the standard.",
+                    "In every case OTDR testing is included in the quote. We hand over a graphical report for each fibre, showing losses at every splice, connector and bend. Total attenuation on fibre installed by CableCore always stays below 80% of the regulatory limit, which leaves margin for future expansion.",
+                ],
+            },
+        ],
+        updated: '2026-09-09T00:00:00.000Z',
     },
     {
         slug: 'instalacion-fibra-optica-empresas-barcelona',
@@ -853,6 +905,23 @@ export const SEO_PAGES_EN: SEOPageConfig[] = [
             { q: 'Does transitioning immediately toward encompassing fiber infrastructures demonstrably guarantee positive sweeping long-term enterprise return-on-investment parameters?', a: 'Given scenarios continuously aggressively attempting successfully managing massively crushing concurrent heavy volume streaming information matrices or bridging completely disconnected remote independent physical architectures demanding zero-compromise exceeding generalized gigabit baselines; aggressive optical implementations unequivocally represent unbeatably efficient definitively optimized supreme long-term stabilization solutions.' },
             { q: 'Do optical fiber layouts securely integrate synchronously alongside pre-existing conventional heavy copper Ethernet deployments?', a: 'Utterly. Symbiotic hybridized combinations frequently constitute dominant standardized implementation models. Invariably, optical pathways definitively act shouldering heavy intra-building core bridging loads, while existing conventional copper Cat6A distributions efficiently actively execute localized localized terminal workstation branch node segregations.' },
         ],
+        richSections: [
+            {
+                h2: "When a company genuinely needs fibre",
+                paragraphs: [
+                    "Many companies ask for fibre when what they have is a local network problem, not an access problem. If the bottleneck sits between the desk and the server, an operator's fibre line changes nothing: the traffic never leaves the building. We look at this before proposing anything, because the fix may be far cheaper than the client expects.",
+                    "Private fibre is the right answer in three concrete cases: linking separate buildings or units, raising the floor-to-floor backbone beyond what copper allows, and electrically isolating two zones of the installation. In those three, copper is not a worse alternative — it is simply not viable.",
+                ],
+            },
+            {
+                h2: "What we hand over on completion",
+                paragraphs: [
+                    "A business fibre link is delivered with documentation or it has not been delivered. We provide an OTDR report per fibre with the graphical trace, a loss table per splice and connector, a route drawing showing splice box locations, and physical labelling at both ends.",
+                    "This is not paperwork: on the day the link fails, that trace is what makes it possible to know which metre holds the problem instead of opening the whole building. Without a baseline measured on installation day there is nothing to compare against, and diagnosis starts from zero.",
+                ],
+            },
+        ],
+        updated: '2026-09-09T00:00:00.000Z',
     },
     {
         slug: 'cableado-fibra-optica-interior-barcelona',
@@ -874,6 +943,23 @@ export const SEO_PAGES_EN: SEOPageConfig[] = [
             { q: 'Does interior surface-mounted optical layout processing conspicuously drastically alter existing interior visual aesthetics?', a: 'Decisively negatively. Precise implementations lean aggressively maintaining near-invisible overall profiling intentionally exploiting extremely minute slimline flush decorative trunking segments completely melting practically disappearing naturally conforming hugging immediate interior environmental trims.' },
             { q: 'Which explicit physical cable specifications define mandated strictly indoor legal networking execution frameworks?', a: 'Implementations invariably depend entirely upon specialized distinctly dedicated tight-buffered optical configurations crucially incorporating strictly mandatory heavy LSZH regulatory safety jackets strongly limiting deadly toxic atmospheric smoke generation reliably aligning directly keeping full strict compliance facing overarching CPR European fire code legislation.' },
         ],
+        richSections: [
+            {
+                h2: "Fibre inside the building: which type and why",
+                paragraphs: [
+                    "For building risers and floor-to-floor backbone we use G.657.A2 singlemode, which tolerates very tight bend radii with no appreciable penalty. That is the difference between being able to climb a narrow service shaft with real bends and having to find a longer route for lack of slack.",
+                    "Where the link is short and multimode electronics already exist, OM4 remains valid and cheaper in transceivers. But for new work we propose singlemode almost every time: cable cost is similar and it imposes no ceiling on the building's distance or speed ten years from now.",
+                ],
+            },
+            {
+                h2: "Indoor cable is not outdoor cable",
+                paragraphs: [
+                    "Indoor cable carries a low-smoke halogen-free sheath, and that is not a catalogue detail: in a fire, conventional sheathing inside a service shaft fills the building's escape routes with toxic smoke. It is a regulatory requirement, and we verify it before pulling a single metre.",
+                    "The reverse matters too: indoor cable is not built for moisture or sunlight. On sections that emerge onto a courtyard, roof or facade, even two metres of it, we change to cable rated for outdoor use and make the transition inside a box, not part-way along the route.",
+                ],
+            },
+        ],
+        updated: '2026-09-09T00:00:00.000Z',
     },
     {
         slug: 'fusion-fibra-optica-barcelona',
@@ -896,6 +982,23 @@ export const SEO_PAGES_EN: SEOPageConfig[] = [
             { q: 'Exactly how severely prolonged does generating individual physical fusion processes demand operationally?', a: 'Specifically isolating single singular junctions remarkably easily strictly consumes actively barely two rapid minutes. Correspondingly systematically extrapolating larger demanding 12-24 core multi-node arrays steadily conclude reliably heavily finishing completely definitively wrapping typically occupying merely 2-3 standard hours heavily inclusive integrating comprehensive testing procedural routines.' },
             { q: 'What anticipated attenuation variances routinely characterize heavily processed successfully finished machine welded optical junctions?', a: 'Directly utilizing uncompromising deeply advanced calibration machinery inherently forcibly pulls standard expected attenuation resistance loss metrics dramatically remarkably driving resulting margins frequently registering actively hovering firmly lower cleanly tracking well profoundly beneath strictly challenging 0.02 dB floors effortlessly bypassing normally widely accepted completely tolerable wider 0.1 dB industrial limits.' },
         ],
+        richSections: [
+            {
+                h2: "What a good splice actually measures",
+                paragraphs: [
+                    "A correct arc fusion splice comes in below 0.05 dB of loss, and under normal conditions we reach 0.02 dB or less. That figure is not estimated by eye: the splicer calculates it from image analysis of the joint, and the OTDR confirms it afterwards by measuring the complete link from one end.",
+                    "The difference between 0.02 and 0.3 dB per splice looks small until six splices and two connectors accumulate on a long link. Then the optical budget runs out, the transceiver works at its limit, and intermittent errors appear that nobody connects to a splice made months earlier.",
+                ],
+            },
+            {
+                h2: "Preparation is where the splice is won or lost",
+                paragraphs: [
+                    "The electric arc is the easy, automatic part. What decides the outcome is everything before it: clean stripping, cleaning the coating with isopropyl alcohol, and a perpendicular cut with a precision cleaver. A cut two degrees off square already ruins the splice, however good the machine is.",
+                    "So we work with a calibrated cleaver and change the blade according to its cut counter, not when it starts failing. And we protect every splice with heat-shrink sleeving inside a tray, never in free air: a spliced fibre without mechanical protection breaks the first time the box is handled.",
+                ],
+            },
+        ],
+        updated: '2026-09-09T00:00:00.000Z',
     },
     {
         slug: 'instalacion-ftth-edificios-barcelona',
@@ -918,6 +1021,23 @@ export const SEO_PAGES_EN: SEOPageConfig[] = [
             { q: 'How much does it cost to outfit a residential building with FTTH?', a: 'A standard 10-apartment building ranges around €2000-4000 depending on floors and endpoints, with racks and fusions included.' },
             { q: 'Can individual residents contract completely different independent operators?', a: 'Yes! The installed core vertical FTTH architecture operates completely neutrally. Any subsequent external telecom provider simply links their street fiber directly into the communal basement rack, immediately actively feeding any specific corresponding contracted apartment instantly.' },
         ],
+        richSections: [
+            {
+                h2: "FTTH in a residential block: the part that is not technical",
+                paragraphs: [
+                    "In an apartment building the technical work is usually the simplest part. What governs the timescale is agreement: the installation affects common areas, needs the owners' association to authorise it and, in heritage-protected buildings, dictates where cable may run on the facade or stairwell.",
+                    "So we always present a proposal with the route drawn before the owners' meeting, so residents can see exactly what will be touched. A project rejected at the meeting for lack of information costs months more than preparing that documentation properly.",
+                ],
+            },
+            {
+                h2: "Main distribution, riser and the drop to each flat",
+                paragraphs: [
+                    "The installation splits into three sections with their own logic. The main distribution point, where operators arrive, needs room for several to coexist without encroaching on each other. The riser climbs the service shaft with slack for future connections. And the drop to each flat is left pulled through to the flat's network termination point.",
+                    "The most expensive mistake is sizing the riser exactly for the neighbours who say yes today. Connections keep arriving for years, and climbing the shaft again once the work is closed up costs far more than leaving spare capacity from the start. We always calculate against the number of dwellings, not the number of interested parties.",
+                ],
+            },
+        ],
+        updated: '2026-09-09T00:00:00.000Z',
     },
     {
         slug: 'cableado-estructurado-empresas',
@@ -941,6 +1061,23 @@ export const SEO_PAGES_EN: SEOPageConfig[] = [
             { q: 'Can you install outside business hours?', a: 'Yes, we offer night and weekend installations for businesses that cannot stop during the day. No surcharge for overnight work on projects with 15+ points.' },
             { q: 'What cable category do you recommend for a business?', a: 'Cat6A (10 Gbps) is the current standard for new business installations. It is ready for future technologies like Wi-Fi 6E, PoE++, and 10GbE.' },
         ],
+        richSections: [
+            {
+                h2: "How a business project is organised in phases",
+                paragraphs: [
+                    "A corporate project is rarely executed in one go. We split it into phases with their own deliverable: first the complete passive infrastructure (containment, cable pulling, rack, panels, certification), then the electronics, and finally configuration and desk migration. Each phase is closed and working before the next begins.",
+                    "The reason is financial as well as technical. Passive work is the expensive part to undo and the part that must be sized with spare capacity; electronics can be scaled later as headcount grows. A client who spreads the spend this way reaches the same result without committing the whole budget at once.",
+                ],
+            },
+            {
+                h2: "Coordinating with the build, the architect and other trades",
+                paragraphs: [
+                    "When cabling forms part of a refurbishment, the order of work with other trades decides the cost. Containment goes in before ceilings and partitions close; arriving afterwards means opening what has already been painted. So we ask to be part of the planning, not to get a call once the build is finished.",
+                    "We also coordinate with the electrician on separation between data and power containment, which is a regulatory requirement rather than a preference of ours. Agreeing routes between both at the outset avoids the usual scenario: arriving to find the only free conduit runs parallel to the power line.",
+                ],
+            },
+        ],
+        updated: '2026-09-09T00:00:00.000Z',
     },
     {
         slug: 'instalador-red-barcelona',
@@ -964,5 +1101,22 @@ export const SEO_PAGES_EN: SEOPageConfig[] = [
             { q: 'Do you work across all of Barcelona?', a: 'Yes, we cover all Barcelona districts and the entire metropolitan area (Badalona, Hospitalet, Sant Cugat, Sabadell, Terrassa, and more).' },
             { q: 'Do you also install Wi-Fi?', a: 'Yes, we complement Ethernet cabling with professional Wi-Fi access points (Ubiquiti, TP-Link EAP). Cable is the backbone; Wi-Fi covers the mobile zones.' },
         ],
+        richSections: [
+            {
+                h2: "What to ask for before hiring anyone",
+                paragraphs: [
+                    "There are three things worth demanding from any installer, ourselves included. First, that the quote states the exact category of both the cable and the connectivity, not just the cable: that is where corners get cut invisibly. Second, that it includes certification with a report handed over. Third, that it spells out what happens if impassable containment turns up mid-job.",
+                    "A quote that gives only an outlet count and a total leaves out precisely what separates one installation from another. And an installer who becomes uncomfortable detailing those three points is telling you something useful about how the work will go.",
+                ],
+            },
+            {
+                h2: "Signs an installation was done badly",
+                paragraphs: [
+                    "There are symptoms we recognise on walking in. Installation cable terminated in a male plug hanging from the wall. Patch leads of a lower category than the cabling. A consumer switch under a desk feeding half the office. Unlabelled outlets. Data cable clipped alongside the power line in the same conduit.",
+                    "None of these stops the network working on day one, which is exactly why they get done. All of them surface months later as intermittent dropouts blamed on the internet provider. When we are called in to diagnose a slow network, we check these five before touching any configuration.",
+                ],
+            },
+        ],
+        updated: '2026-09-09T00:00:00.000Z',
     },
 ];
