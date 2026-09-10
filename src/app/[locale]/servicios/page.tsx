@@ -1,4 +1,5 @@
 import { Metadata } from 'next';
+import { setRequestLocale } from 'next-intl/server';
 import { useTranslations, useLocale } from 'next-intl';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
@@ -55,7 +56,9 @@ const allServices = [
     },
 ];
 
-export default function ServiciosPage() {
+export default function ServiciosPage({ params }: { params: { locale: string } }) {
+    setRequestLocale(params.locale);
+
     const t = useTranslations();
     const locale = useLocale();
     const breadcrumbLabels: Record<string, { home: string; services: string }> = {

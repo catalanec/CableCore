@@ -1,4 +1,5 @@
 import { notFound } from 'next/navigation';
+import { setRequestLocale } from 'next-intl/server';
 import { Metadata } from 'next';
 import { SEO_PAGES, getPageBySlug } from '@/lib/seo-data';
 import SEOLandingPage from '@/components/seo/SEOLandingPage';
@@ -46,6 +47,8 @@ export function generateMetadata({ params }: { params: { slug: string; locale: s
 }
 
 export default function ServicePage({ params }: { params: { slug: string; locale: string } }) {
+    setRequestLocale(params.locale);
+
     const page = getPageBySlug(params.slug, params.locale);
     if (!page) notFound();
     return <SEOLandingPage data={page} />;

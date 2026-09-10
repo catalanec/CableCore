@@ -1,4 +1,5 @@
 import { Metadata } from 'next';
+import { setRequestLocale } from 'next-intl/server';
 import { useTranslations, useLocale } from 'next-intl';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
@@ -10,7 +11,9 @@ export function generateMetadata({ params }: { params: { locale: string } }): Me
     return generatePageMetadata('calculator', params.locale, '/calculator');
 }
 
-export default function CalculatorPage() {
+export default function CalculatorPage({ params }: { params: { locale: string } }) {
+    setRequestLocale(params.locale);
+
     const locale = useLocale();
 
     const labels: Record<string, { title: string; highlight: string; subtitle: string; label: string }> = {

@@ -1,4 +1,5 @@
 import { Metadata } from 'next';
+import { setRequestLocale } from 'next-intl/server';
 import { useLocale } from 'next-intl';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
@@ -68,7 +69,9 @@ const FAQS_ES = [
     },
 ];
 
-export default function PreciosPage() {
+export default function PreciosPage({ params }: { params: { locale: string } }) {
+    setRequestLocale(params.locale);
+
     const locale = useLocale();
     const faqJsonLd = getFAQJsonLd(FAQS_ES);
     const bcLabels: Record<string, { home: string; prices: string }> = {

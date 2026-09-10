@@ -1,4 +1,5 @@
 import Header from '@/components/layout/Header';
+import { setRequestLocale } from 'next-intl/server';
 import Footer from '@/components/layout/Footer';
 import type { Metadata } from 'next';
 
@@ -19,7 +20,9 @@ export function generateMetadata({ params }: { params: { locale: string } }): Me
     };
 }
 
-export default function AvisoLegalPage() {
+export default function AvisoLegalPage({ params }: { params: { locale: string } }) {
+    setRequestLocale(params.locale);
+
     return (
         <>
             <Header />

@@ -1,4 +1,5 @@
 import { notFound } from 'next/navigation';
+import { setRequestLocale } from 'next-intl/server';
 import { permanentRedirect } from 'next/navigation';
 import { useTranslations, useLocale } from 'next-intl';
 import Header from '@/components/layout/Header';
@@ -61,7 +62,9 @@ export function generateMetadata({ params }: { params: { slug: string; locale: s
     };
 }
 
-export default function BlogArticlePage({ params }: { params: { slug: string } }) {
+export default function BlogArticlePage({ params }: { params: { slug: string; locale: string } }) {
+    setRequestLocale(params.locale);
+
     const locale = useLocale();
 
     // Redirect typo slugs permanently to the canonical slug

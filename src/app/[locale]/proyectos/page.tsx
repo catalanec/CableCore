@@ -1,4 +1,5 @@
 import { Metadata } from 'next';
+import { setRequestLocale } from 'next-intl/server';
 import { useTranslations } from 'next-intl';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
@@ -9,7 +10,9 @@ export function generateMetadata({ params }: { params: { locale: string } }): Me
     return generatePageMetadata('proyectos', params.locale, '/proyectos');
 }
 
-export default function ProyectosPage() {
+export default function ProyectosPage({ params }: { params: { locale: string } }) {
+    setRequestLocale(params.locale);
+
     const t = useTranslations();
 
     const projects = t.raw('projectsPage.items') as Array<{

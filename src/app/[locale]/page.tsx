@@ -1,4 +1,5 @@
 import { Metadata } from 'next';
+import { setRequestLocale } from 'next-intl/server';
 import { useTranslations, useLocale } from 'next-intl';
 import { Link } from '@/i18n/routing';
 import Header from '@/components/layout/Header';
@@ -10,7 +11,9 @@ export function generateMetadata({ params }: { params: { locale: string } }): Me
     return generatePageMetadata('home', params.locale, '');
 }
 
-export default function HomePage() {
+export default function HomePage({ params }: { params: { locale: string } }) {
+    setRequestLocale(params.locale);
+
     const t = useTranslations();
     const locale = useLocale();
 

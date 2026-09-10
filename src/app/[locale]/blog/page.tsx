@@ -1,4 +1,5 @@
 import { Metadata } from 'next';
+import { setRequestLocale } from 'next-intl/server';
 import { useTranslations, useLocale } from 'next-intl';
 import Header from '@/components/layout/Header';
 import Footer from '@/components/layout/Footer';
@@ -10,7 +11,9 @@ export function generateMetadata({ params }: { params: { locale: string } }): Me
     return generatePageMetadata('blog', params.locale, '/blog');
 }
 
-export default function BlogPage() {
+export default function BlogPage({ params }: { params: { locale: string } }) {
+    setRequestLocale(params.locale);
+
     const t = useTranslations();
     const p = useTranslations('pages.blog');
     const locale = useLocale();
