@@ -17,6 +17,14 @@ export const maxDuration = 300;
 // is expanded it is no longer among the thinnest. The deadline leaves room to
 // commit whatever the run finished.
 const BATCH_SIZE = 5;
+
+// Groq retires models, and a retired one answers 404 to every call. That is how
+// this cron spent days doing nothing after being fixed: it ran, asked for
+// llama-3.3-70b-versatile, got model_not_found on all five articles and
+// reported only "Groq failed to generate content". Keep the id here so the swap
+// is one line, and see expandArticleWithGroq for why the reason is now carried
+// out to the report instead of being left in a log that is kept for an hour.
+const GROQ_MODEL = 'openai/gpt-oss-120b';
 const DEADLINE_MS = 240_000;
 const LOCALES = ['es', 'en', 'ru'] as const;
 type Locale = (typeof LOCALES)[number];
@@ -96,7 +104,9 @@ function estimateWordCount(content: ContentBlock[] | undefined): number {
 }
 
 // ── Groq API (Llama 3.3 70B) ─────────────────────────────────────────────
-async function expandArticleWithGroq(apiKey: string, localeArticle: LocaleArticle, locale: Locale, slug: string): Promise<ContentBlock[] | null> {
+type GroqResult = { content: ContentBlock[]; reason?: never } | { content: null; reason: string };
+
+async function expandArticleWithGroq(apiKey: string, localeArticle: LocaleArticle, locale: Locale, slug: string): Promise<GroqResult> {
     const langLabel = locale === 'es' ? 'Spanish' : locale === 'en' ? 'English' : 'Russian';
     const currentContent = JSON.stringify(localeArticle.content || [], null, 2);
     const wordCount = estimateWordCount(localeArticle.content);
@@ -127,15 +137,25 @@ Rules:
             'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-            model: 'llama-3.3-70b-versatile',
+            model: GROQ_MODEL,
             max_tokens: 4096,
             messages: [{ role: 'user', content: prompt }],
         }),
     });
 
     if (!res.ok) {
-        console.error('Groq API error:', res.status, await res.text());
-        return null;
+        const body = await res.text();
+        console.error('Groq API error:', res.status, body);
+        // Surface the API's own words. A generic failure reads as a transient
+        // hiccup; "model_not_found" reads as something to go and fix.
+        let detail = body.slice(0, 200);
+        try {
+            const parsed = JSON.parse(body);
+            const code = parsed?.error?.code;
+            const message = parsed?.error?.message;
+            if (message) detail = code ? `${code}: ${message}` : message;
+        } catch { /* keep the raw body */ }
+        return { content: null, reason: `Groq ${res.status ?? 'error'} — ${detail}` };
     }
 
     const data = await res.json();
@@ -143,11 +163,11 @@ Rules:
 
     try {
         const jsonMatch = text.match(/\[[\s\S]*\]/);
-        if (!jsonMatch) return null;
-        return JSON.parse(jsonMatch[0]) as ContentBlock[];
+        if (!jsonMatch) return { content: null, reason: `Groq ${GROQ_MODEL} returned no JSON array` };
+        return { content: JSON.parse(jsonMatch[0]) as ContentBlock[] };
     } catch {
         console.error('Failed to parse Groq response:', text.slice(0, 200));
-        return null;
+        return { content: null, reason: `Groq ${GROQ_MODEL} returned unparsable JSON` };
     }
 }
 
@@ -260,11 +280,12 @@ export async function GET(request: Request) {
                 }
 
                 // Expand with Groq
-                const expandedContent = await expandArticleWithGroq(groqKey, localeArticle, page.locale, page.slug);
-                if (!expandedContent) {
-                    errors.push(`${page.url} — Groq failed to generate content`);
+                const expansion = await expandArticleWithGroq(groqKey, localeArticle, page.locale, page.slug);
+                if (!expansion.content) {
+                    errors.push(`${page.url} — ${expansion.reason}`);
                     continue;
                 }
+                const expandedContent = expansion.content;
 
                 blogData[articleIdx] = {
                     ...article,

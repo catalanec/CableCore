@@ -123,7 +123,7 @@ describe('GET /api/cron/gsc-autofix', () => {
         expect(json.fixed).toHaveLength(1);
         expect(json.committed).toBe(true);
 
-        expect(json.errors.join(' ')).toContain('Groq failed to generate content');
+        expect(json.errors.join(' ')).toContain('quota exceeded');
         expect(json.errors.join(' ')).toContain('ECONNRESET');
         expect(json.fixed[0]).toContain('article-fixed');
 
@@ -208,5 +208,39 @@ describe('GET /api/cron/gsc-autofix', () => {
         expect(json.fixed).toEqual([]);
         expect(json.committed).toBe(false);
         expect(fetchMock.mock.calls.filter(([u]: any[]) => u.includes('urlInspection'))).toHaveLength(0);
+    });
+
+    it('carries the reason Groq refused into the report, not just "failed"', async () => {
+        // The cron ran daily against a model Groq had retired. It reported
+        // "Groq failed to generate content" and returned 200, so the real cause
+        // — model_not_found — lived only in Vercel logs, which are kept an hour.
+        fetchMock.mockImplementation((url: string) => {
+            if (url.includes('oauth2.googleapis.com')) return jsonResponse({ access_token: 'tok' });
+            if (url.includes('githubusercontent') || url.includes('api.github.com/repos'))
+                return jsonResponse({ content: Buffer.from(JSON.stringify(BLOG_DATA_FIXTURE)).toString('base64'), sha: 'sha1' });
+            if (url.includes('searchconsole.googleapis.com'))
+                return jsonResponse({ inspectionResult: { indexStatusResult: { verdict: 'NEUTRAL' } } });
+            if (url.includes('api.groq.com'))
+                return Promise.resolve({
+                    ok: false,
+                    status: 404,
+                    text: () => Promise.resolve(JSON.stringify({
+                        error: { message: 'The model `some-model` does not exist or you do not have access to it', code: 'model_not_found' },
+                    })),
+                    json: () => Promise.resolve({}),
+                });
+            return jsonResponse({ ok: true });
+        });
+
+        const { GET } = await import('./route');
+        const res = await GET(cronRequest());
+        const json = await res.json();
+
+        expect(json.errors.length).toBeGreaterThan(0);
+        expect(json.errors.join(' ')).toContain('model_not_found');
+
+        const telegram = fetchMock.mock.calls.find(c => String(c[0]).includes('api.telegram.org'));
+        expect(telegram, 'the run must report to Telegram').toBeDefined();
+        expect(String(telegram![1].body)).toContain('model_not_found');
     });
 });
