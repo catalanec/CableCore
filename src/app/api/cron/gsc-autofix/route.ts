@@ -336,6 +336,22 @@ export async function GET(request: Request) {
 
         const startedAt = Date.now();
 
+        // Every failure also goes to the log. Until now they existed only in the
+        console.log('[gsc-autofix] done:', JSON.stringify({
+            candidates: keyPages.length,
+            fixed: fixed.length,
+            skipped: skipped.length,
+            errors: errors.length,
+            elapsedMs: Date.now() - startedAt,
+        }));
+
+        // Telegram report, so a run that did little work looked clean in Vercel's
+        // logs and there was nothing to read while diagnosing it.
+        const fail = (url: string, reason: string) => {
+            console.error('[gsc-autofix]', url, '—', reason);
+            errors.push(`${url} — ${reason}`);
+        };
+
         for (const page of keyPages) {
             if (fixed.length >= BATCH_SIZE) break;
             if (Date.now() - startedAt > DEADLINE_MS) {
@@ -354,14 +370,14 @@ export async function GET(request: Request) {
 
                 const articleIdx = blogData.findIndex(a => a.slug === page.slug);
                 if (articleIdx === -1) {
-                    errors.push(`${page.url} — article not found in blog-data.json`);
+                    fail(page.url, 'article not found in blog-data.json');
                     continue;
                 }
 
                 const article = blogData[articleIdx];
                 const localeArticle = article[page.locale];
                 if (!localeArticle) {
-                    errors.push(`${page.url} — no ${page.locale} content on this article`);
+                    fail(page.url, `no ${page.locale} content on this article`);
                     continue;
                 }
 
@@ -380,7 +396,7 @@ export async function GET(request: Request) {
 
                 const expansion = await expandArticleWithGroq(groqKey, localeArticle, page.locale, page.slug);
                 if (!expansion.content) {
-                    errors.push(`${page.url} — ${expansion.reason}`);
+                    fail(page.url, expansion.reason);
                     continue;
                 }
                 const expandedContent = expansion.content;
@@ -400,7 +416,7 @@ export async function GET(request: Request) {
                 fixed.push(`${page.url} (${estimatedWords}w → 1200+w, ${verdict})`);
 
             } catch (err) {
-                errors.push(`${page.url} — ${err instanceof Error ? err.message : String(err)}`);
+                fail(page.url, err instanceof Error ? err.message : String(err));
             }
         }
 
