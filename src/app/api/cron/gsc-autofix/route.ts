@@ -343,20 +343,14 @@ export async function GET(request: Request) {
                 continue;
             }
             try {
-                const { verdict, coverageState } = await inspectUrl(gscToken, page.url);
-
-                // Only attempt fix if page is not indexed
-                const needsFix = verdict !== 'PASS' && (
-                    coverageState.includes('not indexed') ||
-                    coverageState.includes('Discovered') ||
-                    coverageState === '' ||
-                    verdict === 'UNKNOWN'
-                );
-
-                if (!needsFix) {
-                    skipped.push(`${page.url} (${verdict})`);
-                    continue;
-                }
+                // The verdict is recorded, not obeyed. Skipping articles Google
+                // had already indexed sounded right while the goal was "fix what
+                // Google refuses to index" — but the goal is thin content, and a
+                // 191-word article ranks badly whether indexed or not. Worse,
+                // indexed articles stay the thinnest, so they filled the
+                // candidate pool: a run on 11 September inspected 40 and found
+                // three it was willing to touch.
+                const { verdict } = await inspectUrl(gscToken, page.url);
 
                 const articleIdx = blogData.findIndex(a => a.slug === page.slug);
                 if (articleIdx === -1) {
@@ -377,6 +371,7 @@ export async function GET(request: Request) {
                     skipped.push(`${page.url} (content ok, ~${estimatedWords}w, verdict=${verdict})`);
                     continue;
                 }
+
 
                 // Expand with Groq
                 // Space the calls so the per-minute token budget is not spent
@@ -402,7 +397,7 @@ export async function GET(request: Request) {
                     },
                 };
                 blogDataModified = true;
-                fixed.push(`${page.url} (${estimatedWords}w → 1200+w)`);
+                fixed.push(`${page.url} (${estimatedWords}w → 1200+w, ${verdict})`);
 
             } catch (err) {
                 errors.push(`${page.url} — ${err instanceof Error ? err.message : String(err)}`);

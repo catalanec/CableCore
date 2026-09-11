@@ -97,11 +97,12 @@ describe('GET /api/cron/gsc-autofix', () => {
         expect(JSON.parse(telegramCall![1].body).text).toContain('GSC Auto-Fix crash');
     });
 
-    it('derives the pages to check from every slug x locale in blog-data.json and classifies each correctly: skip (indexed), error (Groq failed), fixed (expanded), error (inspect threw) — committing once', async () => {
+    it('derives the pages to check from every slug x locale in blog-data.json and classifies each correctly: fixed (indexed but thin), error (Groq failed), fixed (expanded), error (inspect threw) — committing once', async () => {
         const responses: Array<() => Promise<unknown>> = [
             () => jsonResponse({ access_token: 'gsc-token' }), // 1. OAuth token
             () => jsonResponse({ sha: 'sha-1', content: Buffer.from(JSON.stringify(BLOG_DATA_FIXTURE)).toString('base64') }), // 2. GitHub GET
-            () => jsonResponse({ inspectionResult: { indexStatusResult: { verdict: 'PASS', coverageState: 'Submitted and indexed' } } }), // 3. article-indexed -> skip
+            () => jsonResponse({ inspectionResult: { indexStatusResult: { verdict: 'PASS', coverageState: 'Submitted and indexed' } } }), // 3. article-indexed inspect — PASS no longer skips
+            () => jsonResponse({ choices: [{ message: { content: JSON.stringify([{ type: 'p', text: 'también expandido' }]) } }] }), // 4. article-indexed groq call
             () => jsonResponse({ inspectionResult: { indexStatusResult: { verdict: 'FAIL', coverageState: 'Discovered - currently not indexed' } } }), // 5. article-groq-fail inspect
             () => jsonResponse({ error: { message: 'quota exceeded' } }, false), // 6. article-groq-fail groq call -> fails
             () => jsonResponse({ inspectionResult: { indexStatusResult: { verdict: 'FAIL', coverageState: 'Discovered - currently not indexed' } } }), // 7. article-fixed inspect
@@ -117,23 +118,26 @@ describe('GET /api/cron/gsc-autofix', () => {
         expect(res.status).toBe(200);
         const json = await res.json();
 
-        // article-long (~1300 words) is now filtered out by word count before
+        // article-long (~1300 words) is still filtered out by word count before
         // any GSC call, so it neither costs a round-trip nor shows as skipped.
-        expect(json.skipped).toHaveLength(1);
-        expect(json.skipped.join(' ')).toContain('article-indexed');
+        // article-indexed is PASS and thin, so it is expanded like the rest.
+        expect(json.skipped).toHaveLength(0);
         expect(fetchMock.mock.calls.filter(([u]) => u.includes('urlInspection')).length).toBe(4);
         expect(json.errors).toHaveLength(2);
-        expect(json.fixed).toHaveLength(1);
+        expect(json.fixed).toHaveLength(2);
+        expect(json.fixed.join(' ')).toContain('article-indexed');
         expect(json.committed).toBe(true);
 
         expect(json.errors.join(' ')).toContain('quota exceeded');
         expect(json.errors.join(' ')).toContain('ECONNRESET');
-        expect(json.fixed[0]).toContain('article-fixed');
+        // thinnest first: article-indexed (10w) precedes article-fixed (30w)
+        expect(json.fixed.join(' ')).toContain('article-fixed');
+        expect(json.fixed[0]).toContain('article-indexed');
 
         const githubPutCall = fetchMock.mock.calls.find(([u, opts]) => u.includes('api.github.com') && opts?.method === 'PUT');
         expect(githubPutCall).toBeDefined();
         const putBody = JSON.parse(githubPutCall![1].body);
-        expect(putBody.message).toContain('1 fixed by gsc-autofix cron');
+        expect(putBody.message).toContain('2 fixed by gsc-autofix cron');
 
         // The committed article's es.content keeps its original blocks with the
         // new ones appended, written back into the nested locale object (not a
@@ -250,11 +254,10 @@ describe('GET /api/cron/gsc-autofix', () => {
         expect(String(telegram![1].body)).toContain('model_not_found');
     });
 
-    it('does not let already-indexed thin articles occupy the batch forever', async () => {
-        // The 11 September run expanded one article and skipped four as PASS.
-        // Those four are still the thinnest, so the next run picks the same
-        // four again — permanently consuming four of five slots. Left alone the
-        // cron reaches zero expansions per run while still reporting success.
+    it('fills the whole batch when the thinnest articles are all already indexed', async () => {
+        // This started as a starvation test: PASS articles were skipped, stayed
+        // the thinnest, and took the same slots every run. The skip is gone —
+        // thin is thin — so the batch now fills regardless of index status.
         const THIN = (n: number) => [{ type: 'p', text: 'w '.repeat(n) }];
         const fixture = [
             { slug: 'indexed-1', es: { title: 'A', content: THIN(10) } },
@@ -292,9 +295,8 @@ describe('GET /api/cron/gsc-autofix', () => {
 
         expect(
             json.fixed.length,
-            `a run must still do a full batch of real work when the thinnest articles are already indexed; got ${json.fixed.length}`
+            `a run must do a full batch of real work; got ${json.fixed.length}`
         ).toBe(5);
-        expect(json.fixed.join(' ')).not.toContain('indexed-');
     });
 
     it('waits out a Groq rate limit instead of losing the article', async () => {
@@ -490,5 +492,33 @@ describe('GET /api/cron/gsc-autofix', () => {
         expect(res.status, 'an oversized file must not crash the run').toBe(200);
         expect(blobFetched, 'the run must fall back to the blobs API').toBe(true);
         expect(json.fixed.length).toBe(1);
+    });
+
+    it('expands a thin article even when Google has already indexed it', async () => {
+        // Skipping PASS articles made sense while the goal was "fix what Google
+        // refuses to index". The goal is thin content: a 191-word article ranks
+        // badly whether or not it is in the index. And because PASS articles are
+        // the thinnest, skipping them meant they filled the candidate pool —
+        // a run on 11 September inspected 40 and found only 3 it would touch.
+        const fixture = [
+            { slug: 'indexado-1', es: { title: 'A', content: [{ type: 'p', text: 'w '.repeat(20) }] } },
+            { slug: 'indexado-2', es: { title: 'B', content: [{ type: 'p', text: 'w '.repeat(21) }] } },
+        ];
+        fetchMock.mockImplementation((url: string) => {
+            if (url.includes('oauth2.googleapis.com')) return jsonResponse({ access_token: 'tok' });
+            if (url.includes('githubusercontent') || url.includes('api.github.com/repos'))
+                return jsonResponse({ content: Buffer.from(JSON.stringify(fixture)).toString('base64'), sha: 'sha1' });
+            if (url.includes('searchconsole.googleapis.com'))
+                return jsonResponse({ inspectionResult: { indexStatusResult: { verdict: 'PASS', coverageState: 'Submitted and indexed' } } });
+            if (url.includes('api.groq.com'))
+                return jsonResponse({ choices: [{ finish_reason: 'stop', message: { content: JSON.stringify([{ type: 'p', text: 'x '.repeat(1300) }]) } }] });
+            return jsonResponse({ ok: true });
+        });
+
+        const { GET } = await import('./route');
+        const json = await (await GET(cronRequest())).json();
+
+        expect(json.fixed.length, 'thin articles must be expanded regardless of index status').toBe(2);
+        expect(json.skipped.join(' '), 'PASS is reported, not used to skip').not.toMatch(/indexado/);
     });
 });
