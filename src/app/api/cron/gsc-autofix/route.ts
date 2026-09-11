@@ -105,13 +105,31 @@ async function inspectUrl(token: string, url: string): Promise<{ verdict: string
 }
 
 // ── GitHub API ────────────────────────────────────────────────────────────
+// The contents API stops returning file content above 1 MB: it answers with
+// metadata and encoding "none". blog-data.json crossed that line on
+// 2026-09-11 while this cron was expanding articles into it, and the run died
+// on JSON.parse(''). The sha still comes back, and the blobs API serves up to
+// 100 MB, so the content is fetched from there when contents declines.
+//
+// Worth noting for later: one JSON file holding every article in three locales
+// is what made a 1 MB ceiling reachable at all. Splitting it per article would
+// remove the ceiling rather than raise it.
 async function githubGetFile(token: string, path: string): Promise<{ content: string; sha: string }> {
-    const res = await fetch(`https://api.github.com/repos/${GITHUB_REPO}/contents/${path}`, {
-        headers: { 'Authorization': `Bearer ${token}`, 'Accept': 'application/vnd.github+json' },
-    });
+    const headers = { 'Authorization': `Bearer ${token}`, 'Accept': 'application/vnd.github+json' };
+    const res = await fetch(`https://api.github.com/repos/${GITHUB_REPO}/contents/${path}`, { headers });
     if (!res.ok) throw new Error(`GitHub GET error: ${res.status}`);
     const data = await res.json();
-    return { content: Buffer.from(data.content, 'base64').toString('utf-8'), sha: data.sha };
+
+    if (data.content) {
+        return { content: Buffer.from(data.content, 'base64').toString('utf-8'), sha: data.sha };
+    }
+
+    if (!data.sha) throw new Error(`GitHub GET returned neither content nor sha for ${path}`);
+    const blob = await fetch(`https://api.github.com/repos/${GITHUB_REPO}/git/blobs/${data.sha}`, { headers });
+    if (!blob.ok) throw new Error(`GitHub blob GET error: ${blob.status} (file is ${data.size ?? '?'} bytes)`);
+    const blobData = await blob.json();
+    if (!blobData.content) throw new Error(`GitHub blob ${data.sha} returned no content`);
+    return { content: Buffer.from(blobData.content, 'base64').toString('utf-8'), sha: data.sha };
 }
 
 async function githubUpdateFile(token: string, path: string, content: string, sha: string, message: string): Promise<void> {

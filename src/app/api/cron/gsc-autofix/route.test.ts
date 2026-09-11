@@ -457,4 +457,38 @@ describe('GET /api/cron/gsc-autofix', () => {
         expect(JSON.stringify(saved)).not.toContain('basura suelta');
         expect(JSON.stringify(saved)).not.toContain('sinTipo');
     });
+
+    it('reads the file through the blobs API once it outgrows the contents API', async () => {
+        // blog-data.json passed 1 MB on 11 September. The GitHub contents API
+        // stops returning content above that — it answers with metadata and
+        // encoding "none" — so JSON.parse('') threw "Unexpected end of JSON
+        // input" and the run crashed with a 500.
+        const fixture = [{ slug: 'grande', es: { title: 'A', content: [{ type: 'p', text: 'w '.repeat(20) }] } }];
+        let blobFetched = false;
+        fetchMock.mockImplementation((url: string, init?: { method?: string }) => {
+            if (url.includes('oauth2.googleapis.com')) return jsonResponse({ access_token: 'tok' });
+            if (url.includes('/git/blobs/')) {
+                blobFetched = true;
+                return jsonResponse({ content: Buffer.from(JSON.stringify(fixture)).toString('base64'), encoding: 'base64' });
+            }
+            if (url.includes('api.github.com/repos') && init?.method === 'PUT')
+                return jsonResponse({ commit: { sha: 'new' } });
+            if (url.includes('api.github.com/repos'))
+                // too large: metadata only, no content
+                return jsonResponse({ content: '', encoding: 'none', size: 1_090_407, sha: 'f'.repeat(40) });
+            if (url.includes('searchconsole.googleapis.com'))
+                return jsonResponse({ inspectionResult: { indexStatusResult: { verdict: 'NEUTRAL', coverageState: 'Crawled - currently not indexed' } } });
+            if (url.includes('api.groq.com'))
+                return jsonResponse({ choices: [{ finish_reason: 'stop', message: { content: JSON.stringify([{ type: 'p', text: 'x '.repeat(1300) }]) } }] });
+            return jsonResponse({ ok: true });
+        });
+
+        const { GET } = await import('./route');
+        const res = await GET(cronRequest());
+        const json = await res.json();
+
+        expect(res.status, 'an oversized file must not crash the run').toBe(200);
+        expect(blobFetched, 'the run must fall back to the blobs API').toBe(true);
+        expect(json.fixed.length).toBe(1);
+    });
 });
