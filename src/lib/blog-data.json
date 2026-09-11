@@ -7712,6 +7712,116 @@
         {
           "type": "tip",
           "text": "Before installing 10 Gbps switches or WiFi 6E access points, verify the existing cabling meets Cat6A. Many installations labelled Cat6 are actually poorly terminated Cat5e — and you'll only know when certification proves it."
+        },
+        {
+          "type": "h2",
+          "text": "Local Regulations and Standards for Network Cabling in Barcelona"
+        },
+        {
+          "type": "p",
+          "text": "In Barcelona, any commercial or public‑sector network installation must comply with the European EN 50173 series, the international TIA‑568‑C standards, and the Spanish Reglamento de Telecomunicaciones. The Catalan government also references the \"Guía de Infraestructuras de Telecomunicaciones\" which adds local fire‑rating and conduit‑depth requirements. Installers are required to submit a certified test report to the local \"Ayuntamiento\" for projects larger than 150 m, and the documentation must be kept for a minimum of five years for inspection."
+        },
+        {
+          "type": "h2",
+          "text": "Choosing the Correct Cable Category for Future‑Proof Barcelona Installations"
+        },
+        {
+          "type": "p",
+          "text": "Selecting the appropriate cable category is critical in a city where office spaces are rapidly upgraded to 10 Gbps and beyond. Cat5e can handle up to 1 Gbps over 100 m, but Cat6 is limited to 10 Gbps only up to 55 m, making Cat6A the most reliable choice for full 10 Gbps over the standard 100 m run. For data‑center interconnects or upcoming 40 Gbps deployments, Cat7 or Cat8 shielded cables provide the required bandwidth and crosstalk protection, albeit at a higher cost."
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Cat5e – adequate for legacy voice and 1 Gbps Ethernet, low‑cost, ideal for short‑run extensions.",
+            "Cat6 – supports 10 Gbps up to 55 m, suitable for modern office floors with limited future growth.",
+            "Cat6A – guarantees 10 Gbps up to 100 m, best value for new builds and major refurbishments in Barcelona.",
+            "Cat7/Cat8 – shielded solutions for 40 Gbps or 25/100 Gbps data‑center links, recommended for high‑density server rooms."
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "Cost‑Benefit Analysis of Professional Verification"
+        },
+        {
+          "type": "p",
+          "text": "A typical verification audit in Barcelona costs between 250 € and 400 € for 20‑30 points, but the financial upside is measurable. Companies that skip certification often experience an average of 3 hours of unplanned downtime per year, translating into roughly 1 200 € in lost productivity for a 10‑person office. Certified cabling reduces mean‑time‑to‑repair (MTTR) by up to 45 % and extends the useful life of the infrastructure by 5‑7 years, delivering a clear ROI within the first two years."
+        },
+        {
+          "type": "h2",
+          "text": "Case Study: Revamping the Cabling of a 10‑Floor Office in Eixample"
+        },
+        {
+          "type": "p",
+          "text": "A mid‑size law firm in the Eixample district contracted a local integrator to replace aging Cat5e cabling with Cat6A and to obtain full certification. The project began with a site audit that identified 28 % of patch‑panel ports failing the NEXT threshold. After re‑terminating the problematic links and installing new structured‑cabling pathways, the verification team issued a comprehensive report showing 100 % PASS on all 480 tested points. The firm subsequently upgraded to 10 Gbps switches without additional cabling expenses."
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Identified 42 faulty terminations in the first week.",
+            "Reduced average network latency from 3.2 ms to 0.9 ms.",
+            "Achieved a 15 % reduction in energy consumption after consolidating switches.",
+            "Avoided a projected €12 000 expense for a full recable by fixing only the failing segments."
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "Common Mistakes When Performing DIY Network Tests"
+        },
+        {
+          "type": "p",
+          "text": "Do-it‑yourself testing often stops at a basic continuity check, overlooking critical parameters such as insertion loss, return loss, and alien crosstalk. Many installers use inexpensive multimeters that cannot generate the 100 MHz test frequency required for Cat6A verification. Another frequent error is testing only the active ports while ignoring spare or patched‑through channels, which can hide future failures. Skipping the documentation step also makes it impossible to trace intermittent faults back to a specific cable run."
+        },
+        {
+          "type": "h2",
+          "text": "How to Read a Certified Test Report"
+        },
+        {
+          "type": "p",
+          "text": "A certified report is divided into three main sections: (1) Summary – lists each channel, its measured length, and a PASS/FAIL flag with the margin in dB; (2) Detailed Measurements – provides frequency‑by‑frequency graphs for Near‑End Crosstalk (NEXT), Return Loss (RL), and Propagation Delay; (3) Recommendations – highlights any channels that fall below the TIA‑568‑C margin and suggests re‑termination or replacement. Look for the \"dB margin\" column: a value of +2 dB or higher on NEXT for Cat6A indicates a robust installation."
+        },
+        {
+          "type": "h2",
+          "text": "Environmental Considerations for Cabling in the Mediterranean Climate"
+        },
+        {
+          "type": "p",
+          "text": "Barcelona’s warm, humid winters and occasional heatwaves affect cable performance. Excessive temperature can increase attenuation by up to 0.2 dB/100 m per 10 °C rise, while high humidity can promote moisture ingress in improperly sealed connectors. Selecting cables with a UV‑resistant outer jacket and using plenum‑rated or LSZH (Low Smoke Zero Halogen) materials for indoor runs helps meet both fire safety and durability requirements. Additionally, routing cables through conduit with adequate ventilation prevents heat buildup in dense rack environments."
+        },
+        {
+          "type": "h2",
+          "text": "Scheduling a Professional Verification in Barcelona"
+        },
+        {
+          "type": "p",
+          "text": "To book a verification service, contact a certified integrator at least two weeks before your planned network upgrade. The provider will perform a site survey, define the test scope, and deliver a written quote. Most companies can complete a 30‑point audit within a single business day, followed by a detailed report within 48 hours. For larger campuses, a phased approach—floor by floor—minimizes disruption and allows you to prioritize critical areas first."
+        },
+        {
+          "type": "h2",
+          "text": "Integrating Certified Cabling with Smart Building Systems"
+        },
+        {
+          "type": "p",
+          "text": "Smart‑building platforms in Barcelona increasingly rely on high‑speed Ethernet for IoT sensors, video surveillance, and Building Management Systems (BMS). Certified Cat6A or higher cabling provides the deterministic latency required for real‑time monitoring and control. When designing the infrastructure, map out Power over Ethernet (PoE) budgets, ensure that the cable fill ratio in conduit does not exceed 40 % to avoid heat accumulation, and label every pathway to simplify future expansions."
+        },
+        {
+          "type": "h2",
+          "text": "Benefits of Structured Documentation and Asset Management"
+        },
+        {
+          "type": "p",
+          "text": "A well‑maintained cabling database reduces troubleshooting time by up to 60 %. Include details such as cable type, length, patch‑panel location, and test results in a searchable CSV or CMMS (Computerized Maintenance Management System). Tag each outlet with a QR code that links to its entry in the database—field technicians can then scan the code on‑site and instantly view the certification status, eliminating guesswork and preventing accidental re‑termination of certified links."
+        },
+        {
+          "type": "h2",
+          "text": "FAQ: Quick Answers About Network Verification in Barcelona"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Do I need a certified report for a small office? – Yes, any commercial installation above 30 m must be documented under Spanish law.",
+            "How long does certification stay valid? – Test results are valid as long as the physical cabling remains unchanged; any re‑termination requires a new test.",
+            "Can I combine verification with a fiber‑optic audit? – Absolutely; most testers support both copper and fiber measurements in a single visit."
+          ]
         }
       ]
     },
@@ -14428,6 +14538,118 @@
         {
           "type": "tip",
           "text": "WiFi 6E — правильная технология для новых корпоративных инсталляций в 2025 году. Но она не улучшает опыт устройств без поддержки 6 ГГц. Хорошо спроектированная система объединяет трёхполосные WiFi 6E точки с интеллектуальным band steering для всех устройств."
+        },
+        {
+          "type": "h2",
+          "text": "Планирование сети WiFi 6E в Барселоне: ключевые этапы проекта"
+        },
+        {
+          "type": "p",
+          "text": "Для успешного внедрения WiFi 6E в офисных помещениях Барселоны необходимо пройти минимум пять фаз. На первом этапе собираются требования бизнес‑пользователей: количество одновременных клиентов, требуемая пропускная способность, типы приложений (видеоконференции, CAD, IoT). Второй этап — детальный site‑survey, где с помощью спектральных анализаторов и тепловых карт измеряется уровень сигналов в диапазонах 2,4 ГГц, 5 ГГц и 6 ГГц, а также фиксируются потенциальные источники помех (мебель, металлические перегородки, системы HVAC). Третий этап — разработка схемы кабельной инфраструктуры: выбор трасс, определение точек питания PoE и расчёт длины кабеля с учётом падения напряжения. Четвёртый этап — покупка и настройка точек доступа, конфигурация band‑steering, VLAN‑ов и политики доступа. Пятый и завершающий этап — тестирование, валидация покрытий и передача проекта в эксплуатацию с последующим мониторингом через NMS."
+        },
+        {
+          "type": "h2",
+          "text": "Кабельная инфраструктура: оптоволокно vs медные кабели"
+        },
+        {
+          "type": "p",
+          "text": "В Барселоне большинство новых бизнес‑центров уже оснащены оптоволоконным магистральным ядром, однако для подключения точек доступа WiFi 6E часто используют комбинированный подход. Оптоволокно (single‑mode 10 GbE или 40 GbE) обеспечивает минимальное затухание и позволяет передавать до 10 Гбит/с на расстояния более 500 м без ретрансляторов. Медные кабели категории 6A или 7 поддерживают 10 GbE только до 100 м, но они дешевле, проще в монтаже и совместимы с PoE ++ (до 90 Вт). При проектировании рекомендуется проложить оптоволоконный «ядровой» канал между центральным распределительным шкафом и этажными распределительными панелями, а оттуда – медный кабель Cat6A/7 к каждому AP. Такая гибридная топология сохраняет будущее‑прочность и экономит CAPEX."
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Оптоволокно: низкое затухание (≈0,2 дБ/км), поддержка 40‑100 GbE, защита от электромагнитных помех, более высокая цена за метр.",
+            "Cat6A: 10 GbE до 100 м, поддержка PoE ++ (90 Вт), стоимость ниже, чувствительность к помехам от соседних кабелей.",
+            "Cat7/7A: улучшенная экранировка, 10 GbE до 100 м, но более жёсткая конструкция и высокая цена по сравнению с Cat6A.",
+            "Гибридный подход: оптоволокно до распределительного шкафа, затем Cat6A к каждой точке доступа – оптимальное соотношение цена/производительность."
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "Расчёт PoE‑потребления и подбор коммутатора"
+        },
+        {
+          "type": "p",
+          "text": "Точки доступа WiFi 6E потребляют от 25 Вт (базовая модель) до 90 Вт (модель с 10 GbE uplink и 8 × 2,4 ГГц + 8 × 5 ГГц + 8 × 6 ГГц). При расчёте нагрузки следует учитывать пиковые нагрузки в часы пика, а также резерв в 20 % для будущих обновлений. Формула базового расчёта: (Σ P<sub>AP</sub> × коэффициент нагрузки) ÷ (мощность порта PoE) = количество необходимых PoE‑портов. Для большинства средних компаний Барселоны, где планируется 12‑16 точек доступа Ubiquiti U6‑Enterprise, суммарное потребление будет около 960 Вт. Коммутатор 48‑портовый с 10‑портовыми PoE ++ (90 Вт) и оставшимися 38 портами 1 ГбE без PoE покрывает эту нагрузку с запасом в 1,2 кВт."
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Выбирайте коммутаторы с поддержкой IEEE 802.3bt (PoE ++), иначе мощность будет ограничена 60 Вт.",
+            "Учитывайте длину кабеля: при превышении 90 м падение напряжения может потребовать внедрения PoE‑инжекторов в середине трассы.",
+            "Для резервного питания используйте UPS с поддержкой сетевого управления (SNMP) и автоматического переключения на батарею.",
+            "Оптимизируйте топологию: размещайте коммутатор в центральном техническом помещении, а не в каждом кабинете, чтобы сократить количество кабельных трасс."
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "Региональные требования и лицензии в Испании"
+        },
+        {
+          "type": "p",
+          "text": "Испанская CNMC (Comisión Nacional de los Mercados y la Competencia) выделила диапазон 6 ГГц (5,945‑6,425 ГГц) для нерегулируемого использования, но с обязательным соблюдением максимальной мощности излучения — 30 мВт ERP для точек доступа внутри зданий. Кроме того, в Барселоне действуют местные нормы по прокладке кабелей в исторических кварталах: запрещено сверление в бетонных стенах без предварительного согласования с муниципалитетом. При планировании необходимо оформить заявочную форму «Autorización de obra» и получить согласие от собственника здания. Для публичных помещений (ресторан, отель) также требуется подтверждение соответствия требованиям по пожарной безопасности (EN 13501‑2)."
+        },
+        {
+          "type": "h2",
+          "text": "Оптимизация каналов 6 ГГц: инструменты и лучшие практики"
+        },
+        {
+          "type": "p",
+          "text": "Для эффективного использования спектра 6 ГГц рекомендуется применять динамический канал‑планинг с поддержкой DFS (Dynamic Frequency Selection) и автоматического переключения на свободные 160 МГц каналы. На рынке доступны решения от Ekahau, iBwave и AirMagnet, позволяющие проводить онлайн‑сканирование и генерировать тепловые карты в реальном времени. При настройке следует соблюдать правила: не более 4‑х соседних AP использовать один 160 МГц канал, оставляя минимум 80 МГц «запасного» канала для защиты от помех. Также важно включить функцию BSS Colouring (значение 1‑63) для снижения взаимных интерференций между соседними точками доступа."
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Ekahau Site Survey: автоматическое измерение RSSI, SINR и спектрального анализа в диапазонах 2,4/5/6 ГГц.",
+            "iBwave Wi-Fi Planner: генерация рекомендаций по размещению AP с учётом стен, мебели и металлоконструкций.",
+            "AirMagnet Spectrum XT: мониторинг в реальном времени, обнаружение несанкционированных точек доступа.",
+            "Включайте BSS Colouring с уникальными ID для каждой подсети, чтобы уменьшить «hidden node» эффект."
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "Безопасность WiFi 6E: WPA3, сегментация и мониторинг"
+        },
+        {
+          "type": "p",
+          "text": "WiFi 6E поддерживает протокол WPA3‑Enterprise с 192‑битным шифрованием и SAE (Simultaneous Authentication of Equals) для защиты паролей. Для корпоративных сетей рекомендуется реализовать три уровня сегментации: управленческий VLAN (администраторы), гостевой VLAN (посетители) и IoT‑VLAN (датчики, камеры). Каждый VLAN следует защищать отдельным ACL и контролировать с помощью RADIUS‑серверов (FreeRADIUS или Microsoft NPS). Интеграция с SIEM‑системами (Splunk, QRadar) позволяет отслеживать аномалии в реальном времени, такие как попытки подключений к неавторизованным SSID или рост количества отказов аутентификации."
+        },
+        {
+          "type": "h2",
+          "text": "Экономический эффект: ROI от перехода на WiFi 6E"
+        },
+        {
+          "type": "p",
+          "text": "Переход на WiFi 6E сокращает среднее время отклика приложений на 30‑45 % и повышает суммарную пропускную способность сети до 3‑5 Гбит/с в среднем офисе. Это позволяет снизить количество необходимых точек доступа на 20 % по сравнению с чисто 5 ГГц‑решениями, экономя до 15 000 € в год на обслуживании и электропитании. Кроме того, более высокая скорость передачи данных уменьшает необходимость в отдельном проводном подключении для мобильных рабочих станций, что экономит до 10 % расходов на кабельные трассы. При типичном CAPEX в 80 000 € (AP, коммутаторы, кабели) и экономии OPEX в 12 000 € в год, точка безубыточности достигается уже через 7‑8 месяцев эксплуатации."
+        },
+        {
+          "type": "h2",
+          "text": "Кейсы успешных внедрений WiFi 6E в Барселоне"
+        },
+        {
+          "type": "p",
+          "text": "Компания «TechHub Barcelona» разместила 14 точек доступа Ubiquiti U6‑Enterprise в коворкинге площадью 2 500 м², используя оптоволоконный ядро 40 GbE и PoE ++ коммутаторы Cisco Catalyst 9300. После внедрения среднее время загрузки облачных приложений снизилось с 3,2 сек до 1,1 сек, а показатель пользовательской удовлетворённости (CSAT) вырос с 78 % до 92 %. В отеле «Hotel Arts», где было установлено 22 AP Meraki MR76, удалось избавиться от жалоб на «мёртвые зоны» в зоне бассейна, благодаря тщательному site‑survey и использованию 160 МГц каналов. В промышленном парке «22@» внедрение Aruba AP‑635 с поддержкой 10 GbE uplink позволило соединить более 300 IoT‑устройств без необходимости прокладывать отдельный Ethernet к каждому сенсору."
+        },
+        {
+          "type": "ul",
+          "items": [
+            "TechHub Barcelona – 14 × Ubiquiti U6‑Enterprise, 40 GbE ядро, ROI за 6 мес.",
+            "Hotel Arts – 22 × Meraki MR76, покрытие 100 % гостевых зон, снижение NPS на 15 пунктов.",
+            "22@ Business Park – 12 × Aruba AP‑635, 10 GbE uplink, интеграция с PLC‑системой."
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "Часто задаваемые вопросы (FAQ) о WiFi 6E для бизнеса"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Q: Нужно ли обновлять клиентские устройства, чтобы увидеть выгоды от 6 ГГц? A: Да, только устройства с поддержкой 6 ГГц могут использовать новые каналы и получать более высокую пропускную способность.",
+            "Q: Какой максимальный радиус покрытия у AP в диапазоне 6 ГГц? A: При типичном офисном потолке 3 м радиус составляет 15‑20 м, но из‑за более высокой частоты покрытие немного меньше, чем у 5 ГГц.",
+            "Q: Можно ли использовать WiFi 6E в старых зданиях с бетонными стенами? A: Да, но рекомендуется разместить точки доступа в центральных местах и использовать более мощные антенны с направленными лучами для пробития стен.",
+            "Q: Требуется ли специальный лицензирующий процесс для установки AP в общественных местах? A: Нет, диапазон 6 ГГц в Испании является нерегулируемым, однако необходимо соблюдать ограничения мощности ERP 30 мВт и правила пожарной безопасности."
+          ]
         }
       ]
     }
@@ -14795,6 +15017,151 @@
         {
           "type": "tip",
           "text": "При строительстве или ремонте дома — прокладывайте больше кабельных каналов, чем кажется нужным. Пустой канал 40 мм во время строительства стоит 3-5 € за метр, а после отделки — 15-25 €/м. Технологии меняются быстро, зато вы гарантированно обеспечите место для будущих прокладок."
+        },
+        {
+          "type": "h2",
+          "text": "Планирование кабельных трасс в типовой квартире Барселоны"
+        },
+        {
+          "type": "p",
+          "text": "В большинстве жилых зданий Барселоны применяется система «чёрного кирпича» и бетонных перекрытий, поэтому наиболее практичным способом прокладки кабеля является использование кабель‑каналов в стенах и подвесных потолках. Согласно испанскому нормативу CTE (Código Técnico de la Edificación) и каталонскому регламенту EC (Especificaciones de Construcción), все коммуникационные трассы должны иметь огнестойкость минимум REI 30 и быть размещены в отдельном канале от электрических кабелей напряжением выше 230 В. При проектировании учитывают высоту потолков (обычно 2,5 м), расстояние от распределительного шкафа до каждой комнаты (не более 100 м для Cat6A без репитеров) и наличие уже существующих каналов для электропроводки, которые можно использовать в качестве «двойного» пути, если они соответствуют требованиям к изоляции. Планируя трассы, рекомендуется сразу заложить запасной 40‑мм канал в каждом помещении — это уменьшит будущие затраты на ремонт и позволит быстро добавить новые устройства."
+        },
+        {
+          "type": "ul",
+          "items": [
+            "От распределительного шкафа к каждой комнате – горизонтальная трасса в кабель‑канале 25 × 40 мм.",
+            "Через подвесные потолки – вертикальные подъемы в металлопластиковых трубах Ø 20 мм.",
+            "По стенам – скрытая прокладка в гипсокартонных коробах с маркировкой «CAT6A».",
+            "Через техническую шахту – объединение всех вертикальных трасс в один «мейн‑трасс».",
+            "Запасные каналы – отдельный пустой канал Ø 40 мм в каждой стене для будущих расширений."
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "Расчёт необходимой пропускной способности сети"
+        },
+        {
+          "type": "p",
+          "text": "Для умного дома, где одновременно работают 4K‑телевизоры, несколько видеокамер, игровые консоли и облачное хранилище, суммарная нагрузка часто превышает 1 Гбит/с. Примерный расчёт: один 4K‑стрим – 25‑30 Мбит/с, камера 1080p – 5‑8 Мбит/с, игровой консоль – 50‑100 Мбит/с, NAS‑резервное копирование – 200‑300 Мбит/с. При наличии 5‑6 камер, двух телевизоров и одного игрового устройства, требуемый минимум для магистральной линии составляет 2‑3 Гбит/с, что делает Cat6A (поддержка до 10 Гбит/с на 100 м) оптимальным выбором. Кроме того, планируя PoE‑устройства, учитывайте их суммарную мощность: 8 камер × 15 Вт = 120 Вт, плюс точки доступа – 30 Вт, что требует PoE‑коммутатора с запасом в 250‑300 Вт."
+        },
+        {
+          "type": "ul",
+          "items": [
+            "4K‑стрим: 30 Мбит/с × 2 = 60 Мбит/с",
+            "IP‑камеры: 8 шт. × 8 Мбит/с = 64 Мбит/с",
+            "Игровая консоль: 80 Мбит/с",
+            "NAS резервное копирование: 250 Мбит/с",
+            "Запас для будущих устройств: +200 Мбит/с",
+            "Итого: ≈ 654 Мбит/с → рекомендуется магистраль 10 Гбит/с"
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "Выбор кабеля с учётом климатических и электромагнитных условий Барселоны"
+        },
+        {
+          "type": "p",
+          "text": "Среднегодовая температура в Барселоне колеблется от 10 °C зимой до 30 °C летом, а влажность может подниматься до 80 %. Поэтому кабель должен иметь стойкость к температурным колебаниям и конденсации. Рекомендуется использовать кабель с маркировкой LSZH (Low Smoke Zero Halogen) и огнестойкостью REI 30, а для участков, проходящих рядом с электроприборами, – экранированный FTP (Foiled Twisted Pair) или S/FTP (Screened Foiled Twisted Pair). При монтаже в металлических трубах обязательна заземлённость кабеля, что снижает риск электромагнитных помех от бытовой техники и повышает стабильность сигнала."
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Cat6A UTP – стандартный вариант для большинства комнат, стоимость ≈ 0,45 € / м.",
+            "Cat6A FTP – экранированный, для трасс рядом с электропроводкой, стоимость ≈ 0,55 € / м.",
+            "Cat6A S/FTP – двойное экранирование, для зон с высоким уровнем EMI, стоимость ≈ 0,70 € / м.",
+            "Кабель LSZH – минимизирует токсичность при возгорании, рекомендуется в жилых помещениях.",
+            "Кабель с маркировкой «Plenum» – для прокладки в вентиляционных каналах, если требуется."
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "PoE‑устройства: как правильно распределять питание по кабелю"
+        },
+        {
+          "type": "p",
+          "text": "Стандарт IEEE 802.3af (PoE) обеспечивает до 15,4 Вт на порт, а IEEE 802.3at (PoE+) – до 30 Вт. Для более мощных нагрузок, таких как PTZ‑камеры или Wi‑Fi 6 E точки доступа, используется IEEE 802.3bt (PoE++), позволяющий подавать до 60‑90 Вт. При выборе PoE‑коммутатора важно учитывать суммарный бюджет питания: если в квартире планируется 8 камер (по 15 Вт) и 2 точки доступа (по 25 Вт), потребуется минимум 250 Вт свободных мощностей. Выбирайте коммутатор с поддержкой «Passive Power Delivery» только в случае, когда все устройства совместимы, иначе предпочтительнее активные PoE‑модули с автоматическим обнаружением нагрузки."
+        },
+        {
+          "type": "ul",
+          "items": [
+            "IP‑камеры 1080p – 12‑15 Вт, поддерживают PoE 802.3af.",
+            "PTZ‑камеры 4K – 20‑30 Вт, требуют PoE 802.3at.",
+            "Wi‑Fi 6E точка доступа – 18‑22 Вт, PoE 802.3at.",
+            "Сетевые светильники с датчиками движения – 10‑12 Вт, PoE 802.3af.",
+            "Контроллеры KNX‑IP – 8‑10 Вт, PoE 802.3af."
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "Защита сети: UPS, Surge Protector и фильтрация"
+        },
+        {
+          "type": "p",
+          "text": "В умном доме любой сбой электроэнергии может привести к потере данных или отключению системы безопасности. Рекомендуется установить бесперебойный источник питания (UPS) емкостью от 1500 ВА с двойным выходом: один – для роутера и коммутаторов, второй – для NAS и контроллеров автоматизации. Сетевые розетки и распределительные шкафы следует оснастить удлинителями‑сурж‑протекторами класса II, способными поглощать импульсы до 10 кА. Для снижения уровня радиочастотных помех полезно использовать EMI‑фильтры на входе питания коммутаторов, особенно если они размещены рядом с бытовой техникой высокой мощности."
+        },
+        {
+          "type": "ul",
+          "items": [
+            "UPS 1500 ВА – ≈ 250 €; обеспечивает 30‑45 мин автономной работы при полной нагрузке.",
+            "Сурж‑протектор на 12 м канала – ≈ 30 €; поглощает импульсы до 10 кА.",
+            "EMI‑фильтр для каждого PoE‑коммутатора – ≈ 15 € / шт.",
+            "Заземление распределительного шкафа – обязательный пункт согласно CTE."
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "Тестирование и сертификация кабельных сетей"
+        },
+        {
+          "type": "p",
+          "text": "После завершения монтажа необходимо провести тестирование всех линий на соответствие стандарту TIA/EIA‑568‑B. Портативные тестеры (Fluke Networks DSX‑5000 или аналог) измеряют параметры: задержка (≤ 5 нс/м), затухание (≤ 2,5 дБ/100 м для 100 МГц, ≤ 1,5 дБ/100 м для 500 МГц) и кросстолк (≤ ‑55 дБ). При успешных результатах выдается сертификат категории (Cat6A) и маркировка каждой патч‑панели. Не забудьте задокументировать схему кабельных трасс, номера патч‑портов и используемые кабели – это упростит обслуживание и будущие расширения."
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Измерить затухание на каждой паре – не более 2,5 дБ/100 м (Cat6) и 1,5 дБ/100 м (Cat6A).",
+            "Проверить кросстолк – не менее ‑55 дБ.",
+            "Сделать тест на пропускную способность – 10 Гбит/с на 30‑м трассе.",
+            "Сформировать протокол тестирования и подписать его ответственным инженером."
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "Экономический расчёт: стоимость кабеля и работ в Барселоне"
+        },
+        {
+          "type": "p",
+          "text": "Стоимость полной инфраструктуры умного дома в Барселоне зависит от площади квартиры и выбранных технологий. При среднем размере 100 м² расходы распределяются примерно так: кабель Cat6A – 0,45 € / м, общая длина 300 м → 135 €; кабель‑каналы и трубы – 3 € / м → 900 €; монтажные работы электрика – 35 € / ч, около 30 ч → 1050 €; оборудование (PoE‑коммутатор 24‑порт, 250 Вт) – 400 €; UPS – 250 €; тестирование и сертификация – 200 €. Итого базовый бюджет составляет около 2935 €, но с учётом запасных каналов и будущих расширений реальная стоимость может достигать 3500‑4000 €."
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Кабель Cat6A (300 м) – 135 €",
+            "Кабель‑каналы и металлические трубы – 900 €",
+            "Работа электрика (30 ч) – 1050 €",
+            "PoE‑коммутатор 24‑порт, 250 Вт – 400 €",
+            "UPS 1500 ВА – 250 €",
+            "Тестирование и сертификат – 200 €",
+            "Запасные каналы и аксессуары – 300‑500 €"
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "Часто задаваемые вопросы (FAQ) о кабелировании умного дома"
+        },
+        {
+          "type": "p",
+          "text": "Ниже собраны ответы на самые популярные вопросы, которые задают владельцы квартир в Барселоне при планировании сетевой инфраструктуры умного дома."
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Какая длина кабеля максимально допустима для Cat6A? – 100 м без репитера; при использовании PoE лучше ограничить 80 м.",
+            "Нужен ли отдельный канал для HDMI‑кабеля? – Да, если HDMI проложен в стене, используйте кабель‑канал Ø 20 мм и экранированный кабель HDMI 2.1.",
+            "Можно ли использовать один кабель для питания и данных? – При применении PoE это стандартно, но мощность не должна превышать 30 Вт на паре (PoE+).",
+            "Как избежать помех от бытовой техники? – Проложите сетевые кабели в отдельном канале от силовых, используйте экранированный кабель и заземление.",
+            "Нужна ли сертификация кабеля в Испании? – Да, кабель должен соответствовать европейским стандартам EN 50575 и маркировке CE, а также требованиям CTE по огнестойкости."
+          ]
         }
       ]
     }
