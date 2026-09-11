@@ -13024,6 +13024,99 @@
         {
           "type": "tip",
           "text": "El precio correcto para una instalación de red en una oficina de tamaño mediano (20-50 puestos) en Barcelona está entre 3.500 y 10.000 €, dependiendo de los equipos activos incluidos. Por debajo de ese rango debes preguntar qué se ha omitido. Por encima, justifica en detalle qué justifica el sobrecoste."
+        },
+        {
+          "type": "h2",
+          "text": "Impacto económico de una instalación certificada en Barcelona"
+        },
+        {
+          "type": "p",
+          "text": "Una red bien diseñada y certificada reduce el tiempo de inactividad en un 70 % según estudios del sector. En una pyme de 30 puestos, cada hora de caída cuesta entre 300 y 500 €, lo que implica pérdidas anuales de 20 000 € a 40 000 € si la infraestructura es inestable. Invertir entre 3.500 € y 10.000 € en una instalación con certificación Fluke y garantía de 5 años genera un retorno de inversión (ROI) de 3 a 5 veces en los primeros tres años, ya que elimina gastos de reparaciones emergentes y disminuye la necesidad de soporte técnico externo."
+        },
+        {
+          "type": "h2",
+          "text": "Normativas y estándares que rigen el cableado estructurado en España"
+        },
+        {
+          "type": "p",
+          "text": "En la península, el cableado de datos está regulado por varias normas que deben cumplirse para que la instalación sea legal y segura. El Reglamento Electrotécnico de Baja Tensión (REBT) obliga a seguir las pautas de seguridad eléctrica, mientras que la familia de normas UNE‑EN 50173‑1, 2 y 3 define la arquitectura, los requisitos de desempeño y los métodos de ensayo de los sistemas de cableado estructurado. Además, la normativa de la Comisión Nacional de los Mercados y la Competencia (CNMC) establece requisitos de habilitación (HAT) para empresas que trabajen con infraestructuras de telecomunicaciones."
+        },
+        {
+          "type": "ul",
+          "items": [
+            "UNE‑EN 50173‑1: Arquitectura de cableado de telecomunicaciones.",
+            "UNE‑EN 50173‑2: Requisitos de desempeño para enlaces horizontales.",
+            "UNE‑EN 50173‑3: Requisitos de desempeño para enlaces de área de campus.",
+            "REBT – Reglamento Electrotécnico de Baja Tensión, sección 15.1.",
+            "Ley 9/2014 del uso de la fibra óptica y la habilitación de operadores."
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "Tecnologías emergentes que debes considerar"
+        },
+        {
+          "type": "p",
+          "text": "El crecimiento de aplicaciones de videoconferencia, IoT y IA demanda mayor ancho de banda y energía a través del cable. La norma IEEE 802.3bt (PoE++) permite suministrar hasta 90 W por puerto, suficiente para pantallas digitales, teléfonos DECT y puntos de acceso Wi‑Fi 6. En entornos con requerimientos de 10 GbE, el cable de categoría 6A o 7A garantiza la transmisión sin errores hasta 100 m. La fibra óptica multimodo OM4, con capacidad de 40 GbE a 150 m, está ganando terreno en edificios de oficinas de alta densidad, especialmente cuando se planifica una migración a 25 GbE o 100 GbE en los próximos cinco años."
+        },
+        {
+          "type": "ul",
+          "items": [
+            "PoE++ (IEEE 802.3bt) – hasta 90 W por puerto, ideal para AP 6 y cámaras 4K.",
+            "Cat 6A / Cat 7A – 10 GbE garantizado a 100 m, resistencia a interferencias.",
+            "Fibra OM4 – 40 GbE a 150 m, preparada para 100 GbE con módulos SFP+.",
+            "Cableado estructurado con certificación Fluke – verificación de atenuación, diafonía y continuidad."
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "Checklist de inspección post‑instalación"
+        },
+        {
+          "type": "p",
+          "text": "Después de que el instalador termine el trabajo, verifica cada punto con la siguiente lista. Un chequeo exhaustivo asegura que la certificación sea válida y que la garantía cubra todos los componentes."
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Informe de certificación Fluke: al menos 95 % de los enlaces deben estar en categoría ≥ Cat 6A.",
+            "Etiquetado claro de cada parche y puerto, siguiendo la convención de colores del cliente.",
+            "Documentación de rutas de cableado (planos, diagramas de distribución).",
+            "Comprobación de la continuidad de tierra y cumplimiento REBT.",
+            "Pruebas de PoE: medición de potencia entregada y consumo real de cada dispositivo.",
+            "Verificación de la presión de los conectores (test de retorno de señal)."
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "Planificación para la expansión a 5 años"
+        },
+        {
+          "type": "p",
+          "text": "Una instalación inteligente contempla la evolución tecnológica. Calcula el crecimiento previsto de puestos de trabajo y la incorporación de dispositivos IoT para dimensionar el número de ranuras de parcheo y la capacidad del back‑bone. En Barcelona, la densidad media de oficinas es de 12 m² por puesto; si esperas añadir 20 % de puestos cada año, necesitarás una infraestructura que soporte al menos 150 puertos activos en una oficina mediana. Opta por bandejas de cableado con espacio libre del 30 % y por switches modulares que permitan añadir módulos de 10 GbE sin cambiar la arquitectura."
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Dimensiona el número de paneles de parcheo con un margen del 30 % sobre los puertos actuales.",
+            "Instala conductos y canalizaciones sobredimensionadas (Ø 25 mm) para futuros cables de fibra.",
+            "Elige racks con capacidad de carga mínima de 2 kW para alojar equipos de alimentación PoE.",
+            "Documenta todas las rutas y deja espacio para la inserción de cables de categoría superior."
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "Preguntas frecuentes (FAQ) sobre instaladores de red en Barcelona"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "¿El instalador está inscrito como HAT en la CNMC? Sí/No.",
+            "¿Cuál es el tiempo medio de respuesta para incidencias críticas (SLA < 4 h)?",
+            "¿Incluye el presupuesto la gestión de residuos de cables antiguos según la normativa de la UE?",
+            "¿Qué tipo de garantía ofrece el fabricante de los cables y cómo se combina con la garantía del instalador?",
+            "¿Se proporciona un plano actualizado del rack y del cableado vertical y horizontal?"
+          ]
         }
       ]
     },
@@ -15240,6 +15333,162 @@
         {
           "type": "tip",
           "text": "If building or renovating a home, install more conduit than you think you need. An empty 40 mm conduit costs 3-5 € per metre during construction, and 15-25 € per metre when it has to be opened afterwards. Technology changes fast — what can't be predicted is what cables you'll need in 10 years, but you can guarantee there'll be space for the runs."
+        },
+        {
+          "type": "h2",
+          "text": "Designing the cable layout for a Barcelona home"
+        },
+        {
+          "type": "p",
+          "text": "Before any cutter reaches a wall, map the floor plan on a scaled CAD sheet or a simple 1:100 drawing. Measure the longest run from the central hub to each room, add at least 10 % slack for future moves, and keep every Ethernet segment under 100 m to stay within Cat6A specifications. In Mediterranean apartments, vertical shafts often run through the stairwell; use them to pull cables to upper floors, reducing the need for multiple surface‑mounted trunks."
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Create a point‑by‑point matrix (room → device → cable type).",
+            "Mark exact outlet locations on the wall plan, respecting furniture placement.",
+            "Route cables through 40 mm PVC conduit wherever possible, avoiding sharp bends (< 90°).",
+            "Label each conduit and cable with a durable alphanumeric tag before pulling.",
+            "Reserve a spare conduit in every room for future upgrades."
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "Spanish building codes and certifications you must respect"
+        },
+        {
+          "type": "p",
+          "text": "In Spain, low‑voltage cabling falls under the Reglamento Electrotécnico de Baja Tensión (REBT) and the European EN 50173 series for structured cabling. All cables must carry the CE mark, be fire‑rated (UL‑94 V‑0 or equivalent), and respect the separation distances from power conductors defined in the ITC‑BT‑30 standard. When you install in a condominium, the community board often requires a written project signed by a certified instal·lator and a final inspection report."
+        },
+        {
+          "type": "ul",
+          "items": [
+            "REBT article 9.2 – low‑voltage cable segregation from mains.",
+            "EN 50173‑1 – performance classes for Category 6A (10 GbE).",
+            "EN 50385 – fire safety for cable ducts in residential buildings.",
+            "Certificate of conformity (CE) for every Cat6A, fiber and HDMI cable.",
+            "Local Ayuntamiento permit if you cut through structural walls."
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "Choosing conduit, cable trays and surface‑mount solutions"
+        },
+        {
+          "type": "p",
+          "text": "PVC conduit 40 mm is the most cost‑effective choice for Barcelona renovations; it costs €3‑5 /m and can host up to four Cat6A bundles plus a spare fiber strand. In historic buildings where drilling is restricted, use low‑profile surface‑mount raceways (e.g., 2‑inch metal trays) that can be painted to match the plaster. For open‑plan lofts, overhead cable trays provide easy access for future upgrades."
+        },
+        {
+          "type": "ul",
+          "items": [
+            "PVC conduit (flexible or rigid) – 40 mm minimum, UV‑resistant for balconies.",
+            "Metal ladder trays – 30 mm deep, ideal for visible installations in tech rooms.",
+            "Cable clips with self‑tapping screws – keep bundles tidy and maintain bend radius.",
+            "Push‑through fittings – allow fast cable entry without stripping the jacket.",
+            "Cable management boxes – protect patch panels and keep spare cords organized."
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "Future‑proofing with fiber‑to‑the‑room and 10 GbE"
+        },
+        {
+          "type": "p",
+          "text": "While Cat6A covers most needs today, the price gap to single‑mode fiber has narrowed to under €0.40 /m in Spain. Installing a 2 mm multimode fiber strand alongside each Ethernet run enables a 10 GbE or 40 GbE backbone without rewiring. The fiber can later be terminated to SFP+ modules for high‑performance home labs, media servers, or a direct‑to‑router 10 Gbps uplink."
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Run one OM3 multimode fiber per conduit for future 10 GbE or 25 GbE.",
+            "Terminate fiber in a mini‑patch panel at the central hub – keeps splicing tidy.",
+            "Use LC‑to‑LC connectors; they are smaller than SC and fit dense panels.",
+            "Consider a hybrid patch panel that combines RJ45 and fiber ports.",
+            "Document fiber routes in a GIS‑style spreadsheet for quick troubleshooting."
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "Power over Ethernet (PoE) strategy for cameras and access points"
+        },
+        {
+          "type": "p",
+          "text": "PoE simplifies installations by delivering up to 60 W over a single Cat6A cable (IEEE 802.3bt). In a Barcelona smart home, allocate a PoE‑enabled managed switch (48‑port, 370 W budget) in the communications hub. This powers indoor/outdoor security cameras, Wi‑Fi 6E access points, and smart door locks without additional AC adapters, keeping the interior aesthetically clean."
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Choose a switch with auto‑detect (802.3af/at/bt) to protect legacy devices.",
+            "Reserve a dedicated PoE VLAN for security cameras – improves QoS.",
+            "Run PoE cables at least 1 m away from high‑current power lines to avoid interference.",
+            "Install a PoE injector per zone if the central switch lacks enough ports.",
+            "Use shielded Cat6A for outdoor runs to protect against electromagnetic noise."
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "Cost breakdown for a typical 150 m² smart home in Barcelona"
+        },
+        {
+          "type": "p",
+          "text": "Below is an average budget based on 2024 supplier prices in Catalonia. Prices include material, labour (licensed instal·lator) and a basic testing report. Adjustments may be needed for high‑rise buildings with complex access shafts."
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Cat6A bulk cable (100 m roll) – €1.10 /m → €220.",
+            "PVC conduit 40 mm (150 m) – €4 /m → €600.",
+            "RJ45 wall plates (30 pcs) – €8 each → €240.",
+            "Managed PoE switch 24‑port 370 W – €550.",
+            "Mini‑patch panel (24 ports) + patch cords – €180.",
+            "Fiber OM3 strand (200 m) – €0.35 /m → €70.",
+            "Labour (installation & testing) – €45 /h × 30 h → €1,350.",
+            "Permit & inspection fees – €120.",
+            "Total estimated cost – €3,330."
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "DIY vs professional installation – when to call CableCore"
+        },
+        {
+          "type": "p",
+          "text": "A skilled DIYer can pull cables in a single‑storey house, but Barcelona’s building regulations, especially in older blocks, often require a certified instal·lator to certify fire‑rated pathways and to issue the “Informe de Compatibilidad”. CableCore provides a turnkey service: design, permit acquisition, installation, testing (Fluke cert‑test) and a 5‑year warranty, guaranteeing compliance and resale value."
+        },
+        {
+          "type": "ul",
+          "items": [
+            "DIY suitable for: new ground‑floor villas, detached houses, or temporary office spaces.",
+            "Professional required for: multi‑story apartments, condominiums, or any work that penetrates load‑bearing walls.",
+            "CableCore advantage: single‑point project management, Spanish‑language technical support, and local knowledge of Barcelona’s building codes.",
+            "Free on‑site survey from CableCore – no obligation quote within 48 h.",
+            "DIY risk: voiding insurance if non‑compliant cabling causes fire or water damage."
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "Maintenance, testing and troubleshooting best practices"
+        },
+        {
+          "type": "p",
+          "text": "After installation, certify each link with a Fluke DSX‑5300 tester to record insertion loss (< 1 dB for 100 m Cat6A) and return loss (> 20 dB). Keep a digital spreadsheet with port numbers, cable IDs, and test results. For ongoing maintenance, schedule a visual inspection every 12 months, especially after renovations or when adding new devices."
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Label both ends of every cable with a QR code linked to the spreadsheet.",
+            "Use a handheld cable tracer to locate faults without opening walls.",
+            "Replace any cable showing > 3 dB loss or intermittent link errors.",
+            "Update firmware on PoE switches and Wi‑Fi APs quarterly to avoid security gaps.",
+            "Document any changes in a “change‑log” file stored on the home NAS."
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "Conclusion – why a well‑cabled foundation matters for the next two decades"
+        },
+        {
+          "type": "p",
+          "text": "A robust structured‑cabling system turns a collection of gadgets into a true smart home that scales with emerging technologies such as 8K streaming, AR/VR workstations, and edge‑AI appliances. In Barcelona’s dense urban fabric, the extra €1‑2 k spent on future‑proof conduit, Cat6A and fiber today avoids costly retrofits later, protects property value, and ensures uninterrupted connectivity for years to come."
         }
       ]
     },
