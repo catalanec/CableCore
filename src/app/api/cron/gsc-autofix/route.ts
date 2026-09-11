@@ -26,6 +26,28 @@ const BATCH_SIZE = 5;
 // skips cost an inspection, not a slot.
 const CANDIDATE_POOL = 40;
 
+// Groq's on-demand tier allows 8000 tokens per minute, and one expansion asks
+// for roughly 4250 (prompt plus the max_tokens reservation). Two back-to-back
+// calls therefore hit 429 — which is exactly what happened on 11 September:
+// five articles picked, three lost to "Rate limit reached ... try again in
+// 22.8s". Leave room between calls, and when a 429 arrives anyway, wait the
+// interval Groq itself names rather than discarding the article.
+// Configurable because the right value follows the Groq plan: the on-demand
+// tier needs ~20s between calls, a paid tier needs none.
+const GROQ_SPACING_MS = Number(process.env.GROQ_SPACING_MS ?? 20_000);
+const GROQ_MAX_ATTEMPTS = 2;
+
+function sleep(ms: number): Promise<void> {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+// Groq puts the wait in the message: "Please try again in 22.8s."
+function retryDelayFromGroq(body: string): number | null {
+    const m = body.match(/try again in ([\d.]+)s/i);
+    if (!m) return null;
+    return Math.ceil(parseFloat(m[1]) * 1000) + 500;
+}
+
 // Groq retires models, and a retired one answers 404 to every call. That is how
 // this cron spent days doing nothing after being fixed: it ran, asked for
 // llama-3.3-70b-versatile, got model_not_found on all five articles and
@@ -138,45 +160,66 @@ Rules:
 5. Topics should stay relevant to network cable installation in Barcelona, Spain
 6. Return ONLY a valid JSON array of the complete content blocks (existing + new), using this exact shape for each block: {"type":"h2","text":"..."} or {"type":"p","text":"..."} or {"type":"ul","items":["...","..."]}. No markdown, no explanation.`;
 
-    const res = await fetch('https://api.groq.com/openai/v1/chat/completions', {
-        method: 'POST',
-        headers: {
-            'Authorization': `Bearer ${apiKey}`,
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-            model: GROQ_MODEL,
-            max_tokens: 4096,
-            messages: [{ role: 'user', content: prompt }],
-        }),
-    });
+    let lastReason = 'Groq call never ran';
 
-    if (!res.ok) {
-        const body = await res.text();
-        console.error('Groq API error:', res.status, body);
-        // Surface the API's own words. A generic failure reads as a transient
-        // hiccup; "model_not_found" reads as something to go and fix.
-        let detail = body.slice(0, 200);
+    for (let attempt = 1; attempt <= GROQ_MAX_ATTEMPTS; attempt++) {
+        const res = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+            method: 'POST',
+            headers: {
+                'Authorization': `Bearer ${apiKey}`,
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                model: GROQ_MODEL,
+                max_tokens: 4096,
+                messages: [{ role: 'user', content: prompt }],
+            }),
+        });
+
+        if (!res.ok) {
+            const body = await res.text();
+            console.error('Groq API error:', res.status, body);
+            // Surface the API's own words. A generic failure reads as a transient
+            // hiccup; "model_not_found" reads as something to go and fix.
+            let detail = body.slice(0, 200);
+            try {
+                const parsed = JSON.parse(body);
+                const code = parsed?.error?.code;
+                const message = parsed?.error?.message;
+                if (message) detail = code ? `${code}: ${message}` : message;
+            } catch { /* keep the raw body */ }
+            lastReason = `Groq ${res.status ?? 'error'} — ${detail}`;
+
+            const wait = res.status === 429 ? retryDelayFromGroq(body) : null;
+            if (wait !== null && attempt < GROQ_MAX_ATTEMPTS) {
+                await sleep(wait);
+                continue;
+            }
+            return { content: null, reason: lastReason };
+        }
+
+        const data = await res.json();
+        const text = data.choices?.[0]?.message?.content || '';
+
         try {
-            const parsed = JSON.parse(body);
-            const code = parsed?.error?.code;
-            const message = parsed?.error?.message;
-            if (message) detail = code ? `${code}: ${message}` : message;
-        } catch { /* keep the raw body */ }
-        return { content: null, reason: `Groq ${res.status ?? 'error'} — ${detail}` };
+            const jsonMatch = text.match(/\[[\s\S]*\]/);
+            if (!jsonMatch) {
+                // The model occasionally answers in prose. One more attempt is
+                // cheaper than losing the article until tomorrow's run.
+                lastReason = `Groq ${GROQ_MODEL} returned no JSON array`;
+                if (attempt < GROQ_MAX_ATTEMPTS) continue;
+                return { content: null, reason: lastReason };
+            }
+            return { content: JSON.parse(jsonMatch[0]) as ContentBlock[] };
+        } catch {
+            console.error('Failed to parse Groq response:', text.slice(0, 200));
+            lastReason = `Groq ${GROQ_MODEL} returned unparsable JSON`;
+            if (attempt < GROQ_MAX_ATTEMPTS) continue;
+            return { content: null, reason: lastReason };
+        }
     }
 
-    const data = await res.json();
-    const text = data.choices?.[0]?.message?.content || '';
-
-    try {
-        const jsonMatch = text.match(/\[[\s\S]*\]/);
-        if (!jsonMatch) return { content: null, reason: `Groq ${GROQ_MODEL} returned no JSON array` };
-        return { content: JSON.parse(jsonMatch[0]) as ContentBlock[] };
-    } catch {
-        console.error('Failed to parse Groq response:', text.slice(0, 200));
-        return { content: null, reason: `Groq ${GROQ_MODEL} returned unparsable JSON` };
-    }
+    return { content: null, reason: lastReason };
 }
 
 // ── Telegram notification ──────────────────────────────────────────────────
@@ -289,6 +332,10 @@ export async function GET(request: Request) {
                 }
 
                 // Expand with Groq
+                // Space the calls so the per-minute token budget is not spent
+                // in the first few seconds of the run.
+                if (fixed.length > 0) await sleep(GROQ_SPACING_MS);
+
                 const expansion = await expandArticleWithGroq(groqKey, localeArticle, page.locale, page.slug);
                 if (!expansion.content) {
                     errors.push(`${page.url} — ${expansion.reason}`);

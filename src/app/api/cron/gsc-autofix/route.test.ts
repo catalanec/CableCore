@@ -38,6 +38,9 @@ describe('GET /api/cron/gsc-autofix', () => {
     beforeEach(() => {
         process.env = {
             ...ORIGINAL_ENV,
+            // Real runs space Groq calls by 20s to stay inside the per-minute
+            // token budget; tests must not wait that out.
+            GROQ_SPACING_MS: '0',
             CRON_SECRET: 'test-cron-secret',
             GOOGLE_CLIENT_ID: 'client-id',
             GOOGLE_CLIENT_SECRET: 'client-secret',
@@ -289,5 +292,69 @@ describe('GET /api/cron/gsc-autofix', () => {
             `a run must still do a full batch of real work when the thinnest articles are already indexed; got ${json.fixed.length}`
         ).toBe(5);
         expect(json.fixed.join(' ')).not.toContain('indexed-');
+    });
+
+    it('waits out a Groq rate limit instead of losing the article', async () => {
+        // Groq's free tier allows 8000 tokens per minute; each expansion asks for
+        // roughly 4250, so the second and third call of a run came back 429 with
+        // "try again in 22.8s". The run threw those articles away.
+        const THIN = [{ type: 'p', text: 'w '.repeat(20) }];
+        const fixture = [{ slug: 'rate-limited', es: { title: 'A', content: THIN } }];
+        let groqCalls = 0;
+        fetchMock.mockImplementation((url: string) => {
+            if (url.includes('oauth2.googleapis.com')) return jsonResponse({ access_token: 'tok' });
+            if (url.includes('githubusercontent') || url.includes('api.github.com/repos'))
+                return jsonResponse({ content: Buffer.from(JSON.stringify(fixture)).toString('base64'), sha: 'sha1' });
+            if (url.includes('searchconsole.googleapis.com'))
+                return jsonResponse({ inspectionResult: { indexStatusResult: { verdict: 'NEUTRAL', coverageState: 'Crawled - currently not indexed' } } });
+            if (url.includes('api.groq.com')) {
+                groqCalls += 1;
+                if (groqCalls === 1) {
+                    return Promise.resolve({
+                        ok: false,
+                        status: 429,
+                        headers: { get: () => null },
+                        text: () => Promise.resolve(JSON.stringify({
+                            error: { code: 'rate_limit_exceeded', message: 'Rate limit reached. Please try again in 0.05s.' },
+                        })),
+                        json: () => Promise.resolve({}),
+                    });
+                }
+                return jsonResponse({ choices: [{ message: { content: JSON.stringify([{ type: 'p', text: 'x '.repeat(1300) }]) } }] });
+            }
+            return jsonResponse({ ok: true });
+        });
+
+        const { GET } = await import('./route');
+        const json = await (await GET(cronRequest())).json();
+
+        expect(groqCalls, 'a 429 must be retried, not abandoned').toBeGreaterThan(1);
+        expect(json.fixed.length, 'the article should be expanded on the retry').toBe(1);
+        expect(json.errors).toHaveLength(0);
+    });
+
+    it('retries once when the model returns something that is not a JSON array', async () => {
+        const THIN = [{ type: 'p', text: 'w '.repeat(20) }];
+        const fixture = [{ slug: 'bad-json', es: { title: 'A', content: THIN } }];
+        let groqCalls = 0;
+        fetchMock.mockImplementation((url: string) => {
+            if (url.includes('oauth2.googleapis.com')) return jsonResponse({ access_token: 'tok' });
+            if (url.includes('githubusercontent') || url.includes('api.github.com/repos'))
+                return jsonResponse({ content: Buffer.from(JSON.stringify(fixture)).toString('base64'), sha: 'sha1' });
+            if (url.includes('searchconsole.googleapis.com'))
+                return jsonResponse({ inspectionResult: { indexStatusResult: { verdict: 'NEUTRAL', coverageState: 'Crawled - currently not indexed' } } });
+            if (url.includes('api.groq.com')) {
+                groqCalls += 1;
+                if (groqCalls === 1) return jsonResponse({ choices: [{ message: { content: 'Sure! Here is the content you asked for.' } }] });
+                return jsonResponse({ choices: [{ message: { content: JSON.stringify([{ type: 'p', text: 'x '.repeat(1300) }]) } }] });
+            }
+            return jsonResponse({ ok: true });
+        });
+
+        const { GET } = await import('./route');
+        const json = await (await GET(cronRequest())).json();
+
+        expect(groqCalls).toBeGreaterThan(1);
+        expect(json.fixed.length).toBe(1);
     });
 });
