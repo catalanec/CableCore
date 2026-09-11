@@ -18,6 +18,14 @@ export const maxDuration = 300;
 // commit whatever the run finished.
 const BATCH_SIZE = 5;
 
+// How many of the thinnest articles a run is willing to look at in order to
+// find BATCH_SIZE that actually need expanding. Articles Google has already
+// indexed are skipped, but they stay the thinnest, so a fixed window of
+// BATCH_SIZE handed them the same slots every single day: the 11 September run
+// expanded one article and skipped four. The pool is wider than the batch so
+// skips cost an inspection, not a slot.
+const CANDIDATE_POOL = 40;
+
 // Groq retires models, and a retired one answers 404 to every call. That is how
 // this cron spent days doing nothing after being fixed: it ran, asked for
 // llama-3.3-70b-versatile, got model_not_found on all five articles and
@@ -232,13 +240,14 @@ export async function GET(request: Request) {
             )
             .filter(p => p.words <= 1200)
             .sort((a, b) => a.words - b.words)
-            .slice(0, BATCH_SIZE);
+            .slice(0, CANDIDATE_POOL);
 
         let blogDataModified = false;
 
         const startedAt = Date.now();
 
         for (const page of keyPages) {
+            if (fixed.length >= BATCH_SIZE) break;
             if (Date.now() - startedAt > DEADLINE_MS) {
                 skipped.push(`${page.url} (out of time this run)`);
                 continue;

@@ -243,4 +243,51 @@ describe('GET /api/cron/gsc-autofix', () => {
         expect(telegram, 'the run must report to Telegram').toBeDefined();
         expect(String(telegram![1].body)).toContain('model_not_found');
     });
+
+    it('does not let already-indexed thin articles occupy the batch forever', async () => {
+        // The 11 September run expanded one article and skipped four as PASS.
+        // Those four are still the thinnest, so the next run picks the same
+        // four again — permanently consuming four of five slots. Left alone the
+        // cron reaches zero expansions per run while still reporting success.
+        const THIN = (n: number) => [{ type: 'p', text: 'w '.repeat(n) }];
+        const fixture = [
+            { slug: 'indexed-1', es: { title: 'A', content: THIN(10) } },
+            { slug: 'indexed-2', es: { title: 'B', content: THIN(11) } },
+            { slug: 'indexed-3', es: { title: 'C', content: THIN(12) } },
+            { slug: 'indexed-4', es: { title: 'D', content: THIN(13) } },
+            { slug: 'needs-1', es: { title: 'E', content: THIN(20) } },
+            { slug: 'needs-2', es: { title: 'F', content: THIN(21) } },
+            { slug: 'needs-3', es: { title: 'G', content: THIN(22) } },
+            { slug: 'needs-4', es: { title: 'H', content: THIN(23) } },
+            { slug: 'needs-5', es: { title: 'I', content: THIN(24) } },
+        ];
+        // indexed-* come back as PASS, needs-* as not indexed
+        fetchMock.mockImplementation((url: string, init?: { body?: string }) => {
+            if (url.includes('oauth2.googleapis.com')) return jsonResponse({ access_token: 'tok' });
+            if (url.includes('githubusercontent') || url.includes('api.github.com/repos'))
+                return jsonResponse({ content: Buffer.from(JSON.stringify(fixture)).toString('base64'), sha: 'sha1' });
+            if (url.includes('searchconsole.googleapis.com')) {
+                const isIndexed = String(init?.body || '').includes('indexed-');
+                return jsonResponse({
+                    inspectionResult: {
+                        indexStatusResult: isIndexed
+                            ? { verdict: 'PASS', coverageState: 'Submitted and indexed' }
+                            : { verdict: 'NEUTRAL', coverageState: 'Crawled - currently not indexed' },
+                    },
+                });
+            }
+            if (url.includes('api.groq.com'))
+                return jsonResponse({ choices: [{ message: { content: JSON.stringify([{ type: 'p', text: 'x '.repeat(1300) }]) } }] });
+            return jsonResponse({ ok: true });
+        });
+
+        const { GET } = await import('./route');
+        const json = await (await GET(cronRequest())).json();
+
+        expect(
+            json.fixed.length,
+            `a run must still do a full batch of real work when the thinnest articles are already indexed; got ${json.fixed.length}`
+        ).toBe(5);
+        expect(json.fixed.join(' ')).not.toContain('indexed-');
+    });
 });
