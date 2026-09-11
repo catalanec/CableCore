@@ -127,6 +127,21 @@ async function githubUpdateFile(token: string, path: string, content: string, sh
 // { type, text, items } shape actually used in blog-data.json — NOT the
 // { type, content } shape a previous version of this cron assumed, which
 // meant it silently never read/expanded real article content).
+// The model does not always answer with a flat array of blocks. On 11 September
+// it returned [[block, block], block] and the inner array was appended as one
+// "block": the page rendered 200 and quietly skipped it, so the work was lost
+// while the run reported success. Anything that is not a usable block is
+// dropped here rather than written to disk.
+function sanitizeBlocks(raw: unknown): ContentBlock[] {
+    const flat = (Array.isArray(raw) ? raw : [raw]).flat(3);
+    return flat.filter((b): b is ContentBlock => {
+        if (!b || typeof b !== 'object' || Array.isArray(b)) return false;
+        const block = b as { type?: unknown; text?: unknown; items?: unknown };
+        if (typeof block.type !== 'string') return false;
+        return typeof block.text === 'string' || Array.isArray(block.items);
+    });
+}
+
 function estimateWordCount(content: ContentBlock[] | undefined): number {
     if (!content || content.length === 0) return 0;
     const text = content.map(b => b.text || (b.items ? b.items.join(' ') : '')).join(' ');
@@ -216,7 +231,13 @@ Rules:
                 if (attempt < GROQ_MAX_ATTEMPTS) continue;
                 return { content: null, reason: lastReason };
             }
-            return { content: JSON.parse(jsonMatch[0]) as ContentBlock[] };
+            const blocks = sanitizeBlocks(JSON.parse(jsonMatch[0]));
+            if (blocks.length === 0) {
+                lastReason = `Groq ${GROQ_MODEL} returned no usable blocks`;
+                if (attempt < GROQ_MAX_ATTEMPTS) continue;
+                return { content: null, reason: lastReason };
+            }
+            return { content: blocks };
         } catch {
             console.error('Failed to parse Groq response:', text.slice(0, 200));
             lastReason = cutShort

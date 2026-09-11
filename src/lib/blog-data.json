@@ -13296,20 +13296,18 @@
           "type": "h2",
           "text": "Building codes and regulations in Spain"
         },
-        [
-          {
-            "type": "p",
-            "text": "Spain follows the European EN 50173‑1 standard for structured cabling and the local Código Técnico de la Edificación (CTE) for fire safety. Indoor fiber optic cables must be classified as LSZH (Low Smoke Zero Halogen) or Plenum‑rated (F/OF) when routed through air‑handling spaces. In Barcelona, the municipal fire department requires a fire‑stop seal at every penetrated fire barrier, using approved intumescent sleeves that expand to close the gap in case of fire."
-          },
-          {
-            "type": "ul",
-            "items": [
-              "EN 50373 – General requirements for optical fiber cabling",
-              "CTE DB‑S – Fire protection of building services",
-              "EN 50174‑2 – Testing and verification of fiber installations"
-            ]
-          }
-        ],
+        {
+          "type": "p",
+          "text": "Spain follows the European EN 50173‑1 standard for structured cabling and the local Código Técnico de la Edificación (CTE) for fire safety. Indoor fiber optic cables must be classified as LSZH (Low Smoke Zero Halogen) or Plenum‑rated (F/OF) when routed through air‑handling spaces. In Barcelona, the municipal fire department requires a fire‑stop seal at every penetrated fire barrier, using approved intumescent sleeves that expand to close the gap in case of fire."
+        },
+        {
+          "type": "ul",
+          "items": [
+            "EN 50373 – General requirements for optical fiber cabling",
+            "CTE DB‑S – Fire protection of building services",
+            "EN 50174‑2 – Testing and verification of fiber installations"
+          ]
+        },
         {
           "type": "h2",
           "text": "Choosing the right cable and connectors for indoor use"

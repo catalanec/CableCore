@@ -417,4 +417,44 @@ describe('GET /api/cron/gsc-autofix', () => {
         expect(reported, `errors were: ${reported}`).toMatch(/cut short|truncat/i);
         expect(reported).not.toMatch(/unparsable/i);
     });
+
+    it('flattens a nested array and drops anything that is not a real block', async () => {
+        // Seen in production on 11 September: the model answered
+        // [[{...},{...}]] and the whole inner array was appended as a single
+        // "block". The page still returned 200 and simply did not render it —
+        // the work was lost silently while the run reported success.
+        const fixture = [{ slug: 'anidado', es: { title: 'A', content: [{ type: 'p', text: 'w '.repeat(20).trim() }] } }];
+        let committed: unknown = null;
+        fetchMock.mockImplementation((url: string, init?: { body?: string; method?: string }) => {
+            if (url.includes('oauth2.googleapis.com')) return jsonResponse({ access_token: 'tok' });
+            if (url.includes('api.github.com/repos') && init?.method === 'PUT') {
+                committed = JSON.parse(Buffer.from(JSON.parse(String(init.body)).content, 'base64').toString());
+                return jsonResponse({ commit: { sha: 'new' } });
+            }
+            if (url.includes('githubusercontent') || url.includes('api.github.com/repos'))
+                return jsonResponse({ content: Buffer.from(JSON.stringify(fixture)).toString('base64'), sha: 'sha1' });
+            if (url.includes('searchconsole.googleapis.com'))
+                return jsonResponse({ inspectionResult: { indexStatusResult: { verdict: 'NEUTRAL', coverageState: 'Crawled - currently not indexed' } } });
+            if (url.includes('api.groq.com'))
+                return jsonResponse({ choices: [{ finish_reason: 'stop', message: { content: JSON.stringify([
+                    [{ type: 'h2', text: 'Anidado uno' }, { type: 'p', text: 'texto '.repeat(300).trim() }],
+                    { type: 'p', text: 'plano '.repeat(300).trim() },
+                    'basura suelta',
+                    { sinTipo: true },
+                ]) } }] });
+            return jsonResponse({ ok: true });
+        });
+
+        const { GET } = await import('./route');
+        await GET(cronRequest());
+
+        const saved = (committed as Array<{ es: { content: unknown[] } }>)[0].es.content;
+        expect(saved.every(b => b !== null && typeof b === 'object' && !Array.isArray(b)),
+            `every stored block must be a real block object, got: ${JSON.stringify(saved.map(b => Array.isArray(b) ? 'array' : typeof b))}`).toBe(true);
+        const texts = saved.map(b => (b as { text?: string }).text).filter(Boolean);
+        expect(texts.some(t => t!.startsWith('Anidado uno'))).toBe(true);
+        expect(texts.some(t => t!.startsWith('plano'))).toBe(true);
+        expect(JSON.stringify(saved)).not.toContain('basura suelta');
+        expect(JSON.stringify(saved)).not.toContain('sinTipo');
+    });
 });
