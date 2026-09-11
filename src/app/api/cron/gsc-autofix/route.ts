@@ -151,14 +151,13 @@ Article metadata:
 Current content blocks array:
 ${currentContent}
 
-Task: Expand this article by adding new content blocks to reach 1200-1500+ words total.
+Task: Write ADDITIONAL content blocks to append after the ones above, enough to bring the article to 1200-1500+ words in total.
 Rules:
-1. Keep ALL existing blocks exactly as they are (do not modify them)
-2. Add new blocks after the existing ones
-3. Add "h2" sections, "p" paragraphs, "ul" lists (with an "items" string array) — whatever improves the article
-4. Write in ${langLabel}, professional and SEO-friendly tone, with concrete technical facts/numbers, not generic filler
-5. Topics should stay relevant to network cable installation in Barcelona, Spain
-6. Return ONLY a valid JSON array of the complete content blocks (existing + new), using this exact shape for each block: {"type":"h2","text":"..."} or {"type":"p","text":"..."} or {"type":"ul","items":["...","..."]}. No markdown, no explanation.`;
+1. Do NOT repeat or restate the existing blocks — they are kept as they are and yours go after them
+2. Use "h2" sections, "p" paragraphs, "ul" lists (with an "items" string array) — whatever improves the article
+3. Write in ${langLabel}, professional and SEO-friendly tone, with concrete technical facts/numbers, not generic filler
+4. Topics should stay relevant to network cable installation in Barcelona, Spain
+5. Return ONLY a valid JSON array of the NEW blocks, using this exact shape for each: {"type":"h2","text":"..."} or {"type":"p","text":"..."} or {"type":"ul","items":["...","..."]}. No markdown, no explanation.`;
 
     let lastReason = 'Groq call never ran';
 
@@ -199,21 +198,30 @@ Rules:
         }
 
         const data = await res.json();
-        const text = data.choices?.[0]?.message?.content || '';
+        const choice = data.choices?.[0];
+        const text = choice?.message?.content || '';
+        // finish_reason 'length' means the answer hit max_tokens and stopped
+        // mid-sentence. Reporting that as "unparsable JSON" sent us looking at
+        // the model's formatting when the real problem was the size of the ask.
+        const cutShort = choice?.finish_reason === 'length';
 
         try {
             const jsonMatch = text.match(/\[[\s\S]*\]/);
             if (!jsonMatch) {
                 // The model occasionally answers in prose. One more attempt is
                 // cheaper than losing the article until tomorrow's run.
-                lastReason = `Groq ${GROQ_MODEL} returned no JSON array`;
+                lastReason = cutShort
+                    ? `Groq ${GROQ_MODEL} answer was cut short at max_tokens`
+                    : `Groq ${GROQ_MODEL} returned no JSON array`;
                 if (attempt < GROQ_MAX_ATTEMPTS) continue;
                 return { content: null, reason: lastReason };
             }
             return { content: JSON.parse(jsonMatch[0]) as ContentBlock[] };
         } catch {
             console.error('Failed to parse Groq response:', text.slice(0, 200));
-            lastReason = `Groq ${GROQ_MODEL} returned unparsable JSON`;
+            lastReason = cutShort
+                ? `Groq ${GROQ_MODEL} answer was cut short at max_tokens`
+                : `Groq ${GROQ_MODEL} returned unparsable JSON`;
             if (attempt < GROQ_MAX_ATTEMPTS) continue;
             return { content: null, reason: lastReason };
         }
@@ -343,9 +351,16 @@ export async function GET(request: Request) {
                 }
                 const expandedContent = expansion.content;
 
+                // Append. The model is asked only for new blocks now, so what
+                // already reads well cannot be silently rewritten, and the
+                // response is half the size it used to be — which is what was
+                // pushing it into max_tokens and truncating the JSON.
                 blogData[articleIdx] = {
                     ...article,
-                    [page.locale]: { ...localeArticle, content: expandedContent },
+                    [page.locale]: {
+                        ...localeArticle,
+                        content: [...(localeArticle.content || []), ...expandedContent],
+                    },
                 };
                 blogDataModified = true;
                 fixed.push(`${page.url} (${estimatedWords}w → 1200+w)`);

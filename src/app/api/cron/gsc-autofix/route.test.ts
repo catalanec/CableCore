@@ -135,12 +135,15 @@ describe('GET /api/cron/gsc-autofix', () => {
         const putBody = JSON.parse(githubPutCall![1].body);
         expect(putBody.message).toContain('1 fixed by gsc-autofix cron');
 
-        // The committed article's es.content should be the Groq-expanded array,
-        // written back into the nested locale object (not a stray top-level
-        // "blocks" field a previous version of this cron produced).
+        // The committed article's es.content keeps its original blocks with the
+        // new ones appended, written back into the nested locale object (not a
+        // stray top-level "blocks" field a previous version of this cron produced).
         const committedBlogData = JSON.parse(Buffer.from(putBody.content, 'base64').toString('utf-8'));
         const fixedArticle = committedBlogData.find((a: { slug: string }) => a.slug === 'article-fixed');
-        expect(fixedArticle.es.content).toEqual([{ type: 'p', text: 'expanded' }, { type: 'h2', text: 'Más info' }]);
+        const original = BLOG_DATA_FIXTURE.find(a => a.slug === 'article-fixed')!.es.content;
+        expect(fixedArticle.es.content.slice(0, original.length)).toEqual(original);
+        expect(fixedArticle.es.content.slice(original.length))
+            .toEqual([{ type: 'p', text: 'expanded' }, { type: 'h2', text: 'Más info' }]);
         expect(fixedArticle.blocks).toBeUndefined();
 
         const telegramCall = fetchMock.mock.calls.find(([u]) => u.includes('api.telegram.org'));
@@ -356,5 +359,62 @@ describe('GET /api/cron/gsc-autofix', () => {
 
         expect(groqCalls).toBeGreaterThan(1);
         expect(json.fixed.length).toBe(1);
+    });
+
+    it('keeps the existing blocks byte-for-byte and only appends what the model returned', async () => {
+        // The prompt used to ask for the whole array back, existing blocks
+        // included. That doubled the response, pushed it into max_tokens and
+        // truncated the JSON mid-array — and it let the model silently rewrite
+        // text that was already good.
+        const existing = [
+            { type: 'h2', text: 'Sección original que no debe cambiar' },
+            { type: 'p', text: 'w '.repeat(20).trim() },
+        ];
+        const fixture = [{ slug: 'append-only', es: { title: 'A', content: existing } }];
+        let committed: unknown = null;
+        fetchMock.mockImplementation((url: string, init?: { body?: string; method?: string }) => {
+            if (url.includes('oauth2.googleapis.com')) return jsonResponse({ access_token: 'tok' });
+            if (url.includes('api.github.com/repos') && init?.method === 'PUT') {
+                const body = JSON.parse(String(init.body));
+                committed = JSON.parse(Buffer.from(body.content, 'base64').toString());
+                return jsonResponse({ commit: { sha: 'new' } });
+            }
+            if (url.includes('githubusercontent') || url.includes('api.github.com/repos'))
+                return jsonResponse({ content: Buffer.from(JSON.stringify(fixture)).toString('base64'), sha: 'sha1' });
+            if (url.includes('searchconsole.googleapis.com'))
+                return jsonResponse({ inspectionResult: { indexStatusResult: { verdict: 'NEUTRAL', coverageState: 'Crawled - currently not indexed' } } });
+            if (url.includes('api.groq.com'))
+                return jsonResponse({ choices: [{ finish_reason: 'stop', message: { content: JSON.stringify([{ type: 'p', text: 'nuevo '.repeat(400).trim() }]) } }] });
+            return jsonResponse({ ok: true });
+        });
+
+        const { GET } = await import('./route');
+        await GET(cronRequest());
+
+        expect(committed, 'the run must commit').not.toBeNull();
+        const saved = (committed as Array<{ es: { content: Array<{ type: string; text?: string }> } }>)[0].es.content;
+        expect(saved.slice(0, existing.length)).toEqual(existing);
+        expect(saved.length).toBeGreaterThan(existing.length);
+    });
+
+    it('says the answer was cut short rather than calling it unparsable', async () => {
+        const fixture = [{ slug: 'cortada', es: { title: 'A', content: [{ type: 'p', text: 'w '.repeat(20) }] } }];
+        fetchMock.mockImplementation((url: string) => {
+            if (url.includes('oauth2.googleapis.com')) return jsonResponse({ access_token: 'tok' });
+            if (url.includes('githubusercontent') || url.includes('api.github.com/repos'))
+                return jsonResponse({ content: Buffer.from(JSON.stringify(fixture)).toString('base64'), sha: 'sha1' });
+            if (url.includes('searchconsole.googleapis.com'))
+                return jsonResponse({ inspectionResult: { indexStatusResult: { verdict: 'NEUTRAL', coverageState: 'Crawled - currently not indexed' } } });
+            if (url.includes('api.groq.com'))
+                return jsonResponse({ choices: [{ finish_reason: 'length', message: { content: '[{"type":"p","text":"empieza pero no term' } }] });
+            return jsonResponse({ ok: true });
+        });
+
+        const { GET } = await import('./route');
+        const json = await (await GET(cronRequest())).json();
+
+        const reported = json.errors.join(' ');
+        expect(reported, `errors were: ${reported}`).toMatch(/cut short|truncat/i);
+        expect(reported).not.toMatch(/unparsable/i);
     });
 });
