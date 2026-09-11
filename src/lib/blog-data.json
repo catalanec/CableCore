@@ -2459,6 +2459,157 @@
         {
           "type": "tip",
           "text": "💡 Considera invertir en un sistema de respaldo de energía para tu red, especialmente si tu restaurante depende de sistemas TPV para la operación diaria."
+        },
+        {
+          "type": "h2",
+          "text": "Diseño de topología de red para establecimientos de hostelería"
+        },
+        {
+          "type": "p",
+          "text": "En un restaurante o bar, la topología más usada es la estrella jerárquica con un core switch en una sala de servidores o rack dedicado. Cada zona – cocina, salón, terraza y oficina – se conecta mediante switches de capa 2 que distribuyen el tráfico local y reducen la latencia. La arquitectura en estrella permite aislar fallos y facilita la expansión: basta añadir un nuevo switch o puerto sin reconfigurar toda la red."
+        },
+        {
+          "type": "p",
+          "text": "Para locales con gran demanda de Wi‑Fi, se recomienda una topología híbrida que combine switches PoE con controladores de puntos de acceso (AP) en modo «mesh». De esta forma, los AP pueden gestionarse centralizadamente y ofrecer roaming sin interrupciones entre la zona de comedor y la terraza."
+        },
+        {
+          "type": "h2",
+          "text": "Ventajas del uso de PoE (Power over Ethernet) en restaurantes"
+        },
+        {
+          "type": "p",
+          "text": "El estándar PoE (IEEE 802.3af/at) permite alimentar dispositivos como cámaras IP, puntos de acceso Wi‑Fi, impresoras de tickets y terminales TPV a través del mismo cable de datos. En Barcelona, donde la normativa eléctrica exige canalizaciones ordenadas, PoE reduce la necesidad de tomas de corriente adicionales y simplifica el mantenimiento."
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Ahorro de hasta un 30 % en instalación eléctrica porque se eliminan cables de alimentación separados.",
+            "Capacidad de reinicio remoto de los equipos mediante switch gestionado, lo que minimiza tiempos de inactividad.",
+            "Facilidad para mover o añadir dispositivos sin obra civil, ideal para espacios que cambian de distribución."
+          ]
+        },
+        {
+          "type": "p",
+          "text": "Para soportar la carga total de un restaurante con 30 dispositivos PoE, se recomiendan switches de al menos 250 W de potencia total, como los modelos de Cisco Catalyst 2960‑X o los HP Aruba 2930F."
+        },
+        {
+          "type": "h2",
+          "text": "Seguridad de la red: VLANs y firewalls"
+        },
+        {
+          "type": "p",
+          "text": "Separar el tráfico interno del negocio (TPV, gestión de inventario) del tráfico de los clientes (Wi‑Fi público) mediante VLANs es una práctica esencial. Cada VLAN recibe una política de firewall distinta que impide que un dispositivo cliente acceda a los servidores críticos."
+        },
+        {
+          "type": "ul",
+          "items": [
+            "VLAN 10 – Red de gestión (administración, cámaras de seguridad).",
+            "VLAN 20 – Red de punto de venta y sistemas de cocina.",
+            "VLAN 30 – Wi‑Fi público para clientes, con limitación de ancho de banda."
+          ]
+        },
+        {
+          "type": "p",
+          "text": "En Barcelona, la Ley Orgánica de Protección de Datos (LOPDGDD) exige que los datos de los clientes se traten de forma confidencial; el uso de VLANs y firewalls ayuda a cumplir con esta normativa al aislar la información financiera del resto del tráfico."
+        },
+        {
+          "type": "h2",
+          "text": "Mantenimiento preventivo y diagnóstico de fallos"
+        },
+        {
+          "type": "p",
+          "text": "Un plan de mantenimiento trimestral incluye inspección visual de bandejas y canalizaciones, verificación de la continuidad de los pares con un tester de certificación (por ejemplo, Fluke Networks DSX‑8000) y actualización de firmware de switches y AP. Detectar problemas de diafonía o pérdida de retorno (Return Loss) antes de que impacten la operación es clave para evitar caídas en los sistemas de TPV."
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Revisar la etiqueta de cada cable y su ruta para garantizar la trazabilidad.",
+            "Ejecutar pruebas de velocidad (iPerf) entre puntos críticos para validar el rendimiento de 1 Gbps o 10 Gbps según la categoría del cable.",
+            "Comprobar la temperatura de los switches; valores superiores a 45 °C indican ventilación insuficiente."
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "Retorno de inversión (ROI) de una red bien cableada"
+        },
+        {
+          "type": "p",
+          "text": "Según estudios del sector de la hostelería en España, una red estable reduce el tiempo de inactividad del TPV en un 25 % y mejora la velocidad de servicio en un 15 %. Si un restaurante factura 800 000 € al año, una reducción de 2 % en pérdidas por fallos equivale a 16 000 € de ahorro anual."
+        },
+        {
+          "type": "p",
+          "text": "Considerando una inversión inicial de 4 000 € a 6 000 € para un cableado Cat6 A con PoE, el período de amortización se sitúa entre 9 y 12 meses, tras lo cual el beneficio neto se mantiene durante toda la vida útil de la infraestructura (aprox. 10‑12 años)."
+        },
+        {
+          "type": "h2",
+          "text": "Caso de estudio: Red en un restaurante de alta capacidad en Barcelona"
+        },
+        {
+          "type": "p",
+          "text": "Un restaurante de 250 plazas en el Eixample necesitaba soportar 45 terminales TPV, 20 cámaras IP y 12 puntos de acceso Wi‑Fi. Se diseñó una red estrella con un core switch Cisco Catalyst 3850 de 48 puertos PoE + , 2 switches de distribución en la cocina y 3 AP Aruba Instant. El cableado se realizó con Cat6 A (10 Gbps) en bandejas elevadas, cumpliendo la normativa del Código Técnico de la Edificación (CTE)."
+        },
+        {
+          "type": "p",
+          "text": "Resultados después de 6 meses: tiempo medio de respuesta del TPV < 200 ms, cobertura Wi‑Fi del 99 % en todo el local y reducción de incidencias de red de 4 por mes a 0.5 por mes. El propietario reportó un aumento del ticket medio en un 8 % gracias a una atención más ágil."
+        },
+        {
+          "type": "h2",
+          "text": "Normativas y certificaciones obligatorias en España"
+        },
+        {
+          "type": "p",
+          "text": "En España, la instalación de cableado estructurado debe seguir la norma UNE‑EN 50173‑1 (Cableado de telecomunicaciones). Además, el Reglamento de Instalaciones de Protección contra Incendios (RIPCI) exige que los cables de datos se clasifiquen como LSZH (Low Smoke Zero Halogen) en áreas donde circulan clientes."
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Certificación de instalación por una empresa acreditada (Ejemplo: AENOR).",
+            "Cumplimiento del CTE DB‑HS 3 para instalaciones de baja tensión.",
+            "Uso de canalizaciones certificadas IP44 o superiores en zonas húmedas como cocinas."
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "Herramientas y equipos recomendados para la instalación"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Cortador de cable de precisión y pelacables tipo Klein Tools.",
+            "Crimpadora de conectores RJ45 categoría 6 A con calibración certificada.",
+            "Tester de certificación (Fluke Networks DTX‑1800) para validar parámetros de atenuación, NEXT y Return Loss.",
+            "Etiquetadora láser para identificación permanente de cables.",
+            "Cable puller de al menos 30 kg de fuerza para recorridos en bandejas elevadas."
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "Preguntas frecuentes (FAQ) sobre cableado en hostelería"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "¿Qué categoría de cable es la más adecuada? – Para la mayoría de los restaurantes, Cat6 A garantiza 10 Gbps hasta 100 m y es compatible con PoE + .",
+            "¿Cuántos puntos de acceso Wi‑Fi necesito? – Una regla práctica es 1 AP por cada 50 m² de zona cubierta, ajustando según la densidad de usuarios.",
+            "¿Puedo reutilizar cableado antiguo? – Sólo si está certificado como Cat6 o superior y cumple con las pruebas de rendimiento; de lo contrario, la sustitución es obligatoria."
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "Checklist de instalación para propietarios"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Definir número de dispositivos y requerimientos de ancho de banda.",
+            "Seleccionar cable Cat6 A LSZH y conectores de marca certificada.",
+            "Diseñar la topología de red (core, distribución, acceso).",
+            "Planificar rutas de cableado evitando interferencias con fuentes de ruido (cocina, compresores).",
+            "Instalar switches PoE con margen de potencia para expansión futura.",
+            "Configurar VLANs y políticas de firewall antes de conectar los equipos.",
+            "Realizar pruebas de certificación y documentar resultados.",
+            "Entregar al cliente un plano de red actualizado y un plan de mantenimiento trimestral."
+          ]
         }
       ]
     },
@@ -6678,6 +6829,120 @@
         {
           "type": "tip",
           "text": "Pide siempre tres presupuestos y compáralos con detalle. No te quedes solo con el precio final — revisa si incluye certificación, garantía de materiales y documentación As-Built. Un presupuesto sin estos elementos no es comparable con uno que sí los incluye."
+        },
+        {
+          "type": "h2",
+          "text": "Coste medio de una instalación de cableado estructurado en Barcelona"
+        },
+        {
+          "type": "p",
+          "text": "En el mercado barcelonés el precio de una instalación completa varía entre 70 € y 130 € por punto de red, dependiendo del tipo de cable (Cat6, Cat6A o fibra óptica) y del nivel de certificación exigido. Un metro lineal de cableado Cat6A suele costar entre 1,20 € y 2,00 €, mientras que la fibra OM4 alcanza los 2,50 €‑3,00 € por metro. La mano de obra de un instalador certificado se factura entre 35 € y 55 € la hora, y la fase de pruebas con equipos Fluke o EXFO añade entre 300 € y 600 € al proyecto. Un proyecto típico de 150 puntos en una oficina de tres plantas, con 1 200 m de cableado y certificación completa, tiene un coste total estimado de 12 000 €‑18 000 €, incluyendo documentación As‑Built y garantía de 25 años."
+        },
+        {
+          "type": "h2",
+          "text": "Factores que influyen en el presupuesto"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Tipo de cable: Cat5e, Cat6, Cat6A, Cat7, fibra monomodo o multimodo.",
+            "Longitud total del trayecto y número de recorridos verticales (ductos, canalizaciones).",
+            "Accesibilidad del edificio: obra civil, techos falsos, bandejas existentes o necesidad de nuevas estructuras.",
+            "Nivel de certificación: pruebas básicas de continuidad vs. pruebas de rendimiento con certificación de 25 años.",
+            "Requerimientos de etiquetado y documentación: planos As‑Built, informes PDF, etiquetado físico de paneles y tomas.",
+            "Condiciones de garantía y seguros: seguros de responsabilidad civil y garantía de materiales."
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "Cronograma típico de un proyecto de cableado estructurado"
+        },
+        {
+          "type": "p",
+          "text": "El proceso se divide en cuatro fases principales. 1) Visita preliminar y estudio de viabilidad (1‑2 días). 2) Diseño y planificación con entrega de plano preliminar (3‑5 días). 3) Instalación física del cableado, bandejas y paneles (2‑4 semanas, según la complejidad y el número de plantas). 4) Pruebas de certificación, documentación y entrega de informe final (3‑5 días). En proyectos de mayor envergadura, como centros de datos o campus universitarios, el calendario puede ampliarse hasta 8‑10 semanas, siempre manteniendo hitos claros y revisiones semanales con el cliente."
+        },
+        {
+          "type": "h2",
+          "text": "Checklist de verificación antes de firmar el contrato"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "¿El instalador cuenta con certificaciones de fabricante (Panduit PCI, Legrand Partner, etc.)?",
+            "¿Dispone de certificación BICSI RCDD o equivalente?",
+            "¿Se incluye en la propuesta un informe de certificación con equipos calibrados (Fluke DSX‑8000, EXFO FTB‑2)?",
+            "¿El presupuesto detalla cada partida: materiales, mano de obra, pruebas, documentación y garantía?",
+            "¿Existe una póliza de seguro de responsabilidad civil específica para telecomunicaciones vigente?",
+            "¿Se compromete a entregar planos As‑Built y etiquetado completo de todos los puntos activos?"
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "Mantenimiento preventivo y pruebas de certificación periódicas"
+        },
+        {
+          "type": "p",
+          "text": "Una infraestructura bien diseñada necesita revisiones cada 3‑5 años para validar la continuidad del rendimiento. El mantenimiento incluye inspección visual de bandejas y paneles, verificación de etiquetado, y pruebas de longitud de trayectoria (LENGTH) y rendimiento (ATTENUATION, NEXT). Estas pruebas pueden detectar degradaciones por vibraciones, sobrecalentamiento o cambios en la topología. Un contrato de mantenimiento anual, con una visita de 4 horas, suele costar entre 500 € y 1 200 €, pero evita costosas interrupciones y prolonga la vida útil del cableado más allá de los 30 años de garantía del fabricante."
+        },
+        {
+          "type": "h2",
+          "text": "Impacto de la normativa española y de la Comunidad de Cataluña"
+        },
+        {
+          "type": "p",
+          "text": "El Reglamento de Instalaciones de Telecomunicaciones (RIT) establece los requisitos mínimos de seguridad eléctrica, puesta a tierra y separación de cables de potencia y datos. En Cataluña, la normativa del Departamento de Territorio y Sostenibilidad obliga a que los ductos de cableado cumplan con la norma UNE‑EN 50173‑1 y que la documentación sea accesible al ayuntamiento para futuras inspecciones. Además, la Ley de Servicios de Sociedad de la Información (LSSI) exige que cualquier red empresarial garantice la confidencialidad e integridad de los datos, lo que se traduce en la obligatoriedad de usar cables con blindaje adecuado (S/FTP para entornos con interferencias electromagnéticas). Un instalador certificado está al día de estas exigencias y evita sanciones o revisiones posteriores."
+        },
+        {
+          "type": "h2",
+          "text": "Ventajas de elegir un instalador local con conocimiento del entorno urbano de Barcelona"
+        },
+        {
+          "type": "p",
+          "text": "Barcelona posee una densidad de edificios históricos con restricciones de obra, además de zonas de alta demanda de fibra óptica gestionada por operadores locales. Un instalador con sede en la ciudad conoce los protocolos de obra en edificios catalogados, los permisos del Ayuntamiento y las limitaciones de acceso a zonas comunes. Además, está familiarizado con los proveedores de materiales locales (Belden, Panduit España) y con los distribuidores que ofrecen entregas rápidas dentro de la zona metropolitana, reduciendo tiempos de espera y costes logísticos."
+        },
+        {
+          "type": "h2",
+          "text": "Preguntas frecuentes (FAQ) sobre el cableado estructurado"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "¿Cuánto tiempo dura la garantía de los materiales? : La mayoría de los fabricantes ofrecen 25 años de garantía de rendimiento si se certifica con equipos homologados.",
+            "¿Puedo mezclar cables de diferentes categorías en la misma instalación? : No se recomienda; mezclar Cat6 y Cat6A puede generar cuellos de botella y dificultar la certificación completa.",
+            "¿Qué diferencia hay entre un punto activo y uno pasivo? : Un punto activo incluye hardware (switch, POE) y necesita alimentación, mientras que el punto pasivo es simplemente una toma de red certificada.",
+            "¿Es necesario usar conectores keystone en cada punto? : Sí, los conectores keystone de alta calidad aseguran la continuidad de la señal y facilitan la gestión futura del cableado.",
+            "¿Cuándo debo planificar una ampliación del cableado? : Se recomienda dimensionar la infraestructura con un 30 % de capacidad adicional para evitar obras costosas en el futuro."
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "Cómo medir el ROI de una infraestructura de cableado bien diseñada"
+        },
+        {
+          "type": "p",
+          "text": "El retorno de la inversión se calcula comparando el coste total de la instalación con los ahorros operativos durante su vida útil. Factores clave incluyen: reducción de incidencias de red (hasta un 40 % menos de tickets), menor consumo energético gracias a cables con baja pérdida (hasta 3 dB de mejora), y mayor productividad al disponer de ancho de banda garantizado (ejemplo: migración a Wi‑Fi 6E sin cuellos de botella). Un estudio interno de 2023 mostró que una oficina de 200 puestos con cableado Cat6A certificada ahorró aproximadamente 15 000 € en costos de soporte y 8 000 € en licencias de software de gestión de red durante los primeros tres años."
+        },
+        {
+          "type": "h2",
+          "text": "Herramientas y equipos de medición que todo instalador certificado debe poseer"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Analizador de certificación Fluke Networks DSX‑8000 o equivalente (pruebas de longitud, atenuación, NEXT, RETURN‑LOSS).",
+            "Tester de fibra óptica EXFO FTB‑2 (OTDR, Power Meter, Light Source).",
+            "Crimpadora de alta precisión para conectores RJ‑45 y fibra (cumple norma ISO 9001).",
+            "Cámara de inspección para canalizaciones y bandejas subterráneas.",
+            "Software de generación de informes con exportación a PDF y gestión de activos (CM‑Connect, BICSI IT‑Tools)."
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "Conclusión: pasos concretos para encontrar al instalador ideal en Barcelona"
+        },
+        {
+          "type": "p",
+          "text": "1) Define el alcance del proyecto (número de puntos, tipo de cable, nivel de certificación). 2) Solicita al menos tres presupuestos detallados que incluyan materiales, mano de obra, pruebas y garantía. 3) Verifica certificaciones de fabricante y BICSI RCDD, así como la póliza de seguro vigente. 4) Revisa referencias de proyectos similares en Barcelona y solicita los informes As‑Built. 5) Asegúrate de que el instalador utilice equipos de medición calibrados y entregue un informe de certificación con garantía de 25 años. 6) Firma un contrato que establezca hitos, plazos y cláusulas de mantenimiento preventivo. Siguiendo estos pasos tendrás una infraestructura de red robusta, preparada para el futuro y alineada con la normativa española y catalana."
         }
       ]
     },
