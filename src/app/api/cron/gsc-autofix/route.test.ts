@@ -533,7 +533,11 @@ describe('GET /api/cron/gsc-autofix', () => {
             { slug: 'sigue', es: { title: 'B', content: [{ type: 'p', text: 'w '.repeat(21) }] } },
         ];
         const groqAt: number[] = [];
+        // GROQ_SPACING_MS is read when the module is first imported, so the
+        // value must be in place before the import and the module cache cleared
+        // — otherwise this passes alone and fails in a full run.
         process.env.GROQ_SPACING_MS = '60';
+        vi.resetModules();
         fetchMock.mockImplementation((url: string) => {
             if (url.includes('oauth2.googleapis.com')) return jsonResponse({ access_token: 'tok' });
             if (url.includes('githubusercontent') || url.includes('api.github.com/repos'))
