@@ -20057,6 +20057,120 @@
         {
           "type": "tip",
           "text": "Si estás construyendo o reformando una vivienda, instala más canalización de la que crees necesitar. Una canalización vacía de 40 mm cuesta 3-5 € por metro instalada durante la obra, y 15-25 € por metro cuando hay que abrirla después. La tecnología cambia rápido — lo que no se puede predecir es qué cables necesitarás en 10 años, pero sí se puede garantizar que habrá espacio para tendidos."
+        },
+        {
+          "type": "h2",
+          "text": "Coste estimado del cableado estructurado para una casa inteligente en Barcelona"
+        },
+        {
+          "type": "p",
+          "text": "El presupuesto de una instalación completa de cableado estructurado varía según la superficie, el número de puntos y la calidad de los materiales. En Barcelona, el precio medio por metro lineal de cable Cat6A instalado ronda los 6 € – 8 €, mientras que el coste de la canalización vacía (tubo de 40 mm) se sitúa entre 3 € y 5 € por metro cuando se realiza durante la obra. Un proyecto típico de 150 m² con 30 puntos de red, un switch PoE de 24 puertos y un rack de 45×45 cm suele situarse entre 3.200 € y 4.800 €, incluyendo mano de obra, pruebas y certificación."
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Cable Cat6A (10 Gbps) – 0,30 €/m x 150 m = 45 €",
+            "Tubería PVC de 40 mm – 4 €/m x 150 m = 600 €",
+            "Conectores RJ45 (Cat6A) y bloques de patch panel – 200 €",
+            "Switch gestionable PoE 24 puertos – 300 €",
+            "Rack o armario de distribución – 150 €",
+            "Mano de obra especializada (instalador certificado) – 1.800 € a 2.500 €",
+            "Pruebas de certificación (certificado ISO/IEC 11801) – 250 €",
+            "Margen para ampliaciones futuras (cables de sobra, tubos adicionales) – 200 €"
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "Normativas y certificaciones aplicables en Cataluña"
+        },
+        {
+          "type": "p",
+          "text": "En España, el cableado estructurado debe cumplir con la norma UNE‑EN 50173‑1 y con la especificación ISO/IEC 11801‑2, que garantizan rendimiento y compatibilidad a nivel mundial. En Cataluña, el Código Técnico de la Edificación (CTE) exige que los conductores eléctricos y de datos estén separados adecuadamente y que la instalación cumpla con la Directiva de Baja Tensión (DGT). Además, para proyectos en edificios de viviendas, es recomendable solicitar la certificación de un instalador autorizado por la Asociación de Telecomunicaciones de Cataluña (ATC)."
+        },
+        {
+          "type": "ul",
+          "items": [
+            "UNE‑EN 50173‑1: requisitos de rendimiento para cableado de área local",
+            "ISO/IEC 11801‑2: clasificación de cables y parámetros de transmisión",
+            "CTE DB‑HS 3: canalizaciones y separación de cables eléctricos y de datos",
+            "Directiva de Baja Tensión (DGT) – garantía de seguridad eléctrica",
+            "Certificado de Instalador ATC – aval profesional y cumplimiento normativo"
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "Herramientas y materiales imprescindibles para la instalación"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Crimpadora RJ45 Cat6A de alta precisión",
+            "Probador de cable certificado (Fluke Networks o similar) con pruebas de longitud, pérdida y diafonía",
+            "Cortacables y pelacables de 0,5 mm a 4 mm",
+            "Caja de empalmes y patch panel de 24 puertos (Cat6A)",
+            "Switch gestionable PoE con capacidad de 802.3af/at",
+            "Tubo PVC flexible de 40 mm y abrazaderas de sujeción",
+            "Etiquetas de identificación y planilla de trazado de cables",
+            "Herramientas de perforación (taladro, brocas de 10 mm y 16 mm) y nivel láser para trazado rectilíneo"
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "Guía paso a paso para cablear tu hogar inteligente"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "1. **Planificación del esquema**: dibuja el plano de la vivienda, marca la ubicación del armario de distribución y define el número de puntos por habitación.",
+            "2. **Dimensionado de la canalización**: instala tubos PVC de 40 mm en paredes y techos, dejando al menos 10 cm de holgura entre cables de datos y cables de corriente.",
+            "3. **Tendido del cable**: pasa el cable Cat6A por la canalización, asegurándote de no superar 100 m de longitud entre el switch y el punto más lejano.",
+            "4. **Empalmes y terminaciones**: corta y pela cada tramo, inserta los conectores RJ45 con la crimpadora y verifica cada conexión con el probador.",
+            "5. **Instalación del patch panel**: conecta todos los cables al patch panel en el armario, dejando espacio para futuras ampliaciones.",
+            "6. **Montaje del switch PoE**: ubica el switch dentro del rack, conecta los cables de red al panel y alimenta los AP y cámaras mediante PoE.",
+            "7. **Configuración de la red**: asigna VLANs para video, IoT y datos de oficina; habilita QoS para streaming 4K y gaming.",
+            "8. **Pruebas y certificación**: ejecuta pruebas de longitud, atenuación (< 2 dB/100 m) y diafonía (≤ -55 dB); genera el certificado de conformidad.",
+            "9. **Documentación**: elabora un diagrama as‑built y una tabla de etiquetas para futuros mantenimientos."
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "Pruebas y certificación del cableado"
+        },
+        {
+          "type": "p",
+          "text": "Una vez finalizada la instalación, es fundamental validar que cada enlace cumpla con los requisitos de transmisión. El uso de un certificador de cableado permite medir parámetros críticos como la atenuación (máximo 2 dB/100 m para Cat6A), la diafonía (crosstalk) y la pérdida de retorno (Return Loss > 20 dB). Al obtener un informe de certificación, el propietario dispone de garantía de que la red soportará 10 Gbps y que los dispositivos de seguridad, como cámaras IP, funcionarán sin interrupciones."
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Verificar longitud total del tramo (≤ 100 m por segmento)",
+            "Comprobar atenuación: < 2 dB/100 m (Cat6A) o < 3 dB/100 m (Cat6)",
+            "Medir diafonía NEXT y FEXT: ≤ ‑55 dB (Cat6A)",
+            "Confirmar continuidad de pares y ausencia de cortocircuitos",
+            "Generar informe PDF con resultados y número de certificado"
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "Preguntas frecuentes"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "¿Es necesario pasar cableado durante la reforma? No es obligatorio, pero instalar la canalización en obra reduce costes y evita abrir paredes después.",
+            "¿Cuántos puntos de red necesito por habitación? Como regla general, 2 puntos por zona de uso intensivo (salón, despacho) y 1 punto en habitaciones secundarias.",
+            "¿Puedo mezclar Cat6 y Cat6A? Sí, siempre que el tramo más largo sea Cat6A; sin embargo, para futuras ampliaciones se recomienda uniformizar a Cat6A.",
+            "¿Qué diferencia hay entre PoE y PoE+? PoE (802.3af) entrega hasta 15,4 W por puerto; PoE+ (802.3at) entrega hasta 30 W, suficiente para cámaras PTZ y AP WiFi 6.",
+            "¿Necesito una licencia especial para instalar cableado en Barcelona? No se requiere licencia, pero el instalador debe estar dado de alta en el Registro de Instaladores de Telecomunicaciones de la Generalitat."
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "Conclusión y próximos pasos"
+        },
+        {
+          "type": "p",
+          "text": "Un cableado estructurado bien planificado es la columna vertebral de cualquier casa inteligente en Barcelona. Con Cat6A, PoE y una arquitectura basada en VLAN, garantizas rendimiento, seguridad y escalabilidad durante los próximos 15 años. Si estás listo para transformar tu vivienda, contacta con un instalador certificado, solicita el plano as‑built y comienza a disfrutar de una red doméstica sin interrupciones. ¡Da el primer paso hacia el futuro de la domótica con una infraestructura robusta y preparada para lo que viene!"
         }
       ]
     },
