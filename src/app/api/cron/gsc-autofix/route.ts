@@ -337,14 +337,6 @@ export async function GET(request: Request) {
         const startedAt = Date.now();
 
         // Every failure also goes to the log. Until now they existed only in the
-        console.log('[gsc-autofix] done:', JSON.stringify({
-            candidates: keyPages.length,
-            fixed: fixed.length,
-            skipped: skipped.length,
-            errors: errors.length,
-            elapsedMs: Date.now() - startedAt,
-        }));
-
         // Telegram report, so a run that did little work looked clean in Vercel's
         // logs and there was nothing to read while diagnosing it.
         const fail = (url: string, reason: string) => {
@@ -419,6 +411,14 @@ export async function GET(request: Request) {
                 fail(page.url, err instanceof Error ? err.message : String(err));
             }
         }
+
+        console.log('[gsc-autofix] done:', JSON.stringify({
+            candidates: keyPages.length,
+            fixed: fixed.length,
+            skipped: skipped.length,
+            errors: errors.length,
+            elapsedMs: Date.now() - startedAt,
+        }));
 
         // Commit if anything changed
         if (blogDataModified) {
