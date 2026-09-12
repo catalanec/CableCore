@@ -8150,6 +8150,87 @@
         {
           "type": "tip",
           "text": "No compres puntos de acceso basándote solo en la cobertura máxima del fabricante. Esos datos son en campo abierto sin obstáculos. En una oficina con tabiques de pladur, suelos técnicos y mamparas metálicas, la cobertura real es un 30-50% menor. El diseño con herramientas de simulación es la única forma de garantizar resultados."
+        },
+        {
+          "type": "h2",
+          "text": "Análisis del coste total de propiedad (TCO) de WiFi 6 y WiFi 6E"
+        },
+        {
+          "type": "p",
+          "text": "El TCO no solo incluye el precio de compra del punto de acceso (AP), sino también la infraestructura de cableado, el consumo energético, el mantenimiento y la posible necesidad de licencias de software de gestión. En Barcelona, el precio medio de un AP WiFi 6 de gama media ronda los 300 €, mientras que un modelo WiFi 6E con puertos 2,5 GbE puede superar los 600 €. Sin embargo, la diferencia de velocidad y la reducción de interferencias se traduce en menos tickets de soporte y una mayor productividad, lo que a medio plazo compensa la inversión inicial."
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Cableado: Cat6A cuesta entre 1,5 € y 2,5 € por metro en la zona de Eixample; Cat6 cuesta 1,0 €‑1,3 € por metro.",
+            "PoE: Un switch PoE 802.3bt de 24 puertos en Barcelona tiene un coste medio de 1.200 € y permite alimentar APs WiFi 6E con hasta 90 W.",
+            "Mantenimiento: Según estudios de IDC, una red con WiFi 6E reduce el número de incidencias de capa física en un 35 % respecto a una red solo 5 GHz."
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "Impacto de la normativa española y certificaciones obligatorias"
+        },
+        {
+          "type": "p",
+          "text": "Desde 2022, la Comisión Nacional de los Mercados y la Competencia (CNMC) exige que cualquier equipamiento que opere en la banda de 6 GHz cumpla con la normativa ETSI EN 301 893‑1 V2.2.1 y esté registrado en el registro de equipos de radioeléctrica. Además, los edificios de oficinas en Barcelona deben respetar el Reglamento de Instalaciones de Telecomunicaciones (RIT) que obliga a usar cableado con certificación Cat6A o superior cuando la velocidad del enlace supera 2 Gbps. Cumplir estas normas garantiza evitar multas y facilita la obtención de la certificación de eficiencia energética del ayuntamiento."
+        },
+        {
+          "type": "h2",
+          "text": "Guía paso a paso para la migración a WiFi 6E en una oficina de Barcelona"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "1️⃣ Auditoría inicial: utiliza un analizador de espectro (por ejemplo, Ekahau Sidekick) para mapear la ocupación de 2,4 GHz y 5 GHz en cada planta.",
+            "2️⃣ Dimensionado del cableado: calcula la longitud máxima de cada tramo (no más de 100 m) y verifica que el cable existente sea Cat6A; de lo contrario, planifica una sustitución parcial.",
+            "3️⃣ Selección del hardware: elige APs compatibles con 802.11ax E y con puertos uplink 2,5 GbE o 5 GbE; combina con switches PoE 802.3bt que soporten al menos 90 W por puerto.",
+            "4️⃣ Diseño de RF: genera un plano de cobertura con herramientas de simulación, define la potencia de transmisión (generalmente 14‑17 dBm) y asigna canales no solapados en la banda de 6 GHz.",
+            "5️⃣ Instalación física: etiqueta y documenta cada cableado, utiliza bandejas de PVC o canaletas de acero galvanizado para cumplir con la normativa de protección contra incendios (Código Técnico de la Edificación).",
+            "6️⃣ Configuración y pruebas: habilita WPA3‑Enterprise, activa OFDMA y MU‑MIMO, y ejecuta pruebas de throughput (expectativa 2,5‑3 Gbps en 80 MHz) y de latencia (menos de 5 ms para videoconferencias).",
+            "7️⃣ Documentación y capacitación: entrega al cliente un informe de diseño, planos de cableado y un manual de buenas prácticas para el equipo de IT."
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "Consideraciones de energía y PoE 802.3bt"
+        },
+        {
+          "type": "p",
+          "text": "Los APs WiFi 6E de última generación pueden requerir hasta 60 W de potencia cuando se utilizan canales de 160 MHz y funciones avanzadas como BSS Coloring. Un switch PoE 802.3bt (tipo 4) suministra 90 W por puerto, lo que permite alimentar el AP y, a la vez, alimentar dispositivos periféricos como cámaras IP o sensores IoT a través del mismo cable. En una oficina típica de 800 m² en Barcelona, un diseño con 6 APs y un switch PoE central de 24 puertos consume alrededor de 350 W, lo que equivale a menos de 0,3 % de la factura eléctrica mensual."
+        },
+        {
+          "type": "h2",
+          "text": "Casos de éxito locales"
+        },
+        {
+          "type": "p",
+          "text": "• **Consultora tecnológica en el Eixample**: sustitución de 12 APs WiFi 6 por 8 APs WiFi 6E con uplink de 2,5 GbE. Resultado: aumento del throughput medio de 250 Mbps a 1,2 Gbps, reducción del tiempo de carga de archivos de 200 MB en un 68 % y ahorro estimado de 12 000 € en tickets de soporte anual."
+        },
+        {
+          "type": "p",
+          "text": "• **Despacho de arquitectura en Poblenou**: instalación de cableado Cat6A en todo el edificio y despliegue de 5 APs WiFi 6E con antenas sectoriales. La densidad de usuarios pasó de 35 usuarios/AP a 90 usuarios/AP sin pérdida de QoS, permitiendo la migración a herramientas de renderizado en la nube sin latencia perceptible."
+        },
+        {
+          "type": "h2",
+          "text": "Preguntas frecuentes (FAQ) sobre WiFi 6E en oficinas barcelonesas"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "❓ **¿Necesito cambiar todos los dispositivos de la empresa?** No. Los equipos que solo soportan 2,4 GHz o 5 GHz seguirán funcionando, aunque no aprovecharán la nueva banda de 6 GHz. Sin embargo, para aplicaciones críticas se recomienda actualizar laptops y smartphones compatibles con WiFi 6E.",
+            "❓ **¿Cuánto tiempo lleva una instalación típica?** En una oficina de 600 m², la fase de cableado y colocación de APs suele completarse en 3‑4 días laborables, más 1‑2 días para la fase de pruebas y ajustes.",
+            "❓ **¿Hay riesgos de interferencia con sistemas de seguridad (alarma, CCTV)?** La banda de 6 GHz está libre de uso previo en España, por lo que prácticamente no hay interferencia con sistemas legacy que operan en 2,4 GHz o 5 GHz.",
+            "❓ **¿Puedo reutilizar los racks de telecomunicaciones existentes?** Sí, siempre que tengan espacio para los nuevos switches PoE 802.3bt y cumplan con la capacidad de carga térmica (mínimo 1,2 kW por rack en edificios con aire acondicionado central)."
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "Conclusión ampliada: por qué WiFi 6E es la mejor inversión para oficinas en Barcelona"
+        },
+        {
+          "type": "p",
+          "text": "Barcelona es una ciudad con alta densidad de dispositivos y una regulación que favorece la adopción de la banda de 6 GHz. Incorporar WiFi 6E junto con un cableado Cat6A bien planificado y una arquitectura PoE 802.3bt garantiza no solo un rendimiento superior hoy, sino también una plataforma preparada para futuras exigencias como realidad aumentada, IA en el borde y videoconferencias 8K. La combinación de factores técnicos, económicos y legales convierte a WiFi 6E en la solución más rentable y segura para cualquier oficina que busque mantenerse competitiva en el entorno digital actual."
         }
       ]
     },
@@ -9920,6 +10001,86 @@
         {
           "type": "p",
           "text": "При выборе подрядчика обращайте внимание на наличие сертификатов ISO 9001 и ISO 14001, опыт работы с проектами минимум 5 лет, наличие лицензий на электромонтажные работы в Каталонии и положительные отзывы от локальных компаний. Запросите портфолио с примерами проектов в аналогичных бизнес‑центрах и уточните, какие инструменты тестирования (Fluke‑Network‑Tester, EXFO) они используют для гарантии качества."
+        },
+        {
+          "type": "h2",
+          "text": "Кейсы успешных проектов кабелирования в Барселоне"
+        },
+        {
+          "type": "p",
+          "text": "В 2023 году компания CableCore завершила проект структурированного кабелирования в бизнес‑центре Torre Glòries (площадью ≈ 3 500 м²). Было проложено 4 800 м кабеля Cat6a, установлено 120 патч‑панелей и 250 конечных точек доступа. Тестирование показало среднее затухание ≤ 18 dB/100 м, а время простоя после ввода в эксплуатацию сократилось на 30 % благодаря предварительному планированию. В 2024 году аналогичный подход использовался в историческом здании в Барри‑Готик, где вместо обычных кабельных лотков применяли гибкие подвесные системы, что позволило сохранить архитектурный облик и выполнить монтаж за 4 недели вместо запланированных 6."
+        },
+        {
+          "type": "h2",
+          "text": "Влияние 5G и Wi‑Fi 6E на планирование внутренней инфраструктуры"
+        },
+        {
+          "type": "p",
+          "text": "Развёртывание 5G‑базовых станций в бизнес‑парках Барселоны повышает нагрузку на сеть доступа. Для обеспечения бесперебойного backhaul‑соединения рекомендуется резервировать минимум 20 % пропускной способности ядра через оптоволокно OM4 (10 GbE) и предусмотреть двойные пути (ring topology). При планировании точек доступа Wi‑Fi 6E необходимо учитывать, что частотный спектр 6 GHz обладает более коротким диапазоном действия, поэтому расстояние между AP не должно превышать 12 м в офисных помещениях с перегородками из гипсокартона. Это приводит к росту количества точек доступа на 15‑25 % по сравнению с Wi‑Fi 5."
+        },
+        {
+          "type": "h2",
+          "text": "Экологические требования и утилизация кабельных материалов"
+        },
+        {
+          "type": "p",
+          "text": "С 2021 года в ЕС действует директива 2019/904 (EU RoHS) и план по повышению уровня переработки электромонтажных отходов до 70 % к 2030 году. При выборе кабельных изделий следует отдавать предпочтение LSZH‑ и Halogen‑Free‑маркерам, а также материалам, пригодным для вторичной переработки. Кабельные стержни из медных жил могут быть рециклированы в металлургических заводах, а изоляцию – в специализированных центрах по переработке пластмасс. Предоставление заказчику сертификата утилизации снижает экологический след проекта и повышает рейтинг компании в ESG‑оценках."
+        },
+        {
+          "type": "h2",
+          "text": "Сравнительный анализ стоимости кабеля Cat6a и волоконно‑оптических трасс"
+        },
+        {
+          "type": "p",
+          "text": "По средним ценам Барселоны в 2024 году стоимость кабеля Cat6a (медный, LSZH) составляет ≈ 1,2 €/м, включая монтаж и маркировку, тогда как оптоволоконный кабель OM3/OM4 (мульти‑модовый) – ≈ 2,5 €/м. Однако затраты на оборудование (трансиверы, медиаконвертеры) для волокна добавляют ≈ 80 € за порт, в то время как медные коммутаторы часто уже включают PoE‑порты. При расчёте полной стоимости проекта на 500 м² офисной площади (≈ 2 000 м трассы) медный вариант обойдётся в ≈ 2 400 €, а волоконный – в ≈ 5 200 €, но ROI волокна выше за счёт снижения энергопотребления (≈ 0,6 W/порт vs 2,5 W) и возможности масштабировать до 40 GbE без замены кабеля."
+        },
+        {
+          "type": "h2",
+          "text": "Пошаговый чек‑лист проекта структурированного кабелирования"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Определить текущие и прогнозируемые потребности в полосе пропускания (GbE) на 3‑5 лет вперёд.",
+            "Провести аудит существующей инфраструктуры и собрать план помещения (CAD/BIM).",
+            "Согласовать схему вертикальных шахт и горизонтальных лотков с архитектором и управляющей компанией здания.",
+            "Выбрать тип кабеля (Cat6a, Cat7, OM3/OM4) в зависимости от требований к скорости и условиям эксплуатации.",
+            "Составить спецификацию материалов, включающую резервные кабели (15‑20 % от расчётного объёма).",
+            "Разработать график монтажа, учитывая периоды доступности помещений (рабочие часы, выходные).",
+            "Провести монтаж с соблюдением минимального зазора 30 мм от электропроводки и маркировать каждый сегмент согласно ISO/IEC 11801.",
+            "Выполнить тестирование по TIA‑568‑C.2 и IEC 60794‑1‑2, задокументировать результаты в протоколе приемки.",
+            "Передать заказчику полную документацию: схемы, журналы маркировки, сертификаты тестов, план обслуживания."
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "Типичные ошибки при проектировании и монтаже и как их избежать"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Недостаточный запас длины кабеля – приводит к необходимости «доделок» и ухудшает затухание; планировать минимум 10 % сверх требуемой длины.",
+            "Пренебрежение разграничением кабельных каналов по назначению (данные vs. электро) – может вызвать перекрёстные помехи; использовать отдельные лотки или маркировать зоны.",
+            "Отсутствие учета будущих точек доступа – приводит к добавлению новых трасс в уже заполненных каналах; оставлять свободный объём 30 % в каждом лотке.",
+            "Неправильный выбор типа изоляции в условиях повышенной влажности – выбирайте LSZH‑Plenum для вертикальных шахт, а UF‑кабель для наружных трасс.",
+            "Пропуск этапа предварительного тестирования кабеля до монтажа – обнаружить дефекты (зажимы, повреждения) можно только после укладки, что удорожает исправления."
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "Гарантии, сервисное обслуживание и сроки тестирования"
+        },
+        {
+          "type": "p",
+          "text": "CableCore предоставляет 24‑мес. гарантию на все кабельные материалы и 12‑мес. гарантию на монтажные работы. После сдачи проекта в эксплуатацию клиент получает план профилактических проверок: визуальная проверка маркировки каждые 6 мес, измерение затухания и NEXT раз в 12 мес. При обнаружении отклонений подрядчик обязуется провести коррекцию в течение 48 часов без дополнительных затрат. Сервисный контракт включает удалённый мониторинг состояния портов через SNMP и ежеквартальные отчёты о производительности сети."
+        },
+        {
+          "type": "h2",
+          "text": "Калькулятор стоимости проекта и пример расчёта"
+        },
+        {
+          "type": "p",
+          "text": "На сайте cablecore.es/ru/calculator пользователь может указать площадь офиса, количество рабочих мест, требуемый уровень категории кабеля и наличие оптоволоконного ядра. Пример: офис 800 м², 120 рабочих мест, требование Cat6a + 2 ODF‑коридора OM4. Калькулятор выдаёт предварительную смету ≈ 9 850 € (материалы ≈ 5 200 €, монтаж ≈ 3 400 €, тестирование ≈ 1 250 €). При добавлении резервных точек (+10 %) итоговая стоимость растёт лишь на 5 %, что подтверждает экономию от планирования запасов на этапе проектирования."
         }
       ]
     }
@@ -16652,6 +16813,91 @@
             "Поддержка PoE: только медный кабель (Cat6A/Cat7) с IEEE 802.3bt; оптоволокно требует Media Converter.",
             "Гарантийный срок производителя: оптоволокно ≈ 25 лет; медь ≈ 20 лет."
           ]
+        },
+        {
+          "type": "h2",
+          "text": "Экономический анализ TCO (Total Cost of Ownership) для оптоволокна и медных сетей"
+        },
+        {
+          "type": "p",
+          "text": "При расчёте полной стоимости проекта важно учитывать не только цену кабеля, но и затраты на обслуживание, энергоэффективность и потенциальные простои. За пять‑летний период эксплуатации оптоволокно обычно требует реже замен (срок службы ≈ 25 лет) и меньше ремонтных работ, чем медный кабель, который подвержен коррозии и механическим повреждениям. По оценкам консалтинговой фирмы IDC, сокращение простоев на 0,5 % в год при переходе на оптику экономит в среднем ≈ 12 000 € для офисов площадью 2 000 м² в Барселоне."
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Капитальные расходы: кабель + коннекторы ≈ 0,45–0,55 €/м (оптика) vs 0,25–0,35 €/м (медь).",
+            "Эксплуатационные расходы: тестирование OTDR раз в 2 года ≈ 300 €; тестирование кабеля TIA‑568 ≈ 150 €.",
+            "Энергопотребление: коммутаторы на 10 Гбит/с потребляют до 30 W/порт, а PoE‑коммутаторы ≈ 45 W/порт, что увеличивает счёт за электроэнергию на ≈ 5 % при полном заполнении сети медью.",
+            "Простои: средний простой из‑за проблем с медью ≈ 2 ч/год, с оптикой ≈ 0,5 ч/год."
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "Влияние климатических условий Барселоны на выбор кабельных материалов"
+        },
+        {
+          "type": "p",
+          "text": "Средиземноморский климат характеризуется высокой влажностью (до 80 % в летний период) и сильным ультрафиолетовым излучением. Медь, не защищённая специальными экранирующими трубами, подвержена окислению и образованию патин, что повышает сопротивление и ухудшает сигналы. Оптоволоконные кабели, выполненные из стекловолокна с двойными покрытием UV‑стабильного полимера, сохраняют свои оптические свойства даже после 15‑летнего воздействия солнца. Поэтому наружные трассы в Барселоне рекомендуется проектировать с оптикой, а внутренние – с экранированным Cat6A или Cat7."
+        },
+        {
+          "type": "h2",
+          "text": "Плановый осмотр и обслуживание сети: практические рекомендации"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Каждые 12 мес. проводить визуальный осмотр трасс в подземных люках и на подвесных лотках; фиксировать любые признаки коррозии, повреждений изоляции или ослабления креплений.",
+            "Для оптики использовать OTDR‑сканирование с разрешением ≤ 0,1 dB для выявления микротрещин и потерь в соединениях.",
+            "Для медных кабелей выполнять тесты на сопротивление изоляции (≥ 100 MΩ) и проверку кросстока (≤ ‑55 dB) согласно стандарту IEC 61888‑3.",
+            "Документировать результаты в системе CMMS (Computerized Maintenance Management System) с привязкой к CAD‑плану здания."
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "Кейсы реальных проектов в Барселоне"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Торговый центр «Diagonal Mar»: гибридная инфраструктура 3 km оптоволокна OM4 + 12 000 точек доступа Cat6A, стоимость проекта ≈ 1,2 млн €; снижение времени отклика сети на 35 % после ввода оптики.",
+            "Технологический парк «22@»: полностью оптоволоконная магистраль 5 km, поддержка 100 Гбит/с, SLA = 99,99 % за 3 года, экономия на аренде оборудования ≈ 200 k € в год.",
+            "Больничный комплекс «Hospital de Sant Pau»: модернизация до Cat7 с PoE+ + внутренней оптикой 2 km, уменьшение энергопотребления PoE‑устройств на 12 % и повышение надёжности электромедицинского оборудования."
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "Чек‑лист при планировании оптоволоконных трасс в Барселоне"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "✅ Проверить наличие разрешений от Ayuntamiento de Barcelona для прокладки в общественных каналах.",
+            "✅ Определить тип волокна (OM3, OM4, OS2) в зависимости от требуемой скорости (10 Gbps – 40 Gbps – 100 Gbps).",
+            "✅ Спланировать резервные каналы (потеря‑проброс) согласно требованиям EN 50173‑1 – минимум 2 × потеря для критических соединений.",
+            "✅ Рассчитать количество меди‑трансиверов (Media Converter) и PoE‑инжекторов, если в сети требуется питание по кабелю.",
+            "✅ Учесть схему заземления и защиту от перенапряжения согласно Reglamento Electrotécnico de Baja Tensión (REBT).",
+            "✅ Подготовить схему трассировки в BIM‑модели, включив координаты кабельных лотков, колодцев и точек доступа."
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "Дополнительные FAQ (часто задаваемые вопросы)"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "❓ Какой тип разъёма предпочтительнее для новых оптоволоконных сетей в Барселоне? Рекомендуется LC‑SC комбинированный (LC‑plug, SC‑panel) – совместим с большинством современных коммутаторов и медиаконвертеров.",
+            "❓ Можно ли использовать один кабель для передачи данных и синхронизации времени (PTP)? Да, оптоволокно с поддержкой IEEE 1588 (Synchronous Ethernet) обеспечивает точность до ± 100 нс, что невозможно на медных трассах более 100 м.",
+            "❓ Что важнее: количество волокон (single‑mode vs multimode) или диаметр ядра? Для дистанций до 300 м достаточно multimode OM4 (50 µm), а для более длинных – single‑mode OS2 (9 µm)."
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "Заключительные рекомендации для руководителей ИТ‑отделов в Барселоне"
+        },
+        {
+          "type": "p",
+          "text": "Выбор между оптоволокном и медью должен базироваться на трёх столпах: расстояние, требования к пропускной способности и общий бюджет проекта. Для большинства новых офисных зданий в Барселоне оптимально реализовать гибридную схему – оптоволокно на магистральных узлах (MDF ↔ IDF) и Cat6A/Cat7 для конечных точек. Такой подход гарантирует масштабируемость до 400 Гбит/с, минимизирует энергозатраты и соответствует местным нормативам EN 50173‑1 и REBT. При правильном планировании, выборе квалифицированного подрядчика и регулярном обслуживании сеть прослужит более 20 лет без существенного обновления."
         }
       ]
     }
@@ -19452,6 +19698,102 @@
         {
           "type": "tip",
           "text": "WiFi 6E es la tecnología correcta para nuevas instalaciones empresariales en 2025. Sin embargo, no mejora la experiencia de los dispositivos que no son compatibles con 6 GHz — para esos, WiFi 6 sigue siendo la mejor opción. Un sistema bien diseñado combina APs triband WiFi 6E con configuración inteligente de bandas para maximizar el rendimiento de todos los dispositivos, antiguos y nuevos."
+        },
+        {
+          "type": "h2",
+          "text": "Planificación de canales y uso del espectro en la banda de 6 GHz"
+        },
+        {
+          "type": "p",
+          "text": "El nuevo segmento de 6 GHz dispone de 500 MHz autorizados en España (5.945‑6.425 GHz). Para maximizar el rendimiento se recomienda dividir ese ancho de banda en canales de 80 MHz o 160 MHz, según la densidad de usuarios y la capacidad del AP. En entornos empresariales con alta densidad (más de 150 usuarios simultáneos) los canales de 160 MHz permiten alcanzar la velocidad teórica de 9,6 Gbps, pero reducen la cantidad de canales simultáneos disponibles. En oficinas medianas, la combinación de dos canales de 80 MHz y uno de 160 MHz suele ser el punto de equilibrio entre cobertura y capacidad."
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Canales de 80 MHz: 7 canales no superpuestos (A‑A1‑A2‑A3‑A4‑A5‑A6).",
+            "Canales de 160 MHz: 3 bloques (B‑1, B‑2, B‑3) que ocupan dos canales de 80 MHz contiguos.",
+            "DFS (Dynamic Frequency Selection) obligatorio en la banda 6 GHz para evitar interferencias con enlaces satelitales y radares, lo que implica una vigilancia automática del espectro cada 30 s.",
+            "Recomendación de usar “band steering” para dirigir dispositivos 2.4/5 GHz a la banda menos congestionada y reservar 6 GHz para equipos de alta demanda como videoconferencias 4K o transferencia de archivos grandes."
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "Seguridad WLAN con WiFi 6E: WPA3‑Enterprise y enfoque Zero‑Trust"
+        },
+        {
+          "type": "p",
+          "text": "WiFi 6E incorpora todas las mejoras de seguridad de WiFi 6, pero su mayor ancho de banda permite aplicar políticas más estrictas sin penalizar la experiencia del usuario. La implementación de WPA3‑Enterprise con 802.1X y certificados digitales protege la autenticación de dispositivos críticos, mientras que la arquitectura Zero‑Trust segmenta la red por tipo de dispositivo, aplicación y nivel de confianza."
+        },
+        {
+          "type": "ul",
+          "items": [
+            "WPA3‑Enterprise: cifrado AES‑256‑GCM y autenticación simultánea (SAE) para reducir ataques de diccionario.",
+            "802.1X con RADIUS: integración con Microsoft Azure AD o LDAP para gestión centralizada de credenciales.",
+            "Segmentación de SSID: un SSID dedicado a dispositivos 6 GHz (ej. “Empresa‑6E‑IoT”) y otro para equipos legacy (2.4/5 GHz).",
+            "Política de acceso basada en dispositivos: dispositivos sin soporte 6 GHz se colocan en VLAN de invitados con ancho de banda limitado."
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "Herramientas de monitoreo y control centralizado"
+        },
+        {
+          "type": "p",
+          "text": "Para garantizar que la infraestructura WiFi 6E mantenga los SLAs de latencia y disponibilidad, es esencial contar con una plataforma de gestión que ofrezca visibilidad en tiempo real, análisis predictivo y automatización de ajustes de radio."
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Cisco Meraki Dashboard: panel basado en la nube con métricas de SNR, utilización de canales y alertas de interferencia.",
+            "Ubiquiti UniFi Network Controller: mapeo de calor de cobertura, informes de uso por cliente y capacidad de aplicar scripts de ajuste automático.",
+            "Aruba AirWave: integración con Aruba Central para detección de anomalías mediante IA y generación de tickets en ServiceNow.",
+            "Ruckus SmartZone: soporte para “Wi‑Fi Insight” que identifica dispositivos incompatibles y sugiere migración a la banda de 6 GHz."
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "Caso de estudio: despliegue de WiFi 6E en una oficina de 300 m² en el Eixample"
+        },
+        {
+          "type": "p",
+          "text": "Una firma de arquitectura con 35 empleados y 12 salas de reuniones decidió modernizar su red en 2024. Tras un site survey se detectaron 12 puntos de acceso críticos y una densidad de 0,12 AP por m², suficiente para cubrir áreas de alta densidad como la sala de juntas (30 m²) y el laboratorio de renderizado (45 m²). Se seleccionaron 4 APs Ubiquiti U6‑Enterprise con uplink de 10 GbE, conectados a un switch Cisco Catalyst 9300 con puertos 2.5 GbE y PoE++ 60 W."
+        },
+        {
+          "type": "p",
+          "text": "Los resultados tras tres meses de operación mostraron una reducción del 68 % en retransmisiones de paquetes, una latencia media de 12 ms en la banda de 6 GHz frente a 38 ms en 5 GHz, y un aumento del 42 % en la velocidad de descarga promedio (de 350 Mbps a 500 Mbps). Además, la solución permitió migrar 18 dispositivos (laptops de última generación y tablets) a la banda de 6 GHz, liberando canales 5 GHz para dispositivos legacy."
+        },
+        {
+          "type": "h2",
+          "text": "Estimación de costos y cálculo de ROI para empresas en Barcelona"
+        },
+        {
+          "type": "p",
+          "text": "El coste total de propiedad (TCO) de un despliegue WiFi 6E incluye hardware, cableado, licencias de gestión y mano de obra. En la práctica, una empresa promedio de 200 m² paga entre 8.000 € y 12.000 € por una solución completa, con un retorno de inversión estimado en 24‑36 meses gracias a la mayor productividad y reducción de incidencias de red."
+        },
+        {
+          "type": "ul",
+          "items": [
+            "APs Ubiquiti U6‑Enterprise: 4 × 550 € = 2.200 €.",
+            "Switch Cisco Catalyst 9300 (24 puertos 2.5 GbE, PoE++): 3.500 €.",
+            "Cableado Cat6A (100 m x 4 pares) + instalación: 1.800 €.",
+            "Licencia de gestión UniFi (Cloud Key + 1 año): 600 €.",
+            "Servicios de site survey y configuración (CableCore): 1.200 €.",
+            "Total estimado: 9.300 €."
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "Preguntas frecuentes (FAQ) sobre WiFi 6E en entornos empresariales"
+        },
+        {
+          "type": "ul",
+          "items": [
+            "¿Necesito reemplazar todos los dispositivos actuales? No, WiFi 6E es tribanda. Los equipos legacy siguen operando en 2.4 GHz o 5 GHz mientras los nuevos dispositivos se conectan a 6 GHz.",
+            "¿Cuánto tarda la instalación de cableado Cat6A? En una oficina típica de 200 m², la fase de tendido y pruebas lleva entre 2 y 3 días laborables.",
+            "¿WiFi 6E funciona en exteriores? Sí, siempre que el AP sea certificado para uso exterior y se respeten las regulaciones de potencia de la CNMC.",
+            "¿Qué pasa si mi ISP solo ofrece 1 Gbps? Los enlaces de 10 GbE en los APs son futuros‑proof; pueden operar a 1 Gbps sin pérdida de rendimiento y se actualizarán cuando el ancho de banda del ISP mejore.",
+            "¿Es obligatorio usar PoE++? Para APs con 10 GbE y radios de 6 GHz, PoE++ (60 W) garantiza alimentación estable y elimina la necesidad de inyectores externos."
+          ]
         }
       ]
     },
@@ -20826,6 +21168,108 @@
         {
           "type": "tip",
           "text": "Si tu instalación tiene más de 5 años, es buen momento para hacer una revisión completa: verifica que el cableado cumple Cat6 o superior, que los equipos activos tienen soporte de firmware activo, y que la segmentación de red protege adecuadamente tus datos. Una auditoría de red completa con CableCore cuesta entre 400 y 800 € y puede revelarte vulnerabilidades que no sabías que tenías."
+        },
+        {
+          "type": "h2",
+          "text": "6. Redes definidas por software (SDN) para pymes"
+        },
+        {
+          "type": "p",
+          "text": "Las SDN permiten separar el plano de control del plano de datos, centralizando la gestión de switches y routers en un controlador único. En 2026, soluciones como Cisco ACI, VMware NSX y las plataformas de código abierto basadas en OpenFlow están disponibles a precios asequibles para empresas con 10‑200 puestos. La automatización de políticas reduce el tiempo de aprovisionamiento de una red nueva de semanas a minutos y permite escalar la capacidad sin reemplazar hardware físico."
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Provisionamiento automático mediante APIs REST",
+            "Visibilidad en tiempo real de tráfico y uso de ancho de banda",
+            "Políticas de seguridad dinámicas que se adaptan a la carga",
+            "Reducción del CAPEX: reutiliza switches existentes con firmware SDN"
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "7. Fibra óptica FTTH y FTTx en edificios de Barcelona"
+        },
+        {
+          "type": "p",
+          "text": "Según el Ayuntamiento de Barcelona, más de 1,2 millones de viviendas contaban con FTTH a finales de 2025, y la meta es cubrir el 95 % de los hogares para 2028. La arquitectura típica en edificios residenciales utiliza GPON con divisor de 1:32, ofreciendo 2,5 Gbps downstream y 1,25 Gbps upstream por suscripción. En locales comerciales y oficinas, se prefiere XGS‑PON (10 Gbps simétricos) para soportar videoconferencias 8K y entornos de trabajo en la nube."
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Plan de cableado interno: bandejas de fibra con tubo corrugado de 19 mm",
+            "Uso de conectores LC/APC para minimizar pérdidas (≤ 0,2 dB por conector)",
+            "Pruebas de OTDR y pérdida de inserción < 0,5 dB por tramo de 30 m",
+            "Documentación completa según el CTE y la normativa de bajas tensiones"
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "8. Cumplimiento de normativas locales y certificaciones de calidad"
+        },
+        {
+          "type": "p",
+          "text": "En Cataluña, el Código Técnico de la Edificación (CTE) exige que todo el cableado estructurado cumpla la Sección HE 4 sobre instalaciones de telecomunicaciones. Además, la norma UNE‑EN 50173‑1 define los parámetros de rendimiento para Cat6A y fibra. Para proyectos que manejan datos sensibles, obtener la certificación ISO/IEC 27001 y la etiqueta BREEAM Excellent garantiza que la infraestructura cumple con los estándares de seguridad y sostenibilidad exigidos por clientes corporativos."
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Cumplir con la distancia mínima de 0,5 m entre cables de potencia y de datos",
+            "Etiquetado de cables según la norma IEC 60304 para trazabilidad",
+            "Registro de pruebas de certificación (CERTEX) con valores de NEXT, FEXT y pérdida de inserción",
+            "Plan de mantenimiento preventivo documentado cada 12 meses"
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "9. Redes privadas 5G para empresas industriales"
+        },
+        {
+          "type": "p",
+          "text": "Las redes 5G privadas están ganando terreno en sectores como la fabricación, la logística y la salud. En 2026, los operadores españoles (Movistar, Orange y Vodafone) ofrecen espectro en la banda de 3,5 GHz con latencia inferior a 5 ms y capacidad de 1‑10 Gbps por célula. La combinación de 5G con la infraestructura cableada (backhaul de fibra) permite crear una malla de cobertura indoor que soporta robots colaborativos, visión artificial y transmisión de video en tiempo real."
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Backhaul de fibra de al menos 10 Gbps para cada nodo 5G",
+            "Core virtualizado basado en NFV para escalar servicios de red",
+            "Seguridad integrada con encriptación 256‑bit y micro‑segmentación",
+            "Gestión centralizada mediante plataformas OSS/NMS compatibles con O-RAN"
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "10. Sostenibilidad y eficiencia energética en la infraestructura de red"
+        },
+        {
+          "type": "p",
+          "text": "La presión por reducir la huella de carbono está impulsando el uso de equipos con mayor eficiencia energética. Los switches con certificación ENERGY STAR consumen hasta un 30 % menos que modelos tradicionales. El PoE++ no solo simplifica la instalación, sino que permite monitorear el consumo de cada dispositivo mediante SNMP, facilitando la optimización energética. En Barcelona, varios edificios están integrando paneles solares en la cubierta para alimentar los racks de red, logrando una reducción de hasta 15 % en la factura eléctrica."
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Seleccionar equipos con modo Low‑Power Idle (LPI) para puertos Ethernet",
+            "Implementar sensores de temperatura y humedad en racks para evitar sobre‑enfriamiento",
+            "Utilizar fuentes de alimentación con factor de potencia > 0,95",
+            "Reciclaje de cables y conectores siguiendo la normativa de residuos de aparatos eléctricos (RAEE)"
+          ]
+        },
+        {
+          "type": "h2",
+          "text": "11. Caso práctico: modernización de la red en una oficina del Eixample"
+        },
+        {
+          "type": "p",
+          "text": "Una empresa de arquitectura ubicada en el distrito del Eixample decidió renovar su infraestructura en febrero 2026. El proyecto incluyó: reemplazo de cableado CAT5e por Cat6A en 850 m de obra, instalación de un backbone de fibra multimodo OM4 entre los cuatro pisos, despliegue de 12 puntos de acceso Wi‑Fi 7 con MLO y configuración de una solución SDN basada en Ubiquiti UniFi Controller. Además, se implementaron VLANs segmentadas por departamentos y un firewall NGFW con inspección SSL."
+        },
+        {
+          "type": "ul",
+          "items": [
+            "Tiempo total de ejecución: 3 semanas (incluyendo pruebas de certificación)",
+            "Incremento del ancho de banda disponible: de 1 Gbps a 10 Gbps en la capa de distribución",
+            "Reducción de la latencia promedio de aplicaciones Cloud: de 45 ms a 12 ms",
+            "Ahorro energético estimado: 22 % gracias al uso de PoE++ y switches de bajo consumo"
+          ]
         }
       ]
     },
