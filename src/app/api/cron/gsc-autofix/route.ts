@@ -333,6 +333,10 @@ export async function GET(request: Request) {
             .slice(0, CANDIDATE_POOL);
 
         let blogDataModified = false;
+        // Counts calls to Groq, not successes. Spacing keyed to `fixed` meant a
+        // failed article left the gap at zero and sent the next call straight
+        // into the per-minute limit.
+        let groqCalls = 0;
 
         const startedAt = Date.now();
 
@@ -384,7 +388,8 @@ export async function GET(request: Request) {
                 // Expand with Groq
                 // Space the calls so the per-minute token budget is not spent
                 // in the first few seconds of the run.
-                if (fixed.length > 0) await sleep(GROQ_SPACING_MS);
+                if (groqCalls > 0) await sleep(GROQ_SPACING_MS);
+                groqCalls += 1;
 
                 const expansion = await expandArticleWithGroq(groqKey, localeArticle, page.locale, page.slug);
                 if (!expansion.content) {

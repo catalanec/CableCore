@@ -521,4 +521,41 @@ describe('GET /api/cron/gsc-autofix', () => {
         expect(json.fixed.length, 'thin articles must be expanded regardless of index status').toBe(2);
         expect(json.skipped.join(' '), 'PASS is reported, not used to skip').not.toMatch(/indexado/);
     });
+
+    it('spaces Groq calls by attempt, not by success', async () => {
+        // The pause was guarded by `fixed.length > 0`, so a failed article left
+        // the counter at zero and the next call went out with no gap at all —
+        // straight into the per-minute limit. Seen on 12 September: one article
+        // failed, the next came back 429 with "Used 4117, Requested 4040".
+        const THIN = [{ type: 'p', text: 'w '.repeat(20) }];
+        const fixture = [
+            { slug: 'falla', es: { title: 'A', content: THIN } },
+            { slug: 'sigue', es: { title: 'B', content: [{ type: 'p', text: 'w '.repeat(21) }] } },
+        ];
+        const groqAt: number[] = [];
+        process.env.GROQ_SPACING_MS = '60';
+        fetchMock.mockImplementation((url: string) => {
+            if (url.includes('oauth2.googleapis.com')) return jsonResponse({ access_token: 'tok' });
+            if (url.includes('githubusercontent') || url.includes('api.github.com/repos'))
+                return jsonResponse({ content: Buffer.from(JSON.stringify(fixture)).toString('base64'), sha: 'sha1' });
+            if (url.includes('searchconsole.googleapis.com'))
+                return jsonResponse({ inspectionResult: { indexStatusResult: { verdict: 'NEUTRAL', coverageState: 'Crawled - currently not indexed' } } });
+            if (url.includes('api.groq.com')) {
+                groqAt.push(Date.now());
+                // first article always fails, so `fixed` stays 0
+                if (groqAt.length <= 2) return jsonResponse({ choices: [{ message: { content: 'no es json' } }] });
+                return jsonResponse({ choices: [{ finish_reason: 'stop', message: { content: JSON.stringify([{ type: 'p', text: 'x '.repeat(1300) }]) } }] });
+            }
+            return jsonResponse({ ok: true });
+        });
+
+        const { GET } = await import('./route');
+        await GET(cronRequest());
+
+        // calls 1-2 are the failing article and its retry; call 3 is the next
+        // article and must not follow immediately on the heels of call 2.
+        expect(groqAt.length).toBeGreaterThanOrEqual(3);
+        const gap = groqAt[2] - groqAt[1];
+        expect(gap, `gap before the next article was ${gap}ms`).toBeGreaterThanOrEqual(50);
+    });
 });
