@@ -146,7 +146,14 @@ async function githubUpdateFile(token: string, path: string, content: string, sh
         headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
         body: JSON.stringify({ message, content: Buffer.from(content).toString('base64'), sha }),
     });
-    if (!res.ok) throw new Error(`GitHub PUT error: ${res.status} ${await res.text()}`);
+    if (!res.ok) {
+        const body = await res.text();
+        // The contents API stops serving files over 1 MB on read; whether it
+        // also refuses to write them is the question this log answers, and
+        // blog-data.json is past that line.
+        console.error('[gsc-autofix] GitHub PUT failed:', res.status, `${content.length} bytes`, body.slice(0, 400));
+        throw new Error(`GitHub PUT error: ${res.status} ${body.slice(0, 200)}`);
+    }
 }
 
 // Rough word-count estimate from a locale's content-block array (matches the
