@@ -26,6 +26,14 @@ const BATCH_SIZE = 5;
 // skips cost an inspection, not a slot.
 const CANDIDATE_POOL = 40;
 
+// Selection threshold, deliberately lower than the target below. Every article
+// on the site now runs 936 words or more; holding selection at the 1200-word
+// target meant re-processing pieces that are no longer thin, day after day, for
+// a hundred words that change nothing. 14 of the last 17 were Russian, where
+// Cyrillic costs more tokens per word and the model stops short of 1200 no
+// matter how many passes it gets.
+const THIN_WORD_THRESHOLD = 900;
+
 // Groq's on-demand tier allows 8000 tokens per minute, and one expansion asks
 // for roughly 4250 (prompt plus the max_tokens reservation). Two back-to-back
 // calls therefore hit 429 — which is exactly what happened on 11 September:
@@ -328,7 +336,7 @@ export async function GET(request: Request) {
                     words: estimateWordCount(article[locale]?.content),
                 }))
             )
-            .filter(p => p.words <= 1200)
+            .filter(p => p.words <= THIN_WORD_THRESHOLD)
             .sort((a, b) => a.words - b.words)
             .slice(0, CANDIDATE_POOL);
 
@@ -379,7 +387,7 @@ export async function GET(request: Request) {
 
                 const estimatedWords = estimateWordCount(localeArticle.content);
 
-                if (estimatedWords > 1200) {
+                if (estimatedWords > THIN_WORD_THRESHOLD) {
                     skipped.push(`${page.url} (content ok, ~${estimatedWords}w, verdict=${verdict})`);
                     continue;
                 }

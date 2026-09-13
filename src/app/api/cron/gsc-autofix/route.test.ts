@@ -562,4 +562,34 @@ describe('GET /api/cron/gsc-autofix', () => {
         const gap = groqAt[2] - groqAt[1];
         expect(gap, `gap before the next article was ${gap}ms`).toBeGreaterThanOrEqual(50);
     });
+
+    it('leaves an article alone once it is comfortably past the thin mark', async () => {
+        // Every article on the site now runs 936 words or more. Chasing the old
+        // 1200 threshold meant re-processing pieces that are no longer thin —
+        // 14 of the 17 remaining were Russian, where Cyrillic costs more tokens
+        // and the model stops short of 1200 however many passes it gets.
+        const words = (n: number) => [{ type: 'p', text: 'w '.repeat(n) }];
+        const fixture = [
+            { slug: 'ya-suficiente', es: { title: 'A', content: words(1000) } },
+            { slug: 'de-verdad-fina', es: { title: 'B', content: words(300) } },
+        ];
+        fetchMock.mockImplementation((url: string) => {
+            if (url.includes('oauth2.googleapis.com')) return jsonResponse({ access_token: 'tok' });
+            if (url.includes('githubusercontent') || url.includes('api.github.com/repos'))
+                return jsonResponse({ content: Buffer.from(JSON.stringify(fixture)).toString('base64'), sha: 'sha1' });
+            if (url.includes('searchconsole.googleapis.com'))
+                return jsonResponse({ inspectionResult: { indexStatusResult: { verdict: 'NEUTRAL', coverageState: 'Crawled - currently not indexed' } } });
+            if (url.includes('api.groq.com'))
+                return jsonResponse({ choices: [{ finish_reason: 'stop', message: { content: JSON.stringify([{ type: 'p', text: 'x '.repeat(1300) }]) } }] });
+            return jsonResponse({ ok: true });
+        });
+
+        const { GET } = await import('./route');
+        const json = await (await GET(cronRequest())).json();
+
+        expect(json.fixed.join(' ')).toContain('de-verdad-fina');
+        expect(json.fixed.join(' '), 'a 1000-word article is not thin').not.toContain('ya-suficiente');
+        // and it costs no inspection either — it never enters the candidate list
+        expect(fetchMock.mock.calls.filter(([u]) => String(u).includes('urlInspection')).length).toBe(1);
+    });
 });
