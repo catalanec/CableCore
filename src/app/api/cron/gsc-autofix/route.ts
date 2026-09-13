@@ -140,20 +140,32 @@ async function githubGetFile(token: string, path: string): Promise<{ content: st
     return { content: Buffer.from(blobData.content, 'base64').toString('utf-8'), sha: data.sha };
 }
 
+// GitHub validates repository rules on write, and on a file this size that
+// validation can exceed its own timeout: 409 "Repository rule violations found
+// / Timed out validating rule, please try again". A whole run's work is already
+// done by then and only the commit is lost, so take GitHub at its word.
+const GITHUB_PUT_ATTEMPTS = 3;
+const GITHUB_RETRY_MS = Number(process.env.GITHUB_RETRY_MS ?? 4_000);
+
 async function githubUpdateFile(token: string, path: string, content: string, sha: string, message: string): Promise<void> {
-    const res = await fetch(`https://api.github.com/repos/${GITHUB_REPO}/contents/${path}`, {
-        method: 'PUT',
-        headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
-        body: JSON.stringify({ message, content: Buffer.from(content).toString('base64'), sha }),
-    });
-    if (!res.ok) {
+    let last = '';
+    for (let attempt = 1; attempt <= GITHUB_PUT_ATTEMPTS; attempt++) {
+        const res = await fetch(`https://api.github.com/repos/${GITHUB_REPO}/contents/${path}`, {
+            method: 'PUT',
+            headers: { 'Authorization': `Bearer ${token}`, 'Content-Type': 'application/json' },
+            body: JSON.stringify({ message, content: Buffer.from(content).toString('base64'), sha }),
+        });
+        if (res.ok) return;
+
         const body = await res.text();
-        // The contents API stops serving files over 1 MB on read; whether it
-        // also refuses to write them is the question this log answers, and
-        // blog-data.json is past that line.
-        console.error('[gsc-autofix] GitHub PUT failed:', res.status, `${content.length} bytes`, body.slice(0, 400));
-        throw new Error(`GitHub PUT error: ${res.status} ${body.slice(0, 200)}`);
+        last = `${res.status} ${body.slice(0, 200)}`;
+        console.error('[gsc-autofix] GitHub PUT failed:', res.status, `${content.length} bytes`, body.slice(0, 300));
+
+        const worthRetrying = res.status === 409 || res.status === 502 || res.status === 503;
+        if (!worthRetrying || attempt === GITHUB_PUT_ATTEMPTS) break;
+        await sleep(GITHUB_RETRY_MS * attempt);
     }
+    throw new Error(`GitHub PUT error: ${last}`);
 }
 
 // Rough word-count estimate from a locale's content-block array (matches the

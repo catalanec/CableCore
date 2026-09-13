@@ -592,4 +592,42 @@ describe('GET /api/cron/gsc-autofix', () => {
         // and it costs no inspection either — it never enters the candidate list
         expect(fetchMock.mock.calls.filter(([u]) => String(u).includes('urlInspection')).length).toBe(1);
     });
+
+    it('retries the commit when GitHub times out validating its own rules', async () => {
+        // Seen 13 September: GitHub PUT error 409 "Repository rule violations
+        // found / Timed out validating rule, please try again". The run had
+        // already expanded five articles; only the commit was lost. GitHub says
+        // to try again, so the run does.
+        process.env.GITHUB_RETRY_MS = '5';
+        vi.resetModules();
+        const fixture = [{ slug: 'reintento', es: { title: 'A', content: [{ type: 'p', text: 'w '.repeat(20) }] } }];
+        let puts = 0;
+        fetchMock.mockImplementation((url: string, init?: { method?: string }) => {
+            if (url.includes('oauth2.googleapis.com')) return jsonResponse({ access_token: 'tok' });
+            if (url.includes('api.github.com/repos') && init?.method === 'PUT') {
+                puts += 1;
+                if (puts === 1) return Promise.resolve({
+                    ok: false, status: 409,
+                    text: () => Promise.resolve('{"message":"Repository rule violations found\n\nTimed out validating rule, please try again\n\n","status":"409"}'),
+                    json: () => Promise.resolve({}),
+                });
+                return jsonResponse({ commit: { sha: 'ok' } });
+            }
+            if (url.includes('githubusercontent') || url.includes('api.github.com/repos'))
+                return jsonResponse({ content: Buffer.from(JSON.stringify(fixture)).toString('base64'), sha: 'sha1' });
+            if (url.includes('searchconsole.googleapis.com'))
+                return jsonResponse({ inspectionResult: { indexStatusResult: { verdict: 'NEUTRAL', coverageState: 'Crawled - currently not indexed' } } });
+            if (url.includes('api.groq.com'))
+                return jsonResponse({ choices: [{ finish_reason: 'stop', message: { content: JSON.stringify([{ type: 'p', text: 'x '.repeat(1300) }]) } }] });
+            return jsonResponse({ ok: true });
+        });
+
+        const { GET } = await import('./route');
+        const res = await GET(cronRequest());
+        const json = await res.json();
+
+        expect(puts, 'a 409 from rule validation must be retried').toBeGreaterThan(1);
+        expect(res.status, 'the run must not crash when the retry succeeds').toBe(200);
+        expect(json.committed).toBe(true);
+    });
 });
