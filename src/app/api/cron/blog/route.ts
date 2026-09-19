@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { isDuplicateSlug } from '@/lib/blog-dedup';
+import { isDuplicateArticle } from '@/lib/blog-dedup';
 
 export const maxDuration = 60; // Allow function to run up to 60 seconds (critical for LLM generation)
 export const dynamic = 'force-dynamic';
@@ -155,10 +155,10 @@ Generate a deep, professional tech blog post translated accurately into 3 langua
         // looking — putting all three of its locale URLs in the sitemap twice
         // and rendering the article twice on the blog index. A prompt is a
         // request; this is the constraint.
-        if (isDuplicateSlug(currentBlogs, newArticle.slug ?? '')) {
-            console.warn(`[cron/blog] refusing duplicate slug: ${newArticle.slug}`);
+        if (isDuplicateArticle(currentBlogs, newArticle)) {
+            console.warn(`[cron/blog] refusing duplicate: ${newArticle.slug} / ${newArticle.es?.title ?? ''}`);
             return NextResponse.json(
-                { success: false, reason: 'duplicate-slug', slug: newArticle.slug },
+                { success: false, reason: 'duplicate', slug: newArticle.slug, title: newArticle.es?.title },
                 { status: 200 },
             );
         }

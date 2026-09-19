@@ -22,6 +22,9 @@ const SLUG_REDIRECTS: Record<string, string> = {
     'puntos-de-red-precio-guia': 'cuanto-cuesta-instalar-red-oficina-barcelona',
     'precio-instalacion-cable-red-barcelona': 'cuanto-cuesta-instalar-red-oficina-barcelona',
     'instalar-red-oficina-barcelona': 'cuanto-cuesta-instalar-red-oficina-barcelona',
+    // Published 2026-09-11 under the same Spanish title as the 2026-08-07
+    // article; the year suffix made it a different slug, so the guard missed it.
+    'cableado-de-red-para-restaurantes-y-hosteleria-2023': 'cableado-de-red-para-restaurantes-y-hosteleria',
 };
 
 export function generateStaticParams() {

@@ -4,6 +4,11 @@ interface SluggedArticle {
     date?: string;
 }
 
+/** An article as the publisher hands it over, before anything is committed. */
+interface TitledArticle extends SluggedArticle {
+    es?: { title?: string };
+}
+
 /**
  * Slugs are compared case- and punctuation-insensitively.
  *
@@ -49,4 +54,37 @@ export function dedupeBySlug<T extends SluggedArticle>(articles: readonly T[]): 
         out.push(a);
     }
     return out;
+}
+
+/** Titles are compared ignoring case, accents, punctuation and spacing. */
+function normaliseTitle(title: string): string {
+    return title
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, ' ')
+        .trim();
+}
+
+/**
+ * True when this article repeats something already published — by slug or by
+ * Spanish title.
+ *
+ * The slug check alone was not enough. On 2026-09-11 the publisher produced
+ * 'cableado-de-red-para-restaurantes-y-hosteleria-2023' against
+ * 'cableado-de-red-para-restaurantes-y-hosteleria' from 2026-08-07: a year
+ * suffix is a different slug, so it went through, while the Spanish title was
+ * identical character for character. The bodies differ, but Google sees two
+ * pages answering one query and picks one — the other is wasted work that also
+ * drags on the first.
+ */
+export function isDuplicateArticle(
+    articles: readonly TitledArticle[],
+    candidate: TitledArticle,
+): boolean {
+    if (isDuplicateSlug(articles, candidate.slug ?? '')) return true;
+
+    const title = normaliseTitle(candidate.es?.title ?? '');
+    if (!title) return true; // an article with no Spanish title is not publishable
+    return articles.some((a) => normaliseTitle(a.es?.title ?? '') === title);
 }

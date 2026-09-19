@@ -73,6 +73,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
         'puntos-de-red-precio-guia',
         'precio-instalacion-cable-red-barcelona',
         'instalar-red-oficina-barcelona',
+        'cableado-de-red-para-restaurantes-y-hosteleria-2023',
     ]);
 
     // Blog articles — sorted by date, primary locale prioritized
