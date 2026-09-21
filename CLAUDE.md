@@ -1,6 +1,13 @@
 Отвечай мне всегда на русском языке
 # CableCore Project Context & History
 
+> **Читай этот файл первым, в любом клиенте.** Claude Code подхватывает его
+> автоматически; в десктопном приложении открой его сам. Сессии Claude друг
+> друга не видят — общего у них только этот репозиторий, поэтому всё, что
+> должно пережить разговор, пишется в файлы, а не проговаривается в чате.
+> Раздел «Pending Actions» внизу — источник правды; обновляй его после
+> заметных изменений.
+
 This document serves as the primary source of truth for Claude Code and other AI assistants. It contains the history, architectural decisions, and current state of the CableCore platform.
 
 ## 🚀 Project Overview
