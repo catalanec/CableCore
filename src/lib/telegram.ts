@@ -3,8 +3,6 @@
  * Sends instant messages to the business owner when new leads/quotes come in.
  */
 
-const TELEGRAM_BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
-const TELEGRAM_CHAT_ID = process.env.TELEGRAM_CHAT_ID;
 
 // Telegram's parse_mode:'HTML' supports a small tag allowlist (<b>, <a href>, ...).
 // User-supplied text must be escaped so a crafted "<a href=...>" in a lead's
@@ -15,8 +13,16 @@ function escTg(s: string | undefined | null): string {
 }
 
 async function sendTelegramMessage(text: string): Promise<boolean> {
+    // Read on every call, never at module scope. A module is evaluated once and
+    // reused for the life of the lambda, so credentials captured then are
+    // whatever process.env happened to hold at that moment — which is how quote
+    // notifications went silent while the SEO cron, reading env inside its
+    // handler, kept delivering to the same chat.
+    const TELEGRAM_BOT_TOKEN = process.env.TELEGRAM_BOT_TOKEN;
+    const TELEGRAM_CHAT_ID = process.env.TELEGRAM_CHAT_ID;
+
     if (!TELEGRAM_BOT_TOKEN || !TELEGRAM_CHAT_ID) {
-        console.warn('Telegram not configured: missing TELEGRAM_BOT_TOKEN or TELEGRAM_CHAT_ID');
+        console.warn('[telegram] not configured: missing TELEGRAM_BOT_TOKEN or TELEGRAM_CHAT_ID');
         return false;
     }
 
@@ -35,13 +41,13 @@ async function sendTelegramMessage(text: string): Promise<boolean> {
 
         if (!response.ok) {
             const err = await response.text();
-            console.error('Telegram API error:', err);
+            console.error('[telegram] API error:', response.status, err.slice(0, 300));
             return false;
         }
 
         return true;
     } catch (error) {
-        console.error('Telegram send error:', error);
+        console.error('[telegram] send error:', error);
         return false;
     }
 }

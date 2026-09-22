@@ -4,7 +4,7 @@ import Footer from '@/components/layout/Footer';
 import AdminDashboard from '@/components/admin/AdminDashboard';
 import type { Metadata } from 'next';
 
-import { createClient } from '@supabase/supabase-js';
+import { createAdminClient } from '@/lib/supabase-admin';
 
 export const dynamic = 'force-dynamic';
 
@@ -45,11 +45,12 @@ export default async function AdminPage({ params: { locale } }: { params: { loca
     let tasks: any[] = [];
     let invoices: any[] = [];
 
-    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-    const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-
-    if (supabaseUrl && supabaseKey) {
-        const supabase = createClient(supabaseUrl, supabaseKey);
+    // A missing service key used to fall back to the anon key, which RLS lets
+    // insert but not read — an empty dashboard that looks like lost data. Let it
+    // throw instead, and say so on screen.
+    let loadError: string | null = null;
+    try {
+        const supabase = createAdminClient();
         
         const [qRes, lRes, mRes, pRes, tRes, invRes] = await Promise.all([
             supabase.from('quotes').select('*').order('created_at', { ascending: false }),
@@ -60,12 +61,18 @@ export default async function AdminPage({ params: { locale } }: { params: { loca
             supabase.from('invoices').select('*').order('invoice_number', { ascending: false }),
         ]);
 
+        const failed = [qRes, lRes, mRes, pRes, tRes, invRes].find(r => r.error);
+        if (failed?.error) throw new Error(failed.error.message);
+
         quotes = qRes.data || [];
         leads = lRes.data || [];
         materials = mRes.data || [];
         projects = pRes.data || [];
         tasks = tRes.data || [];
         invoices = invRes.data || [];
+    } catch (e) {
+        loadError = e instanceof Error ? e.message : String(e);
+        console.error('[admin] failed to load CRM data:', loadError);
     }
 
     return (
@@ -82,6 +89,15 @@ export default async function AdminPage({ params: { locale } }: { params: { loca
                             </h1>
                             <p className="text-brand-gold-muted leading-relaxed">{l.subtitle}</p>
                         </div>
+                        {loadError && (
+                            <div className="mb-8 rounded-lg border border-red-500/40 bg-red-500/10 p-4 text-sm text-red-200">
+                                <strong className="block mb-1">No se han podido cargar los datos del CRM.</strong>
+                                <span className="opacity-80">{loadError}</span>
+                                <span className="block mt-2 opacity-60">
+                                    La lista aparece vacía por este error, no porque falten registros.
+                                </span>
+                            </div>
+                        )}
                         <AdminDashboard 
                             initialQuotes={quotes} 
                             initialLeads={leads} 

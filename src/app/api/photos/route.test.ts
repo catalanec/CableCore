@@ -29,11 +29,22 @@ describe('/api/photos', () => {
     });
 
     describe('module initialization', () => {
-        it('throws at import time when SUPABASE_SERVICE_ROLE_KEY is missing', async () => {
+        // The check moved from module scope into the request path. Reading a
+        // secret at import time binds whatever the environment held when the
+        // module was first evaluated — during the build, for instance — which
+        // is a different value from the one the running request would see.
+        it('imports cleanly without SUPABASE_SERVICE_ROLE_KEY, and fails on use', async () => {
             const original = process.env.SUPABASE_SERVICE_ROLE_KEY;
             process.env.SUPABASE_SERVICE_ROLE_KEY = '';
             try {
-                await expect(loadPhotosRoute()).rejects.toThrow('SUPABASE_SERVICE_ROLE_KEY is not configured');
+                const mod = await loadPhotosRoute();
+                expect(mod, 'importing must not throw').toBeDefined();
+
+                const req = new Request('https://cablecore.es/api/photos?project_id=x', {
+                    headers: { authorization: 'Basic ' + Buffer.from('admin:admin').toString('base64') },
+                });
+                const res = await mod.GET(req as never);
+                expect(res.status, 'a request without the key must fail, not succeed').toBeGreaterThanOrEqual(400);
             } finally {
                 process.env.SUPABASE_SERVICE_ROLE_KEY = original;
             }

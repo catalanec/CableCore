@@ -51,7 +51,7 @@ export async function POST(request: NextRequest) {
         });
 
         // Send Telegram notification (instant)
-        await notifyNewLead({
+        const notified = await notifyNewLead({
             name: data.name,
             phone: data.phone,
             email: data.email,
@@ -59,6 +59,9 @@ export async function POST(request: NextRequest) {
             message: data.message,
             source: data.source || 'contact_form',
         });
+        if (!notified) {
+            console.error('[lead] saved but Telegram notification failed');
+        }
 
         return NextResponse.json({ success: true });
     } catch (error) {

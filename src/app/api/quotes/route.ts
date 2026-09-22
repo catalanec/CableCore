@@ -105,7 +105,7 @@ export async function POST(request: NextRequest) {
         // });
 
         // Send Telegram notification (instant)
-        await notifyNewQuote({
+        const notified = await notifyNewQuote({
             clientName: data.client_name,
             clientPhone: data.client_phone,
             clientEmail: data.client_email,
@@ -115,6 +115,9 @@ export async function POST(request: NextRequest) {
             total: data.total,
             quoteNumber,
         });
+        if (!notified) {
+            console.error('[quote] saved but Telegram notification failed');
+        }
 
         return NextResponse.json({ success: true, quoteNumber });
     } catch (error) {

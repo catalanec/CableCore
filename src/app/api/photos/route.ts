@@ -2,11 +2,19 @@ import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
 import { requireAdminAuth } from '@/lib/api-auth';
 
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!;
-const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
-if (!supabaseKey) throw new Error('SUPABASE_SERVICE_ROLE_KEY is not configured');
-
-const supabase = createClient(supabaseUrl, supabaseKey!);
+// Built per request, not at module scope. A module is evaluated once — during
+// the build, among other times — so a secret captured there is whatever the
+// environment held at that moment. That is also why `next build` used to die
+// on this file with "SUPABASE_SERVICE_ROLE_KEY is not configured": collecting
+// page data ran the module without the production env.
+function getSupabase() {
+    const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+    const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+    if (!supabaseUrl || !supabaseKey) {
+        throw new Error('SUPABASE_SERVICE_ROLE_KEY is not configured');
+    }
+    return createClient(supabaseUrl, supabaseKey);
+}
 
 const MAX_SIZE = 10 * 1024 * 1024; // 10MB
 const ALLOWED_TYPES = ['image/jpeg', 'image/png', 'image/webp', 'image/gif'];
@@ -40,18 +48,18 @@ export async function POST(req: NextRequest) {
         const arrayBuffer = await file.arrayBuffer();
         const buffer = new Uint8Array(arrayBuffer);
 
-        const { error: uploadError } = await supabase.storage
+        const { error: uploadError } = await getSupabase().storage
             .from('project-photos')
             .upload(fileName, buffer, { contentType: file.type, upsert: false });
 
         if (uploadError) throw uploadError;
 
-        const { data: { publicUrl } } = supabase.storage
+        const { data: { publicUrl } } = getSupabase().storage
             .from('project-photos')
             .getPublicUrl(fileName);
 
         // Save metadata to project_photos table
-        const { error: dbError } = await supabase
+        const { error: dbError } = await getSupabase()
             .from('project_photos')
             .insert({ project_id: projectId, url: publicUrl, path: fileName, caption });
 
@@ -78,7 +86,7 @@ export async function GET(req: NextRequest) {
         if (!projectId) return NextResponse.json({ photos: [] });
 
         // Try DB first
-        const { data, error } = await supabase
+        const { data, error } = await getSupabase()
             .from('project_photos')
             .select('*')
             .eq('project_id', projectId)
@@ -89,12 +97,12 @@ export async function GET(req: NextRequest) {
         }
 
         // Fallback: list from Storage
-        const { data: files } = await supabase.storage
+        const { data: files } = await getSupabase().storage
             .from('project-photos')
             .list(projectId, { limit: 50 });
 
         const photos = (files || []).map(f => ({
-            url: supabase.storage.from('project-photos').getPublicUrl(`${projectId}/${f.name}`).data.publicUrl,
+            url: getSupabase().storage.from('project-photos').getPublicUrl(`${projectId}/${f.name}`).data.publicUrl,
             path: `${projectId}/${f.name}`,
             caption: ''
         }));
@@ -113,10 +121,10 @@ export async function DELETE(req: NextRequest) {
     try {
         const { path, id } = await req.json();
         if (path) {
-            await supabase.storage.from('project-photos').remove([path]);
+            await getSupabase().storage.from('project-photos').remove([path]);
         }
         if (id) {
-            await supabase.from('project_photos').delete().eq('id', id);
+            await getSupabase().from('project_photos').delete().eq('id', id);
         }
         return NextResponse.json({ success: true });
     } catch (err: any) {
