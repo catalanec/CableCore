@@ -1,7 +1,7 @@
 'use client';
 
-import { useState, useMemo } from 'react';
-import QuoteForm from './QuoteForm';
+import { useState, useMemo, useEffect } from 'react';
+import type { QuoteCalculationData, QuoteLineItem } from '@/lib/quote-items';
 
 /* ═════════════════════════════════════
    FIBER CONFIG — цены рынка Испании 2025
@@ -338,6 +338,11 @@ export interface FiberCalcResult {
     bandejaCost: number;
     rackCost: number;
     customItemsCost: number;
+    /**
+     * Esta pestaña tal como va al presupuesto. Sube al padre, que genera UN
+     * solo documento con la parte de red, la de fibra o las dos.
+     */
+    quoteData: QuoteCalculationData;
     subtotal: number;
     discount: number;
     discountPercent: number;
@@ -416,7 +421,60 @@ export default function FiberCalculator({ locale, onCalcUpdate }: FiberCalculato
         const iva = afterUrgency * IVA_RATE;
         const total = afterUrgency + iva;
 
+        // Always the Spanish labels: the document is in Spanish whatever
+        // language the calculator happens to be shown in.
+        const doc = fiberLabels.es;
+        const fiberItems = [
+            fusionCount > 0 ? { description: doc.fusionLabel, quantity: `${fusionCount} ${doc.fusionCount}`, unitPrice: `${FIBER_CONFIG.fusionPerSplice.toFixed(2)}€`, total: `${fusionCost.toFixed(2)}€` } : null,
+            doCertification && points > 0 ? { description: doc.certificationLabel, quantity: `${points} pts`, unitPrice: `${FIBER_CONFIG.certificationPerPoint.toFixed(2)}€`, total: `${certificationCost.toFixed(2)}€` } : null,
+            patchCordCount > 0 ? { description: doc.patchCordLabel, quantity: `${patchCordCount} ud`, unitPrice: `${FIBER_CONFIG.patchCordFibra.toFixed(2)}€`, total: `${patchCordCost.toFixed(2)}€` } : null,
+            acopladorCount > 0 ? { description: doc.acopladorLabel, quantity: `${acopladorCount} ud`, unitPrice: `${FIBER_CONFIG.acopladorScApc.toFixed(2)}€`, total: `${acopladorCost.toFixed(2)}€` } : null,
+            bandeja !== 'none' ? { description: `${doc.bandejaLabel} (${bandeja === 'bandeja12' ? doc.bandeja12 : doc.bandeja24})`, quantity: '1 ud', unitPrice: `${bandejaCost.toFixed(2)}€`, total: `${bandejaCost.toFixed(2)}€` } : null,
+        ].filter((i): i is QuoteLineItem => i !== null);
+
+        const quoteData: QuoteCalculationData = {
+            calculatorType: 'fiber',
+            cableType: `Fibra ${FIBER_CABLE_TYPES.find(c => c.id === cableType)?.name || cableType}`,
+            cableMeters: totalCableLength,
+            points,
+            installationType: `Fibra - ${installType}`,
+            installationMeters: totalCableLength,
+            canaleta: 0,
+            tubo_corrugado: 0,
+            tubo_pvc: 0,
+            canaleta_extra: 0,
+            mano_de_obra_horas: 0,
+            regata: 0,
+            patchPanel12: 0,
+            patchPanel24: 0,
+            patchPanel48: 0,
+            materialsCustomNames: {},
+            materialsCustomPrices: {},
+            rackCustomName: rack !== 'none' ? (doc as Record<string, string>)[rack] || '' : '',
+            rackCustomPrice: 0,
+            equipmentCustom: {},
+            additionalWork: {},
+            fiberItems,
+            rack,
+            urgency,
+            cablesCost: cableCost,
+            pointsCost: rosetaCost,
+            installCost: routingCost,
+            laborCost,
+            materialsCost: 0,
+            workCost: 0,
+            rackCost,
+            customItems,
+            subtotal,
+            discountPercent,
+            discount,
+            urgencyMultiplier: urgencyOption.multiplier,
+            iva,
+            total,
+        };
+
         const result: FiberCalcResult = {
+            quoteData,
             cableType, cableMeters: totalCableLength, points, installationType: installType,
             fusionCount, patchCordCount, acopladorCount, bandeja, rack, urgency,
             cableCost, routingCost, laborCost, fusionCost, certificationCost,
@@ -425,9 +483,15 @@ export default function FiberCalculator({ locale, onCalcUpdate }: FiberCalculato
             iva, total,
         };
 
-        onCalcUpdate?.(result);
         return { ...result, totalCableLength, urgencyOption };
-    }, [cableType, points, avgLength, installType, fusionCount, doCertification, patchCordCount, acopladorCount, bandeja, rack, urgency, customItems, onCalcUpdate]);
+    }, [cableType, points, avgLength, installType, fusionCount, doCertification, patchCordCount, acopladorCount, bandeja, rack, urgency, customItems]);
+
+    // Reported upwards after render, not from inside useMemo: setting the
+    // parent's state while rendering is what React warns about, and with both
+    // sections now always on the page it happened on every keystroke.
+    useEffect(() => {
+        onCalcUpdate?.(calc);
+    }, [calc, onCalcUpdate]);
 
     const btnClass = (active: boolean) => `p-4 rounded-lg border text-center transition-all duration-200 ${active
         ? 'bg-[rgba(0,180,255,0.1)] border-cyan-400 text-cyan-300'
@@ -768,7 +832,7 @@ export default function FiberCalculator({ locale, onCalcUpdate }: FiberCalculato
                     </div>
 
                     <button
-                        onClick={() => document.getElementById('fiber-quote-form')?.scrollIntoView({ behavior: 'smooth' })}
+                        onClick={() => document.getElementById('quote-form')?.scrollIntoView({ behavior: 'smooth' })}
                         className="btn-gold w-full justify-center text-base py-4 mb-4"
                     >
                         {l.requestQuote} →
@@ -791,66 +855,6 @@ export default function FiberCalculator({ locale, onCalcUpdate }: FiberCalculato
                 </div>
             </div>
 
-            {/* QUOTE FORM — full width below */}
-            <div id="fiber-quote-form" className="lg:col-span-3">
-                <div className="card p-6 border-cyan-400/20">
-                    <QuoteForm
-                        locale={locale}
-                        calculationData={{
-                            calculatorType: 'fiber',
-                            cableType: `Fibra ${FIBER_CABLE_TYPES.find(c => c.id === cableType)?.name || cableType}`,
-                            cableMeters: calc.totalCableLength,
-                            points,
-                            installationType: `Fibra - ${installType}`,
-                            installationMeters: calc.totalCableLength,
-                            canaleta: 0,
-                            tubo_corrugado: 0,
-                            tubo_pvc: 0,
-                            canaleta_extra: 0,
-                            mano_de_obra_horas: 0,
-                            regata: 0,
-                            patchPanel12: 0,
-                            patchPanel24: 0,
-                            patchPanel48: 0,
-                            materialsCustomNames: {},
-                            materialsCustomPrices: {},
-                            rackCustomName: '',
-                            rackCustomPrice: 0,
-                            equipmentCustom: {},
-                            additionalWork: {},
-                            // Fusion splices, patch cords, couplers, splice tray and OTDR
-                            // certification are all folded into calc.subtotal/calc.total
-                            // already — these are display-only line items so the fiber
-                            // PDF/CRM record actually shows what's being charged for,
-                            // instead of silently baking them into materialsCost/workCost
-                            // with no matching label in QuoteForm's item-building logic.
-                            fiberItems: [
-                                fusionCount > 0 ? { description: l.fusionLabel, quantity: `${fusionCount} ${l.fusionCount}`, unitPrice: `${FIBER_CONFIG.fusionPerSplice.toFixed(2)}€`, total: `${calc.fusionCost.toFixed(2)}€` } : null,
-                                doCertification && points > 0 ? { description: l.certificationLabel, quantity: `${points} pts`, unitPrice: `${FIBER_CONFIG.certificationPerPoint.toFixed(2)}€`, total: `${calc.certificationCost.toFixed(2)}€` } : null,
-                                patchCordCount > 0 ? { description: l.patchCordLabel, quantity: `${patchCordCount} ud`, unitPrice: `${FIBER_CONFIG.patchCordFibra.toFixed(2)}€`, total: `${calc.patchCordCost.toFixed(2)}€` } : null,
-                                acopladorCount > 0 ? { description: l.acopladorLabel, quantity: `${acopladorCount} ud`, unitPrice: `${FIBER_CONFIG.acopladorScApc.toFixed(2)}€`, total: `${calc.acopladorCost.toFixed(2)}€` } : null,
-                                bandeja !== 'none' ? { description: `${l.bandejaLabel} (${bandeja === 'bandeja12' ? l.bandeja12 : l.bandeja24})`, quantity: '1 ud', unitPrice: `${calc.bandejaCost.toFixed(2)}€`, total: `${calc.bandejaCost.toFixed(2)}€` } : null,
-                            ].filter((i): i is { description: string; quantity: string; unitPrice: string; total: string } => i !== null),
-                            rack,
-                            urgency,
-                            cablesCost: calc.cableCost,
-                            pointsCost: calc.rosetaCost,
-                            installCost: calc.routingCost,
-                            laborCost: calc.laborCost,
-                            materialsCost: 0,
-                            workCost: 0,
-                            rackCost: calc.rackCost,
-                            customItems,
-                            subtotal: calc.subtotal,
-                            discountPercent: calc.discountPercent,
-                            discount: calc.discount,
-                            urgencyMultiplier: calc.urgencyOption.multiplier,
-                            iva: calc.iva,
-                            total: calc.total,
-                        }}
-                    />
-                </div>
-            </div>
         </div>
     );
 }

@@ -67,7 +67,7 @@ export function trackCalculatorOpen(type: 'ethernet' | 'fiber') {
 }
 
 /** User requests a quote from calculator */
-export function trackCalculatorQuoteRequest(type: 'ethernet' | 'fiber', total: number) {
+export function trackCalculatorQuoteRequest(type: 'ethernet' | 'fiber' | 'combined', total: number) {
     trackEvent('calculator_quote_request', {
         event_category: 'calculator',
         event_label: type,

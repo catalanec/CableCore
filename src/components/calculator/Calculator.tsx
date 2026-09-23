@@ -4,6 +4,7 @@ import { useState, useCallback, useMemo } from 'react';
 import { useTranslations } from 'next-intl';
 import QuoteForm from './QuoteForm';
 import FiberCalculator, { FiberCalcResult } from './FiberCalculator';
+import { isQuotePartUsed, type QuoteCalculationData } from '@/lib/quote-items';
 
 /* ═════════════════════════════════════
    CONFIG — реальные цены Испании
@@ -451,7 +452,6 @@ export default function Calculator({ locale }: { locale: string }) {
     const l = calcLabels[locale] || calcLabels.es;
 
     // ── Mode: ethernet vs fiber ──
-    const [calcMode, setCalcMode] = useState<'ethernet' | 'fiber'>('ethernet');
     const [fiberCalcData, setFiberCalcData] = useState<FiberCalcResult | null>(null);
 
     // ── State ──
@@ -653,39 +653,84 @@ export default function Calculator({ locale }: { locale: string }) {
 
     const installationDisabled = points === 0 && avgLength === 0;
 
+    // The Ethernet tab as it goes on the quote. The fibre tab reports its own
+    // (fiberCalcData.quoteData); QuoteForm puts on the document whichever of
+    // the two has something to charge for — one, the other or both.
+    const ethernetQuoteData: QuoteCalculationData = {
+    calculatorType: 'ethernet',
+    cableType,
+    cableMeters: calc.totalCableLength,
+    points,
+    installationType: installType,
+    installationMeters: calc.trenchLength,
+    canaleta: calc.canetaLength,
+    tubo_corrugado: additionalMaterials.corrugated || 0,
+    tubo_pvc: additionalMaterials.pvc || 0,
+    canaleta_extra: additionalMaterials.trunking || 0,
+    mano_de_obra_horas: additionalMaterials.laborHour || 0,
+    regata: calc.trenchLength,
+    patchPanel12: patchPanelCounts.pp12 || 0,
+    patchPanel24: patchPanelCounts.pp24 || 0,
+    patchPanel48: patchPanelCounts.pp48 || 0,
+    materialsCustomNames: {
+        trunking:   materialsCustom.trunking?.name  || '',
+        pvc:        materialsCustom.pvc?.name       || '',
+        corrugated: materialsCustom.corrugated?.name|| '',
+        laborHour:  materialsCustom.laborHour?.name || '',
+    },
+    materialsCustomPrices: {
+        trunking:   materialsCustom.trunking?.price   !== undefined ? parsePrice(materialsCustom.trunking.price)   : 4,
+        pvc:        materialsCustom.pvc?.price        !== undefined ? parsePrice(materialsCustom.pvc.price)        : 2,
+        corrugated: materialsCustom.corrugated?.price !== undefined ? parsePrice(materialsCustom.corrugated.price) : 1,
+        laborHour:  materialsCustom.laborHour?.price  !== undefined ? parsePrice(materialsCustom.laborHour.price)  : 60,
+    },
+    rackCustomName: rackCustom[rack]?.name || '',
+    rackCustomPrice: rackCustom[rack]?.price !== undefined ? parsePrice(rackCustom[rack].price) : 0,
+    equipmentCustom: Object.fromEntries(
+        Object.entries(equipmentCustom).map(([k, v]) => [k, { name: v.name, price: parsePrice(v.price) }])
+    ),
+    customItems,
+    additionalWork: {
+        ...Object.fromEntries(Object.entries(equipment).map(([k, v]) => [k, v > 0])),
+        ...upsellOptions,
+    },
+    // Real per-item counts (round 19 audit) — additionalWork above
+    // collapses equipment quantity into a true/false flag, which
+    // previously meant a quantity > 1 (e.g. 2 access points, set via
+    // the +/- stepper below) was priced correctly into the subtotal
+    // but always rendered as "1 ud" on the PDF/CRM item list.
+    equipmentQty: equipment,
+    rack,
+    urgency,
+    cablesCost: calc.cableCost,
+    pointsCost: calc.materialsCost,
+    installCost: calc.routingCost,
+    laborCost: calc.laborCost,
+    materialsCost: calc.additionalMaterialsCost,
+    workCost: calc.equipmentCost,
+    rackCost: calc.rackCost,
+    subtotal: calc.subtotal,
+    discountPercent: calc.discountPercent,
+    discount: calc.discount,
+    urgencyMultiplier: calc.urgencyOption.multiplier,
+    iva: calc.iva,
+    total: calc.total,
+};
+
+
     return (
         <div className="space-y-6">
-            {/* ═══ TABS: Ethernet / Fibra ═══ */}
-            <div className="flex gap-2 justify-center">
-                <button
-                    onClick={() => setCalcMode('ethernet')}
-                    className={`px-6 py-3 rounded-xl font-heading font-bold text-sm transition-all duration-300 flex items-center gap-2 ${
-                        calcMode === 'ethernet'
-                            ? 'bg-[rgba(201,168,76,0.15)] border-2 border-brand-gold text-brand-gold shadow-[0_0_20px_rgba(201,168,76,0.15)]'
-                            : 'bg-surface-card border-2 border-border-subtle text-brand-gold-muted hover:border-brand-gold/30'
-                    }`}
-                >
-                    🌐 {locale === 'ru' ? 'Сеть Ethernet' : locale === 'en' ? 'Ethernet Network' : 'Red Ethernet'}
-                </button>
-                <button
-                    onClick={() => setCalcMode('fiber')}
-                    className={`px-6 py-3 rounded-xl font-heading font-bold text-sm transition-all duration-300 flex items-center gap-2 ${
-                        calcMode === 'fiber'
-                            ? 'bg-[rgba(0,180,255,0.1)] border-2 border-cyan-400 text-cyan-300 shadow-[0_0_20px_rgba(0,180,255,0.15)]'
-                            : 'bg-surface-card border-2 border-border-subtle text-brand-gold-muted hover:border-cyan-400/30'
-                    }`}
-                >
-                    🔆 {locale === 'ru' ? 'Оптоволокно' : locale === 'en' ? 'Fiber Optic' : 'Fibra Óptica'}
-                </button>
-            </div>
-
-            {/* ═══ FIBER CALCULATOR ═══ */}
-            {calcMode === 'fiber' && (
-                <FiberCalculator locale={locale} onCalcUpdate={setFiberCalcData} />
-            )}
-
+            {/*
+              * Both halves on one page, one after the other: a job is often
+              * network AND fibre, and the quote below takes whichever of the
+              * two has something in it. They used to be tabs, which hid half
+              * of the job while you priced the other half.
+              */}
             {/* ═══ ETHERNET CALCULATOR ═══ */}
-            {calcMode === 'ethernet' && (
+            <section aria-labelledby="calc-ethernet-title" className="space-y-4">
+                <h2 id="calc-ethernet-title" className="font-heading font-bold text-xl text-brand-gold flex items-center gap-2 border-b border-brand-gold/30 pb-3">
+                    🌐 {locale === 'ru' ? 'Сеть Ethernet' : locale === 'en' ? 'Ethernet Network' : 'Red Ethernet'}
+                </h2>
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             {/* LEFT — Configuration */}
             <div className="lg:col-span-2 space-y-6">
@@ -1593,79 +1638,21 @@ export default function Calculator({ locale }: { locale: string }) {
                         ℹ️ {l.disclaimer}
                     </p>
 
-                    {/* Quote Form */}
-                    <div id="quote-form" className="mt-6 pt-6 border-t border-border-subtle">
-                        <QuoteForm
-                            locale={locale}
-                            calculationData={{
-                                calculatorType: 'ethernet',
-                                cableType,
-                                cableMeters: calc.totalCableLength,
-                                points,
-                                installationType: installType,
-                                installationMeters: calc.trenchLength,
-                                canaleta: calc.canetaLength,
-                                tubo_corrugado: additionalMaterials.corrugated || 0,
-                                tubo_pvc: additionalMaterials.pvc || 0,
-                                canaleta_extra: additionalMaterials.trunking || 0,
-                                mano_de_obra_horas: additionalMaterials.laborHour || 0,
-                                regata: calc.trenchLength,
-                                patchPanel12: patchPanelCounts.pp12 || 0,
-                                patchPanel24: patchPanelCounts.pp24 || 0,
-                                patchPanel48: patchPanelCounts.pp48 || 0,
-                                materialsCustomNames: {
-                                    trunking:   materialsCustom.trunking?.name  || '',
-                                    pvc:        materialsCustom.pvc?.name       || '',
-                                    corrugated: materialsCustom.corrugated?.name|| '',
-                                    laborHour:  materialsCustom.laborHour?.name || '',
-                                },
-                                materialsCustomPrices: {
-                                    trunking:   materialsCustom.trunking?.price   !== undefined ? parsePrice(materialsCustom.trunking.price)   : 4,
-                                    pvc:        materialsCustom.pvc?.price        !== undefined ? parsePrice(materialsCustom.pvc.price)        : 2,
-                                    corrugated: materialsCustom.corrugated?.price !== undefined ? parsePrice(materialsCustom.corrugated.price) : 1,
-                                    laborHour:  materialsCustom.laborHour?.price  !== undefined ? parsePrice(materialsCustom.laborHour.price)  : 60,
-                                },
-                                rackCustomName: rackCustom[rack]?.name || '',
-                                rackCustomPrice: rackCustom[rack]?.price !== undefined ? parsePrice(rackCustom[rack].price) : 0,
-                                equipmentCustom: Object.fromEntries(
-                                    Object.entries(equipmentCustom).map(([k, v]) => [k, { name: v.name, price: parsePrice(v.price) }])
-                                ),
-                                customItems,
-                                additionalWork: {
-                                    ...Object.fromEntries(Object.entries(equipment).map(([k, v]) => [k, v > 0])),
-                                    ...upsellOptions,
-                                },
-                                // Real per-item counts (round 19 audit) — additionalWork above
-                                // collapses equipment quantity into a true/false flag, which
-                                // previously meant a quantity > 1 (e.g. 2 access points, set via
-                                // the +/- stepper below) was priced correctly into the subtotal
-                                // but always rendered as "1 ud" on the PDF/CRM item list.
-                                equipmentQty: equipment,
-                                rack,
-                                urgency,
-                                cablesCost: calc.cableCost,
-                                pointsCost: calc.materialsCost,
-                                installCost: calc.routingCost,
-                                laborCost: calc.laborCost,
-                                materialsCost: calc.additionalMaterialsCost,
-                                workCost: calc.equipmentCost,
-                                rackCost: calc.rackCost,
-                                subtotal: calc.subtotal,
-                                discountPercent: calc.discountPercent,
-                                discount: calc.discount,
-                                urgencyMultiplier: calc.urgencyOption.multiplier,
-                                iva: calc.iva,
-                                total: calc.total,
-                            }}
-                        />
-                    </div>
                 </div>
             </div>
         </div>
-            )}
+            </section>
+
+            {/* ═══ FIBER CALCULATOR ═══ */}
+            <section aria-labelledby="calc-fiber-title" className="space-y-4 pt-4">
+                <h2 id="calc-fiber-title" className="font-heading font-bold text-xl text-cyan-300 flex items-center gap-2 border-b border-cyan-400/30 pb-3">
+                    🔆 {locale === 'ru' ? 'Оптоволокно' : locale === 'en' ? 'Fiber Optic' : 'Fibra Óptica'}
+                </h2>
+                <FiberCalculator locale={locale} onCalcUpdate={setFiberCalcData} />
+            </section>
 
             {/* ═══ COMBINED SUMMARY (if both calculators used) ═══ */}
-            {fiberCalcData && fiberCalcData.total > 0 && calcMode === 'ethernet' && (
+            {isQuotePartUsed(ethernetQuoteData) && isQuotePartUsed(fiberCalcData?.quoteData) && fiberCalcData && (
                 <div className="card p-6 border-cyan-400/20 mt-6">
                     <h3 className="font-heading font-semibold text-white text-lg mb-4 text-center">
                         🧾 {locale === 'ru' ? 'Сводная смета' : locale === 'en' ? 'Combined Estimate' : 'Presupuesto combinado'}
@@ -1686,6 +1673,16 @@ export default function Calculator({ locale }: { locale: string }) {
                     </div>
                 </div>
             )}
+
+            {/* ═══ ONE QUOTE FORM for both tabs ═══ */}
+            {/*
+              * Outside the tabs so it is there whichever tab is open. It puts
+              * on the document what was filled in: network only, fibre only, or
+              * both in one quote with one total — one invoice for one job.
+              */}
+            <div id="quote-form">
+                <QuoteForm locale={locale} parts={[ethernetQuoteData, fiberCalcData?.quoteData]} />
+            </div>
         </div>
     );
 }
