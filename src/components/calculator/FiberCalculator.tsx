@@ -9,6 +9,10 @@ import type { QuoteCalculationData, QuoteLineItem } from '@/lib/quote-items';
 
 const FIBER_CONFIG = {
     cablePrices: {
+        // Acometida FTTH de operador: 1 fibra SM G.657A2, drop LSZH 3-4,6 mm.
+        // Proveedor (sep-2026, bobina 1000 m, sin IVA): 0,18-0,35 €/m;
+        // rollos cortos preconectorizados ~0,28-0,37 €/m.
+        sm_1f_drop: 0.35,
         sm_2f: 0.45,   // Monomodo 2 fibras (más común)
         sm_4f: 0.65,   // Monomodo 4 fibras
         sm_12f: 1.20,  // Monomodo 12 fibras
@@ -46,6 +50,7 @@ const IVA_RATE = 0.21;
    ═════════════════════════════════════ */
 
 const FIBER_CABLE_TYPES = [
+    { id: 'sm_1f_drop' as const, name: 'Acometida FTTH 1F', desc: 'SM G.657A2 · operador', price: FIBER_CONFIG.cablePrices.sm_1f_drop },
     { id: 'sm_2f' as const, name: 'Monomodo 2F', desc: 'SM G.657A', price: FIBER_CONFIG.cablePrices.sm_2f },
     { id: 'sm_4f' as const, name: 'Monomodo 4F', desc: 'SM interior', price: FIBER_CONFIG.cablePrices.sm_4f },
     { id: 'sm_12f' as const, name: 'Monomodo 12F', desc: 'SM multi-hilo', price: FIBER_CONFIG.cablePrices.sm_12f },
