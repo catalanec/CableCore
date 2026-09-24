@@ -107,6 +107,25 @@ describe('buildQuoteItems', () => {
     });
 });
 
+describe('cable and conduit on the document', () => {
+    it('names the cable instead of printing the internal id', () => {
+        const [cable] = buildQuoteItems(base({ cableType: 'cat6a_ext', cableMeters: 100, cablesCost: 100, subtotal: 100 }));
+        expect(cable.description).toBe('Cableado Cat 6A U/UTP exterior (cubierta PE anti-UV) — suministro de cable');
+    });
+
+    it('prints flexible steel conduit rows with their own price', () => {
+        const items = buildQuoteItems(base({
+            tubo_acero_pg16: 40, tubo_acero_pg21: 10,
+            materialsCustomPrices: { steelFlex16: 1.6, steelFlex21: 2.4 },
+            materialsCost: 88, subtotal: 88,
+        }));
+        expect(items).toEqual([
+            { description: 'Tubo flexible de acero PG16', quantity: '40m', unitPrice: '1.60€', total: '64.00€' },
+            { description: 'Tubo flexible de acero PG21', quantity: '10m', unitPrice: '2.40€', total: '24.00€' },
+        ]);
+    });
+});
+
 describe('isQuotePartUsed', () => {
     it('treats an untouched calculator as unused', () => {
         expect(isQuotePartUsed(base())).toBe(false);

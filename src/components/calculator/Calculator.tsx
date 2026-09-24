@@ -12,9 +12,11 @@ import { isQuotePartUsed, type QuoteCalculationData } from '@/lib/quote-items';
    ═════════════════════════════════════ */
 
 const CONFIG = {
-    cablePrices: { cat5: 0.30, cat6: 0.55, cat6a_utp: 0.85, cat6a_ftp: 1.10, cat6a_sftp: 1.50, cat7: 2.00 },
+    // cat6a_ext: U/UTP Cat6A exterior, cubierta PE negra (UV), Fca, PoE++.
+    // Compra sep-2026: Prysmian 100 m a 56,20 € sin IVA = 0,56 €/m.
+    cablePrices: { cat5: 0.30, cat6: 0.55, cat6a_utp: 0.85, cat6a_ftp: 1.10, cat6a_sftp: 1.50, cat6a_ext: 1.00, cat7: 2.00 },
     laborPerPoint: { basic: 30, conduit: 50, advanced: 90 },
-    cableMultiplier: { cat5: 1.0, cat6: 1.1, cat6a_utp: 1.20, cat6a_ftp: 1.25, cat6a_sftp: 1.30, cat7: 1.4 },
+    cableMultiplier: { cat5: 1.0, cat6: 1.1, cat6a_utp: 1.20, cat6a_ftp: 1.25, cat6a_sftp: 1.30, cat6a_ext: 1.25, cat7: 1.4 },
     installationMultiplier: {
         external: 1.0, ceiling: 1.1, existing_wall: 1.2,
         new_wall: 1.0, // штроба считается отдельно
@@ -30,7 +32,8 @@ const CONFIG = {
         trays: 5,          // лотки / бандежи
     },
     trenchPricePerMeter: 45,
-    materials: { keystone: 6, socket: 10, trunking: 4, pvc: 2, corrugated: 1, patchPanel12: 40, patchPanel24: 65, patchPanel48: 100, laborHour: 60 },
+    // Tubo flexible de acero (compra sep-2026, sin IVA): PG16 1,07 €/m, PG21 1,65 €/m.
+    materials: { keystone: 6, socket: 10, trunking: 4, pvc: 2, corrugated: 1, steelFlex16: 1.60, steelFlex21: 2.40, patchPanel12: 40, patchPanel24: 65, patchPanel48: 100, laborHour: 60 },
     equipment: { router: 50, switch: 40, accessPoint: 70, configuration: 150 },
     upsell: { testing: 50, labeling: 20, cableManagement: 50, extendedWarranty: 30 },
 } as const;
@@ -58,6 +61,7 @@ const CABLE_TYPES = [
     { id: 'cat6a_utp' as const, name: 'Cat 6A U/UTP', price: CONFIG.cablePrices.cat6a_utp },
     { id: 'cat6a_ftp' as const, name: 'Cat 6A U/FTP', price: CONFIG.cablePrices.cat6a_ftp },
     { id: 'cat6a_sftp' as const, name: 'Cat 6A S/FTP', price: CONFIG.cablePrices.cat6a_sftp },
+    { id: 'cat6a_ext' as const, name: 'Cat 6A U/UTP Exterior', price: CONFIG.cablePrices.cat6a_ext },
     { id: 'cat7' as const, name: 'Cat 7 S/FTP', price: CONFIG.cablePrices.cat7 },
     { id: 'none' as const, name: 'Ninguno', price: 0 },
 ];
@@ -73,6 +77,7 @@ const CAT6A_SUBTYPES = [
     { id: 'cat6a_utp' as const, label: 'U/UTP', badge: 'Doméstico', price: CONFIG.cablePrices.cat6a_utp, desc: 'Sin blindaje. Hogar y SOHO.' },
     { id: 'cat6a_ftp' as const, label: 'U/FTP', badge: 'Estándar', price: CONFIG.cablePrices.cat6a_ftp, desc: 'Pantalla general. Estándar para oficinas.' },
     { id: 'cat6a_sftp' as const, label: 'S/FTP', badge: 'Industrial', price: CONFIG.cablePrices.cat6a_sftp, desc: 'Doble blindaje. Alta densidad EMI.' },
+    { id: 'cat6a_ext' as const, label: 'Exterior', badge: 'Cubiertas', price: CONFIG.cablePrices.cat6a_ext, desc: 'U/UTP, cubierta PE negra anti-UV. Fca, PoE++.' },
 ];
 
 const INSTALLATION_TYPES = [
@@ -118,6 +123,8 @@ const ADDITIONAL_MATERIALS = [
     { id: 'trunking' as const, price: CONFIG.materials.trunking, unit: 'm', icon: '📏' },
     { id: 'pvc' as const, price: CONFIG.materials.pvc, unit: 'm', icon: '🔧' },
     { id: 'corrugated' as const, price: CONFIG.materials.corrugated, unit: 'm', icon: '⚒️' },
+    { id: 'steelFlex16' as const, price: CONFIG.materials.steelFlex16, unit: 'm', icon: '⛓️' },
+    { id: 'steelFlex21' as const, price: CONFIG.materials.steelFlex21, unit: 'm', icon: '⛓️' },
     { id: 'laborHour' as const, price: CONFIG.materials.laborHour, unit: 'h', icon: '👷' },
 ];
 
@@ -215,6 +222,8 @@ const calcLabels: Record<string, Record<string, string>> = {
         trunking: 'Canaleta',
         pvc: 'Tubo PVC',
         corrugated: 'Tubo corrugado',
+        steelFlex16: 'Tubo flexible acero PG16',
+        steelFlex21: 'Tubo flexible acero PG21',
         laborHour: 'Mano de obra',
         patchPanel: 'Patch panel',
         // Urgency
@@ -318,6 +327,8 @@ const calcLabels: Record<string, Record<string, string>> = {
         trunking: 'Cable trunking',
         pvc: 'PVC conduit',
         corrugated: 'Corrugated tube',
+        steelFlex16: 'Flexible steel conduit PG16',
+        steelFlex21: 'Flexible steel conduit PG21',
         laborHour: 'Labor (hourly)',
         patchPanel: 'Patch panel',
         normal: 'Normal',
@@ -418,6 +429,8 @@ const calcLabels: Record<string, Record<string, string>> = {
         trunking: 'Кабель-канал',
         pvc: 'Труба ПВХ',
         corrugated: 'Гофра',
+        steelFlex16: 'Металлорукав PG16',
+        steelFlex21: 'Металлорукав PG21',
         laborHour: 'Мано де обра (ч/р)',
         patchPanel: 'Патч-панель',
         normal: 'Обычная',
@@ -464,7 +477,7 @@ export default function Calculator({ locale }: { locale: string }) {
     const [canetaMode, setCanetaMode] = useState<'full' | 'manual'>('full');
     const [canetaLengthInput, setCanetaLengthInput] = useState(0);
     const [additionalMaterials, setAdditionalMaterials] = useState<Record<string, number>>({
-        trunking: 0, pvc: 0, corrugated: 0, laborHour: 0,
+        trunking: 0, pvc: 0, corrugated: 0, steelFlex16: 0, steelFlex21: 0, laborHour: 0,
     });
     const [patchPanelCounts, setPatchPanelCounts] = useState<Record<string, number>>({ pp12: 0, pp24: 0, pp48: 0 });
     const [equipment, setEquipment] = useState<Record<string, number>>({
@@ -484,6 +497,8 @@ export default function Calculator({ locale }: { locale: string }) {
         trunking:  { name: '', price: 4 },
         pvc:       { name: '', price: 2 },
         corrugated:{ name: '', price: 1 },
+        steelFlex16: { name: '', price: CONFIG.materials.steelFlex16 },
+        steelFlex21: { name: '', price: CONFIG.materials.steelFlex21 },
         laborHour: { name: '', price: 60 },
     });
     const [rackCustom, setRackCustom] = useState<Record<string, { name: string; price: number | string }>>(
@@ -589,6 +604,9 @@ export default function Calculator({ locale }: { locale: string }) {
         additionalMaterialsCost += trunkingQty * (materialsCustom.trunking?.price !== undefined ? parsePrice(materialsCustom.trunking.price) : CONFIG.materials.trunking);
         additionalMaterialsCost += pvcQty * (materialsCustom.pvc?.price !== undefined ? parsePrice(materialsCustom.pvc.price) : CONFIG.materials.pvc);
         additionalMaterialsCost += corrugatedQty * (materialsCustom.corrugated?.price !== undefined ? parsePrice(materialsCustom.corrugated.price) : CONFIG.materials.corrugated);
+        for (const key of ['steelFlex16', 'steelFlex21'] as const) {
+            additionalMaterialsCost += (additionalMaterials[key] || 0) * (materialsCustom[key]?.price !== undefined ? parsePrice(materialsCustom[key].price) : CONFIG.materials[key]);
+        }
         additionalMaterialsCost += (additionalMaterials.laborHour || 0) * (materialsCustom.laborHour?.price !== undefined ? parsePrice(materialsCustom.laborHour.price) : CONFIG.materials.laborHour);
         // Patch panels por cantidad de puertos
         additionalMaterialsCost += (patchPanelCounts.pp12 || 0) * CONFIG.materials.patchPanel12;
@@ -666,6 +684,8 @@ export default function Calculator({ locale }: { locale: string }) {
     canaleta: calc.canetaLength,
     tubo_corrugado: additionalMaterials.corrugated || 0,
     tubo_pvc: additionalMaterials.pvc || 0,
+    tubo_acero_pg16: additionalMaterials.steelFlex16 || 0,
+    tubo_acero_pg21: additionalMaterials.steelFlex21 || 0,
     canaleta_extra: additionalMaterials.trunking || 0,
     mano_de_obra_horas: additionalMaterials.laborHour || 0,
     regata: calc.trenchLength,
@@ -676,12 +696,16 @@ export default function Calculator({ locale }: { locale: string }) {
         trunking:   materialsCustom.trunking?.name  || '',
         pvc:        materialsCustom.pvc?.name       || '',
         corrugated: materialsCustom.corrugated?.name|| '',
+        steelFlex16: materialsCustom.steelFlex16?.name || '',
+        steelFlex21: materialsCustom.steelFlex21?.name || '',
         laborHour:  materialsCustom.laborHour?.name || '',
     },
     materialsCustomPrices: {
         trunking:   materialsCustom.trunking?.price   !== undefined ? parsePrice(materialsCustom.trunking.price)   : 4,
         pvc:        materialsCustom.pvc?.price        !== undefined ? parsePrice(materialsCustom.pvc.price)        : 2,
         corrugated: materialsCustom.corrugated?.price !== undefined ? parsePrice(materialsCustom.corrugated.price) : 1,
+        steelFlex16: materialsCustom.steelFlex16?.price !== undefined ? parsePrice(materialsCustom.steelFlex16.price) : CONFIG.materials.steelFlex16,
+        steelFlex21: materialsCustom.steelFlex21?.price !== undefined ? parsePrice(materialsCustom.steelFlex21.price) : CONFIG.materials.steelFlex21,
         laborHour:  materialsCustom.laborHour?.price  !== undefined ? parsePrice(materialsCustom.laborHour.price)  : 60,
     },
     rackCustomName: rackCustom[rack]?.name || '',
@@ -757,7 +781,7 @@ export default function Calculator({ locale }: { locale: string }) {
                     </div>
                     <div className="border border-border-subtle rounded-lg p-4">
                         <p className="text-xs font-semibold uppercase tracking-wider text-brand-gold mb-3">Cat 6A — variantes de blindaje</p>
-                        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
                             {CAT6A_SUBTYPES.map((sub) => (
                                 <button
                                     key={sub.id}

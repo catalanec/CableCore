@@ -30,6 +30,8 @@ export interface QuoteCalculationData {
     canaleta: number;
     tubo_corrugado: number;
     tubo_pvc: number;
+    tubo_acero_pg16?: number;
+    tubo_acero_pg21?: number;
     canaleta_extra: number;
     mano_de_obra_horas: number;
     regata: number;
@@ -115,6 +117,18 @@ const rackPrices: Record<string, number> = {
     rack_6u: 90, rack_9u: 130, rack_12u: 180, rack_18u: 250, rack_22u: 380, rack_42u: 650,
 };
 
+// The document names the cable, not the calculator's internal id: it used
+// to print "CABLEADO CAT6A_FTP".
+const cableNames: Record<string, string> = {
+    cat5: 'Cat 5e U/UTP',
+    cat6: 'Cat 6 U/UTP',
+    cat6a_utp: 'Cat 6A U/UTP',
+    cat6a_ftp: 'Cat 6A U/FTP',
+    cat6a_sftp: 'Cat 6A S/FTP',
+    cat6a_ext: 'Cat 6A U/UTP exterior (cubierta PE anti-UV)',
+    cat7: 'Cat 7 S/FTP',
+};
+
 const eur = (n: number) => `${n.toFixed(2)}€`;
 
 function row(description: string, quantity: string, unitPrice: number, total: number): QuoteLineItem {
@@ -127,7 +141,7 @@ export function buildQuoteItems(d: QuoteCalculationData): QuoteLineItem[] {
     const items: QuoteLineItem[] = [];
 
     if (d.cablesCost > 0 || d.cableMeters > 0) {
-        items.push(row(`Cableado ${d.cableType.toUpperCase()} — suministro de cable`, `${d.cableMeters}m`,
+        items.push(row(`Cableado ${cableNames[d.cableType] ?? d.cableType} — suministro de cable`, `${d.cableMeters}m`,
             d.cablesCost / Math.max(1, d.cableMeters), d.cablesCost));
     }
 
@@ -166,6 +180,8 @@ export function buildQuoteItems(d: QuoteCalculationData): QuoteLineItem[] {
     material(d.canaleta_extra || 0, 'trunking', 'Canaleta adicional', 4);
     material(d.tubo_corrugado, 'corrugated', 'Tubo corrugado', 1);
     material(d.tubo_pvc || 0, 'pvc', 'Tubo PVC', 2);
+    material(d.tubo_acero_pg16 || 0, 'steelFlex16', 'Tubo flexible de acero PG16', 1.6);
+    material(d.tubo_acero_pg21 || 0, 'steelFlex21', 'Tubo flexible de acero PG21', 2.4);
     if (d.regata > 0) items.push(row('Regata (corte muro)', `${d.regata}m`, 45, d.regata * 45));
     if ((d.mano_de_obra_horas || 0) > 0) {
         const name = d.materialsCustomNames?.laborHour || 'Mano de obra adicional';
