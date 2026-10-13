@@ -42,6 +42,21 @@ export interface InvoicePDFData {
     signatureEmisor?: string;
     signatureClient?: string;
     refAdicional?: string;
+    /**
+     * Factura rectificativa: anula `originalNumber`. Los importes ya llegan en
+     * negativo; el documento cambia de título, no lleva vencimiento ni método
+     * de pago, y dice al final qué factura rectifica y por qué.
+     */
+    rectification?: {
+        number: string;
+        originalNumber: string;
+        originalDate: string;
+        reason: string;
+    };
+}
+
+function escapeHtml(s: string): string {
+    return String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c] as string));
 }
 
 // Ensure the invoice number is padded with zeros (e.g., 21 -> 00021)
@@ -69,7 +84,8 @@ export function generateInvoiceHTML(data: InvoicePDFData): string {
     const headRows = renderRows(headItems, 0);
     const tailRows = renderRows(tailItems, headItems.length);
 
-    const formattedInvoiceNum = formatInvoiceNumber(data.invoiceNumber);
+    const rect = data.rectification;
+    const formattedInvoiceNum = rect ? rect.number : formatInvoiceNumber(data.invoiceNumber);
 
     // Calculate due date: invoice date + 60 days
     const parseDateES = (dateStr: string): Date => {
@@ -95,7 +111,7 @@ export function generateInvoiceHTML(data: InvoicePDFData): string {
           <span>Subtotal</span> <span style="font-weight: 600; color: #333;">${data.subtotal}</span>
         </div>
         <div style="display: flex; justify-content: space-between; padding: 6px 10px; font-size: 10px; color: #2E7D32; background: #F1F8E9; border-bottom: 1px solid #e0dcd4;">
-          <span style="font-weight: 600;">Descuento${data.discountPercent ? ` (-${data.discountPercent}%)` : ''}</span> <span style="font-weight: 700;">-${data.discount}</span>
+          <span style="font-weight: 600;">Descuento${data.discountPercent ? ` (-${data.discountPercent}%)` : ''}</span> <span style="font-weight: 700;">${rect ? '+' : '-'}${data.discount}</span>
         </div>
         <div style="display: flex; justify-content: space-between; padding: 6px 10px; font-size: 10px; color: #555; border-bottom: 1px solid #e0dcd4;">
           <span>Base Imponible</span> <span style="font-weight: 600; color: #333;">${data.base ?? data.subtotal}</span>
@@ -118,6 +134,13 @@ export function generateInvoiceHTML(data: InvoicePDFData): string {
         </div>
       </div>
     </div>
+
+    ${rect ? `
+    <div style="margin-top: 10px; border: 1.5px solid #c0392b; border-radius: 6px; padding: 10px; background: #fdf3f2;">
+      <p style="color: #c0392b; font-size: 12px; font-weight: 800; letter-spacing: 0.5px;">FACTURA RECTIFICATIVA DE LA FACTURA ${rect.originalNumber} POR ${escapeHtml(rect.reason).toUpperCase()}</p>
+      <p style="color: #555; font-size: 10px; margin-top: 4px;">Factura rectificada: Nº ${rect.originalNumber} de fecha ${rect.originalDate}. Esta factura anula íntegramente la factura rectificada.</p>
+    </div>
+    ` : ''}
 
     ${data.notes ? `
     <div style="margin-top: 10px; background: #f8f6f1; border: 1px solid #e0dcd4; border-radius: 6px; padding: 10px;">
@@ -156,7 +179,7 @@ export function generateInvoiceHTML(data: InvoicePDFData): string {
 <head>
   <meta charset="utf-8">
   <meta name="format-detection" content="telephone=no, date=no, address=no, email=no">
-  <title>Factura_CableCore_${formattedInvoiceNum}</title>
+  <title>${rect ? 'Factura_Rectificativa' : 'Factura'}_CableCore_${formattedInvoiceNum}</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     body { font-family: 'Helvetica Neue', Arial, sans-serif; background: #fff; color: #222; padding: 0 6mm; font-size: 10px; }
@@ -193,10 +216,12 @@ export function generateInvoiceHTML(data: InvoicePDFData): string {
         <p style="color: #8B6914; font-size: 8px; font-style: italic; margin-top: 1px; font-weight: 500; text-align: center;">Conectamos tu negocio</p>
       </div>
       <div style="text-align: right; font-size: 11px; color: #555; line-height: 1.6;">
-        <div style="color: #8B6914; font-size: 17px; font-weight: 700; margin-bottom: 4px;">FACTURA</div>
+        <div style="color: #8B6914; font-size: 17px; font-weight: 700; margin-bottom: 4px;">${rect ? 'FACTURA RECTIFICATIVA' : 'FACTURA'}</div>
         <div>Nº ${formattedInvoiceNum}</div>
         <div>Fecha: ${data.date}</div>
-        <div style="color: #c0392b; font-weight: 600;">Vencimiento: ${dueDateStr}</div>
+        ${rect
+            ? `<div style="color: #c0392b; font-weight: 600;">Rectifica la factura Nº ${rect.originalNumber} (${rect.originalDate})</div>`
+            : `<div style="color: #c0392b; font-weight: 600;">Vencimiento: ${dueDateStr}</div>`}
         ${data.refAdicional ? `<div style="color: #555; font-size: 10px; margin-top: 4px;">Ref. adicional cliente: <strong>${data.refAdicional}</strong></div>` : ''}
       </div>
     </div>

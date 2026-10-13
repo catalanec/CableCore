@@ -5,6 +5,7 @@ import { useLocale } from 'next-intl';
 import { updateLeadStatus, updateQuoteStatus, updateMaterialStock, deleteLead, deleteQuote, updateLeadNotes, updateQuoteNotes, addMaterial, deleteMaterial, updateMaterial, updateProjectCosts, updateProjectPayment, seedMaterials, sendLowStockAlerts, exportMaterialsCSV, exportProjectsCSV, getAllTasks, addExpense, getExpenses, deleteExpense, notifyStaleLeads, deleteProject } from '@/app/actions/crm';
 import { downloadQuotePDF, type QuotePDFData } from '@/lib/quote-pdf';
 import { downloadInvoicePDF, type InvoicePDFData } from '@/lib/invoice-pdf';
+import { buildRectificationPDFData, formatRectNumber, type RectificationRow } from '@/lib/invoice-rectification';
 import { quoteDiscount, quoteDiscountPercent } from '@/lib/quote-discount';
 import Pipeline from './Pipeline';
 import TaskManager from './TaskManager';
@@ -16,6 +17,7 @@ interface AdminDashboardProps {
     initialProjects: any[];
     initialTasks?: any[];
     initialInvoices?: any[];
+    initialRectifications?: RectificationRow[];
 }
 
 /* Tab types */
@@ -37,7 +39,7 @@ const STATUS_COLORS: Record<string, string> = {
     in_progress: 'bg-amber-400/10 text-amber-400',
 };
 
-export default function AdminDashboard({ initialQuotes, initialLeads, initialMaterials, initialProjects, initialTasks = [], initialInvoices = [] }: AdminDashboardProps) {
+export default function AdminDashboard({ initialQuotes, initialLeads, initialMaterials, initialProjects, initialTasks = [], initialInvoices = [], initialRectifications = [] }: AdminDashboardProps) {
     const locale = useLocale();
     const [activeTab, setActiveTab] = useState<Tab>('overview');
     const [searchTerm, setSearchTerm] = useState('');
@@ -56,7 +58,8 @@ export default function AdminDashboard({ initialQuotes, initialLeads, initialMat
     const [currentQuoteId, setCurrentQuoteId] = useState<string | null>(null);
 
     const [invoices, setInvoices] = useState<any[]>(initialInvoices);
-    const [categoryFilter, setCategoryFilter] = useState('all');
+    const [rectifications, setRectifications] = useState<RectificationRow[]>(initialRectifications);
+    const rectificationFor = (invoiceId: string) => rectifications.find(r => r.invoice_id === invoiceId);    const [categoryFilter, setCategoryFilter] = useState('all');
     const [chartPeriod, setChartPeriod] = useState(6);
     const [newMat, setNewMat] = useState({ name: '', category: 'cable', unit: 'm', cost_price: 0, sell_price: 0, stock: 0, min_stock: 5 });
 
@@ -1736,7 +1739,7 @@ export default function AdminDashboard({ initialQuotes, initialLeads, initialMat
                         <h3 className="font-heading font-semibold text-white">🧾 Facturas emitidas</h3>
                         <div className="flex items-center gap-4 text-xs text-brand-gold-muted">
                             <span>Total: <span className="text-white font-bold">{invoices.length}</span></span>
-                            <span>Facturado: <span className="text-brand-gold font-bold">{invoices.reduce((s, inv) => s + Number(inv.total_data?.total || 0), 0).toFixed(2)}€</span></span>
+                            <span>Facturado: <span className="text-brand-gold font-bold">{invoices.reduce((s, inv) => s + (rectificationFor(inv.id) ? 0 : Number(inv.total_data?.total || 0)), 0).toFixed(2)}€</span></span>
                         </div>
                     </div>
 
@@ -1765,6 +1768,11 @@ export default function AdminDashboard({ initialQuotes, initialLeads, initialMat
                                         <tr key={inv.id} className="border-b border-border-subtle/50 hover:bg-[rgba(201,168,76,0.03)] transition-colors">
                                             <td className="p-4 text-brand-gold font-mono font-bold text-sm">
                                                 #{String(inv.invoice_number).padStart(5,'0')}
+                                                {rectificationFor(inv.id) && (
+                                                    <div className="text-[10px] font-sans font-semibold text-red-300 mt-1">
+                                                        Rectificada · {formatRectNumber(rectificationFor(inv.id)!.rect_number)}
+                                                    </div>
+                                                )}
                                             </td>
                                             <td className="p-4">
                                                 <div className="font-medium text-white">{inv.razon_social}</div>
@@ -1811,6 +1819,51 @@ export default function AdminDashboard({ initialQuotes, initialLeads, initialMat
                                                     >
                                                         📄 PDF
                                                     </button>
+                                                    {(() => {
+                                                        const rect = rectificationFor(inv.id);
+                                                        if (rect) {
+                                                            return (
+                                                                <button
+                                                                    title={`Factura rectificativa ${formatRectNumber(rect.rect_number)} — PDF`}
+                                                                    onClick={() => downloadInvoicePDF(buildRectificationPDFData(inv, rect))}
+                                                                    className="text-xs px-2.5 py-1.5 bg-red-500/10 text-red-300 rounded-lg hover:bg-red-500/20 transition-colors font-medium whitespace-nowrap"
+                                                                >
+                                                                    ↩️ {formatRectNumber(rect.rect_number)}
+                                                                </button>
+                                                            );
+                                                        }
+                                                        return (
+                                                            <button
+                                                                title="Emitir factura rectificativa (anula esta factura)"
+                                                                onClick={async () => {
+                                                                    const num = String(inv.invoice_number).padStart(5, '0');
+                                                                    const reason = window.prompt(`Factura rectificativa de la factura ${num} (${inv.razon_social}).\n\nMotivo (aparece en la factura: «POR …»):`, 'duplicidad');
+                                                                    if (!reason || !reason.trim()) return;
+                                                                    const origDate = new Date(inv.created_at).toLocaleDateString('es-ES', { day: '2-digit', month: '2-digit', year: 'numeric' });
+                                                                    const dateStr = window.prompt('Fecha de la rectificativa (dd/mm/aaaa):', origDate);
+                                                                    if (!dateStr) return;
+                                                                    const m = dateStr.trim().match(/^(\d{1,2})\/(\d{1,2})\/(\d{4})$/);
+                                                                    if (!m) { alert('Fecha no válida. Usa dd/mm/aaaa.'); return; }
+                                                                    const issueDate = `${m[3]}-${m[2].padStart(2, '0')}-${m[1].padStart(2, '0')}`;
+                                                                    if (!confirm(`Se emitirá la FACTURA RECTIFICATIVA que anula la factura ${num} por ${reason.trim().toUpperCase()}, con fecha ${dateStr.trim()}.\n\nNo se puede deshacer. ¿Continuar?`)) return;
+                                                                    try {
+                                                                        const res = await fetch('/api/invoice/rectify', {
+                                                                            method: 'POST',
+                                                                            headers: { 'Content-Type': 'application/json' },
+                                                                            body: JSON.stringify({ invoice_id: inv.id, reason: reason.trim(), issue_date: issueDate }),
+                                                                        });
+                                                                        const r = await res.json();
+                                                                        if (!r.success) { alert('Error: ' + (r.error || 'no se pudo emitir')); return; }
+                                                                        setRectifications(prev => [...prev.filter(x => x.invoice_id !== inv.id), r.rectification]);
+                                                                        downloadInvoicePDF(buildRectificationPDFData(inv, r.rectification));
+                                                                    } catch { alert('Error de servidor'); }
+                                                                }}
+                                                                className="text-xs px-2.5 py-1.5 bg-white/5 text-brand-gold-muted rounded-lg hover:bg-white/10 hover:text-white transition-colors font-medium whitespace-nowrap"
+                                                            >
+                                                                ↩️ Rectificar
+                                                            </button>
+                                                        );
+                                                    })()}
                                                     <button
                                                         title="Eliminar factura"
                                                         onClick={async () => {

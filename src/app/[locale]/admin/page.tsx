@@ -44,6 +44,7 @@ export default async function AdminPage({ params: { locale } }: { params: { loca
     let projects: any[] = [];
     let tasks: any[] = [];
     let invoices: any[] = [];
+    let rectifications: any[] = [];
 
     // A missing service key used to fall back to the anon key, which RLS lets
     // insert but not read — an empty dashboard that looks like lost data. Let it
@@ -52,13 +53,14 @@ export default async function AdminPage({ params: { locale } }: { params: { loca
     try {
         const supabase = createAdminClient();
         
-        const [qRes, lRes, mRes, pRes, tRes, invRes] = await Promise.all([
+        const [qRes, lRes, mRes, pRes, tRes, invRes, rectRes] = await Promise.all([
             supabase.from('quotes').select('*').order('created_at', { ascending: false }),
             supabase.from('leads').select('*').order('created_at', { ascending: false }),
             supabase.from('materials').select('*').order('name', { ascending: true }),
             supabase.from('projects').select('*').order('created_at', { ascending: false }),
             supabase.from('tasks').select('*').order('due_date', { ascending: true }),
             supabase.from('invoices').select('*').order('invoice_number', { ascending: false }),
+            supabase.from('invoice_rectifications').select('*').order('rect_number', { ascending: true }),
         ]);
 
         const failed = [qRes, lRes, mRes, pRes, tRes, invRes].find(r => r.error);
@@ -70,6 +72,8 @@ export default async function AdminPage({ params: { locale } }: { params: { loca
         projects = pRes.data || [];
         tasks = tRes.data || [];
         invoices = invRes.data || [];
+        // Sin la tabla (migración aún no aplicada) el panel sigue funcionando.
+        rectifications = rectRes.error ? [] : (rectRes.data || []);
     } catch (e) {
         loadError = e instanceof Error ? e.message : String(e);
         console.error('[admin] failed to load CRM data:', loadError);
@@ -105,6 +109,7 @@ export default async function AdminPage({ params: { locale } }: { params: { loca
                             initialProjects={projects}
                             initialTasks={tasks}
                             initialInvoices={invoices}
+                            initialRectifications={rectifications}
                         />
                     </div>
                 </section>
