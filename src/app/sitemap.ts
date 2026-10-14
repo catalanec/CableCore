@@ -23,7 +23,7 @@ function generateAlternates(path: string) {
 export default function sitemap(): MetadataRoute.Sitemap {
     const staticPages = [
         { path: '', changeFreq: 'weekly' as const, basePriority: 1.0 },
-        { path: '/servicios', changeFreq: 'weekly' as const, basePriority: 0.9 },
+        { path: '/servicios', changeFreq: 'weekly' as const, basePriority: 0.9, updated: '2026-10-14T00:00:00.000Z' },
         { path: '/precios', changeFreq: 'monthly' as const, basePriority: 0.85 },
         { path: '/calculator', changeFreq: 'monthly' as const, basePriority: 0.85 },
         { path: '/blog', changeFreq: 'daily' as const, basePriority: 0.8 },
@@ -40,7 +40,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     const staticUrls = staticPages.flatMap(page =>
         ALL_LOCALES.map(locale => ({
             url: `${BASE_URL}/${locale}${page.path}`,
-            lastModified: STATIC_LAST_MODIFIED,
+            lastModified: page.updated ?? STATIC_LAST_MODIFIED,
             changeFrequency: page.changeFreq,
             priority: locale === PRIMARY_LOCALE
                 ? page.basePriority

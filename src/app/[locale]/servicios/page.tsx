@@ -7,6 +7,7 @@ import { Link } from '@/i18n/routing';
 import { generatePageMetadata } from '@/lib/seo-metadata';
 import Breadcrumbs from '@/components/seo/Breadcrumbs';
 import { getAllPages } from '@/lib/seo-data';
+import { CARD_LINKS, groupPages, hubCopy } from '@/lib/services-hub';
 
 export function generateMetadata({ params }: { params: { locale: string } }): Metadata {
     return generatePageMetadata('servicios', params.locale, '/servicios');
@@ -68,7 +69,8 @@ export default function ServiciosPage({ params }: { params: { locale: string } }
     };
     const bc = breadcrumbLabels[locale] || breadcrumbLabels.es;
 
-    const seoPages = getAllPages(locale);
+    const copy = hubCopy(locale);
+    const groups = groupPages(getAllPages(locale));
 
     return (
         <>
@@ -122,7 +124,11 @@ export default function ServiciosPage({ params }: { params: { locale: string } }
                                                 {service.icon}
                                             </div>
                                             <h2 className="font-heading font-semibold text-xl text-white group-hover:text-brand-gold transition-colors">
-                                                {t(`servicesPage.items.${service.key}.title`)}
+                                                {CARD_LINKS[service.key] ? (
+                                                    <Link href={`/servicios/${CARD_LINKS[service.key]}`}>
+                                                        {t(`servicesPage.items.${service.key}.title`)}
+                                                    </Link>
+                                                ) : t(`servicesPage.items.${service.key}.title`)}
                                             </h2>
                                         </div>
                                         <p className="text-sm text-brand-gold-muted mb-5 leading-relaxed">
@@ -145,33 +151,52 @@ export default function ServiciosPage({ params }: { params: { locale: string } }
 
                 <div className="gold-divider" />
 
-                {/* ═══════════════ SEO SITEMAP / HUB ═══════════════ */}
+                {/* ═══════════════ CÓMO ELEGIR ═══════════════ */}
+                <section className="py-20">
+                    <div className="container-custom max-w-4xl">
+                        <h2 className="font-heading text-2xl sm:text-3xl font-bold mb-10 text-center">{copy.guideTitle}</h2>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                            {copy.guide.map((g) => (
+                                <div key={g.h3}>
+                                    <h3 className="font-heading font-semibold text-lg text-white mb-3">{g.h3}</h3>
+                                    <p className="text-sm text-brand-gold-muted leading-relaxed">{g.text}</p>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </section>
+
+                <div className="gold-divider" />
+
+                {/* ═══════════════ CATÁLOGO AGRUPADO ═══════════════ */}
                 <section className="py-20 bg-black/[0.2]">
                     <div className="container-custom">
                         <div className="text-center mb-12">
-                            <h2 className="font-heading text-2xl sm:text-3xl font-bold mb-4">
-                                {locale === 'es' ? 'Catálogo de Servicios y Zonas' : locale === 'en' ? 'Services & Coverage Catalog' : 'Каталог Услуг и Зон Покрытия'}
-                            </h2>
-                            <p className="text-brand-gold-muted max-w-2xl mx-auto">
-                                {locale === 'es' 
-                                    ? 'Explora todas nuestras áreas de cobertura y servicios específicos de instalación de red y fibra óptica en la provincia de Barcelona.'
-                                    : locale === 'en'
-                                    ? 'Explore all our coverage areas and specific network and fiber optic installation services in the province of Barcelona.'
-                                    : 'Изучите все наши зоны обслуживания и специализированные услуги по установке сетей и оптоволокна в провинции Барселона.'}
-                            </p>
+                            <h2 className="font-heading text-2xl sm:text-3xl font-bold mb-4">{copy.catalogTitle}</h2>
+                            <p className="text-brand-gold-muted max-w-2xl mx-auto">{copy.catalogIntro}</p>
                         </div>
-                        
-                        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                            {seoPages.map((page) => (
-                                <Link
-                                    key={page.slug}
-                                    href={`/servicios/${page.slug}`}
-                                    className="bg-surface-card border border-border-subtle p-4 rounded-lg hover:border-brand-gold/30 hover:bg-white/[0.03] transition-all group"
-                                >
-                                    <h3 className="text-sm font-semibold text-white group-hover:text-brand-gold transition-colors line-clamp-2">
-                                        {page.title.split(' | ')[0]}
-                                    </h3>
-                                </Link>
+
+                        <div className="space-y-14">
+                            {groups.map(({ group, pages }) => (
+                                <div key={group.key}>
+                                    <h3 className="font-heading text-xl font-bold text-white mb-2">{copy.groups[group.key].title}</h3>
+                                    <p className="text-sm text-brand-gold-muted max-w-3xl mb-6">{copy.groups[group.key].text}</p>
+                                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                                        {pages.map((page) => (
+                                            <Link
+                                                key={page.slug}
+                                                href={`/servicios/${page.slug}`}
+                                                className="bg-surface-card border border-border-subtle p-5 rounded-lg hover:border-brand-gold/30 hover:bg-white/[0.03] transition-all group flex flex-col"
+                                            >
+                                                <span className="text-sm font-semibold text-white group-hover:text-brand-gold transition-colors">
+                                                    {page.title.split(' | ')[0]}
+                                                </span>
+                                                <span className="text-xs text-brand-gold-muted mt-2 leading-relaxed">{page.metaDescription}</span>
+                                                <span className="text-xs text-brand-gold mt-3">{copy.more} →</span>
+                                            </Link>
+                                        ))}
+                                    </div>
+                                </div>
                             ))}
                         </div>
                     </div>
