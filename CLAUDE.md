@@ -88,6 +88,14 @@ _Последняя проверка: 2026-09-10._
 - `cablecore.es` отдаёт "Proxy Detected" в Vercel — apex идёт через Cloudflare.
   На индексацию не влияет, отключает DDoS-защиту Vercel. Решать при желании.
 
+**14.10.2026 (проверить ~2026-10-28):**
+- В индексе 143/216 (8.09 было 125). Клики 28д 59→76, показы 5741→8989, позиция 33→19,5.
+- `/es/servicios` переделан (группы + описания + «как выбрать», 500→1500 слов, lastmod 2026-10-14).
+- На переобход запрошены: `/es/servicios`, `fibra-optica-empresas` (Google считал её дублем
+  казино `747live.bet`, наш HTML чистый), `red-casa`, `fibra-optica-barcelona`, `granollers`,
+  `badalona`, `cat6a`, `cat7`, блог `como-elegir-instalador-red-barcelona`.
+- Перепроверка: `node scripts/gsc-index-status.mjs` (все URL sitemap + трафик 28д/28д).
+
 **Полезно знать:**
 - Локальный `next build` падает без `SUPABASE_SERVICE_ROLE_KEY` (сбор данных
   `/api/photos`). Для проверки сборки подставить фиктивные env — это не регрессия.
