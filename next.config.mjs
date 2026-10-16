@@ -47,6 +47,21 @@ const nextConfig = {
     async headers() {
         return [
             {
+                // Baseline security headers for every response. A full CSP is
+                // deliberately left out (it would need auditing every script —
+                // Stripe, analytics, inline JSON-LD); frame-ancestors alone
+                // blocks clickjacking of the admin panel without that risk.
+                source: '/:path*',
+                headers: [
+                    { key: 'X-Frame-Options', value: 'DENY' },
+                    { key: 'Content-Security-Policy', value: "frame-ancestors 'none'" },
+                    { key: 'X-Content-Type-Options', value: 'nosniff' },
+                    { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },
+                    { key: 'Permissions-Policy', value: 'camera=(), microphone=(), geolocation=()' },
+                    { key: 'Strict-Transport-Security', value: 'max-age=31536000' },
+                ],
+            },
+            {
                 // Search Console was reporting a hashed .woff2 as a page it had
                 // crawled and declined to index. Build output is not content;
                 // keep it out of the index and out of the coverage report.

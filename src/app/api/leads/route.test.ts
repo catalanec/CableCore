@@ -1,5 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { NextRequest } from 'next/server';
+import { resetRateLimits } from '@/lib/rate-limit';
 import { createSupabaseMock } from '@/test-utils/supabase-mock';
 
 const createClientMock = vi.fn();
@@ -23,6 +24,7 @@ function postRequest(body: unknown) {
 
 describe('POST /api/leads', () => {
     beforeEach(() => {
+        resetRateLimits();
         createClientMock.mockReset();
         sendLeadNotificationMock.mockClear();
         notifyNewLeadMock.mockClear();
@@ -81,5 +83,29 @@ describe('POST /api/leads', () => {
         });
         const res = await POST(badReq);
         expect(res.status).toBe(500);
+    });
+});
+
+describe('POST /api/leads — abuse limits', () => {
+    beforeEach(() => {
+        resetRateLimits();
+        createClientMock.mockReturnValue(createSupabaseMock({ tables: { leads: [{ data: null, error: null }] } }));
+    });
+
+    it('returns 429 after 5 submissions from the same IP', async () => {
+        const { POST } = await import('./route');
+        const req = () => new NextRequest('https://cablecore.es/api/leads', {
+            method: 'POST',
+            body: JSON.stringify({ name: 'A', phone: '600000000', email: 'a@b.es' }),
+            headers: { 'Content-Type': 'application/json', 'x-real-ip': '9.9.9.9' },
+        });
+        for (let i = 0; i < 5; i++) expect((await POST(req())).status).not.toBe(429);
+        expect((await POST(req())).status).toBe(429);
+    });
+
+    it('rejects oversized fields', async () => {
+        const { POST } = await import('./route');
+        const res = await POST(postRequest({ name: 'A', phone: '1', email: 'a@b.es', message: 'x'.repeat(5001) }));
+        expect(res.status).toBe(400);
     });
 });

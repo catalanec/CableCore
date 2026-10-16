@@ -96,6 +96,21 @@ _Последняя проверка: 2026-09-10._
   `badalona`, `cat6a`, `cat7`, блог `como-elegir-instalador-red-barcelona`.
 - Перепроверка: `node scripts/gsc-index-status.mjs` (все URL sitemap + трафик 28д/28д).
 
+**Безопасность (аудит 17.10.2026):**
+- Модель доступа: всё ходит через сервер с `SUPABASE_SERVICE_ROLE_KEY`. У `anon`/`authenticated`
+  доступа к таблицам быть не должно; новые таблицы — с RLS и **без** политик. Supabase Auth не используется.
+  Фолбэков на anon/publishable-ключ в коде нет и не добавлять.
+- Серверные действия `crm.ts` начинаются с `await assertAdmin()` (`src/lib/admin-guard.ts`: Basic
+  admin или Bearer `CRON_SECRET`). Каждое новое экспортируемое действие — тоже с ним.
+- `/api/leads`, `/api/quotes`: лимит 5 заявок/10 мин на IP (`src/lib/rate-limit.ts`, в памяти инстанса)
+  и потолок 5000 символов на поле. Для настоящей защиты от флуда — правило rate limit в Cloudflare.
+- Миграция `supabase/migrations/20261017_security_hardening.sql`: функция `reset_invoice_sequence`
+  закрыта (применено); блок `harden_rls_and_grants` — проверить, применён ли (`list_migrations`).
+- В истории git (коммиты май 2026) лежал legacy `service_role` JWT. Legacy-ключи в проекте отключены —
+  держать отключёнными. Репозиторий должен быть приватным.
+- Остаётся: Next 14 и next-intl 3 имеют уязвимости, исправленные только в Next 15.5+/next-intl 4 —
+  отдельная миграция. Полный CSP не настроен (только `frame-ancestors`).
+
 **Полезно знать:**
 - Локальный `next build` падает без `SUPABASE_SERVICE_ROLE_KEY` (сбор данных
   `/api/photos`). Для проверки сборки подставить фиктивные env — это не регрессия.

@@ -1,5 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { NextRequest } from 'next/server';
+import { resetRateLimits } from '@/lib/rate-limit';
 import { createSupabaseMock } from '@/test-utils/supabase-mock';
 
 const createClientMock = vi.fn();
@@ -28,6 +29,7 @@ const validQuote = {
 
 describe('POST /api/quotes', () => {
     beforeEach(() => {
+        resetRateLimits();
         createClientMock.mockReset();
         notifyNewQuoteMock.mockClear();
         sendQuoteNotificationMock.mockClear();

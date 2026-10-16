@@ -2,6 +2,9 @@ import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 import { createSupabaseMock } from '@/test-utils/supabase-mock';
 
 vi.mock('next/cache', () => ({ revalidatePath: vi.fn() }));
+// Authorization is covered in src/lib/admin-guard.test.ts; here every call is
+// made as an authenticated admin.
+vi.mock('@/lib/admin-guard', () => ({ assertAdmin: vi.fn(() => Promise.resolve()) }));
 
 const createClientMock = vi.fn();
 vi.mock('@supabase/supabase-js', () => ({
