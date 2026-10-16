@@ -2,10 +2,11 @@
 
 import { createClient } from '@supabase/supabase-js';
 import { revalidatePath } from 'next/cache';
+import { assertAdmin } from '@/lib/admin-guard';
 
 // Initialize superservice client that bypasses RLS
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
-const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '';
+const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY || '';
 const telegramBotToken = process.env.TELEGRAM_BOT_TOKEN || '';
 const telegramChatId = process.env.TELEGRAM_CHAT_ID || '';
 
@@ -42,6 +43,7 @@ async function sendTelegram(message: string) {
 }
 
 export async function sendLowStockAlerts() {
+    await assertAdmin();
     try {
         const supabase = getSupabase();
         const { data: mats } = await supabase.from('materials').select('*');
@@ -67,6 +69,7 @@ export async function sendLowStockAlerts() {
 // ═══════════════════════════════════
 
 export async function exportMaterialsCSV(): Promise<{ success: boolean; csv?: string; error?: string }> {
+    await assertAdmin();
     try {
         const supabase = getSupabase();
         const { data: mats, error } = await supabase.from('materials').select('*').order('name');
@@ -86,6 +89,7 @@ export async function exportMaterialsCSV(): Promise<{ success: boolean; csv?: st
 }
 
 export async function exportProjectsCSV(): Promise<{ success: boolean; csv?: string; error?: string }> {
+    await assertAdmin();
     try {
         const supabase = getSupabase();
         const { data: projs, error } = await supabase.from('projects').select('*').order('created_at', { ascending: false });
@@ -108,6 +112,7 @@ export async function exportProjectsCSV(): Promise<{ success: boolean; csv?: str
 }
 
 export async function updateLeadStatus(id: string, newStatus: string) {
+    await assertAdmin();
     try {
         const supabase = getSupabase();
         const { error } = await supabase
@@ -125,6 +130,7 @@ export async function updateLeadStatus(id: string, newStatus: string) {
 }
 
 export async function updateQuoteStatus(id: string, newStatus: string) {
+    await assertAdmin();
     try {
         const supabase = getSupabase();
         const { error } = await supabase
@@ -190,6 +196,7 @@ export async function updateQuoteStatus(id: string, newStatus: string) {
 }
 
 export async function updateMaterialStock(id: string, newStock: number) {
+    await assertAdmin();
     try {
         const supabase = getSupabase();
         const { error } = await supabase
@@ -207,6 +214,7 @@ export async function updateMaterialStock(id: string, newStock: number) {
 }
 
 export async function deleteLead(id: string) {
+    await assertAdmin();
     try {
         const supabase = getSupabase();
         const { error } = await supabase.from('leads').delete().eq('id', id);
@@ -220,6 +228,7 @@ export async function deleteLead(id: string) {
 }
 
 export async function deleteQuote(id: string) {
+    await assertAdmin();
     try {
         const supabase = getSupabase();
         // Also delete associated project if exists
@@ -235,6 +244,7 @@ export async function deleteQuote(id: string) {
 }
 
 export async function updateLeadNotes(id: string, notes: string) {
+    await assertAdmin();
     try {
         const supabase = getSupabase();
         const { error } = await supabase.from('leads').update({ notes }).eq('id', id);
@@ -248,6 +258,7 @@ export async function updateLeadNotes(id: string, notes: string) {
 }
 
 export async function updateQuoteNotes(id: string, internal_notes: string) {
+    await assertAdmin();
     try {
         const supabase = getSupabase();
         const { error } = await supabase.from('quotes').update({ internal_notes }).eq('id', id);
@@ -273,6 +284,7 @@ export async function addMaterial(data: {
     stock: number;
     min_stock: number;
 }) {
+    await assertAdmin();
     try {
         const supabase = getSupabase();
         const { error } = await supabase.from('materials').insert(data);
@@ -294,6 +306,7 @@ export async function updateMaterial(id: string, data: {
     stock?: number;
     min_stock?: number;
 }) {
+    await assertAdmin();
     try {
         const supabase = getSupabase();
         const { error } = await supabase.from('materials').update(data).eq('id', id);
@@ -307,6 +320,7 @@ export async function updateMaterial(id: string, data: {
 }
 
 export async function deleteMaterial(id: string) {
+    await assertAdmin();
     try {
         const supabase = getSupabase();
         const { error } = await supabase.from('materials').delete().eq('id', id);
@@ -328,6 +342,7 @@ export async function updateProjectCosts(id: string, costs: {
     actual_labor_cost?: number;
     actual_other_cost?: number;
 }) {
+    await assertAdmin();
     try {
         const supabase = getSupabase();
         
@@ -360,6 +375,7 @@ export async function updateProjectPayment(id: string, data: {
     payment_status?: string;
     payment_date?: string | null;
 }) {
+    await assertAdmin();
     try {
         const supabase = getSupabase();
         const { error } = await supabase.from('projects').update(data).eq('id', id);
@@ -377,6 +393,7 @@ export async function updateProjectPayment(id: string, data: {
 // ═══════════════════════════════════
 
 export async function seedMaterials() {
+    await assertAdmin();
     try {
         const supabase = getSupabase();
 
@@ -438,6 +455,7 @@ export async function addActivity(data: {
     entity_id: string;
     metadata?: Record<string, unknown>;
 }) {
+    await assertAdmin();
     try {
         const supabase = getSupabase();
         const { error } = await supabase.from('activities').insert({
@@ -457,6 +475,7 @@ export async function addActivity(data: {
 }
 
 export async function getActivities(entityType: string, entityId: string) {
+    await assertAdmin();
     try {
         const supabase = getSupabase();
         const { data, error } = await supabase
@@ -484,6 +503,7 @@ export async function addTask(data: {
     entity_type?: string;
     entity_id?: string;
 }) {
+    await assertAdmin();
     try {
         const supabase = getSupabase();
         const { error } = await supabase.from('tasks').insert({
@@ -505,6 +525,7 @@ export async function addTask(data: {
 }
 
 export async function updateTaskStatus(id: string, status: string) {
+    await assertAdmin();
     try {
         const supabase = getSupabase();
         const { error } = await supabase
@@ -526,6 +547,7 @@ export async function updateTask(id: string, data: {
     due_date?: string | null;
     status?: string;
 }) {
+    await assertAdmin();
     try {
         const supabase = getSupabase();
         const { error } = await supabase
@@ -541,6 +563,7 @@ export async function updateTask(id: string, data: {
 }
 
 export async function deleteTask(id: string) {
+    await assertAdmin();
     try {
         const supabase = getSupabase();
         const { error } = await supabase.from('tasks').delete().eq('id', id);
@@ -553,6 +576,7 @@ export async function deleteTask(id: string) {
 }
 
 export async function getTasks(entityType?: string, entityId?: string) {
+    await assertAdmin();
     try {
         const supabase = getSupabase();
         let query = supabase.from('tasks').select('*').order('due_date', { ascending: true });
@@ -568,6 +592,7 @@ export async function getTasks(entityType?: string, entityId?: string) {
 }
 
 export async function getAllTasks() {
+    await assertAdmin();
     try {
         const supabase = getSupabase();
         const { data, error } = await supabase
@@ -587,6 +612,7 @@ export async function getAllTasks() {
 // ═══════════════════════════════════
 
 export async function updateLeadPipelineStage(id: string, stage: string) {
+    await assertAdmin();
     try {
         const supabase = getSupabase();
         const { error } = await supabase
@@ -611,6 +637,7 @@ export async function updateLeadPipelineStage(id: string, stage: string) {
 }
 
 export async function updateLeadFollowup(id: string, date: string | null) {
+    await assertAdmin();
     try {
         const supabase = getSupabase();
         const { error } = await supabase
@@ -626,6 +653,7 @@ export async function updateLeadFollowup(id: string, date: string | null) {
 }
 
 export async function updateLeadValue(id: string, value: number) {
+    await assertAdmin();
     try {
         const supabase = getSupabase();
         const { error } = await supabase
@@ -645,6 +673,7 @@ export async function updateLeadValue(id: string, value: number) {
 // ═══════════════════════════════════
 
 export async function getProjectDetail(id: string) {
+    await assertAdmin();
     try {
         const supabase = getSupabase();
 
@@ -668,6 +697,7 @@ export async function getProjectDetail(id: string) {
 }
 
 export async function deleteProject(id: string) {
+    await assertAdmin();
     try {
         const supabase = getSupabase();
         // Delete related records first to avoid FK constraint errors
@@ -686,6 +716,7 @@ export async function deleteProject(id: string) {
 }
 
 export async function updateProjectStatus(id: string, status: string) {
+    await assertAdmin();
     try {
         const supabase = getSupabase();
         const { error } = await supabase.from('projects').update({ status }).eq('id', id);
@@ -714,6 +745,7 @@ export async function updateProjectInfo(id: string, data: {
     start_date?: string;
     end_date?: string;
 }) {
+    await assertAdmin();
     try {
         const supabase = getSupabase();
         const { error } = await supabase.from('projects').update(data).eq('id', id);
@@ -731,6 +763,7 @@ export async function updateProjectInfo(id: string, data: {
 
 
 export async function updateProjectLocations(id: string, locations: Array<{ name: string; total: number; done: number }>) {
+    await assertAdmin();
     try {
         const supabase = getSupabase();
         const { error } = await supabase
@@ -757,6 +790,7 @@ export async function addExpense(data: {
     date: string;
     project_id?: string;
 }) {
+    await assertAdmin();
     try {
         const supabase = getSupabase();
         const { error } = await supabase.from('expenses').insert(data);
@@ -770,6 +804,7 @@ export async function addExpense(data: {
 }
 
 export async function getExpenses() {
+    await assertAdmin();
     try {
         const supabase = getSupabase();
         const { data, error } = await supabase.from('expenses').select('*').order('date', { ascending: false });
@@ -781,6 +816,7 @@ export async function getExpenses() {
 }
 
 export async function deleteExpense(id: string) {
+    await assertAdmin();
     try {
         const supabase = getSupabase();
         const { error } = await supabase.from('expenses').delete().eq('id', id);
@@ -797,6 +833,7 @@ export async function deleteExpense(id: string) {
 // ═══════════════════════════════════
 
 export async function notifyStaleLeads() {
+    await assertAdmin();
     try {
         const supabase = getSupabase();
         const cutoff = new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString();

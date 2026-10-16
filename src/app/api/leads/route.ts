@@ -1,10 +1,23 @@
 import { NextRequest, NextResponse } from 'next/server';
+import { clientIp, rateLimit, FORM_LIMIT, FORM_WINDOW_MS } from '@/lib/rate-limit';
 import { sendLeadNotification } from '@/lib/email';
 import { notifyNewLead } from '@/lib/telegram';
 
 export async function POST(request: NextRequest) {
+    if (!rateLimit(`leads:${clientIp(request.headers)}`, FORM_LIMIT, FORM_WINDOW_MS)) {
+        return NextResponse.json({ error: 'Too many requests' }, { status: 429 });
+    }
+
     try {
         const data = await request.json();
+
+        // Cap free-text sizes: these fields end up in e-mails, Telegram and the CRM.
+        const tooLong = Object.values(data ?? {}).some(
+            (v) => typeof v === 'string' && v.length > 5000,
+        );
+        if (tooLong) {
+            return NextResponse.json({ error: 'Field too long' }, { status: 400 });
+        }
 
         // Honeypot: a hidden field real users never fill in. Bots that
         // blindly fill every input trip it — pretend success so they don't
@@ -18,7 +31,7 @@ export async function POST(request: NextRequest) {
         }
 
         const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
-        const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY || process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+        const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
         if (supabaseUrl && supabaseKey) {
             const { createClient } = await import('@supabase/supabase-js');
